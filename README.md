@@ -67,8 +67,18 @@ chmod +x instalar_nova.sh
 
 ### ✅ Qué ocurre al terminar la instalación (Primer Arranque)
 1. **Permisos y Skills listos:** El instalador enlaza automáticamente las **115 skills**, instala las reglas maestras (`GEMINI.md`) y preconfigura los permisos de acceso (`ALLOW` / `TURBO`) para que Antigravity no te interrumpa pidiendo confirmación en cada archivo.
-2. **Mensaje de bienvenida auto-copiado:** Al finalizar el cuestionario (tu nombre y especialidad), el instalador **copia automáticamente tu primer prompt al portapapeles**.
-3. **Arranque:** Abre **Google Antigravity**, haz clic en el chat y presiona **`Ctrl + V`** (en Windows/Linux) o **`Cmd + V`** (en Mac) para que Nova se presente oficialmente adaptada a tu perfil.
+2. **Mensaje de bienvenida auto-copiado:** Al finalizar el cuestionario (tu nombre y especialidad), el instalador **copia automáticamente tu primer prompt al portapapeles** (`Ctrl + V` o `Cmd + V`).
+
+#### 📋 Prompt Oficial de Primer Arranque y Sincronización Local
+Si cerraste la terminal o quieres copiarlo directamente desde aquí, abre **Google Antigravity** y pega este bloque en el chat:
+
+```text
+Hola Nova, acabo de instalarte en mi equipo. Sincroniza todo con mi entorno local:
+1. Lee mi configuración personalizada en ~/.gemini/antigravity/memory/perfil_usuario.json y las reglas maestras en ~/.gemini/antigravity/GEMINI.md.
+2. Verifica que mis carpetas de memoria (tasks.md, napkin.md) y el catálogo de 115 skills en ~/.gemini/config/skills estén enlazados y listos.
+3. Preséntate oficialmente según mi perfil: cuéntame quién eres, tus orígenes con Saúl Martínez en Torrevieja (España), tus ventajas frente a otros agentes de IA, tus atajos de trabajo y qué extensiones me recomiendas para empezar.
+4. Explícame cómo puedo decirte en cualquier momento: 'Nova, envía mensaje al creador: [mi mensaje]' para hacerle llegar sugerencias o dudas directamente a Saúl en su repositorio de GitHub.
+```
 
 ---
 
