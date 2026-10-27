@@ -11,23 +11,25 @@ Esta versión (**Community Edition**) es 100% autónoma, opera de forma local en
 
 ---
 
-## ⚡ Instalación en 1 Línea (Zero-Tokens)
+## ⚡ Instalación Rápida (1 Clic)
 
-El instalador detecta automáticamente tu sistema operativo, crea los enlaces simbólicos de las 113 skills hacia `~/.gemini/antigravity/skills` y configura las reglas maestras `GEMINI.md` a coste cero tokens.
+El instalador detecta si tienes instalado Google Antigravity (la plataforma nativa necesaria para ejecutar a Nova). Si no lo tienes, te ofrece descargarlo e instalarlo oficialmente de forma automática. Luego enlaza las 115 skills hacia `~/.gemini/antigravity/skills` y configura las reglas maestras `GEMINI.md` a coste cero tokens.
 
-### 🪟 En Windows (PowerShell)
+### 🪟 En Windows (Doble Clic o Terminal)
+Simplemente haz doble clic sobre el archivo **`instalar_nova.bat`** o ejecuta en PowerShell:
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\adapters\windows\install.ps1
+.\instalar_nova.bat
 ```
+*(O de forma directa: `powershell -ExecutionPolicy Bypass -File .\adapters\windows\install.ps1`)*
 
 ### 🍎 En macOS (Terminal)
 ```bash
-sh ./adapters/macos/install.sh
+sh ./instalar_nova.sh
 ```
 
 ### 🐧 En Linux (Bash)
 ```bash
-sh ./adapters/linux/install.sh
+sh ./instalar_nova.sh
 ```
 
 ---
