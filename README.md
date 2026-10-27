@@ -15,16 +15,17 @@ Esta versión (**Community Edition**) es 100% libre, local, no requiere privileg
 
 ---
 
-## ⚡ Instalación en 1 Clic (Zero-Tokens)
+## ⚡ Instalación en 1 Clic (Auto-Instalador de Antigravity Incluido)
 
-El instalador detecta automáticamente si tienes **Google Antigravity** en tu máquina. Si no está instalado, se encarga de descargarlo e instalarlo de manera oficial y automática antes de enlazar las 115 habilidades y reglas del agente.
+> [!TIP]
+> **¿No tienes Google Antigravity instalado?** No te preocupes: al ejecutar el instalador, este comprobará tu sistema y **te preguntará directamente si deseas que descargue e instale Google Antigravity oficial por ti en ese mismo momento**. Al responder que sí, lo instala en segundo plano y te deja a Nova lista para operar.
 
 ### 🪟 En Windows (Doble Clic)
-Haz doble clic en el archivo:
+Simplemente haz doble clic sobre el archivo:
 ```text
 instalar_nova.bat
 ```
-*(O desde PowerShell: `powershell -ExecutionPolicy Bypass -File .\adapters\windows\install.ps1`)*
+*(Si no tienes Antigravity, te saldrá la pregunta en pantalla: `¿Deseas descargar e instalar Google Antigravity oficial ahora? (s/n) [s]`. Solo pulsas Enter y el script hace todo solo).*
 
 ### 🍎 En macOS (Terminal)
 ```bash
