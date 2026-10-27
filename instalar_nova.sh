@@ -22,7 +22,7 @@ else
     echo "[AVISO] No se detecto Google Antigravity en tu equipo."
     echo "Antigravity es el entorno necesario para que Nova opere."
     printf "Deseas abrir la pagina oficial para descargarlo ahora? (s/n) [s]: "
-    read -r resp
+    read -r resp < /dev/tty || resp="s"
     if [ "$resp" != "n" ] && [ "$resp" != "N" ]; then
         if command -v open >/dev/null 2>&1; then
             open "https://antigravity.google/"
@@ -34,27 +34,25 @@ else
     fi
 fi
 
-# Si se ejecuta directamente vía curl | bash, no existe la carpeta local.
-# Clonamos o descargamos el repositorio temporalmente para ejecutar la instalación.
 SCRIPT_DIR="$(cd "$(dirname "$0")" 2>/dev/null && pwd || echo "")"
 if [ ! -d "$SCRIPT_DIR/adapters" ]; then
-    TMP_DIR="$(mktemp -d 2>/dev/null || mktemp -d -t 'nova_install')"
-    echo "[INFO] Descargando archivos de Nova en entorno temporal..."
-    git clone --depth 1 https://github.com/Luaz2021/Nova-Agent-Core-Demo.git "$TMP_DIR" >/dev/null 2>&1 || {
-        echo "[ERROR] Se requiere git instalado para clonar el repositorio."
+    INSTALL_ROOT="$HOME/.nova-agent"
+    echo "[INFO] Descargando nucleo de Nova en $INSTALL_ROOT..."
+    rm -rf "$INSTALL_ROOT"
+    git clone --depth 1 https://github.com/Luaz2021/Nova-Agent-Core-Demo.git "$INSTALL_ROOT" >/dev/null 2>&1 || {
+        echo "[ERROR] Se requiere git instalado para descargar el repositorio."
         exit 1
     }
-    cd "$TMP_DIR"
-    SCRIPT_DIR="$TMP_DIR"
+    SCRIPT_DIR="$INSTALL_ROOT"
 fi
 
 OS_NAME="$(uname -s)"
 case "$OS_NAME" in
     Darwin*)
-        sh "$SCRIPT_DIR/adapters/macos/install.sh"
+        sh "$SCRIPT_DIR/adapters/macos/install.sh" < /dev/tty
         ;;
     Linux*)
-        sh "$SCRIPT_DIR/adapters/linux/install.sh"
+        sh "$SCRIPT_DIR/adapters/linux/install.sh" < /dev/tty
         ;;
     *)
         echo "[ERROR] Sistema operativo no reconocido: $OS_NAME"

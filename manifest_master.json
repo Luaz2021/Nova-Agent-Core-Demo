@@ -1,0 +1,1167 @@
+{
+    "version":  "2.0.0",
+    "created_at":  "2026-10-27 17:30:10",
+    "ecosystem":  "Nova Agent Community Edition",
+    "components":  [
+                       {
+                           "Id":  "rule_gemini_md",
+                           "Name":  "Reglas Maestras GEMINI.md",
+                           "Type":  "Rule",
+                           "RelativePath":  "GEMINI.md",
+                           "TargetRelative":  "GEMINI.md",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\GEMINI.md",
+                           "SHA256":  "827DBAAD5DE5F9EE3A17A3E14A7DBBB81307932905AC9045D06494514F441250",
+                           "SizeBytes":  6570
+                       },
+                       {
+                           "Id":  "skill_agentic_engineering",
+                           "Name":  "agentic-engineering",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\agentic-engineering",
+                           "TargetRelative":  "skills\\agentic-engineering",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\agentic-engineering",
+                           "SHA256":  "41C32C20EC97469341F5D83D8BEB15F03D1B6F1C40FB1BDF534C50CD9A38CB6F",
+                           "SizeBytes":  1830
+                       },
+                       {
+                           "Id":  "skill_agent_introspection_debugging",
+                           "Name":  "agent-introspection-debugging",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\agent-introspection-debugging",
+                           "TargetRelative":  "skills\\agent-introspection-debugging",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\agent-introspection-debugging",
+                           "SHA256":  "0CDBFE3C822FF50D21DF8CD0E20C72407A6F5658089EDC0E96E79A03927CB956",
+                           "SizeBytes":  5627
+                       },
+                       {
+                           "Id":  "skill_agent_security_hardening",
+                           "Name":  "agent-security-hardening",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\agent-security-hardening",
+                           "TargetRelative":  "skills\\agent-security-hardening",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\agent-security-hardening",
+                           "SHA256":  "0E0895ADA90AA8FA085E4257961EBE15F2DFF43B843785B1533D4C731186AD81",
+                           "SizeBytes":  10678
+                       },
+                       {
+                           "Id":  "skill_api_design",
+                           "Name":  "api-design",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\api-design",
+                           "TargetRelative":  "skills\\api-design",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\api-design",
+                           "SHA256":  "250E464413A13C0EB93CC73447B423DF1F9AA8E4F80E5E68C41F895B2C33E352",
+                           "SizeBytes":  13224
+                       },
+                       {
+                           "Id":  "skill_architecture_decision_records",
+                           "Name":  "architecture-decision-records",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\architecture-decision-records",
+                           "TargetRelative":  "skills\\architecture-decision-records",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\architecture-decision-records",
+                           "SHA256":  "263B20E81801AA5FA7E75EAEC6C38345C0AC028CA0EDBD67B1B9071C5FCBE11F",
+                           "SizeBytes":  7182
+                       },
+                       {
+                           "Id":  "skill_autonomous_loops",
+                           "Name":  "autonomous-loops",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\autonomous-loops",
+                           "TargetRelative":  "skills\\autonomous-loops",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\autonomous-loops",
+                           "SHA256":  "C2DB797295500B9C2B31D9DD2451EF28727346C739B5D1D3366F0F9EA2E823DC",
+                           "SizeBytes":  24851
+                       },
+                       {
+                           "Id":  "skill_backend_patterns",
+                           "Name":  "backend-patterns",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\backend-patterns",
+                           "TargetRelative":  "skills\\backend-patterns",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\backend-patterns",
+                           "SHA256":  "9B983D0297A983110FDFDA8DCE55D19B750CA3E53EF155D75A3EFF740D3874B8",
+                           "SizeBytes":  13349
+                       },
+                       {
+                           "Id":  "skill_benchmark_optimization_loop",
+                           "Name":  "benchmark-optimization-loop",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\benchmark-optimization-loop",
+                           "TargetRelative":  "skills\\benchmark-optimization-loop",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\benchmark-optimization-loop",
+                           "SHA256":  "F11208B6A86BC311CFBD9E20688A189238FDA6C1E03B6F8000EF9E55487F6F95",
+                           "SizeBytes":  2658
+                       },
+                       {
+                           "Id":  "skill_brand_design",
+                           "Name":  "brand-design",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\brand-design",
+                           "TargetRelative":  "skills\\brand-design",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\brand-design",
+                           "SHA256":  "1F4E2715548D0392CC92C00B141C161224DD92C32BD93A1AC42D67D7BD502067",
+                           "SizeBytes":  18085
+                       },
+                       {
+                           "Id":  "skill_brand_guidelines",
+                           "Name":  "brand-guidelines",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\brand-guidelines",
+                           "TargetRelative":  "skills\\brand-guidelines",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\brand-guidelines",
+                           "SHA256":  "9817E5F794F65C0727C3A37B30754146C14FC4E6F21AF85588FAC343F16B3F22",
+                           "SizeBytes":  3825
+                       },
+                       {
+                           "Id":  "skill_brand_identity",
+                           "Name":  "brand-identity",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\brand-identity",
+                           "TargetRelative":  "skills\\brand-identity",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\brand-identity",
+                           "SHA256":  "4E4D63495C81F86601537DC2779ED4BDF623E6C16CA42D9FF1D8D8965BE8B929",
+                           "SizeBytes":  5267
+                       },
+                       {
+                           "Id":  "skill_brand_md",
+                           "Name":  "brand-md",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\brand-md",
+                           "TargetRelative":  "skills\\brand-md",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\brand-md",
+                           "SHA256":  "B29EC60CC6430E08E092DED4E9BCB7F03CC3E80C2E992D9D7DE5D8493F5C0232",
+                           "SizeBytes":  3915
+                       },
+                       {
+                           "Id":  "skill_brand_naming",
+                           "Name":  "brand-naming",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\brand-naming",
+                           "TargetRelative":  "skills\\brand-naming",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\brand-naming",
+                           "SHA256":  "7318E4D60A09311296A63329B67A2DBB8273FB3308592729E427F8A007A72E0A",
+                           "SizeBytes":  7055
+                       },
+                       {
+                           "Id":  "skill_brand_to_design_md",
+                           "Name":  "brand-to-design-md",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\brand-to-design-md",
+                           "TargetRelative":  "skills\\brand-to-design-md",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\brand-to-design-md",
+                           "SHA256":  "5DC66A81FF8FFD36FD2BCA265E061D8ADC19AAD1DDE83356BDCFBE9BA4267A99",
+                           "SizeBytes":  5207
+                       },
+                       {
+                           "Id":  "skill_build_awwwards_quality_sites",
+                           "Name":  "build-awwwards-quality-sites",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\build-awwwards-quality-sites",
+                           "TargetRelative":  "skills\\build-awwwards-quality-sites",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\build-awwwards-quality-sites",
+                           "SHA256":  "955DF3FEF8EE1262FF40FC8FB5BCA97498867855CCFC8E4B016A1AEA60B04C9E",
+                           "SizeBytes":  7281
+                       },
+                       {
+                           "Id":  "skill_cinematic_gsap_lenis_motion_system",
+                           "Name":  "cinematic-gsap-lenis-motion-system",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\cinematic-gsap-lenis-motion-system",
+                           "TargetRelative":  "skills\\cinematic-gsap-lenis-motion-system",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\cinematic-gsap-lenis-motion-system",
+                           "SHA256":  "B7935FE9496355CC74304219AEED8E99B5F1A87BB787C3EEE73E0CBB93F432AA",
+                           "SizeBytes":  18217
+                       },
+                       {
+                           "Id":  "skill_color_palette_builder",
+                           "Name":  "color-palette-builder",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\color-palette-builder",
+                           "TargetRelative":  "skills\\color-palette-builder",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\color-palette-builder",
+                           "SHA256":  "E565A76F983C353B05B8DF76CAEF6E06403C200D0190BA54ADDCB832CE646975",
+                           "SizeBytes":  7615
+                       },
+                       {
+                           "Id":  "skill_council",
+                           "Name":  "council",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\council",
+                           "TargetRelative":  "skills\\council",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\council",
+                           "SHA256":  "2104D002D301A061A16D21EA2E00292F80B66B20C9883A33525A7DE404153502",
+                           "SizeBytes":  6358
+                       },
+                       {
+                           "Id":  "skill_council_multi_model",
+                           "Name":  "council-multi-model",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\council-multi-model",
+                           "TargetRelative":  "skills\\council-multi-model",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\council-multi-model",
+                           "SHA256":  "3C67816EFDAB97C89F8433B8A88D720CA736871467F7D6D1FF344FEE59F18CE5",
+                           "SizeBytes":  5987
+                       },
+                       {
+                           "Id":  "skill_cursorrules_advisor",
+                           "Name":  "cursorrules-advisor",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\cursorrules-advisor",
+                           "TargetRelative":  "skills\\cursorrules-advisor",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\cursorrules-advisor",
+                           "SHA256":  "F47EE088AFC529B130E5E7D2569AFD43421CF6A56B014B4D6165F66D7C1AA3A1",
+                           "SizeBytes":  2057
+                       },
+                       {
+                           "Id":  "skill_database_migrations",
+                           "Name":  "database-migrations",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\database-migrations",
+                           "TargetRelative":  "skills\\database-migrations",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\database-migrations",
+                           "SHA256":  "DAD2F1964295EEE14A96E06213CE3F60992BBCDC1F37A50C828BBC2E1ABD79DD",
+                           "SizeBytes":  12034
+                       },
+                       {
+                           "Id":  "skill_dependency_time_traveler",
+                           "Name":  "dependency-time-traveler",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\dependency-time-traveler",
+                           "TargetRelative":  "skills\\dependency-time-traveler",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\dependency-time-traveler",
+                           "SHA256":  "F8AE6C74D7C654B97FE3BE4AF3A3B7CC6F7F947AB6CADC2498F6FC8AB1239019",
+                           "SizeBytes":  1243
+                       },
+                       {
+                           "Id":  "skill_deployment_patterns",
+                           "Name":  "deployment-patterns",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\deployment-patterns",
+                           "TargetRelative":  "skills\\deployment-patterns",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\deployment-patterns",
+                           "SHA256":  "B864ABD1954570C4A469B7E1DEB897E57858D25DB2FD98D035FF7BCA4A15B9B6",
+                           "SizeBytes":  11113
+                       },
+                       {
+                           "Id":  "skill_design_critique",
+                           "Name":  "design-critique",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\design-critique",
+                           "TargetRelative":  "skills\\design-critique",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\design-critique",
+                           "SHA256":  "4CF21B1505AA3CE593FB3B8D913663A35176F1CD22D4CDC5CA830EF7DC36623B",
+                           "SizeBytes":  5308
+                       },
+                       {
+                           "Id":  "skill_design_doctrine",
+                           "Name":  "design-doctrine",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\design-doctrine",
+                           "TargetRelative":  "skills\\design-doctrine",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\design-doctrine",
+                           "SHA256":  "81DE85F5B8EE36A655540E05C9A8A67A0774CEFA16301C108DFBBD837D636915",
+                           "SizeBytes":  9750
+                       },
+                       {
+                           "Id":  "skill_design_qa",
+                           "Name":  "design-qa",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\design-qa",
+                           "TargetRelative":  "skills\\design-qa",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\design-qa",
+                           "SHA256":  "BC4C36A52B30D9701531F95075143FA536D4528DD151C9497EAB5AAFA1DFD533",
+                           "SizeBytes":  2581
+                       },
+                       {
+                           "Id":  "skill_design_system",
+                           "Name":  "design-system",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\design-system",
+                           "TargetRelative":  "skills\\design-system",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\design-system",
+                           "SHA256":  "1969E4CB6CD13CDAFFF5F84353047D6E55CEBC24E1A595EC48E6E2C666F3D8B1",
+                           "SizeBytes":  2815
+                       },
+                       {
+                           "Id":  "skill_docker_patterns",
+                           "Name":  "docker-patterns",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\docker-patterns",
+                           "TargetRelative":  "skills\\docker-patterns",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\docker-patterns",
+                           "SHA256":  "C0CEDEB9B64D4468F5AF3BB0A97659C654F0CEB916ACBEC867A29DC682DD633F",
+                           "SizeBytes":  16807
+                       },
+                       {
+                           "Id":  "skill_env_drift_sentinel",
+                           "Name":  "env-drift-sentinel",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\env-drift-sentinel",
+                           "TargetRelative":  "skills\\env-drift-sentinel",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\env-drift-sentinel",
+                           "SHA256":  "0E2CCEB21298885CD974C3708367A0192023BE97040BCF40BFE8CDB4110B13BA",
+                           "SizeBytes":  1312
+                       },
+                       {
+                           "Id":  "skill_fastapi_patterns",
+                           "Name":  "fastapi-patterns",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\fastapi-patterns",
+                           "TargetRelative":  "skills\\fastapi-patterns",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\fastapi-patterns",
+                           "SHA256":  "F54C2BF5A61EEDA47C939DA265B1431D609C231611E71B688B0B734A064B18F3",
+                           "SizeBytes":  15637
+                       },
+                       {
+                           "Id":  "skill_find_skills",
+                           "Name":  "find-skills",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\find-skills",
+                           "TargetRelative":  "skills\\find-skills",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\find-skills",
+                           "SHA256":  "1C27172B065A24C549C49173807BE30CDCBAEC8FA1134B0C8502AD3E2AF09025",
+                           "SizeBytes":  1367
+                       },
+                       {
+                           "Id":  "skill_frontend_a11y",
+                           "Name":  "frontend-a11y",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\frontend-a11y",
+                           "TargetRelative":  "skills\\frontend-a11y",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\frontend-a11y",
+                           "SHA256":  "E00991A3F4D47FCF1529DD74A080AFCF46137DC5061E70DC6E3DA7B27F2AE3F3",
+                           "SizeBytes":  12861
+                       },
+                       {
+                           "Id":  "skill_frontend_design_direction",
+                           "Name":  "frontend-design-direction",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\frontend-design-direction",
+                           "TargetRelative":  "skills\\frontend-design-direction",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\frontend-design-direction",
+                           "SHA256":  "71A40F7BC4A28DA01B54527FE5590F6055C93ADC630E6CEEE8C892B35C980893",
+                           "SizeBytes":  8820
+                       },
+                       {
+                           "Id":  "skill_frontend_patterns",
+                           "Name":  "frontend-patterns",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\frontend-patterns",
+                           "TargetRelative":  "skills\\frontend-patterns",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\frontend-patterns",
+                           "SHA256":  "A5B971EB9E74CD763C7E3308BFD888E0D9CF69F8B88477659889D77182479740",
+                           "SizeBytes":  15432
+                       },
+                       {
+                           "Id":  "skill_gemini_brand_tokens",
+                           "Name":  "gemini-brand-tokens",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\gemini-brand-tokens",
+                           "TargetRelative":  "skills\\gemini-brand-tokens",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\gemini-brand-tokens",
+                           "SHA256":  "68EB2B2C27FD4B5FC42D2C0C6BF17EF4A759FC7FE573876C33B7B38CFE397FD2",
+                           "SizeBytes":  3676
+                       },
+                       {
+                           "Id":  "skill_gemini_brave_sentinel",
+                           "Name":  "gemini-brave-sentinel",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\gemini-brave-sentinel",
+                           "TargetRelative":  "skills\\gemini-brave-sentinel",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\gemini-brave-sentinel",
+                           "SHA256":  "AF0D2790256BD8BC4C0B4575CDD7680B109EDDB3EEF088D9ECC90F1706267790",
+                           "SizeBytes":  2513
+                       },
+                       {
+                           "Id":  "skill_gemini_chaos_qa",
+                           "Name":  "gemini-chaos-qa",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\gemini-chaos-qa",
+                           "TargetRelative":  "skills\\gemini-chaos-qa",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\gemini-chaos-qa",
+                           "SHA256":  "9CFD66DCE4EAB894AB204E27F8CDB7608736BDBC0839FD1BFED02DCA23A51659",
+                           "SizeBytes":  3762
+                       },
+                       {
+                           "Id":  "skill_gemini_clean_architecture",
+                           "Name":  "gemini-clean-architecture",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\gemini-clean-architecture",
+                           "TargetRelative":  "skills\\gemini-clean-architecture",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\gemini-clean-architecture",
+                           "SHA256":  "C25E2C82C39741DB6110F972F62ACD38BEFAEE2101D91AEB38256D1174DB2894",
+                           "SizeBytes":  1365
+                       },
+                       {
+                           "Id":  "skill_gemini_cloud_sync",
+                           "Name":  "gemini-cloud-sync",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\gemini-cloud-sync",
+                           "TargetRelative":  "skills\\gemini-cloud-sync",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\gemini-cloud-sync",
+                           "SHA256":  "88CD4E70FE3F2787A8FA27A2139A523CF11D21F0ADC4AB07E93AAF84BEFA3BDE",
+                           "SizeBytes":  2837
+                       },
+                       {
+                           "Id":  "skill_gemini_concise_clean_code",
+                           "Name":  "gemini-concise-clean-code",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\gemini-concise-clean-code",
+                           "TargetRelative":  "skills\\gemini-concise-clean-code",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\gemini-concise-clean-code",
+                           "SHA256":  "64D3A0D0DEEFB715AC90E772BE75ACC0BF261EADE04135F0552D324557C52A2E",
+                           "SizeBytes":  2380
+                       },
+                       {
+                           "Id":  "skill_gemini_concise_voice",
+                           "Name":  "gemini-concise-voice",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\gemini-concise-voice",
+                           "TargetRelative":  "skills\\gemini-concise-voice",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\gemini-concise-voice",
+                           "SHA256":  "B64F28EA09C390EFB6B932DF4DFA3C87D5A288B1ECE448AB476762AA8C416491",
+                           "SizeBytes":  2102
+                       },
+                       {
+                           "Id":  "skill_gemini_continuous_learner",
+                           "Name":  "gemini-continuous-learner",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\gemini-continuous-learner",
+                           "TargetRelative":  "skills\\gemini-continuous-learner",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\gemini-continuous-learner",
+                           "SHA256":  "0FD5351E3C8119CCAA6FCBDE660D28CD82B4F105AB28FB1C69902613DD64E35E",
+                           "SizeBytes":  3408
+                       },
+                       {
+                           "Id":  "skill_gemini_daily_briefing",
+                           "Name":  "gemini-daily-briefing",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\gemini-daily-briefing",
+                           "TargetRelative":  "skills\\gemini-daily-briefing",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\gemini-daily-briefing",
+                           "SHA256":  "EA27CF680544AFECD6B8D08C338904190B77408CBA79541331FA1E42D255FCAE",
+                           "SizeBytes":  2916
+                       },
+                       {
+                           "Id":  "skill_gemini_database_mastery",
+                           "Name":  "gemini-database-mastery",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\gemini-database-mastery",
+                           "TargetRelative":  "skills\\gemini-database-mastery",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\gemini-database-mastery",
+                           "SHA256":  "F61017D304AD71B70981341A017F7DE00E76CD533565E39D53FF2A9CBBFE183C",
+                           "SizeBytes":  2358
+                       },
+                       {
+                           "Id":  "skill_gemini_git_guardian",
+                           "Name":  "gemini-git-guardian",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\gemini-git-guardian",
+                           "TargetRelative":  "skills\\gemini-git-guardian",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\gemini-git-guardian",
+                           "SHA256":  "E8B055920484A367A44A4A9A0DA5DF3CBBC0D39AA495AF5C033B8199C94E7AAF",
+                           "SizeBytes":  2705
+                       },
+                       {
+                           "Id":  "skill_gemini_humanizer_prose",
+                           "Name":  "gemini-humanizer-prose",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\gemini-humanizer-prose",
+                           "TargetRelative":  "skills\\gemini-humanizer-prose",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\gemini-humanizer-prose",
+                           "SHA256":  "77594D2C72A915B36E5FEB7C49E7A8AF38EE45B3CECCDCFBE2F7479E7657066A",
+                           "SizeBytes":  2945
+                       },
+                       {
+                           "Id":  "skill_gemini_lecture_transcriber",
+                           "Name":  "gemini-lecture-transcriber",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\gemini-lecture-transcriber",
+                           "TargetRelative":  "skills\\gemini-lecture-transcriber",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\gemini-lecture-transcriber",
+                           "SHA256":  "3EF880B09E709D88C4FDE023B72D801021332FBCFF3A6777A89E61CC8C7DF7E6",
+                           "SizeBytes":  2319
+                       },
+                       {
+                           "Id":  "skill_gemini_mcp_app",
+                           "Name":  "gemini-mcp-app",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\gemini-mcp-app",
+                           "TargetRelative":  "skills\\gemini-mcp-app",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\gemini-mcp-app",
+                           "SHA256":  "A821C19D96E99D8FA6483EA7F84A060B0030A2C328D0F353FE71D76E5604CCBF",
+                           "SizeBytes":  19813
+                       },
+                       {
+                           "Id":  "skill_gemini_mem",
+                           "Name":  "gemini-mem",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\gemini-mem",
+                           "TargetRelative":  "skills\\gemini-mem",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\gemini-mem",
+                           "SHA256":  "DF18B89C5BC7843667D925EF196399267EF9F42524801C49FAE16403FCF782E7",
+                           "SizeBytes":  3745
+                       },
+                       {
+                           "Id":  "skill_gemini_military_cybersec",
+                           "Name":  "gemini-military-cybersec",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\gemini-military-cybersec",
+                           "TargetRelative":  "skills\\gemini-military-cybersec",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\gemini-military-cybersec",
+                           "SHA256":  "A4C0F0E0B611BA98263AFA1F9D6B2E0A979B2FFE86755712ABF03484933BEDB8",
+                           "SizeBytes":  1650
+                       },
+                       {
+                           "Id":  "skill_gemini_motion_artifacts",
+                           "Name":  "gemini-motion-artifacts",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\gemini-motion-artifacts",
+                           "TargetRelative":  "skills\\gemini-motion-artifacts",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\gemini-motion-artifacts",
+                           "SHA256":  "DAA811D58E2DB4E16B80748AFF38F83FE5BF107A1522DB6E4256B6E1DBF69406",
+                           "SizeBytes":  6501
+                       },
+                       {
+                           "Id":  "skill_gemini_multiagent_router",
+                           "Name":  "gemini-multiagent-router",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\gemini-multiagent-router",
+                           "TargetRelative":  "skills\\gemini-multiagent-router",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\gemini-multiagent-router",
+                           "SHA256":  "68B31E85538C7913AFEF0AC0C645BC4F27EAF26F8DBF24BBA04D23F50C44CD09",
+                           "SizeBytes":  4051
+                       },
+                       {
+                           "Id":  "skill_gemini_omniroute_manager",
+                           "Name":  "gemini-omniroute-manager",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\gemini-omniroute-manager",
+                           "TargetRelative":  "skills\\gemini-omniroute-manager",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\gemini-omniroute-manager",
+                           "SHA256":  "51B4299EE10E178F4A7670A5AE4850E9570FB680AFC677C4885EF23A687E10F4",
+                           "SizeBytes":  1671
+                       },
+                       {
+                           "Id":  "skill_gemini_owasp_sentinel",
+                           "Name":  "gemini-owasp-sentinel",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\gemini-owasp-sentinel",
+                           "TargetRelative":  "skills\\gemini-owasp-sentinel",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\gemini-owasp-sentinel",
+                           "SHA256":  "EC3B066BE657A6B4F0A5B4DA7233C391A34F5F56F2DC5645BBD965A87C1EEFDC",
+                           "SizeBytes":  1445
+                       },
+                       {
+                           "Id":  "skill_gemini_playwright_tester",
+                           "Name":  "gemini-playwright-tester",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\gemini-playwright-tester",
+                           "TargetRelative":  "skills\\gemini-playwright-tester",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\gemini-playwright-tester",
+                           "SHA256":  "E74080A4E44995564A93E2B80B4A32AF1ABD618C465210ACE571A7132245B7D6",
+                           "SizeBytes":  15947
+                       },
+                       {
+                           "Id":  "skill_gemini_prompt_distiller",
+                           "Name":  "gemini-prompt-distiller",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\gemini-prompt-distiller",
+                           "TargetRelative":  "skills\\gemini-prompt-distiller",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\gemini-prompt-distiller",
+                           "SHA256":  "B54C487BDE0DE5AF8714838D6304C46814077D4BC5C51B612BEF44838BAF051A",
+                           "SizeBytes":  2616
+                       },
+                       {
+                           "Id":  "skill_gemini_reverse_engineering",
+                           "Name":  "gemini-reverse-engineering",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\gemini-reverse-engineering",
+                           "TargetRelative":  "skills\\gemini-reverse-engineering",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\gemini-reverse-engineering",
+                           "SHA256":  "C5A561475CD87CCC3FFE87D962ACEC31BCB6C66E88C1AF770F3A0857D54C3B12",
+                           "SizeBytes":  1176
+                       },
+                       {
+                           "Id":  "skill_gemini_runbook_napkin",
+                           "Name":  "gemini-runbook-napkin",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\gemini-runbook-napkin",
+                           "TargetRelative":  "skills\\gemini-runbook-napkin",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\gemini-runbook-napkin",
+                           "SHA256":  "5F71AAE042F4402C75E5B8A4853789CCE2EADF1C9B14807853178A2DFF78173C",
+                           "SizeBytes":  2679
+                       },
+                       {
+                           "Id":  "skill_gemini_safe_refactor",
+                           "Name":  "gemini-safe-refactor",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\gemini-safe-refactor",
+                           "TargetRelative":  "skills\\gemini-safe-refactor",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\gemini-safe-refactor",
+                           "SHA256":  "978FEC7E34E05702EFF67D482F5EFBAAA2E54CBA6C26D16FACBC7728E3470F70",
+                           "SizeBytes":  2951
+                       },
+                       {
+                           "Id":  "skill_gemini_security_bastion",
+                           "Name":  "gemini-security-bastion",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\gemini-security-bastion",
+                           "TargetRelative":  "skills\\gemini-security-bastion",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\gemini-security-bastion",
+                           "SHA256":  "92CDEF27B8E37EC73F7A7067DBF99CF868774BA93B01124CCD66BF6FC0AE64F4",
+                           "SizeBytes":  4761
+                       },
+                       {
+                           "Id":  "skill_gemini_skill_architect",
+                           "Name":  "gemini-skill-architect",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\gemini-skill-architect",
+                           "TargetRelative":  "skills\\gemini-skill-architect",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\gemini-skill-architect",
+                           "SHA256":  "C42E8E229A7937FA26A76521FC41FFE5E5CB191A763B9979EA3A6FD67CB21533",
+                           "SizeBytes":  3879
+                       },
+                       {
+                           "Id":  "skill_gemini_stack_advisor",
+                           "Name":  "gemini-stack-advisor",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\gemini-stack-advisor",
+                           "TargetRelative":  "skills\\gemini-stack-advisor",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\gemini-stack-advisor",
+                           "SHA256":  "391F4E99F0D301AC1F3796186A5148998682DCD3AEA8214F1969F8C256E08265",
+                           "SizeBytes":  4961
+                       },
+                       {
+                           "Id":  "skill_gemini_stride_security",
+                           "Name":  "gemini-stride-security",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\gemini-stride-security",
+                           "TargetRelative":  "skills\\gemini-stride-security",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\gemini-stride-security",
+                           "SHA256":  "A1987E1D2B419BEC6EFB0759377DF5316A16A118D9B35AD6A67C9027C8FC782B",
+                           "SizeBytes":  2495
+                       },
+                       {
+                           "Id":  "skill_gemini_supabase_security",
+                           "Name":  "gemini-supabase-security",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\gemini-supabase-security",
+                           "TargetRelative":  "skills\\gemini-supabase-security",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\gemini-supabase-security",
+                           "SHA256":  "6EC4AA7FE537C263B5513DD2D7A862217ADC43CB2343628C3E49E84F324E80D0",
+                           "SizeBytes":  3334
+                       },
+                       {
+                           "Id":  "skill_gemini_superpowers_engine",
+                           "Name":  "gemini-superpowers-engine",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\gemini-superpowers-engine",
+                           "TargetRelative":  "skills\\gemini-superpowers-engine",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\gemini-superpowers-engine",
+                           "SHA256":  "D95009B7ADCD7A42255166793E6C01B4B7C624D1B4206500CF7D44370985A634",
+                           "SizeBytes":  2727
+                       },
+                       {
+                           "Id":  "skill_gemini_system_architect",
+                           "Name":  "gemini-system-architect",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\gemini-system-architect",
+                           "TargetRelative":  "skills\\gemini-system-architect",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\gemini-system-architect",
+                           "SHA256":  "0C209DCD132BFB4BFF02A07306B5B61EC95F0CAB017D99BA37217AEF068F1510",
+                           "SizeBytes":  2143
+                       },
+                       {
+                           "Id":  "skill_gemini_systematic_debugger",
+                           "Name":  "gemini-systematic-debugger",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\gemini-systematic-debugger",
+                           "TargetRelative":  "skills\\gemini-systematic-debugger",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\gemini-systematic-debugger",
+                           "SHA256":  "DA767D97F2ACDD8A3F89FF6F3E5FB65AF3091518DF9ADABEF11802315A5CF32E",
+                           "SizeBytes":  1897
+                       },
+                       {
+                           "Id":  "skill_gemini_tdd_enforcer",
+                           "Name":  "gemini-tdd-enforcer",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\gemini-tdd-enforcer",
+                           "TargetRelative":  "skills\\gemini-tdd-enforcer",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\gemini-tdd-enforcer",
+                           "SHA256":  "842BC32A7143929AF7C393B6736997423393F613F62F21FFC7B3AE994C492182",
+                           "SizeBytes":  2263
+                       },
+                       {
+                           "Id":  "skill_gemini_ui_artisan",
+                           "Name":  "gemini-ui-artisan",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\gemini-ui-artisan",
+                           "TargetRelative":  "skills\\gemini-ui-artisan",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\gemini-ui-artisan",
+                           "SHA256":  "8E14BFB6DF32566A2B4BBB4846115D178B7FF7009540539B9B9FC2E3E65D1CD1",
+                           "SizeBytes":  39078
+                       },
+                       {
+                           "Id":  "skill_gemini_ui_guidelines",
+                           "Name":  "gemini-ui-guidelines",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\gemini-ui-guidelines",
+                           "TargetRelative":  "skills\\gemini-ui-guidelines",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\gemini-ui-guidelines",
+                           "SHA256":  "E40D216825366F151AC60B04877AD16BC1E20DFADB96C9CE33CB89E48B82CDCA",
+                           "SizeBytes":  3828
+                       },
+                       {
+                           "Id":  "skill_gemini_video_intelligence",
+                           "Name":  "gemini-video-intelligence",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\gemini-video-intelligence",
+                           "TargetRelative":  "skills\\gemini-video-intelligence",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\gemini-video-intelligence",
+                           "SHA256":  "4AEB461F06D2DA18E079F922216CE3734E9B55DF30C11BA41A8C1560EE804EB1",
+                           "SizeBytes":  1065
+                       },
+                       {
+                           "Id":  "skill_gemini_vision_to_code",
+                           "Name":  "gemini-vision-to-code",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\gemini-vision-to-code",
+                           "TargetRelative":  "skills\\gemini-vision-to-code",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\gemini-vision-to-code",
+                           "SHA256":  "29BA5FAA720F2BBB6CC2DD5D613072606989947461DFB132999D45455852EE39",
+                           "SizeBytes":  3224
+                       },
+                       {
+                           "Id":  "skill_gemini_webperf",
+                           "Name":  "gemini-webperf",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\gemini-webperf",
+                           "TargetRelative":  "skills\\gemini-webperf",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\gemini-webperf",
+                           "SHA256":  "07C0B9B25D5E4C47D700DDA9D08B60B91C21BEB477112BC8D5044A3C1C113D9D",
+                           "SizeBytes":  3364
+                       },
+                       {
+                           "Id":  "skill_gemini_xlsx_mastery",
+                           "Name":  "gemini-xlsx-mastery",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\gemini-xlsx-mastery",
+                           "TargetRelative":  "skills\\gemini-xlsx-mastery",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\gemini-xlsx-mastery",
+                           "SHA256":  "6EA1638D0547000B21FA24049A168B711669BB1C0BF59480B8656C2C86B55F24",
+                           "SizeBytes":  5406
+                       },
+                       {
+                           "Id":  "skill_generative_media_director",
+                           "Name":  "generative-media-director",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\generative-media-director",
+                           "TargetRelative":  "skills\\generative-media-director",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\generative-media-director",
+                           "SHA256":  "EE982C21C8520A48DD5EF8F55B630FD0E0F4BED98D3D9228409EA6F19B549D1A",
+                           "SizeBytes":  2691
+                       },
+                       {
+                           "Id":  "skill_gsap_core",
+                           "Name":  "gsap-core",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\gsap-core",
+                           "TargetRelative":  "skills\\gsap-core",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\gsap-core",
+                           "SHA256":  "DE938EEFD9A5BC6335216A17783788CD21408923EAD290CDA5871B7D61DB66B8",
+                           "SizeBytes":  15046
+                       },
+                       {
+                           "Id":  "skill_gsap_frameworks",
+                           "Name":  "gsap-frameworks",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\gsap-frameworks",
+                           "TargetRelative":  "skills\\gsap-frameworks",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\gsap-frameworks",
+                           "SHA256":  "3D7E8C2F6BDDB32FFC1763B17BBA9A8A3DCBC3BD5BF6815D921D3C5A4ADED85D",
+                           "SizeBytes":  10887
+                       },
+                       {
+                           "Id":  "skill_gsap_performance",
+                           "Name":  "gsap-performance",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\gsap-performance",
+                           "TargetRelative":  "skills\\gsap-performance",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\gsap-performance",
+                           "SHA256":  "2DD51F19A7FCABE1C06CAEE9E61554485696D05003396C528237ABA970A959CE",
+                           "SizeBytes":  4218
+                       },
+                       {
+                           "Id":  "skill_gsap_plugins",
+                           "Name":  "gsap-plugins",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\gsap-plugins",
+                           "TargetRelative":  "skills\\gsap-plugins",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\gsap-plugins",
+                           "SHA256":  "A755F587A107AE5C9F4F35702F6E0D870774C6930E28A082C4E9EBB1D2C7BF06",
+                           "SizeBytes":  22012
+                       },
+                       {
+                           "Id":  "skill_gsap_react",
+                           "Name":  "gsap-react",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\gsap-react",
+                           "TargetRelative":  "skills\\gsap-react",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\gsap-react",
+                           "SHA256":  "FD1CE4FA883A256E6578F13A4271B494A18DFFAAA6111AB64CA1BC97D4DD8B21",
+                           "SizeBytes":  6700
+                       },
+                       {
+                           "Id":  "skill_gsap_scrolltrigger",
+                           "Name":  "gsap-scrolltrigger",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\gsap-scrolltrigger",
+                           "TargetRelative":  "skills\\gsap-scrolltrigger",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\gsap-scrolltrigger",
+                           "SHA256":  "E6612777BCCE1617D3B9E061B2F671FB0F36379684D0C61F7A1BAA06D7F7A989",
+                           "SizeBytes":  18686
+                       },
+                       {
+                           "Id":  "skill_gsap_timeline",
+                           "Name":  "gsap-timeline",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\gsap-timeline",
+                           "TargetRelative":  "skills\\gsap-timeline",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\gsap-timeline",
+                           "SHA256":  "FBE7A2B9E66E66D2C956F650583D48385498B677BA1292F1DCE9D1FFB1A77EA0",
+                           "SizeBytes":  4501
+                       },
+                       {
+                           "Id":  "skill_gsap_utils",
+                           "Name":  "gsap-utils",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\gsap-utils",
+                           "TargetRelative":  "skills\\gsap-utils",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\gsap-utils",
+                           "SHA256":  "F71503F423561EEB5567AE8EE41E4363C85FD3970A8FEAEAC2C2B18309596BAB",
+                           "SizeBytes":  12377
+                       },
+                       {
+                           "Id":  "skill_html_to_interaction_prompts",
+                           "Name":  "html-to-interaction-prompts",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\html-to-interaction-prompts",
+                           "TargetRelative":  "skills\\html-to-interaction-prompts",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\html-to-interaction-prompts",
+                           "SHA256":  "5F260C8B06F498BB591D312B37516D0557A77B26A4C2BAFFBCCE3823DFD795C7",
+                           "SizeBytes":  15247
+                       },
+                       {
+                           "Id":  "skill_icon_system",
+                           "Name":  "icon-system",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\icon-system",
+                           "TargetRelative":  "skills\\icon-system",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\icon-system",
+                           "SHA256":  "7FAF00496B5AEEEFB700CA0352F496943D0C83D127FF9A272648BD657CF212BC",
+                           "SizeBytes":  7949
+                       },
+                       {
+                           "Id":  "skill_ig_audience_insights",
+                           "Name":  "ig-audience-insights",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\ig-audience-insights",
+                           "TargetRelative":  "skills\\ig-audience-insights",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\ig-audience-insights",
+                           "SHA256":  "41960FCA7A69130049849AB16CB37368C8B98B943B8A2FC70112E69E9C763EBB",
+                           "SizeBytes":  6368
+                       },
+                       {
+                           "Id":  "skill_ig_caption_writer",
+                           "Name":  "ig-caption-writer",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\ig-caption-writer",
+                           "TargetRelative":  "skills\\ig-caption-writer",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\ig-caption-writer",
+                           "SHA256":  "A1E734E228D1DEAEFCD33685CFED0915DA0D52D9425332704AFB01BBE5638A58",
+                           "SizeBytes":  7039
+                       },
+                       {
+                           "Id":  "skill_ig_carousel_planner",
+                           "Name":  "ig-carousel-planner",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\ig-carousel-planner",
+                           "TargetRelative":  "skills\\ig-carousel-planner",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\ig-carousel-planner",
+                           "SHA256":  "8B63BC4590BF16A3CDEDDF0B6E4BC2F78D74159BEEB09BB975747FD8A05AA552",
+                           "SizeBytes":  7673
+                       },
+                       {
+                           "Id":  "skill_ig_content_planner",
+                           "Name":  "ig-content-planner",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\ig-content-planner",
+                           "TargetRelative":  "skills\\ig-content-planner",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\ig-content-planner",
+                           "SHA256":  "B3F4C9662A66C2AF59AB820FF92F2B2556BC8CDEE42B65FBE2665096CB4FBD38",
+                           "SizeBytes":  6025
+                       },
+                       {
+                           "Id":  "skill_ig_hashtag_strategist",
+                           "Name":  "ig-hashtag-strategist",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\ig-hashtag-strategist",
+                           "TargetRelative":  "skills\\ig-hashtag-strategist",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\ig-hashtag-strategist",
+                           "SHA256":  "B3127A4009D473A7882BF4A96DF421958E8EB9E9B32590D8C448EF7EDBD08AA8",
+                           "SizeBytes":  4607
+                       },
+                       {
+                           "Id":  "skill_ig_hook_extractor",
+                           "Name":  "ig-hook-extractor",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\ig-hook-extractor",
+                           "TargetRelative":  "skills\\ig-hook-extractor",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\ig-hook-extractor",
+                           "SHA256":  "583FBEDC57E0F8C747D0CD75AB7517F1A8E2E343238E20380CEC0DDE195DBAE0",
+                           "SizeBytes":  5158
+                       },
+                       {
+                           "Id":  "skill_ig_humanizer",
+                           "Name":  "ig-humanizer",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\ig-humanizer",
+                           "TargetRelative":  "skills\\ig-humanizer",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\ig-humanizer",
+                           "SHA256":  "C2CD7E66CFD0B3C8BB349E52228CE5566033E6665B52E821331CE8A72B719FCC",
+                           "SizeBytes":  16415
+                       },
+                       {
+                           "Id":  "skill_ig_profile_optimizer",
+                           "Name":  "ig-profile-optimizer",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\ig-profile-optimizer",
+                           "TargetRelative":  "skills\\ig-profile-optimizer",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\ig-profile-optimizer",
+                           "SHA256":  "4658AFA8160D844155820BB662737FBA655C75AE7E5D263D0AD7ABF228E05166",
+                           "SizeBytes":  6791
+                       },
+                       {
+                           "Id":  "skill_ig_repurposer",
+                           "Name":  "ig-repurposer",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\ig-repurposer",
+                           "TargetRelative":  "skills\\ig-repurposer",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\ig-repurposer",
+                           "SHA256":  "0045C0423719CC18244E78E86B4451F9C4901FC36E3987FA0AC9FACE02856565",
+                           "SizeBytes":  8843
+                       },
+                       {
+                           "Id":  "skill_instagram_common",
+                           "Name":  "instagram-common",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\instagram-common",
+                           "TargetRelative":  "skills\\instagram-common",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\instagram-common",
+                           "SHA256":  "2DB31D0BB299AC0053427DBB79CC7699CCCE2614C62BFBAF10B8B575955A0DEA",
+                           "SizeBytes":  488
+                       },
+                       {
+                           "Id":  "skill_logo_brief_writer",
+                           "Name":  "logo-brief-writer",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\logo-brief-writer",
+                           "TargetRelative":  "skills\\logo-brief-writer",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\logo-brief-writer",
+                           "SHA256":  "D0AA1F0C99DD73BD6637B11D4BBA67D968AF116EA40F73496A420F3665F5D306",
+                           "SizeBytes":  7352
+                       },
+                       {
+                           "Id":  "skill_moodboard_builder",
+                           "Name":  "moodboard-builder",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\moodboard-builder",
+                           "TargetRelative":  "skills\\moodboard-builder",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\moodboard-builder",
+                           "SHA256":  "934E58D598C6E8D56C9FC340FBB780E8DB942CA897DCB916DFD99F9A84FD67FF",
+                           "SizeBytes":  7142
+                       },
+                       {
+                           "Id":  "skill_motion_design",
+                           "Name":  "motion-design",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\motion-design",
+                           "TargetRelative":  "skills\\motion-design",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\motion-design",
+                           "SHA256":  "0FA7BD378776E776A9AF528DB040E5144127834C461BA7FB6805F47D13BC293D",
+                           "SizeBytes":  12895
+                       },
+                       {
+                           "Id":  "skill_nextjs_turbopack",
+                           "Name":  "nextjs-turbopack",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\nextjs-turbopack",
+                           "TargetRelative":  "skills\\nextjs-turbopack",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\nextjs-turbopack",
+                           "SHA256":  "336034322D2022F47B097E55B5448CBC1E204C11F964910FA6FB3BAEAB06A474",
+                           "SizeBytes":  3141
+                       },
+                       {
+                           "Id":  "skill_nova_awake_sentinel",
+                           "Name":  "nova-awake-sentinel",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\nova-awake-sentinel",
+                           "TargetRelative":  "skills\\nova-awake-sentinel",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\nova-awake-sentinel",
+                           "SHA256":  "D159146FD1F77977946FBE955A77663C2B737FE7C2E84EF55258E567B57DD929",
+                           "SizeBytes":  1307
+                       },
+                       {
+                           "Id":  "skill_nova_community_feedback",
+                           "Name":  "nova-community-feedback",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\nova-community-feedback",
+                           "TargetRelative":  "skills\\nova-community-feedback",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\nova-community-feedback",
+                           "SHA256":  "9208B24A16A96BF86A6D3C00E2F9FEDDB05F49D5C291737B17690A4CA219B380",
+                           "SizeBytes":  1322
+                       },
+                       {
+                           "Id":  "skill_production_audit",
+                           "Name":  "production-audit",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\production-audit",
+                           "TargetRelative":  "skills\\production-audit",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\production-audit",
+                           "SHA256":  "3AB3DD8A364EE17566E9361F0EBED2AEC3B3146EDE44E1DB0A72C5CEAE1CA0A4",
+                           "SizeBytes":  7727
+                       },
+                       {
+                           "Id":  "skill_react_patterns",
+                           "Name":  "react-patterns",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\react-patterns",
+                           "TargetRelative":  "skills\\react-patterns",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\react-patterns",
+                           "SHA256":  "F3208D44A5D553038C42E046CEC4DC16E4A3D90A9DBF931F883A2E21919A64A9",
+                           "SizeBytes":  11466
+                       },
+                       {
+                           "Id":  "skill_react_performance",
+                           "Name":  "react-performance",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\react-performance",
+                           "TargetRelative":  "skills\\react-performance",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\react-performance",
+                           "SHA256":  "AC76E8694D4F802A7BCCC3C07A73AC68ACE6D82A65EA10F10D8B7384DDA61A8F",
+                           "SizeBytes":  18184
+                       },
+                       {
+                           "Id":  "skill_react_testing",
+                           "Name":  "react-testing",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\react-testing",
+                           "TargetRelative":  "skills\\react-testing",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\react-testing",
+                           "SHA256":  "51C18B4E28285BB876EF469E47C6F53108B5A9F900950A60E897C3C24826A65E",
+                           "SizeBytes":  13168
+                       },
+                       {
+                           "Id":  "skill_remotion_video_agent",
+                           "Name":  "remotion-video-agent",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\remotion-video-agent",
+                           "TargetRelative":  "skills\\remotion-video-agent",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\remotion-video-agent",
+                           "SHA256":  "E9ECC5FE9B9CBA783414089754152BB2305657397B4B4794934068AB75E9008B",
+                           "SizeBytes":  1105
+                       },
+                       {
+                           "Id":  "skill_site_motion_excellence_director",
+                           "Name":  "site-motion-excellence-director",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\site-motion-excellence-director",
+                           "TargetRelative":  "skills\\site-motion-excellence-director",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\site-motion-excellence-director",
+                           "SHA256":  "07813565480A617610A37009BFF3A69ADEF80111B83187C47DA7F00C443F0B4B",
+                           "SizeBytes":  2595
+                       },
+                       {
+                           "Id":  "skill_threejs_web_experience",
+                           "Name":  "threejs-web-experience",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\threejs-web-experience",
+                           "TargetRelative":  "skills\\threejs-web-experience",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\threejs-web-experience",
+                           "SHA256":  "292605928B52DA2070C93B3D29856721CD46FF5886DDBB2BD17D04339AA323BA",
+                           "SizeBytes":  3588
+                       },
+                       {
+                           "Id":  "skill_typography_system",
+                           "Name":  "typography-system",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\typography-system",
+                           "TargetRelative":  "skills\\typography-system",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\typography-system",
+                           "SHA256":  "2E0167949D9AF98B443251EFB196D7A9E2F6D22C3F6AF77E4DF6AFD83BCF7398",
+                           "SizeBytes":  6546
+                       },
+                       {
+                           "Id":  "skill_user_intent_reader",
+                           "Name":  "user-intent-reader",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\user-intent-reader",
+                           "TargetRelative":  "skills\\user-intent-reader",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\user-intent-reader",
+                           "SHA256":  "40682F14D13B538D6AF0E2D059EA27A35A6C31AB984CADD5BB30F6C542694FDD",
+                           "SizeBytes":  1127
+                       },
+                       {
+                           "Id":  "skill_ux_writing",
+                           "Name":  "ux-writing",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\ux-writing",
+                           "TargetRelative":  "skills\\ux-writing",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\ux-writing",
+                           "SHA256":  "E7D63594C8404F6F5A7BDC51704781708BECFED29114686626FE05BD2165240A",
+                           "SizeBytes":  2678
+                       },
+                       {
+                           "Id":  "skill_video_to_superprompt",
+                           "Name":  "video-to-superprompt",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\video-to-superprompt",
+                           "TargetRelative":  "skills\\video-to-superprompt",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\video-to-superprompt",
+                           "SHA256":  "7004B9D9F5B2637508DB11BC18A498752B5520F4CE023D34444A19210ACF5691",
+                           "SizeBytes":  5610
+                       },
+                       {
+                           "Id":  "skill_visual_hierarchy",
+                           "Name":  "visual-hierarchy",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\visual-hierarchy",
+                           "TargetRelative":  "skills\\visual-hierarchy",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\visual-hierarchy",
+                           "SHA256":  "28C1ACEFD2BAD40C744300943F0EBFBAE2B6A5B663956933DFD69E81FD858D88",
+                           "SizeBytes":  7031
+                       },
+                       {
+                           "Id":  "skill_web_motion_auditor",
+                           "Name":  "web-motion-auditor",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\web-motion-auditor",
+                           "TargetRelative":  "skills\\web-motion-auditor",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\web-motion-auditor",
+                           "SHA256":  "22A7275C2903E9B85F625CE043C6892771DA2B1C545A83272ADBF6EB4AEBC3A2",
+                           "SizeBytes":  1066
+                       },
+                       {
+                           "Id":  "skill_zero_token_scraper_forge",
+                           "Name":  "zero-token-scraper-forge",
+                           "Type":  "Skill",
+                           "RelativePath":  "skills\\zero-token-scraper-forge",
+                           "TargetRelative":  "skills\\zero-token-scraper-forge",
+                           "TargetPath":  "C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\skills\\zero-token-scraper-forge",
+                           "SHA256":  "507E2A0E2A57AC4508AE9A835DF170C19F91DBEFB9C17AC2117F5C7AE25019EB",
+                           "SizeBytes":  1209
+                       }
+                   ]
+}

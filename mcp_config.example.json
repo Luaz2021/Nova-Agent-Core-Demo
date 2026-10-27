@@ -1,0 +1,10 @@
+{
+  "postgres": {
+    "command": "npx",
+    "args": ["-y", "@modelcontextprotocol/server-postgres", "postgresql://usuario:password@localhost:5432/mi_base_de_datos"]
+  },
+  "playwright": {
+    "command": "npx",
+    "args": ["-y", "@modelcontextprotocol/server-playwright"]
+  }
+}

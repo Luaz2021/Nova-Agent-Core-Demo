@@ -1,0 +1,41 @@
+name: Formulario de Sugerencias y Nuevas Integraciones
+description: Envia una idea, integracion o nueva skill que te gustaria que Saul y Nova implementen.
+title: "[Sugerencia]: "
+labels: ["sugerencia", "comunidad"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Gracias por ayudarnos a hacer evolucionar a **Nova**. 
+        Saul Martinez y Nova revisan estas propuestas para integrarlas en las siguientes versiones.
+  - type: input
+    id: idea_titulo
+    attributes:
+      label: Titulo corto de la propuesta o integracion
+      placeholder: "Ej: Soporte para Docker Compose en local o Skill para NestJS"
+    validations:
+      required: true
+  - type: dropdown
+    id: categoria
+    attributes:
+      label: Categoria de la integracion
+      options:
+        - "Nueva Skill / Herramienta"
+        - "Mejora de Productividad o Atajos"
+        - "Soporte para nuevo Framework / Lenguaje"
+        - "Automatizacion de Sistema Operativo"
+        - "Otro"
+    validations:
+      required: true
+  - type: textarea
+    id: descripcion
+    attributes:
+      label: En que consiste y por que te gustaria tenerlo?
+      placeholder: "Explica brevemente que problema resuelve y como te imaginas que Nova deberia ayudarte."
+    validations:
+      required: true
+  - type: input
+    id: contacto
+    attributes:
+      label: Tu nombre o usuario de GitHub (para los creditos si se implementa)
+      placeholder: "Ej: CarlosDev / @carlos"
