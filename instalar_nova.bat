@@ -18,7 +18,7 @@ if !errorlevel! equ 0 set "ANTIGRAVITY_FOUND=1"
 
 if "!ANTIGRAVITY_FOUND!"=="1" (
     echo [OK] Google Antigravity detectado en el equipo.
-    goto :CONFIGURAR_NOVA
+    goto :DESCARGAR_CORE
 )
 
 echo [AVISO] No se detecto Google Antigravity instalado en tu equipo.
@@ -28,7 +28,7 @@ set /p INSTALAR_AGY="Deseas descargar e instalar Google Antigravity oficial ahor
 if /i "!INSTALAR_AGY!"=="n" (
     echo [!] Se continuara con la instalacion de skills y reglas, pero necesitaras
     echo     instalar Antigravity manualmente desde: https://antigravity.google/
-    goto :CONFIGURAR_NOVA
+    goto :DESCARGAR_CORE
 )
 
 echo.
@@ -39,7 +39,7 @@ if !errorlevel! equ 0 (
     winget install Google.Antigravity --accept-source-agreements --accept-package-agreements
     if !errorlevel! equ 0 (
         echo [OK] Google Antigravity instalado correctamente con winget.
-        goto :CONFIGURAR_NOVA
+        goto :DESCARGAR_CORE
     )
 )
 
@@ -55,10 +55,26 @@ if exist "%TEMP_INSTALLER%" (
     echo Por favor descargalo desde: https://antigravity.google/
 )
 
+:DESCARGAR_CORE
+set "INSTALL_SCRIPT=%~dp0adapters\windows\install.ps1"
+if exist "!INSTALL_SCRIPT!" goto :CONFIGURAR_NOVA
+
+set "NOVA_ROOT=%USERPROFILE%\.nova-agent"
+echo.
+echo [INFO] Descargando nucleo de Nova Agent en !NOVA_ROOT!...
+where git >nul 2>&1
+if !errorlevel! equ 0 (
+    if exist "!NOVA_ROOT!" rmdir /s /q "!NOVA_ROOT!"
+    git clone --depth 1 https://github.com/Luaz2021/Nova-Agent-Core-Demo.git "!NOVA_ROOT!" >nul 2>&1
+) else (
+    powershell -NoProfile -Command "$zip = Join-Path $env:TEMP 'nova_core.zip'; Invoke-WebRequest -Uri 'https://github.com/Luaz2021/Nova-Agent-Core-Demo/archive/refs/heads/main.zip' -OutFile $zip; Expand-Archive -Path $zip -DestinationPath $env:TEMP -Force; if (Test-Path '$env:USERPROFILE\.nova-agent') { Remove-Item '$env:USERPROFILE\.nova-agent' -Recurse -Force }; Move-Item (Join-Path $env:TEMP 'Nova-Agent-Core-Demo-main') '$env:USERPROFILE\.nova-agent'"
+)
+set "INSTALL_SCRIPT=!NOVA_ROOT!\adapters\windows\install.ps1"
+
 :CONFIGURAR_NOVA
 echo.
 echo [INFO] Iniciando configuracion interactiva de Nova Agent...
-powershell -ExecutionPolicy Bypass -File "%~dp0adapters\windows\install.ps1"
+powershell -NoProfile -ExecutionPolicy Bypass -File "!INSTALL_SCRIPT!"
 
 echo.
 echo Presiona cualquier tecla para salir...

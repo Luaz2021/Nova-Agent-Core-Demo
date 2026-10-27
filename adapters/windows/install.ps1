@@ -56,8 +56,10 @@ Write-Host "[INFO] Configurando a Nova para $nombre ($profesion)..." -Foreground
 # 2. Creacion de directorios de usuario
 $geminiDir = "$HOME\.gemini"
 $novaLocalSkills = "$geminiDir\antigravity\skills"
+$novaConfigSkills = "$geminiDir\config\skills"
 $novaLocalMemory = "$geminiDir\antigravity\memory"
 New-Item -ItemType Directory -Path $novaLocalSkills -Force | Out-Null
+New-Item -ItemType Directory -Path $novaConfigSkills -Force | Out-Null
 New-Item -ItemType Directory -Path $novaLocalMemory -Force | Out-Null
 
 # 3. Guardar Perfil de Usuario Personalizado
@@ -75,11 +77,13 @@ Set-Content -Path "$novaLocalMemory\perfil_usuario.json" -Value $perfilData -Enc
 # 4. Enlace de Skills mediante Junctions
 $repoSkills = Join-Path $PSScriptRoot "..\..\skills"
 if (Test-Path $repoSkills) {
-    Write-Host "[INFO] Enlazando las 114 skills de Nova a tu sistema..." -ForegroundColor Cyan
+    Write-Host "[INFO] Enlazando las 115 skills de Nova a tu sistema..." -ForegroundColor Cyan
     Get-ChildItem -Path $repoSkills -Directory | ForEach-Object {
-        $dest = Join-Path $novaLocalSkills $_.Name
-        if (-not (Test-Path $dest)) {
-            cmd /c mklink /J "$dest" "$($_.FullName)" | Out-Null
+        foreach ($targetDir in @($novaLocalSkills, $novaConfigSkills)) {
+            $dest = Join-Path $targetDir $_.Name
+            if (-not (Test-Path $dest)) {
+                cmd /c mklink /J "$dest" "$($_.FullName)" | Out-Null
+            }
         }
     }
     Write-Host "[OK] Skills enlazadas correctamente." -ForegroundColor Green
@@ -97,11 +101,28 @@ if (Test-Path $templatesDir) {
     Write-Host "[OK] Memorias y tablero Kanban inicializados." -ForegroundColor Green
 }
 
-# 6. Copia de Reglas Maestras
+# 6. Copia de Reglas Maestras y Permisos Turbo
 $geminiRules = Join-Path $PSScriptRoot "..\..\GEMINI.md"
 if (Test-Path $geminiRules) {
     Copy-Item $geminiRules "$geminiDir\antigravity\GEMINI.md" -Force
+    Copy-Item $geminiRules "$geminiDir\config\GEMINI.md" -Force
+    Copy-Item $geminiRules "$geminiDir\GEMINI.md" -Force
     Write-Host "[OK] Reglas operativas GEMINI.md configuradas." -ForegroundColor Green
+}
+
+$configJsonPath = "$geminiDir\config\config.json"
+if (-not (Test-Path $configJsonPath)) {
+    $defaultConfig = @{
+        userSettings = @{
+            autoExecutionPolicy = "CASCADE_COMMANDS_AUTO_EXECUTION_EAGER"
+            browserJsExecutionPolicy = "BROWSER_JS_EXECUTION_POLICY_TURBO"
+            enableTerminalSandbox = $false
+            nonWorkspaceFileAccessPolicy = "AGENT_SETTING_POLICY_ALLOW"
+            permissionPreset = "AGENT_PERMISSION_PRESET_TURBO"
+        }
+    } | ConvertTo-Json -Depth 4
+    Set-Content -Path $configJsonPath -Value $defaultConfig -Encoding UTF8
+    Write-Host "[OK] Permisos Turbo y acceso de archivos preconfigurados." -ForegroundColor Green
 }
 
 # 7. Generacion del Prompt de Primer Arranque (Auto-Presentacion)
@@ -113,12 +134,14 @@ Ademas, explicame como puedo decirte en cualquier momento: 'Nova, envia mensaje 
 
 $welcomeFilePath = "$geminiDir\antigravity\primer_mensaje.txt"
 Set-Content -Path $welcomeFilePath -Value $promptBienvenida -Encoding UTF8
+try { Set-Clipboard -Value $promptBienvenida } catch {}
 
 Write-Host ""
 Write-Host "==========================================================" -ForegroundColor Green
 Write-Host "   INSTALACION COMPLETADA CON EXITO PARA $nombre          " -ForegroundColor Green
 Write-Host "==========================================================" -ForegroundColor Green
-Write-Host "Abre Antigravity IDE o VS Code y pega este primer mensaje:" -ForegroundColor Yellow
+Write-Host "[!] El primer mensaje YA ESTA COPIADO en tu portapapeles (Ctrl + V)." -ForegroundColor Cyan
+Write-Host "Abre Antigravity y simplemente presiona Ctrl + V para pegar:" -ForegroundColor Yellow
 Write-Host "----------------------------------------------------------" -ForegroundColor Gray
 Write-Host $promptBienvenida -ForegroundColor White
 Write-Host "----------------------------------------------------------" -ForegroundColor Gray
