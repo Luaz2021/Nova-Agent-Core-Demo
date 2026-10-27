@@ -20,21 +20,47 @@ Esta versión (**Community Edition**) es 100% libre, local, no requiere privileg
 > [!TIP]
 > **¿No tienes Google Antigravity instalado?** No te preocupes: al ejecutar el instalador, este comprobará tu sistema y **te preguntará directamente si deseas que descargue e instale Google Antigravity oficial por ti en ese mismo momento**. Al responder que sí, lo instala en segundo plano y te deja a Nova lista para operar.
 
-### 🪟 En Windows (Doble Clic)
-Simplemente haz doble clic sobre el archivo:
+### 🪟 En Windows (PowerShell / Doble Clic)
+**Opción A (Recomendada en 1 sola línea):**
+Abre PowerShell y pega:
+```powershell
+irm https://raw.githubusercontent.com/Luaz2021/Nova-Agent-Core-Demo/main/instalar_nova.bat -OutFile instalar_nova.bat; .\instalar_nova.bat
+```
+
+**Opción B (Doble Clic):**
+Clona el repositorio o descarga el ZIP, entra a la carpeta y haz doble clic sobre:
 ```text
 instalar_nova.bat
 ```
 *(Si no tienes Antigravity, te saldrá la pregunta en pantalla: `¿Deseas descargar e instalar Google Antigravity oficial ahora? (s/n) [s]`. Solo pulsas Enter y el script hace todo solo).*
 
 ### 🍎 En macOS (Terminal)
+**Opción A (Recomendada en 1 sola línea directa):**
+Abre la Terminal de tu Mac y pega:
 ```bash
-sh ./instalar_nova.sh
+curl -fsSL https://raw.githubusercontent.com/Luaz2021/Nova-Agent-Core-Demo/main/instalar_nova.sh | bash
+```
+
+**Opción B (Clonando el repositorio):**
+```bash
+git clone https://github.com/Luaz2021/Nova-Agent-Core-Demo.git
+cd Nova-Agent-Core-Demo
+chmod +x instalar_nova.sh
+./instalar_nova.sh
 ```
 
 ### 🐧 En Linux (Bash)
+**Opción A (1 sola línea directa):**
 ```bash
-sh ./instalar_nova.sh
+curl -fsSL https://raw.githubusercontent.com/Luaz2021/Nova-Agent-Core-Demo/main/instalar_nova.sh | bash
+```
+
+**Opción B (Clonando el repositorio):**
+```bash
+git clone https://github.com/Luaz2021/Nova-Agent-Core-Demo.git
+cd Nova-Agent-Core-Demo
+chmod +x instalar_nova.sh
+./instalar_nova.sh
 ```
 
 ---
