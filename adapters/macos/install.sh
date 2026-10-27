@@ -57,9 +57,11 @@ echo "[INFO] Configurando a Nova para $nombre ($profesion)..."
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 GEMINI_DIR="$HOME/.gemini/antigravity"
+CONFIG_DIR="$HOME/.gemini/config"
 
 mkdir -p "$GEMINI_DIR/skills"
 mkdir -p "$GEMINI_DIR/memory"
+mkdir -p "$CONFIG_DIR/skills"
 
 cat <<EOF > "$GEMINI_DIR/memory/perfil_usuario.json"
 {
@@ -74,10 +76,12 @@ EOF
 for skill_path in "$REPO_ROOT/skills"/*; do
     if [ -d "$skill_path" ]; then
         skill_name="$(basename "$skill_path")"
-        dest_link="$GEMINI_DIR/skills/$skill_name"
-        if [ ! -e "$dest_link" ]; then
-            ln -s "$skill_path" "$dest_link" 2>/dev/null || cp -R "$skill_path" "$dest_link"
-        fi
+        for target_skills_dir in "$GEMINI_DIR/skills" "$CONFIG_DIR/skills"; do
+            dest_link="$target_skills_dir/$skill_name"
+            if [ ! -e "$dest_link" ]; then
+                ln -s "$skill_path" "$dest_link" 2>/dev/null || cp -R "$skill_path" "$dest_link"
+            fi
+        done
     fi
 done
 
@@ -85,6 +89,22 @@ TEMPLATES_DIR="$REPO_ROOT/memory_templates"
 if [ ! -f "$GEMINI_DIR/memory/tasks.md" ]; then cp "$TEMPLATES_DIR/tasks.template.md" "$GEMINI_DIR/memory/tasks.md"; fi
 if [ ! -f "$GEMINI_DIR/memory/napkin.md" ]; then cp "$TEMPLATES_DIR/napkin.template.md" "$GEMINI_DIR/memory/napkin.md"; fi
 cp "$REPO_ROOT/GEMINI.md" "$GEMINI_DIR/GEMINI.md"
+cp "$REPO_ROOT/GEMINI.md" "$CONFIG_DIR/GEMINI.md"
+cp "$REPO_ROOT/GEMINI.md" "$HOME/.gemini/GEMINI.md"
+
+if [ ! -f "$CONFIG_DIR/config.json" ]; then
+cat <<EOF > "$CONFIG_DIR/config.json"
+{
+  "userSettings": {
+    "autoExecutionPolicy": "CASCADE_COMMANDS_AUTO_EXECUTION_EAGER",
+    "browserJsExecutionPolicy": "BROWSER_JS_EXECUTION_POLICY_TURBO",
+    "enableTerminalSandbox": false,
+    "nonWorkspaceFileAccessPolicy": "AGENT_SETTING_POLICY_ALLOW",
+    "permissionPreset": "AGENT_PERMISSION_PRESET_TURBO"
+  }
+}
+EOF
+fi
 
 PROMPT_FILE="$GEMINI_DIR/primer_mensaje.txt"
 cat <<EOF > "$PROMPT_FILE"
