@@ -21,22 +21,22 @@ Esta versión (**Community Edition**) es 100% libre, local, no requiere privileg
 > **¿No tienes Google Antigravity instalado?** No te preocupes: al ejecutar el instalador, este comprobará tu sistema y **te preguntará directamente si deseas que descargue e instale Google Antigravity oficial por ti en ese mismo momento**. Al responder que sí, lo instala en segundo plano y te deja a Nova lista para operar.
 
 ### 🪟 En Windows (PowerShell / Doble Clic)
-**Opción A (Recomendada en 1 sola línea):**
-Abre PowerShell y pega:
+**Opción A (Recomendada en 1 sola línea — sin descargar carpetas a mano):**
+Abre **PowerShell** y pega:
 ```powershell
-irm https://raw.githubusercontent.com/Luaz2021/Nova-Agent-Core-Demo/main/instalar_nova.bat -OutFile instalar_nova.bat; .\instalar_nova.bat
+irm https://raw.githubusercontent.com/Luaz2021/Nova-Agent-Core-Demo/main/instalar_nova.bat -OutFile $env:TEMP\instalar_nova.bat; & $env:TEMP\instalar_nova.bat
 ```
 
-**Opción B (Doble Clic):**
+**Opción B (Doble Clic desde repositorio clonado o ZIP):**
 Clona el repositorio o descarga el ZIP, entra a la carpeta y haz doble clic sobre:
 ```text
 instalar_nova.bat
 ```
-*(Si no tienes Antigravity, te saldrá la pregunta en pantalla: `¿Deseas descargar e instalar Google Antigravity oficial ahora? (s/n) [s]`. Solo pulsas Enter y el script hace todo solo).*
+*(Si no tienes Antigravity instalado, te saldrá la pregunta en pantalla: `¿Deseas descargar e instalar Google Antigravity oficial ahora? (s/n) [s]`. Solo pulsas Enter y el script hace todo solo).*
 
 ### 🍎 En macOS (Terminal)
 **Opción A (Recomendada en 1 sola línea directa):**
-Abre la Terminal de tu Mac y pega:
+Abre la **Terminal** de tu Mac y pega:
 ```bash
 curl -fsSL https://raw.githubusercontent.com/Luaz2021/Nova-Agent-Core-Demo/main/instalar_nova.sh | bash
 ```
@@ -62,6 +62,13 @@ cd Nova-Agent-Core-Demo
 chmod +x instalar_nova.sh
 ./instalar_nova.sh
 ```
+
+---
+
+### ✅ Qué ocurre al terminar la instalación (Primer Arranque)
+1. **Permisos y Skills listos:** El instalador enlaza automáticamente las **115 skills**, instala las reglas maestras (`GEMINI.md`) y preconfigura los permisos de acceso (`ALLOW` / `TURBO`) para que Antigravity no te interrumpa pidiendo confirmación en cada archivo.
+2. **Mensaje de bienvenida auto-copiado:** Al finalizar el cuestionario (tu nombre y especialidad), el instalador **copia automáticamente tu primer prompt al portapapeles**.
+3. **Arranque:** Abre **Google Antigravity**, haz clic en el chat y presiona **`Ctrl + V`** (en Windows/Linux) o **`Cmd + V`** (en Mac) para que Nova se presente oficialmente adaptada a tu perfil.
 
 ---
 

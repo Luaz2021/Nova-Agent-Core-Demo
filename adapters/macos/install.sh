@@ -118,11 +118,16 @@ if command -v afplay >/dev/null 2>&1; then
     echo "[OK] Motor de audio nativo de macOS (afplay) listo."
 fi
 
+if command -v pbcopy >/dev/null 2>&1; then
+    pbcopy < "$PROMPT_FILE" 2>/dev/null || true
+fi
+
 echo ""
 echo "=========================================================="
 echo "   INSTALACION COMPLETADA CON EXITO PARA $nombre          "
 echo "=========================================================="
-echo "Pega este primer mensaje al abrir Antigravity o VS Code:"
+echo "[!] El primer mensaje YA ESTA COPIADO en tu portapapeles (Cmd + V)."
+echo "Abre Antigravity y presiona Cmd + V (o copia este bloque):"
 echo "----------------------------------------------------------"
 cat "$PROMPT_FILE"
 echo "----------------------------------------------------------"
