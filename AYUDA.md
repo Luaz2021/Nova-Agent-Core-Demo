@@ -19,6 +19,7 @@ sobre tu rama activa y permiso primero antes de tocar tu terminal.
 | :--- | :--- |
 | `hola` / `continuamos` / `seguimos` | Lee el puente de sesion y `tasks.md` y retoma exactamente en la ultima frase respondiendo en 2-3 lineas ejecutivas. |
 | `/ayuda` o `ayuda` | Muestra este archivo estatico completo sin gastar tokens de salida (`6.0x`) redactando desde cero. |
+| /keys o configurar llaves | Despliega la guia paso a paso para activar el Router Multi-Modelo y herramientas a 0 EUR. |
 | `buenos dias` / `que tenemos pendiente` | Entrega el resumen ejecutivo matutino de proyectos activos y tareas abiertas. |
 
 ---
