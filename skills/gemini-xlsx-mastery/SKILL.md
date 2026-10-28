@@ -1,6 +1,6 @@
 ---
 name: gemini-xlsx-mastery
-description: Manipulacion profesional, generacion, auditoria y analisis de hojas de calculo (Excel .xlsx, CSV, TSV) y modelado financiero (DCF, TIR, VAN, balances, proyecciones de rentabilidad y flujos de caja). Aplica scripts reproducibles con openpyxl, pandas o Node para procesar datos, generar formulas nativas y estructurar reportes contables limpios.
+description: "Generacion y analisis profesional de hojas Excel (.xlsx/CSV) y modelos financieros (DCF, TIR, VAN) con openpyxl/pandas."
 ---
 
 # Manipulacion de Hojas de Calculo & Modelado Financiero

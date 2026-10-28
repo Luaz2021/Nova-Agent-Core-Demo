@@ -1,7 +1,7 @@
 ---
 name: gemini-skill-architect
+description: "Diseña y empaqueta nuevas skills con frontmatter YAML estandar y progressive disclosure previa confirmacion."
 trigger: model_decision
-description: "Meta-habilidad oficial de creaciÃ³n y evoluciÃ³n de habilidades (skill-creator de Anthropic adaptada a Gemini/Antigravity). DiseÃ±a, redacta y empaqueta nuevas skills con frontmatter YAML estÃ¡ndar, pautas de activaciÃ³n y progressive disclosure. Requiere SIEMPRE avisar y pedir confirmaciÃ³n al usuario antes de crear una skill."
 ---
 
 # Skill Creator (Antigravity & Gemini Skills Architect)

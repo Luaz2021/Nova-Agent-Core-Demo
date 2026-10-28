@@ -1,7 +1,7 @@
-﻿---
+---
 name: gemini-database-mastery
+description: "Estandares SQL de alto rendimiento (Postgres, MySQL, Supabase): cero N+1, indices B-Tree/GIN, ACID y zero-downtime."
 trigger: model_decision
-description: "EstÃ¡ndares de alto rendimiento para bases de datos relacionales y SQL (PostgreSQL, MySQL, SQLite, Neon, Supabase). Exige eliminaciÃ³n del problema N+1, indexaciÃ³n inteligente (B-Tree/GIN), transacciones seguras ACID y migraciones sin tiempo de inactividad (Zero-Downtime)."
 ---
 
 # Database & SQL Engineering Best Practices

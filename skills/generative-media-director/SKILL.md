@@ -1,6 +1,6 @@
 ---
 name: generative-media-director
-description: Use when planning, prompting, generating, editing, routing, finishing, or QAing AI-created images, GIFs, videos, style frames, image-to-video clips, social ads, cinematic brand assets, motion studies, or multi-provider generative media workflows using Codex imagegen, GPT Image, Sora, Grok Imagine, Veo, Luma, Runway, Higgsfield, Remotion, Playwright, ffmpeg, Figma, Canva, or Vercel.
+description: "Direccion y generacion de imagenes, videos, style frames y anuncios sociales con flujos multi-proveedor e IA."
 ---
 
 # Generative Media Director
@@ -114,3 +114,11 @@ Return:
 - QA checklist
 - provenance template
 
+## Free Generative Arsenal & Hybrid Workflow (Zero Cost / Free Tiers)
+
+Consult references/free-generative-arsenal.md for zero-cost and daily renewable providers:
+- Video B-Roll: PixVerse, Kling AI, Hailuo / Minimax, Dreamina, Luma Dream Machine, Viggle.
+- Images / Backgrounds: Pollinations.ai (FLUX direct REST API without API key), Cloudflare Workers AI.
+- Voice / Audio: edge-tts (Microsoft Neural Voices CLI in local, unlimited & zero tokens, outputs .vtt timestamps) and ElevenLabs free tier.
+- Music / SFX: Suno, Udio, Freesound.
+- Scripts & Transcription: Groq (Llama 3.3 70B & Whisper large-v3), Google AI Studio.

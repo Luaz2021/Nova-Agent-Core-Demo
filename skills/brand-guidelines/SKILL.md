@@ -1,8 +1,7 @@
 ---
 name: brand-guidelines
-description: Writes a brand guidelines document - personality traits with is/is-not definitions, voice principles, a tone-by-context matrix, writing mechanics, a say-this-not-that word list, and visual usage rules - all made concrete with do/don't examples. Use when someone asks "write our brand guidelines", "document our voice and tone", "make a style guide the whole team can follow", or teams keep producing off-brand copy and design. Do NOT use for inventing the brand name itself - use brand-naming instead; for organizing messaging by audience and claim, use messaging-hierarchy.
+description: "Redacta manuales de marca: personalidad, principios de voz, matriz de tono, reglas de estilo y ejemplos do/don't."
 metadata:
-  title: "Brand Guidelines Doc"
 ---
 
 # Brand Guidelines Doc

@@ -1,9 +1,7 @@
 ---
 name: cursorrules-advisor
-description: Catalog, search, and adapt project-specific rules from the 250+ awesome-cursorrules collection into .cursorrules, .cursor/rules/*.mdc, or GEMINI.md. Use when the user asks for cursor rules, project rules for a specific stack (React Native, Expo, Supabase, Spring Boot, Next.js, FastAPI), or wants to enforce coding standards on a repository.
+description: "Catalogo y adaptador de +250 reglas (.cursorrules / .mdc) para React Native, Expo, Supabase, Next.js, Spring y FastAPI."
 metadata:
-  total_rules: 257
-  source: PatrickJS/awesome-cursorrules
 ---
 
 # CursorRules Advisor & Project Rules Engine

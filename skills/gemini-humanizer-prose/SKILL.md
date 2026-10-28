@@ -1,7 +1,7 @@
-﻿---
+---
 name: gemini-humanizer-prose
+description: "Humanizador de textos: elimina giros roboticos de IA en documentacion, correos, READMEs y entregables."
 trigger: model_decision
-description: "Humanizador de redacciÃ³n y eliminaciÃ³n de patrones artificiales de IA (blader/humanizer). Basado en los criterios editoriales de Wikipedia contra textos de IA. Elimina fÃ³rmulas robÃ³ticas (no es solo X sino Y, trÃ­adas forzadas, cierres melodramÃ¡ticos, palabras comodÃ­n como crucial/fundamental/tapiz) para que la documentaciÃ³n, correos, READMEs y commits suenen como escritos por un humano real."
 ---
 
 # Humanizer: Elimina Patrones Artificiales de IA

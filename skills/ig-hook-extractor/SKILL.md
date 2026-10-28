@@ -1,6 +1,6 @@
 ---
 name: ig-hook-extractor
-description: "Reverse-engineer the hook from a viral Instagram Reel or carousel, given a URL or a pasted caption. Identifies which of the 10 canonical 2026 formulas it uses (number-first, contrarian, relatable, confession, listicle, before/after, myth-buster, framework, pattern-interrupt Reel, how-I Reel), explains why it worked, names the primary goal, and returns a blank template mapped to your topic. Use to learn from a post you admire. Not for writing your own (use ig-caption-writer or ig-carousel-planner)."
+description: "Ingenieria inversa de hooks virales en Reels o carruseles de Instagram usando las 10 formulas canonicas de 2026."
 ---
 
 # Instagram Hook Extractor

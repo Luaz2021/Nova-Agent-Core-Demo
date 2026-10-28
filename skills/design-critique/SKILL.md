@@ -1,30 +1,13 @@
 ---
 name: design-critique
-description: Adversarial design critique of the current work. Render it, look at it, and argue for rejection. Run after the gates are green, never instead of them.
-# Converted from .claude/commands/ so it has a CLAUDE_SKILL_DIR of its own and
-# its paths resolve on every install route.
+description: "Revision hostil de diseno UI/UX con tabla priorizada de hallazgos de jerarquia, estados, espaciado y anti-slop."
 disable-model-invocation: true
 # The critic runs in a forked subagent: a fresh context that never sees the
-# conversation that produced the work. That is the whole point. A critic that
-# has read the maker's reasoning is reviewing the argument, not the artifact,
-# and it agrees far too easily.
 context: fork
-# Wait for the verdict in this turn. Forked skills run in the background by
-# default, which would hand the user a "started" message and no critique.
-# Requires Claude Code v2.1.218 or later.
 background: false
-#
 # There is deliberately NO `agent:` field, and it is not an oversight.
-#
-# A plugin namespaces every component under the plugin name, so this repo's
-# critic is `design-critic` when installed with `npx ux-ui-skills init` (a
 # project file in .claude/agents/) and `ux-ui-agent-skills:design-critic` when
-# installed as a plugin. One frontmatter value cannot be both, and a wrong one
 # is the `invocation:` failure again: a field that looks right, is silently
-# ignored or unresolved, and leaves the behaviour it promised switched off.
-#
-# So the fork is generic and the body below loads the critic's instructions from
-# a ${CLAUDE_SKILL_DIR}-relative path, which does resolve on both routes.
 ---
 You are now running in a forked context. You cannot see the conversation that
 produced this work, you cannot ask the user a question, and nothing you learned

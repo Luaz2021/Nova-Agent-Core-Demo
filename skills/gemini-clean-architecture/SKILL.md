@@ -1,6 +1,7 @@
-﻿---
+---
+name: gemini-clean-architecture
+description: "Reglas de arquitectura limpia (Domain, Service, Repository, Controller), KISS y patrones backend en Java/Kotlin/Node."
 trigger: model_decision
-description: "Aplica estas reglas estrictas de arquitectura limpia, separaciÃ³n de capas (Domain, Service, Repository, Controller) y patrones de diseÃ±o siempre que se cree o refactorice cÃ³digo backend."
 ---
 
 # Clean Architecture & Design Patterns Enforcement
@@ -17,4 +18,3 @@ description: "Aplica estas reglas estrictas de arquitectura limpia, separaciÃ³
 
 ## 3. Formato de Respuesta del Agente
 Antes de escribir cÃ³digo, el agente debe desglosar en 3 lÃ­neas quÃ© patrÃ³n va a utilizar y por quÃ© respeta la inversiÃ³n de dependencias (SOLID).
-

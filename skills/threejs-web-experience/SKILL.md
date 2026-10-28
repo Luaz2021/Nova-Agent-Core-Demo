@@ -1,6 +1,6 @@
 ---
 name: threejs-web-experience
-description: Use when building or debugging interactive 3D scenes on the web with Three.js (scene/camera/renderer, lights/materials, GLTF loading, controls, performance). Helpful for designers shipping 3D UI moments.
+description: "Construccion y depuracion de escenas 3D interactivas en web con Three.js (camara, luces, shaders GLTF y controles)."
 ---
 
 # Three.js — WebGL 3D Scenes Skill

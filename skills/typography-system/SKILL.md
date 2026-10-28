@@ -1,8 +1,7 @@
 ---
 name: typography-system
-description: Chooses and pairs typefaces and builds a modular type scale - ratio, named roles, line heights, measure limits, and responsive values - as a complete design-system type layer. Use when someone asks "what fonts should we use", "build our type scale", "why does our typography feel inconsistent", or is establishing the typographic voice for a brand or product. Do NOT use for animated or motion typography - use kinetic-typography instead; for page-level emphasis, spacing, and layout decisions, use visual-hierarchy; for assembling the full brand book, use brand-guidelines.
+description: "Elige y empareja tipografias creando escalas modulares, roles, alturas de linea y valores responsivos."
 metadata:
-  title: "Typography System"
 ---
 
 # Typography System

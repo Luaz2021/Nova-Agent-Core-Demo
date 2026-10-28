@@ -1,7 +1,7 @@
-﻿---
+---
 name: gemini-stride-security
+description: "Modelado de amenazas STRIDE, control de acceso RBAC, sanitizacion criptografica y defensa en profundidad."
 trigger: model_decision
-description: "Ciberseguridad defensiva avanzada y modelado de amenazas STRIDE (Spoofing, Tampering, Repudiation, Information Disclosure, Denial of Service, Elevation of Privilege). Audita el cÃ³digo contra vulnerabilidades crÃ­ticas, control de acceso basado en roles (RBAC), sanitizaciÃ³n criptogrÃ¡fica y defensa en profundidad."
 ---
 
 # Advanced Cyber-Security & STRIDE Threat Modeling

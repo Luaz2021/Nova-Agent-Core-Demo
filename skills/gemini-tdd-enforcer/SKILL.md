@@ -1,7 +1,7 @@
-﻿---
+---
 name: gemini-tdd-enforcer
+description: "Desarrollo guiado por pruebas (Ciclo Rojo-Verde-Refactor), patron AAA y piramide Unit/Integration/E2E."
 trigger: model_decision
-description: "Desarrollo Guiado por Pruebas estricto (TDD) y pirÃ¡mide de testing profesional (Unit, Integration, E2E). ProhÃ­be escribir cÃ³digo de producciÃ³n sin un test previo en fallo (Ciclo Rojo-Verde-Refactor). Aplica patrones AAA (Arrange-Act-Assert), mocks quirÃºrgicos y aislamiento de efectos secundarios."
 ---
 
 # TDD & Testing Engineering Enforcer

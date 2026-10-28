@@ -1,6 +1,6 @@
 ---
 name: web-motion-auditor
-description: Use when reviewing web animations, UI transitions, scroll effects, hover states, loading states, GIF/video captures, reduced-motion support, animation performance, or motion polish in HTML, React, Next.js, or Vercel apps.
+description: "Audita animaciones web, transiciones, estados hover, soporte prefers-reduced-motion y fluidez a 60fps."
 ---
 
 # Web Motion Auditor

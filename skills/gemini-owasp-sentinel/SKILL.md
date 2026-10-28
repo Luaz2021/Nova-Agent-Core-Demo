@@ -1,6 +1,7 @@
-﻿---
+---
+name: gemini-owasp-sentinel
+description: "Ejecuta un anÃ¡lisis de seguridad defensivo, validaciÃ³n de entradas y mitigaciÃ³n de vulnerabilidades OWASP Top 10 al auditar o escrib"
 trigger: model_decision
-description: "Ejecuta un anÃ¡lisis de seguridad defensivo, validaciÃ³n de entradas y mitigaciÃ³n de vulnerabilidades OWASP Top 10 al auditar o escribir endpoints y consultas."
 ---
 
 # Security & OWASP Top 10 Guardian
@@ -15,4 +16,3 @@ description: "Ejecuta un anÃ¡lisis de seguridad defensivo, validaciÃ³n de en
 Cuando el usuario pida revisar seguridad, el agente buscarÃ¡ activamente:
 1. ExposiciÃ³n de datos sensibles en trazas de error (`StackTrace` impresas al usuario).
 2. Uso de algoritmos criptogrÃ¡ficos dÃ©biles (ej. MD5 o SHA-1 para hashes de contraseÃ±as, exigiendo bcrypt o Argon2).
-

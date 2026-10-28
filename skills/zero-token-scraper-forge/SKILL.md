@@ -1,6 +1,6 @@
 ---
 name: zero-token-scraper-forge
-description: Genera y reutiliza micro-scripts ligeros en Python/PowerShell (scripts/scrapers/) para extracción web recurrente, consumiendo 0 tokens de LLM y eliminando la necesidad de abrir navegadores pesados.
+description: "Crea micro-scripts reutilizables en Python/PowerShell (scripts/scrapers/) para extraccion web a 0 tokens de LLM."
 ---
 
 # Zero-Token Scraper Forge

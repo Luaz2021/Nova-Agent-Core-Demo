@@ -1,6 +1,6 @@
 ---
 name: gemini-military-cybersec
-description: "Ciberseguridad defensiva y ofensiva ética de grado bancario y normativo (PCI-DSS, ISO 27001, OWASP Top 10, NIST 800-53). Modelado de amenazas, bastionado de servidores, criptografía robusta (AES-256-GCM, Ed25519) y auditoría de vulnerabilidades críticas."
+description: "Ciberseguridad defensiva y ofensiva etica (OWASP Top 10, PCI-DSS, ISO 27001, AES-256-GCM, bastionado de servidores)."
 ---
 
 # 🛡️ Bank & Military-Grade Cybersecurity Sentinel

@@ -1,7 +1,7 @@
 ---
 name: gemini-supabase-security
+description: "Bastionado de Supabase y PostgreSQL: politicas RLS atomicas, permisos de Storage Buckets y aislamiento de service_role."
 trigger: model_decision
-description: "Auditoria defensiva y bastionado de proyectos con Supabase y PostgreSQL. Aplica politicas estrictas de Row Level Security (RLS), prevencion de fugas en Storage Buckets, aislamiento de claves de API (anon vs service_role) y proteccion contra bypass de autenticacion."
 ---
 
 # Supabase Security & RLS Defense Standards

@@ -1,7 +1,7 @@
-﻿---
+---
 name: gemini-concise-clean-code
+description: "Codigo corto, directo y auto-documentado (KISS, YAGNI, Early Returns) con el minimo de lineas y maxima legibilidad."
 trigger: always_on
-description: "FilosofÃ­a estricta de cÃ³digo corto, directo, auto-documentado y libre de sobre-ingenierÃ­a (KISS, YAGNI, Early Returns). Genera la menor cantidad de lÃ­neas posibles para resolver el problema, con nombres altamente expresivos que se explican solos a la primera lectura."
 ---
 
 # Concise Clean Code & Zero-Bloat Standards

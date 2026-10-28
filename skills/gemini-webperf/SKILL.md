@@ -1,7 +1,7 @@
 ---
 name: gemini-webperf
+description: "Optimizacion de Core Web Vitals (LCP <2.5s, INP <200ms, CLS <0.1), presupuestos de JS (<100KB) y cero waterfalls."
 trigger: model_decision
-description: "Optimizacion de rendimiento web moderno y auditoria de Core Web Vitals (LCP, INP, CLS) inspirada en los estandares de Addy Osmani. Impone presupuestos de bundle, eliminacion de cascadas (waterfalls), carga diferida e imagenes optimizadas sin sobrecarga."
 ---
 
 # Web Performance & Core Web Vitals Standards

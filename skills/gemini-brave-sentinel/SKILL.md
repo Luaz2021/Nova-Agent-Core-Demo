@@ -1,6 +1,6 @@
 ---
 name: gemini-brave-sentinel
-description: "Control, inspección y lectura en tiempo real de tu navegador Brave. Permite a Nova saber qué pestaña o video de YouTube estás reproduciendo, auditar páginas web en vivo y tomar apuntes automáticos de reuniones en Google Meet."
+description: "Inspeccion en tiempo real del navegador Brave: pestaña activa, videos de YouTube y apuntes de Google Meet."
 ---
 
 # 🦁 Brave Browser Sentinel & Meeting Assistant v3

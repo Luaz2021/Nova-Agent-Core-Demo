@@ -1,6 +1,6 @@
 ---
 name: user-intent-reader
-description: "Analiza el estilo y vocabulario del usuario para calibrar dinamicamente el nivel pedagogico de Nova (Cliente No-Dev, Desarrollador Pragmatico o Senior de Trinchera) sin forzar preguntas incomodas."
+description: "Calibra dinamicamente el nivel tecnico de explicacion (No-Dev, Pragmatico o Senior) segun el vocabulario del usuario."
 ---
 
 # User Intent Reader (Calibrador Pedagogico Invisible)

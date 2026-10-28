@@ -1,7 +1,7 @@
-﻿---
+---
 name: gemini-continuous-learner
+description: "Auto-aprendizaje de patrones de trabajo y correcciones del usuario para actualizar reglas y evitar repetir errores."
 trigger: model_decision
-description: "Meta-habilidad de auto-aprendizaje y mejora continua (inspirada en Task Observer / One Skill to Rule Them All). Observa patrones de trabajo, correcciones del usuario y fricciones en las sesiones para aprender preferencias, evitar repetir errores y actualizar las reglas o skills automÃ¡ticamente."
 ---
 
 # Self-Learning Observer (One Skill to Rule Them All)

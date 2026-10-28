@@ -1,8 +1,7 @@
 ---
 name: visual-hierarchy
-description: Diagnoses and fixes visual hierarchy in a page, screen, or layout using ranked levers - size, weight, color, position, whitespace - and the one-focal-point-per-view rule. Use when someone asks "why does this layout feel flat", "what should the eye see first", "everything is competing on this screen", or wants the reading order of a composition made intentional. Do NOT use for a full multi-dimension design review covering usability and craft - use design-critique instead; for building the underlying type scale, use typography-system.
+description: "Diagnostica y corrige la jerarquia visual de una pantalla (tamaño, peso, color, espacio) con un punto focal por vista."
 metadata:
-  title: "Visual Hierarchy"
 ---
 
 # Visual Hierarchy

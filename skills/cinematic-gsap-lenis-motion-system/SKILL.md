@@ -1,6 +1,6 @@
 ---
 name: cinematic-gsap-lenis-motion-system
-description: Create premium cinematic web motion systems with GSAP, ScrollTrigger, and Lenis. Use for luxury editorial websites, creative studio portfolios, Awwwards-style interactions, smooth scroll reveals, staggered text, parallax, pinned sections, magnetic hover states, custom cursors, and mouse-reactive layered movement.
+description: "Sistemas de movimiento web cinematico con GSAP, ScrollTrigger, Lenis, parallax, secciones fijadas y cursores."
 ---
 
 # Cinematic GSAP Lenis Motion System

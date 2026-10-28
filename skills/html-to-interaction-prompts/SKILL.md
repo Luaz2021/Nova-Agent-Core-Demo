@@ -1,6 +1,6 @@
 ---
 name: html-to-interaction-prompts
-description: Convert a supplied HTML page or generated HTML reference into a screenshot-backed article containing multiple reusable interaction prompts. Use when the user provides an HTML file, exported page, generated-page.html, or local/live reference and asks to extract animation/interactions, create prompts, capture screenshots for each prompt, add them to an article, or commit the resulting article/assets.
+description: "Convierte paginas HTML de referencia en articulos respaldados por capturas con prompts reutilizables de interaccion."
 ---
 
 # HTML To Interaction Prompts

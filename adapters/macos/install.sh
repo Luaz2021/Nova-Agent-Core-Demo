@@ -1,7 +1,8 @@
 #!/usr/bin/env sh
 # ==============================================================================
-# INSTALADOR INTERACTIVO UNIVERSAL DE NOVA AGENT - MACOS (ZSH / SH)
-# Creado por Saul Martinez (Torrevieja, Espana)
+# INSTALADOR INTERACTIVO UNIVERSAL DE NOVA AGENT v2.0 - MACOS (ZSH / SH)
+# Zero-Tokens | Escaner de Hardware Inteligente | Inyeccion Unica Optimizada
+# Creado por Saul Alexander Martinez Rivas (@Luaz2021 - Torrevieja, Espana)
 # ==============================================================================
 set -e
 
@@ -12,7 +13,7 @@ fi
 
 clear 2>/dev/null || true
 echo "=========================================================="
-echo "   BIENVENIDO AL INSTALADOR OFICIAL DE NOVA AGENT (MACOS) "
+echo "   BIENVENIDO AL INSTALADOR OFICIAL DE NOVA AGENT v2.0    "
 echo "   Arquitecta de Software & Copiloto Tecnico Senior       "
 echo "=========================================================="
 echo ""
@@ -26,7 +27,6 @@ echo "[AVISO DE PRIVACIDAD Y MEJORA CONTINUA]"
 echo "Nova Agent esta basado en Google Gemini. Para mejorar y evolucionar el sistema:"
 echo "- Una vez al mes genera un resumen anonimo de manifiesto (skills y errores esquivados)."
 echo "- Cero rutas privadas, cero codigo confidencial, cero contrasenas."
-echo "- Puedes activar o desactivar este envio ahora o en cualquier momento."
 printf "Deseas habilitar la telemetria etica anonima? (s/n) [s]: "
 read -r optIn
 telemetryEnabled="true"
@@ -51,17 +51,73 @@ case "$profOpcion" in
     *) profesion="Desarrollador de Software" ;;
 esac
 
+# 2. ESCANER DE HARDWARE INTELIGENTE (0 TOKENS)
 echo ""
-echo "[INFO] Configurando a Nova para $nombre ($profesion)..."
+echo "----------------------------------------------------------"
+echo "[ESCANER DE HARDWARE NOVA] Analizando especificaciones de tu equipo..."
+
+if [ "$(uname -s)" = "Darwin" ]; then
+    cpuName="$(sysctl -n machdep.cpu.brand_string 2>/dev/null || echo 'Apple Silicon / Mac')"
+    ramBytes="$(sysctl -n hw.memsize 2>/dev/null || echo 8589934592)"
+    ramGB="$((ramBytes / 1073741824))"
+    gpuName="$(system_profiler SPDisplaysDataType 2>/dev/null | awk -F': ' '/Chipset Model/ {print $2; exit}' || echo 'GPU Integrada Mac')"
+else
+    cpuName="$(awk -F': ' '/model name/ {print $2; exit}' /proc/cpuinfo 2>/dev/null || echo 'CPU Linux')"
+    ramKb="$(awk '/MemTotal/ {print $2}' /proc/meminfo 2>/dev/null || echo 8388608)"
+    ramGB="$((ramKb / 1048576))"
+    gpuName="$(lspci 2>/dev/null | grep -iE 'vga|3d|display' | head -n 1 | cut -d: -f3 | sed 's/^ //' || echo 'GPU Estandar')"
+fi
+freeDiskGB="$(df -Pk "$HOME" 2>/dev/null | awk 'NR==2 {print int($4 / 1048576)}' || echo 25)"
+
+echo "  - Procesador : $cpuName"
+echo "  - Memoria RAM: ${ramGB} GB"
+echo "  - Tarjeta GPU: $gpuName"
+echo "  - Disco Libre: ${freeDiskGB} GB disponibles"
+
+localAiInstalled="false"
+localAiModel="ninguno"
+hwTier="BASICO_CLOUD_ONLY"
+
+if [ "$ramGB" -lt 12 ] || [ "$freeDiskGB" -lt 15 ]; then
+    hwTier="BASICO_CLOUD_ONLY"
+    echo "  - Veredicto  : MODO NUBE EXCLUSIVO (Proteccion de RAM y Bateria)"
+    echo "----------------------------------------------------------"
+    echo "[OPTIMIZACION AUTOMATICA] Tu equipo tiene ${ramGB} GB de RAM / ${freeDiskGB} GB libres."
+    echo "Para proteger la fluidez y bateria de tu equipo, Nova NO instalara IA local"
+    echo "y operara con el Modo 1-Shot Cloud Optimizado (~38% menos consumo de tokens)."
+elif [ "$ramGB" -ge 16 ]; then
+    hwTier="OPTIMO_GPU"
+    echo "  - Veredicto  : POTENCIA OPTIMA PARA IA LOCAL"
+    echo "----------------------------------------------------------"
+    printf "Tu equipo tiene potencia para el Obrero Local (Qwen 2.5 Coder 7B). Deseas activarlo? (s/n) [s]: "
+    read -r askAi
+    if [ "$askAi" != "n" ] && [ "$askAi" != "N" ]; then
+        localAiModel="qwen2.5-coder:7b"
+        localAiInstalled="true"
+    fi
+else
+    hwTier="GAMA_MEDIA"
+    echo "  - Veredicto  : GAMA MEDIA (Opcional Obrero Ligero 3B)"
+    echo "----------------------------------------------------------"
+    printf "Deseas instalar el Obrero Local Ligero (Qwen 2.5 Coder 3B - 1.9 GB)? (s/n) [n]: "
+    read -r askAi
+    if [ "$askAi" = "s" ] || [ "$askAi" = "S" ]; then
+        localAiModel="qwen2.5-coder:3b"
+        localAiInstalled="true"
+    fi
+fi
+
+if [ "$localAiInstalled" = "true" ] && command -v ollama >/dev/null 2>&1; then
+    echo "[INFO] Descargando modelo $localAiModel en Ollama..."
+    ollama pull "$localAiModel" || true
+fi
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 GEMINI_DIR="$HOME/.gemini/antigravity"
 CONFIG_DIR="$HOME/.gemini/config"
 
-mkdir -p "$GEMINI_DIR/skills"
-mkdir -p "$GEMINI_DIR/memory"
-mkdir -p "$CONFIG_DIR/skills"
+mkdir -p "$GEMINI_DIR/skills" "$GEMINI_DIR/memory" "$GEMINI_DIR/scripts" "$CONFIG_DIR/skills"
 
 cat <<EOF > "$GEMINI_DIR/memory/perfil_usuario.json"
 {
@@ -69,7 +125,19 @@ cat <<EOF > "$GEMINI_DIR/memory/perfil_usuario.json"
   "profesion": "$profesion",
   "sistema_operativo": "macOS",
   "telemetry_opt_in": $telemetryEnabled,
-  "pedagogia_calibrada": "auto_detect"
+  "pedagogia_calibrada": "auto_detect",
+  "hardware": {
+    "cpu": "$cpuName",
+    "ram_gb": $ramGB,
+    "gpu": "$gpuName",
+    "free_disk_gb": $freeDiskGB,
+    "tier": "$hwTier"
+  },
+  "ia_local": {
+    "instalada": $localAiInstalled,
+    "modelo": "$localAiModel",
+    "regla_activacion": "solo_tareas_masivas_mayor_1500_tokens"
+  }
 }
 EOF
 
@@ -85,49 +153,63 @@ for skill_path in "$REPO_ROOT/skills"/*; do
     fi
 done
 
+for script_file in "$REPO_ROOT/scripts"/*; do
+    if [ -f "$script_file" ]; then
+        cp "$script_file" "$GEMINI_DIR/scripts/"
+    fi
+done
+
 TEMPLATES_DIR="$REPO_ROOT/memory_templates"
 if [ ! -f "$GEMINI_DIR/memory/tasks.md" ]; then cp "$TEMPLATES_DIR/tasks.template.md" "$GEMINI_DIR/memory/tasks.md"; fi
 if [ ! -f "$GEMINI_DIR/memory/napkin.md" ]; then cp "$TEMPLATES_DIR/napkin.template.md" "$GEMINI_DIR/memory/napkin.md"; fi
-cp "$REPO_ROOT/GEMINI.md" "$GEMINI_DIR/GEMINI.md"
-cp "$REPO_ROOT/GEMINI.md" "$CONFIG_DIR/GEMINI.md"
-cp "$REPO_ROOT/GEMINI.md" "$HOME/.gemini/GEMINI.md"
+if [ -f "$TEMPLATES_DIR/protocolo_costos_nova_claude.md" ]; then cp "$TEMPLATES_DIR/protocolo_costos_nova_claude.md" "$GEMINI_DIR/memory/protocolo_costos_nova_claude.md"; fi
 
-if [ ! -f "$CONFIG_DIR/config.json" ]; then
+# Inyeccion UNICA de GEMINI.md en ~/.gemini/config/GEMINI.md
+cp "$REPO_ROOT/GEMINI.md" "$CONFIG_DIR/GEMINI.md"
+rm -f "$HOME/.gemini/GEMINI.md"
+if [ -f "$REPO_ROOT/AYUDA.md" ]; then cp "$REPO_ROOT/AYUDA.md" "$CONFIG_DIR/AYUDA.md"; fi
+
+echo ""
+echo "[CONFIGURACION DE PERMISOS DEL IDE]"
+echo "Nova respeta siempre la Ley 1 (pedir tu permiso en el chat antes de tocar tu codigo)."
+printf "Deseas habilitar lectura fluida de ~/.gemini/antigravity/memory y skills sin popups? (s/n) [s]: "
+read -r askTurbo
+if [ "$askTurbo" != "n" ] && [ "$askTurbo" != "N" ] && [ ! -f "$CONFIG_DIR/config.json" ]; then
 cat <<EOF > "$CONFIG_DIR/config.json"
 {
   "userSettings": {
-    "autoExecutionPolicy": "CASCADE_COMMANDS_AUTO_EXECUTION_EAGER",
-    "browserJsExecutionPolicy": "BROWSER_JS_EXECUTION_POLICY_TURBO",
-    "enableTerminalSandbox": false,
-    "nonWorkspaceFileAccessPolicy": "AGENT_SETTING_POLICY_ALLOW",
-    "permissionPreset": "AGENT_PERMISSION_PRESET_TURBO"
+    "nonWorkspaceFileAccessPolicy": "AGENT_SETTING_POLICY_ALLOW"
   }
 }
 EOF
+echo "[OK] Lectura fluida de skills/memoria habilitada (Sandbox de terminal y Ley 1 intactos)."
 fi
 
 PROMPT_FILE="$GEMINI_DIR/primer_mensaje.txt"
 cat <<EOF > "$PROMPT_FILE"
-Hola Nova, soy $nombre ($profesion). Acabo de instalarte en mi equipo.
-Presentate oficialmente: cuentame quien eres, tus origenes con Saul Martinez en Torrevieja Espana, tus ventajas frente a otros agentes de IA, tus atajos de trabajo y que extensiones me puedes configurar o recomendar para arrancar.
-Ademas, explicame como puedo decirte en cualquier momento: 'Nova, envia mensaje al creador: [mi mensaje]' para hacerle llegar sugerencias o dudas directamente a Saul en su repositorio de GitHub.
+Hola Nova, soy $nombre ($profesion). Verifica mi perfil_usuario.json y confirmame en 2 o 3 lineas que todo esta listo.
 EOF
 
-# 6. Verificacion de Motor de Audio (afplay nativo en macOS)
-if command -v afplay >/dev/null 2>&1; then
-    echo "[OK] Motor de audio nativo de macOS (afplay) listo."
-fi
-
-if command -v pbcopy >/dev/null 2>&1; then
-    pbcopy < "$PROMPT_FILE" 2>/dev/null || true
-fi
+if command -v pbcopy >/dev/null 2>&1; then pbcopy < "$PROMPT_FILE" 2>/dev/null || true; fi
 
 echo ""
-echo "=========================================================="
-echo "   INSTALACION COMPLETADA CON EXITO PARA $nombre          "
-echo "=========================================================="
-echo "[!] El primer mensaje YA ESTA COPIADO en tu portapapeles (Cmd + V)."
-echo "Abre Antigravity y presiona Cmd + V (o copia este bloque):"
-echo "----------------------------------------------------------"
+echo "=========================================================================="
+echo "   NOVA COPILOT ENGINE v2.0 - INSTALACION COMPLETADA ($nombre)"
+echo "   Arquitectura creada por Saul Alexander Martinez Rivas (@Luaz2021)"
+echo "=========================================================================="
+echo "ATAJOS RAPIDOS EN EL CHAT (Coste 0 tokens de redaccion):"
+echo "  - 'hola' / 'continuamos'        -> Retoma tu sesion exactamente donde la dejaste."
+echo "  - '/ayuda' o 'ayuda'            -> Muestra la guia completa desde AYUDA.md."
+echo "  - 'Nuevo proyecto: [idea]'      -> Planifica el sprint contigo antes de picar codigo."
+echo "  - 'Nova analiza este proyecto'  -> Radiografia Tanque de 7 Puntos (Stack, UI, SEO, Seguridad)."
+echo "  - 'te lo dejo en tus manos'     -> Modo autonomo: desarrollo 1-Shot + tests en verde."
+echo ""
+echo "LINEA DIRECTA CON EL CREADOR (SAUL MARTINEZ):"
+echo "  - '/creador [mensaje]'          -> Envia una duda, idea o saludo directo al buzon de Saul."
+echo "  - '/reportar-fallo'             -> Envia un bug resuelto para mejorar el Core."
+echo "  - '/compartir-skill [nombre]'   -> Propone una skill tuya para incluirla con creditos."
+echo "  - '/actualizar-nova'            -> Busca e instala mejoras oficiales sin borrar tus notas."
+echo "=========================================================================="
+echo "Pega este primer mensaje corto al abrir Antigravity:"
 cat "$PROMPT_FILE"
-echo "----------------------------------------------------------"
+echo "=========================================================================="

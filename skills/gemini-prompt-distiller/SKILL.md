@@ -1,7 +1,7 @@
-﻿---
+---
 name: gemini-prompt-distiller
+description: "Destilador de contexto y optimizador de tokens: carga progresiva de documentacion y cero respuestas infladas."
 trigger: always_on
-description: "Optimizador integral de tokens y destilador de contexto (inspirado en Headroom y Claude Token Optimizer). Filtra ruido conversacional en prompts, aplica carga progresiva de documentaciÃ³n (.geminiignore / context routing) y evita respuestas infladas, ahorrando hasta un 90% de tokens de inicio y respuesta."
 ---
 
 # Token Optimizer & Context Distiller

@@ -1,6 +1,6 @@
 ---
 name: brand-to-design-md
-description: Convert a public brand URL into a practical DESIGN.md file and optional single-file HTML demo. Use when the user asks to extract, distill, compile, generate, or validate a DESIGN.md/design system from a website, brand page, press kit, or public visual identity.
+description: "Extrae y compila un archivo DESIGN.md ejecutable y demo HTML desde cualquier URL publica o web de marca."
 ---
 
 # Brand To DESIGN.md

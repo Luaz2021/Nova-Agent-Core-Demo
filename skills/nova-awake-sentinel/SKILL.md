@@ -1,6 +1,6 @@
 ---
 name: nova-awake-sentinel
-description: "Guardian anti-suspension inteligente y nativo para Windows. Mantiene la CPU y pantalla encendidas durante tareas activas usando SetThreadExecutionState (sin pulsar teclas falsas), monitorea el nivel de bateria (Safe Checkpoint al 10%) y restaura la politica normal de bloqueo de Windows tras 5 minutos de inactividad."
+description: "Guardian anti-suspension nativo para Windows con SetThreadExecutionState y corte seguro al 10% de bateria."
 ---
 
 # Nova Awake Sentinel

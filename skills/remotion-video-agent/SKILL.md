@@ -1,6 +1,6 @@
 ---
 name: remotion-video-agent
-description: Use when creating or editing Remotion videos, programmatic explainers, motion graphics, MP4 renders, GIF renders, social cutdowns, or React-authored video templates.
+description: "Creacion y edicion de videos programaticos en React con Remotion (explainers, motion graphics, MP4 y cortes sociales)."
 ---
 
 # Remotion Video Agent

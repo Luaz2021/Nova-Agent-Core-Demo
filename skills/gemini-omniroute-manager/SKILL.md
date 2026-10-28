@@ -1,6 +1,6 @@
 ---
 name: gemini-omniroute-manager
-description: "Estrategia de optimización de costos y gestión de maratones de código con OmniRoute. Agota primero las cuotas y pools de tokens gratuitos (Groq, Mistral, Google AI Studio, Cloudflare) antes de consumir cuotas de pago de Claude Sonnet o Gemini Pro."
+description: "Optimizacion de cuotas y pools de tokens para maratones de codigo priorizando eficiencia de modelos."
 ---
 
 # ⚡ OmniRoute Token Optimizer & Marathon Protocol

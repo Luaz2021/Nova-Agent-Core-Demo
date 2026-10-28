@@ -1,8 +1,7 @@
 ---
 name: database-migrations
-description: "Safe, reversible database migration patterns: forward-only production changes, expand-contract zero-downtime renames, concurrent indexes, batched backfills, and per-tool workflows for PostgreSQL, Prisma, Drizzle, Kysely, Django, and golang-migrate. Use when writing a schema or data migration, adding a column or index to a large table, planning a rollback, or preparing a zero-downtime deploy."
+description: "Migraciones seguras sin caida (zero-downtime): expand-contract, indices concurrentes y backfills en Postgres/Prisma/Drizzle."
 metadata:
-  origin: ECC
 ---
 
 # Database Migration Patterns

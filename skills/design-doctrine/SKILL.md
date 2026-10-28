@@ -1,6 +1,6 @@
 ---
 name: design-doctrine
-description: The house rules for ANY design or UI work - the verification protocol (run the gate, never claim a number), the absolute no-emoji rule, token by intent, one shared theme, the eight states, one thing leads, and output completeness. Load this FIRST whenever building, reviewing, or theming a screen, component, or token set. Installed as a plugin, this skill carries what CLAUDE.md carries in the repo.
+description: "Los 5 dogmas de diseno UI: protocolo de verificacion, cero emojis, tokens por intencion, 8 estados interactivos y foco unico."
 ---
 
 # Skill: Design Doctrine

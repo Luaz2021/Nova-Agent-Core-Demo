@@ -1,7 +1,7 @@
-﻿---
+---
 name: gemini-vision-to-code
+description: "Convierte capturas, bocetos o diseños de Figma en codigo frontend limpio y responsivo (React, Tailwind, HTML/CSS)."
 trigger: model_decision
-description: "Convierte capturas de pantalla, bocetos de diseÃ±o, imÃ¡genes de Figma o fotos de interfaces web en cÃ³digo frontend limpio, moderno y responsivo (React, Tailwind CSS, Next.js o HTML/CSS) recreando con mÃ¡xima fidelidad la estructura, colores, espaciados y tipografÃ­as."
 ---
 
 # Screenshot to Code (Visual-to-Code Converter)

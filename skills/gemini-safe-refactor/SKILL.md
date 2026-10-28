@@ -1,7 +1,7 @@
-﻿---
+---
 name: gemini-safe-refactor
+description: "Refactorizacion segura y diagnostico read-only de proyectos con plan de accion previo a tocar codigo."
 trigger: model_decision
-description: "Protocolo de refactorizaciÃ³n segura y diagnÃ³stico no destructivo de proyectos. ProhÃ­be modificar o reescribir cÃ³digo sin aprobaciÃ³n previa del usuario. Analiza proyectos completos, identifica puntos crÃ­ticos/code smells y entrega un plan de acciÃ³n estructurado con opciones para que el usuario decida quÃ© tocar."
 ---
 
 # Safe Plan & Refactor Protocol (Cero DestrucciÃ³n Inesperada)

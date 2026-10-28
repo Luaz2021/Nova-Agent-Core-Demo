@@ -1,6 +1,6 @@
 ---
 name: gemini-video-intelligence
-description: "Procesamiento, análisis semántico y comprensión multimodal de videos locales y URLs (YouTube, MP4, grabaciones). Extracción de frames clave, transcripción temporal precisa con Whisper, OCR en pantalla y síntesis de contenido para aprendizaje acelerado."
+description: "Analisis multimodal de videos locales y YouTube: extraccion de frames clave, transcripcion Whisper y OCR."
 ---
 
 # 🎥 Video Intelligence & Multimodal Understanding

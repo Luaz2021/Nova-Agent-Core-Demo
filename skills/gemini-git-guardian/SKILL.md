@@ -1,7 +1,7 @@
-﻿---
+---
 name: gemini-git-guardian
+description: "Guardian Git y Pre-Commit Hooks: bloquea commits con API keys expuestas, archivos .env o SQL DELETE sin WHERE."
 trigger: model_decision
-description: "GuardiÃ¡n de Git, Pre-Commit Hooks y CI/CD Sentinel. Protege tus repositorios desde VS Code, IntelliJ, Android Studio o terminal. Bloquea automÃ¡ticamente commits o pushes con API keys expuestas (Stripe, OpenAI, AWS), archivos .env sin ignorar, o consultas SQL destructivas tipo DELETE FROM tabla; sin WHERE que borren la base de datos."
 ---
 
 # Git Guardian Sentinel (ProtecciÃ³n Pre-Commit & Pre-Push)

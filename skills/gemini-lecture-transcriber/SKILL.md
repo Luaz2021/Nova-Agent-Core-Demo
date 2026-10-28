@@ -1,7 +1,7 @@
-﻿---
+---
 name: gemini-lecture-transcriber
+description: "Transcriptor y resumidor de clases, videos de YouTube y grabaciones a texto plano y esquemas de estudio en Drive."
 trigger: model_decision
-description: "Transcriptor y resumidor de clases, videos y grabaciones (YouTube, Instagram, grabaciones de clase). Extrae automÃ¡ticamente el audio o subtÃ­tulos en texto plano a 'G:\\Mi unidad\\Antigravity\\transcripts' y genera apuntes estructurados, esquemas de estudio y resÃºmenes ejecutivos para ponerse al dÃ­a."
 ---
 
 # Lecture & Video Transcriber (Extractor de Clases y Grabaciones)

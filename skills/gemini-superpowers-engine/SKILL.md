@@ -1,7 +1,7 @@
-﻿---
+---
 name: gemini-superpowers-engine
+description: "Ingenieria metodica: planificacion previa (Grill-Me), subagentes paralelos, TDD estricto y revision de codigo."
 trigger: model_decision
-description: "MetodologÃ­a oficial de ingenierÃ­a agentic Superpowers (Jesse Vincent / obra/superpowers). Transforma al agente en un ingeniero de software metÃ³dico: planificaciÃ³n arquitectÃ³nica previa (writing-plans), orquestaciÃ³n de subagentes paralelos, desarrollo guiado por pruebas (TDD) y revisiÃ³n de cÃ³digo antes de dar por terminada cualquier rama o tarea."
 ---
 
 # Superpowers Engineering Methodology (obra/superpowers)

@@ -1,7 +1,7 @@
-﻿---
+---
 name: gemini-runbook-napkin
+description: "Servilleta activa de errores pasados y su accion correctiva (Do instead) para no tropezar dos veces."
 trigger: always_on
-description: "Servilleta / Runbook activo de lecciones y errores (blader/napkin). Mantiene un archivo de notas de ejecuciÃ³n rÃ¡pida (.agents/napkin.md o en la nube) con las 'cagadas' y errores cometidos, cada uno acompaÃ±ado estrictamente de una acciÃ³n 'Hacer en su lugar' (Do instead). Evita repetir errores pasados en cualquier proyecto o sesiÃ³n."
 ---
 
 # Napkin (Error Trap & Fast Execution Runbook)

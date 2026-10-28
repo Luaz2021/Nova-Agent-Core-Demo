@@ -1,7 +1,7 @@
-﻿---
+---
 name: gemini-daily-briefing
+description: "Protocolo de inicio de sesion y gestor de tareas al vuelo al decir hola, buenos dias o apuntar pendientes."
 trigger: model_decision
-description: "Protocolo de inicio de sesión matutino y gestor de tareas al vuelo para Nova. Se activa automáticamente cuando el usuario dice 'buenos días', 'buen día', 'hola', 'iniciando sesión', 'qué tenemos pendiente', o cuando pide apuntar/recordar tareas ('apunta esto a la lista', 'tengo pensado hacer', 'me falta por hacer')."
 ---
 
 # Nova Daily Briefing & Task Tracker

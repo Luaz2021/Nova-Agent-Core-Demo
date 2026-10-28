@@ -1,8 +1,7 @@
 ---
 name: react-patterns
-description: React 18/19 patterns including hooks discipline, server/client component boundaries, Suspense + error boundaries, form actions, data fetching, state management decision trees, and accessibility-first composition. Use when writing or reviewing React components.
+description: "Patrones de React 18/19: disciplina de hooks, limites Server/Client, Suspense, Error Boundaries y Server Actions."
 metadata:
-  origin: ECC
 ---
 
 # React Patterns

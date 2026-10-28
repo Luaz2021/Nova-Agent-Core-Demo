@@ -1,6 +1,6 @@
-﻿---
+---
 name: gemini-playwright-tester
-description: Automate browser interactions, test web pages and work with Playwright tests.
+description: "Automatizacion e inspeccion E2E de aplicaciones web con tests de Playwright."
 allowed-tools: Bash(playwright-cli:*) Bash(npx playwright:*) Bash(npx --no-install playwright:*)
 ---
 

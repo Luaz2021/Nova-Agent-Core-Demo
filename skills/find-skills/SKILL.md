@@ -1,6 +1,6 @@
 ---
 name: find-skills
-description: "Buscador y descubridor de habilidades para agentes. Permite rastrear repositorios, el catálogo de Vercel Labs y skills.sh para localizar cualquier skill específica por palabra clave o tecnología, extrayéndola directamente al entorno de Antigravity."
+description: "Buscador e instalador de skills para agentes desde repositorios de Vercel Labs y skills.sh por tecnologia."
 ---
 
 # Find Skills (Motor de Descubrimiento de Habilidades)

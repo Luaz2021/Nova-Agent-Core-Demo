@@ -1,7 +1,7 @@
-﻿---
+---
 name: gemini-ui-guidelines
+description: "Auditoria frontend segun Web Interface Guidelines de Vercel: accesibilidad, estados de foco, tipografia y cero CLS."
 trigger: model_decision
-description: "Audita, revisa y genera cÃ³digo frontend cumpliendo las rigurosas pautas de diseÃ±o web de Vercel (Web Interface Guidelines). Cubre accesibilidad (a11y), estados de foco sin outline-none, micro-interacciones, tipografÃ­a precisa, formularios sin trampas de UX y prevenciÃ³n de saltos de diseÃ±o (CLS)."
 ---
 
 # Vercel Web Interface Guidelines (Frontend Auditor & Standards)

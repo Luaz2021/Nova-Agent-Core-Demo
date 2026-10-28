@@ -1,8 +1,7 @@
 ---
 name: brand-md
-description: Open standard for AI-executable brand identity (brand.md). Use when creating, updating, auditing, or parsing a brand.md file in a project root, translating human brand guidelines into machine-executable precision, semantic, and relationship layers, or aligning image generation, copywriting, and UI design to the brand's single source of truth.
+description: "Estandar abierto brand.md para identidad de marca ejecutable por IA (capas de precision, semantica y relacion)."
 metadata:
-  standard: brand.md v0.1.0 (Sameness Design)
 ---
 
 # brand.md - AI-Executable Brand Identity Standard

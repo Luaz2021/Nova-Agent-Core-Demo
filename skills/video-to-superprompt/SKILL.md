@@ -1,6 +1,6 @@
 ---
 name: video-to-superprompt
-description: Turn a reference video into a super detailed recreation or inspiration prompt. Use when the user provides, mentions, uploads, links, or points to a video and asks to analyze the design, UI, animations, transitions, scroll interactions, typography, colors, assets, WebGL/Three.js, storytelling, section-by-section behavior, or to create a prompt/article that recreates the page, app, interaction, or motion system.
+description: "Convierte un video de referencia UI/web en un superprompt detallado de recreacion de diseño, layout y animaciones."
 ---
 
 # Video To Superprompt

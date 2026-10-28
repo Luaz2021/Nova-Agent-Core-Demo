@@ -1,7 +1,7 @@
-﻿---
+---
 name: gemini-systematic-debugger
+description: "Depuracion rigurosa sin parches a ciegas: aislamiento de causa raiz, lectura de logs y test reproducible."
 trigger: model_decision
-description: "MetodologÃ­a rigurosa de depuraciÃ³n y resoluciÃ³n de errores (inspirada en Superpowers de Jesse Vincent). ProhÃ­be adivinar o aplicar parches a ciegas. Exige aislar la causa raÃ­z con hipÃ³tesis reproducibles, inspecciÃ³n de logs exactos y verificaciÃ³n con tests antes de dar por resuelto un bug."
 ---
 
 # Systematic Debugging & Root Cause Analysis

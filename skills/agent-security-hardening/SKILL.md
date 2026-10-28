@@ -1,8 +1,7 @@
 ---
 name: agent-security-hardening
-description: Security hardening guidance for AI agent frameworks that process untrusted content, invoke tools, write workspace files, manage runtime identifiers, or handle credentials. Use when building or reviewing an agent runtime, autonomous worker, tool gateway, memory service, or multi-tenant agent deployment. Do not use for general web application security or offensive testing.
+description: "Bastionado de seguridad para runtimes de agentes IA, ejecucion de herramientas, sandboxing y gestion de credenciales."
 metadata:
-  origin: ECC
 ---
 
 # Agent Security Hardening

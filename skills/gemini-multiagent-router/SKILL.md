@@ -1,7 +1,7 @@
 ---
 name: gemini-multiagent-router
+description: "Router del ecosistema multi-agente hacia tech-lead, academic-tutor, tech-researcher, doc-writer o system-operator."
 trigger: always_on
-description: "Router y Orquestador del Ecosistema Multi-Agente (Master Config). Analiza automáticamente el prompt del usuario y deriva la tarea al subagente especialista: tech-lead (arquitectura y código), academic-tutor (temarios universitarios y exámenes), tech-researcher (búsqueda web y docs), doc-writer (documentación y humanizer) o system-operator (terminal y Windows)."
 ---
 
 # Multi-Agent Router & Master Orchestrator

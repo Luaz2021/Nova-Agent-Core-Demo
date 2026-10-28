@@ -1,6 +1,6 @@
 ---
 name: design-qa
-description: Set up or run design QA gates for token + hardcoded-value lint, automated a11y (axe), contrast, visual regression across variants/states/themes/RTL, and the manual a11y checklist. Use when the user wants CI quality gates, to prevent design regressions, or to QA a component/screen before shipping.
+description: "Gates de control de calidad de diseno: lint de tokens, axe a11y, contraste y regresion visual en variantes/temas."
 ---
 
 # Skill: Design QA

@@ -1,7 +1,7 @@
-﻿---
+---
 name: gemini-security-bastion
+description: "Auditor White-Hat de repositorios propios: escaneo de secretos, CORS, puertos, bypass de auth y cabeceras Helmet/CSP."
 trigger: model_decision
-description: "Auditor de Ciberseguridad Ofensiva Ã‰tica y Bastionado Local (White-Hat Pentester). Audita EXCLUSIVAMENTE el software y repositorios propios del usuario para evitar llamadas un sÃ¡bado a medianoche: escaneo de API keys y secretos expuestos (gitleaks), detecciÃ³n de puertos y CORS inseguros, endpoints pÃºblicos olvidados, bypass de auth/roles y configuraciÃ³n de cabeceras HTTP (Helmet/CSP)."
 ---
 
 # Security Bastion & Self-Pentesting Auditor (White-Hat Guardian)

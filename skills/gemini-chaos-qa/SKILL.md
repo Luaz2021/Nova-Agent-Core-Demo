@@ -1,7 +1,7 @@
-﻿---
+---
 name: gemini-chaos-qa
+description: "Tester QA destructivo (Chaos Monkey): busca casos limite, nulos, desbordamientos, race conditions e inyecciones."
 trigger: model_decision
-description: "Auditor QA destructivo y cazador de bugs (Chaos Monkey / Adversarial Testing). ActÃºa como un tester hostil buscando deliberadamente formas de romper el proyecto: valores lÃ­mite extremos (Edge Cases), datos nulos/vacÃ­os, desbordamientos, concurrencia (Race Conditions), inyecciones raras y estados corruptos, entregando un reporte rÃ¡pido y aislado de fallos."
 ---
 
 # Chaos QA Auditor & Bug Hunter (El Rompe-Sistemas)
@@ -59,3 +59,11 @@ El agente entrega los hallazgos en un formato conciso y ordenado por severidad:
 > *Â¿Quieres que preparemos los tests unitarios o el parche para alguno de estos fallos?*
 ```
 
+---
+
+## 4. Modo DAST Activo: Simulacion de Ataques a Coste 0 Tokens
+
+Para probar la resistencia real de la web o API sin gastar tokens de LLM:
+1. **Generacion de Payloads via Ollama Local (Capa 0):** La IA local en GPU redacta los casos hostiles (inyecciones SQL, cadenas gigantes, caracteres nulos, bypass de autenticacion).
+2. **Ejecutor Ciego en Python/PowerShell (scripts/scrapers/ o scratch):** Un micro-script nativo lanza 50 a 100 peticiones en rafaga contra http://127.0.0.1:[PUERTO].
+3. **Filtro de Ruptura (0 tokens de lectura):** Solo si un endpoint responde con HTTP 500, se congela por timeout (>5s) o fuga una traza interna de base de datos, el resultado se reporta a Nova para aplicar el early return o validacion correspondiente.

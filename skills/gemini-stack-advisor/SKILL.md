@@ -1,7 +1,7 @@
 ---
 name: gemini-stack-advisor
+description: "Analiza el stack de un proyecto y recomienda servidores MCP, reglas locales, hooks y mejoras de librerias."
 trigger: model_decision
-description: "Analiza el stack de un proyecto (lenguajes, frameworks, dependencias y estructura) y recomienda configuraciones Ã³ptimas para Gemini/Antigravity: servidores MCP, reglas locales (GEMINI.md), hooks de formateo/linting, skills complementarias y mejoras de librerÃ­as."
 ---
 
 # Project Stack Advisor & Automations Recommender

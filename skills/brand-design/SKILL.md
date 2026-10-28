@@ -1,6 +1,6 @@
 ---
 name: brand-design
-description: Drive a strict conversational, image-first and image-final brand identity design process. Use when the user asks for brand design, logo inspiration, logo exploration, AI-generated logo images, VI/visual identity systems, brand manuals, identity guidelines, application mockups, or premium HTML brand books. The skill must not assume missing brand details or generate images from an incomplete brief. It must ask Socratic clarification questions first, wait for user answers or explicit permission to proceed with named assumptions, generate logo images only after the brief is sufficient, require user selection after images, refine the approved logo through image generation rather than SVG reconstruction, then build a complete industry-specific HTML VI manual using generated image assets.
+description: "Director conversacional de identidad visual (VI): preguntas socraticas, generacion de logos IA y manual HTML de 21 capitulos."
 ---
 
 # Brand Design Skill

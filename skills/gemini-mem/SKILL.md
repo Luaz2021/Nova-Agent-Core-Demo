@@ -1,7 +1,7 @@
-﻿---
+---
 name: gemini-mem
+description: "Memoria persistente entre sesiones para consultar decisiones arquitectonicas, errores resueltos y progreso en curso."
 trigger: model_decision
-description: "Sistema de persistencia y memoria continua de proyectos entre sesiones para Gemini y Antigravity. Permite consultar decisiones arquitectÃ³nicas, lecciones aprendidas, correcciones de errores pasados y registrar el progreso y contexto de trabajo continuo."
 ---
 
 # Memoria Persistente de Proyectos (Gemini-Mem)

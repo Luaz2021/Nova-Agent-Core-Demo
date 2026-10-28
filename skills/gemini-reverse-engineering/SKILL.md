@@ -1,6 +1,6 @@
 ---
 name: gemini-reverse-engineering
-description: "Ingeniería inversa avanzada de binarios, APKs, scripts ofuscados y protocolos de red. Desensamblado, desofuscación de JavaScript frontend, análisis estático y dinámico de ejecutables (Ghidra, IDA, Radare2, Frida)."
+description: "Ingenieria inversa de binarios, APKs, scripts JS ofuscados y protocolos de red (Ghidra, Radare2, Frida)."
 ---
 
 # 🧬 Reverse Engineering Mastery

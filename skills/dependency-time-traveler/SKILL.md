@@ -1,6 +1,6 @@
 ---
 name: dependency-time-traveler
-description: Evita alucinaciones de sintaxis o métodos deprecados en librerías modernas (Expo, Next.js, React, Tailwind, Supabase) inspeccionando directamente los archivos .d.ts y package.json en node_modules o entorno local antes de codificar.
+description: "Inspecciona .d.ts y package.json en node_modules antes de picar codigo para evitar metodos deprecados o inventados."
 ---
 
 # Dependency Time Traveler (Source-Driven Truth)

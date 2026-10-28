@@ -1,8 +1,7 @@
 ---
 name: nextjs-turbopack
-description: Next.js 16+ and Turbopack guidance — incremental Rust bundling, file-system caching, faster dev startup and HMR, Turbopack vs webpack tradeoffs, and the middleware.ts to proxy.ts filename change. Use when developing or debugging Next.js 16+ apps, diagnosing slow dev startup or hot reload, choosing between bundlers, or reviewing middleware/proxy file naming.
+description: "Guia de Next.js 16+ y Turbopack: cache en disco, HMR rapido, trade-offs frente a webpack y migracion a proxy.ts."
 metadata:
-  origin: ECC
 ---
 
 # Next.js and Turbopack

@@ -1,7 +1,7 @@
-﻿---
+---
 name: gemini-brand-tokens
+description: "Catalogo de Design Systems de 156 marcas lideres (Stripe, Linear, Apple, Airbnb, Vercel, Supabase) via DESIGN.md."
 trigger: model_decision
-description: "CatÃ¡logo y aplicador de Design Systems de marcas lÃ­deres mundiales (Stripe, Linear, Apple, Vercel, Notion, Raycast, Supabase, Nike, etc.). Permite aplicar la estÃ©tica, paleta de colores, tipografÃ­as y tokens exactos de cualquier marca a tu proyecto web mediante archivos DESIGN.md."
 ---
 
 # Awesome Design-MD (Brand Design Systems & Tokens)

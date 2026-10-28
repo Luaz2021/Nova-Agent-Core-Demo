@@ -1,6 +1,6 @@
 ---
 name: gemini-motion-artifacts
-description: Produce high-craft, self-contained HTML artifacts, interactive sandboxed iframes, and code-driven animations or motion graphics with Canvas/SVG. Use when asked for interactive plans, dashboards, side-by-side comparisons, flowcharts, slide decks, triage editors, or code-generated videos and animations (timelines, frame captures, WebM export).
+description: "Artefactos HTML interactivos autocontenidos, dashboards en iframe sandbox y animaciones en Canvas/SVG."
 ---
 
 # Motion & HTML Artifacts

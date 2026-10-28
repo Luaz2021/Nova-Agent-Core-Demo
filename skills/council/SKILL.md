@@ -1,8 +1,7 @@
 ---
 name: council
-description: Convene a four-voice council for ambiguous decisions, tradeoffs, and go/no-go calls. Use when multiple valid paths exist and you need structured disagreement before choosing.
+description: "Consejo de 4 voces para decisiones ambiguas, trade-offs arquitectonicos y llamadas go/no-go con desacuerdo estructurado."
 metadata:
-  origin: ECC
 ---
 
 # Council
