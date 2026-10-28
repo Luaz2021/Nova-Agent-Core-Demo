@@ -1,0 +1,50 @@
+==============================================================================
+NOVA AGENT - OPEN SOURCE ATTRIBUTION NOTICE
+==============================================================================
+
+Nova Agent: The Google-Native Autonomous Engineering Engine
+Copyright (c) 2026 Saúl Alexander Martínez Rivas (@Luaz2021). All Rights Reserved.
+Repository: https://github.com/Luaz2021/Nova-Agent-Core-Demo
+
+This product includes software and architectural specifications developed by:
+Saúl Alexander Martínez Rivas (@Luaz2021)
+Contact / Profile: https://github.com/Luaz2021
+
+------------------------------------------------------------------------------
+TERMS OF ATTRIBUTION AND PROVENANCE INTEGRITY:
+------------------------------------------------------------------------------
+
+1. REQUIRED ATTRIBUTION:
+   Any redistribution, modification, compilation, packaging, or derivation of 
+   this work, in whole or in part, in source or binary form, MUST retain this 
+   NOTICE file and the following copyright notice in all copies or substantial 
+   portions of the Software:
+   "Nova Agent Core - Developed by Saúl Alexander Martínez Rivas (@Luaz2021) 
+    Native Engine: Google Antigravity 2.0 & Google Gemini"
+
+2. CRYPTOGRAPHIC PROVENANCE:
+   The structural integrity, component list, and skills tree of this engine 
+   are cryptographically cataloged in manifest_master.json via SHA-256 hashes.
+   Removal or alteration of creator metadata while reusing the core skills tree
+   constitutes a violation of the open-source license attribution covenant.
+
+3. TRADEMARKS & IDENTITY:
+   "Nova Agent" and its distinctive dual-voice, 1-shot protocol, and 
+   Google-native architecture are project assets established for the 
+   open-source community. Third-party forks must clearly indicate any 
+   modifications made to the original work.
+
+------------------------------------------------------------------------------
+THIRD-PARTY ACKNOWLEDGMENTS:
+------------------------------------------------------------------------------
+Nova Agent respectfully builds upon and acknowledges the following foundations:
+- Google DeepMind & Google Gemini Team (Antigravity 2.0 & Gemini Models)
+- Jesse Vincent / Obra (superpowers agentic architecture)
+- Julius Brussee (caveman token optimization principles)
+- Blader (humanizer prose and napkin architectural patterns)
+- GreenSock Inc. (GSAP web motion standards)
+- Remotion Dev Team (React programmatic video)
+- Sameness Design (brand.md open specification)
+- Vercel Labs & skills.sh community (Web interface guidelines)
+- OWASP Foundation (Defensive security benchmarks)
+==============================================================================
