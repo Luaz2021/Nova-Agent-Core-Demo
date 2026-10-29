@@ -3,7 +3,7 @@
 
 ```text
 ==========================================================================
-   NOVA COPILOT ENGINE - BIENVENIDA Y MAPA DE COMANDOS (119 SKILLS)
+   NOVA COPILOT ENGINE - BIENVENIDA Y MAPA DE COMANDOS (125 SKILLS)
    Creado por Saul Alexander Martinez Rivas (@Luaz2021)
 ==========================================================================
 ¡Hola! Soy Nova, tu copiloto tecnica y arquitecta de trinchera en Antigravity.

@@ -5,11 +5,11 @@
 [![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20macOS%20%7C%20Linux-success.svg)](#-instalación-en-1-clic-auto-instalador-de-antigravity-incluido)
 [![Native Runtime](https://img.shields.io/badge/Native%20Runtime-Google%20Antigravity%202.0-orange.svg)](https://antigravity.google)
 [![Ecosystem](https://img.shields.io/badge/Ideology-100%25%20Google%20Ecosystem-4285F4.svg)](#-la-ideología-100-ecosistema-google)
-[![Skills](https://img.shields.io/badge/Skills-119%20Optimizadas%20Gemini-purple.svg)](#-catálogo-detallado-de-skills-por-especialidad)
+[![Skills](https://img.shields.io/badge/Skills-125%20Optimizadas%20Gemini-purple.svg)](#-catálogo-detallado-de-skills-por-especialidad)
 [![Integrity Shield](https://img.shields.io/badge/Integrity-SHA--256%20Signed%20Manifest-brightgreen.svg)](#-capa-de-integridad-criptográfica-y-anti-plagio)
 [![1-Shot Protocol](https://img.shields.io/badge/Protocol-1--Shot%20Consolidado-red.svg)](#-la-pirámide-de-escalado-de-4-capas)
 
-**Nova Agent** no es un prompt leak ni una extensión visual de editor: es un **Agente Autónomo de Ingeniería de Software de Código Abierto**, dotado de cerebro agéntico, memoria persistente local, disciplina de trinchera y un árbol de 119 habilidades especializadas diseñado y acoplado nativamente para **Google Antigravity 2.0** y los modelos **Google Gemini**.
+**Nova Agent** no es un prompt leak ni una extensión visual de editor: es un **Agente Autónomo de Ingeniería de Software de Código Abierto**, dotado de cerebro agéntico, memoria persistente local, disciplina de trinchera y un árbol de 125 habilidades especializadas diseñado y acoplado nativamente para **Google Antigravity 2.0** y los modelos **Google Gemini**.
 
 Diseñado, entrenado y probado a fuego durante más de un mes de pruebas de estrés continuas por **Saúl Alexander Martínez Rivas** ([@Luaz2021](https://github.com/Luaz2021)), Nova Agent erradica los tres vicios crónicos de los asistentes de IA convencionales:
 1. **Cero servilismo ni relleno conversacional:** Respuestas directas de arquitecta senior, código limpio bajo filosofía **KISS estricto** (*Keep It Simple, Stupid*) con *early returns*.
@@ -84,18 +84,19 @@ flowchart TD
 
 ---
 
-## 🔥 Novedades de Ingeniería v2.1
+## 🔥 Novedades de Ingeniería v2.2
 
-Esta versión consolida las optimizaciones del **Protocolo de Eficiencia de Costos v3.0**:
+Esta versión expande el core a **125 skills** y añade la suite completa de **Vídeo Programático & Auto-Aprendizaje**:
 
 | Mejora de Arquitectura | Qué problema resuelve | Impacto Técnico Real |
 | :--- | :--- | :--- |
-| **1. Frontmatter YAML Quirúrgico en las 119 Skills** | Antigravity 2.0 inyecta el encabezado de todas las skills en cada ventana. Redujimos los encabezados YAML de `47.647` a `19.922` caracteres preservando el **100% de la lógica interna** de cada `SKILL.md`. | **~7.000 tokens fijos menos** en cada arranque de ventana. |
-| **2. Inyección Única de Reglas (`config/GEMINI.md`)** | Evita la doble inyección de reglas globales eliminando duplicados legacy en `~/.gemini/GEMINI.md`. | **~3.200 tokens menos** en el primer turno. |
-| **3. Regla de Ejecución `1-Shot` Consolidada (Ley 18)** | Cada llamada extra a herramientas paga un sufijo dinámico no cacheado (~2.052 tokens). Nova agrupa la creación de archivos y ejecución de pruebas en **un único paso consolidado** (`2-3` llamadas API en vez de `9`). | **Hasta -60% de costo** en tareas de desarrollo. |
-| **4. Router Multi-Modelo a 0 Tokens (`free_ai_router.py`)** | Permite resolver dudas de sintaxis con **Codestral** o modelos gratuitos de **OpenRouter** por CLI a coste cero de cuota de Antigravity. | **0 tokens de Antigravity** en consultas secundarias. |
-| **5. Bienvenida Estática a 0 Tokens (`AYUDA.md`)** | Los tokens de salida (`output_tokens`) cuestan **`6.0x`**. En lugar de regenerar listas largas de ayuda, Nova remite al archivo estático respondiendo en solo **2-3 líneas** (~50 tokens). | **Ahorro de ~1.000 tokens de salida** por bienvenida. |
-| **6. Guardián Local de 100k Tokens (`nova_buffer_guardian.py` v2.1)** | Monitorea en segundo plano el peso de la sesión, purga chats antiguos de más de 90 días y avisa al superar los 100k tokens para saltar a una ventana limpia sin perder contexto. | Sesiones maratónicas sin degradación de velocidad. |
+| **1. Motor de Vídeo HyperFrames (`hyperframes-director`)** | Permite generar reels y explainers verticales en HTML5+GSAP a 60fps sin sobrecargar tokens con React. | **-70% tokens** frente a Remotion en vídeos de 15-45s. |
+| **2. Principio Audio-First & Safe Zones 9:16** | Elimina desincronizaciones donde la imagen termina antes de que la voz acabe de hablar, y previene textos tapados por botones de TikTok/Instagram. | Vídeos 100% sincronizados con locución real y legibilidad garantizada. |
+| **3. Gimnasio de Razonamiento & Antipatrones (`gimnasio.template.md`)** | 20 preguntas senior de debate arquitectónico y 10 antipatrones forenses de la industria desinfectados de datos personales. | Calibra decisiones complejas antes de picar código; evita sobre-ingeniería. |
+| **4. Auto-Aprendizaje de Trinchera (`learnings.template.md`)** | Registra cuando una corrección o atajo define la forma óptima ("Forma B de Saúl") frente a la genérica ("Forma A"). | Cero divagaciones repetitivas en prompts posteriores. |
+| **5. Runbook Napkin Blindado v2.2 (`napkin.template.md`)** | 12 patrones de reparación extraídos de auditorías a proyectos open-source líderes (Supabase RLS O(1), Cal.com locks pesimistas, Zustand, etc.). | Respuestas de arquitectura Senior a la primera en bases de datos y colas. |
+| **6. Suite Finanzas SaaS, Legal Mercantil & Operaciones COO** | Incorporación de `saas-finance-metrics`, `commercial-legal-counsel` y `business-operations-coo` para análisis de negocio y contratos comerciales. | Blindaje legal, métricas unitarias y SOPs ejecutivos listos para usar. |
+| **7. Multiplataforma Real (macOS & Linux Runners)** | Añadido `nova_buffer_guardian.sh` para background silencioso en Unix y `nova_voice_lite.py` multiplataforma (macOS `say`, Linux `espeak`, Windows SAPI). | Experiencia idéntica en cualquier sistema operativo. |
 
 ---
 
@@ -235,18 +236,31 @@ Nova Agent incorpora **119 skills de ingeniería de software** optimizadas para 
 | **`web-motion-auditor`** | **Auditor de Rendimiento de Animaciones.** Detección de *Layout Thrashing*, forzado de transformaciones GPU (`transform`, `opacity`) y verificación a 60fps. | QA de animaciones y optimización de cuadros por segundo. |
 
 ### 7. 📹 Vídeo Programático & Estrategia Social 2026
-*Producción audiovisual en código React y orquestación de contenidos de alto impacto.*
+*Producción audiovisual en código, renderizado ultraligero Audio-First y orquestación de contenidos de alto impacto.*
 
 | Skill | Especificación Técnica | Cuándo se Activa |
 | :--- | :--- | :--- |
-| **`remotion-video-agent`** | **Vídeo Programático en React con Remotion.** Creación de vídeos MP4 en código puro: motion graphics, renders escalables y subtitulado dinámico. | Generación de reels, demos de producto en vídeo y explainers. |
+| **`hyperframes-director`** | **Vídeo Programático Ultraligero (HTML5 + CSS3 + GSAP).** Renderizado determinista frame a frame con `seek(t)` a mínimo consumo de tokens. Principio Audio-First, subtítulos en DOM y Safe Zones para TikTok y Reels. | Reels explicativos, cinéticas de texto, estilo boceto/Excalidraw y vídeos de 15-45s. |
+| **`video-script-storyteller`** | **Guiones de Alta Retención en 2 Columnas.** Estructura visual vs audio, ganchos de 3 segundos (*scroll stoppers*), ritmo de atención y llamadas a la acción sincronizadas. | Redacción y planificación de guiones para YouTube Shorts, Reels y TikTok. |
+| **`ffmpeg-toolkit`** | **Procesamiento Audiovisual CLI Multiplataforma.** Corte sin recodificar (`-c copy`), compresión optimizada para WhatsApp/Web, normalización EBU R128 (-14 LUFS) y masterizado CRF 18. | Ensamble de vídeo, optimización de peso y extracción de pistas de audio. |
+| **`remotion-video-agent`** | **Vídeo Programático en React con Remotion.** Creación de vídeos MP4 en código puro: motion graphics, renders escalables y subtitulado dinámico. | Generación de reels complejos, demos de producto en vídeo y explainers React. |
 | **`gemini-video-intelligence`** | **Análisis Multimodal de Vídeo.** Extracción de fotogramas clave, OCR de pantallas y resumen estructurado de vídeos locales y de YouTube. | Procesamiento de conferencias, clases y vídeos técnicos. |
+| **`procedural-film`** | **Cine Procedural y Pixel Art a 60 FPS.** Generación de visuales en tiempo real mediante HTML5 Canvas 2D y Web Audio API a cero assets externos. | Fondos cinemáticos, intros visuales y arte generativo en código puro. |
 | **`ig-hook-extractor`** | **Ingeniería Inversa de Ganchos Virales.** Análisis de fórmulas canónicas de retención (<125 caracteres) para Instagram Reels y TikTok. | Redacción de guiones de vídeo y copies de impacto. |
 | **`ig-carousel-planner`** | **Planificador de Carruseles de Alto Valor.** Estructuración narrativa de hasta 10 diapositivas para maximizar guardados y compartidos. | Contenido educativo y divulgación técnica en redes. |
 | **`ig-content-planner`** | **Estrategia Semanal de Contenido Social.** Matrices de distribución por formatos (Reels, Carruseles, Stories) alineadas con objetivos comerciales. | Planes de publicación y calendarios editoriales. |
 | **`ig-humanizer`** | **Filtro Anti-IA para Redes Sociales.** Elimina clichés robotizados de marketing y aporta cadencia natural humana a descripciones y guiones. | Revisión de textos y copys antes de publicar. |
 
-### 8. 🌐 Redes Cisco, Robótica & Hardware IoT
+### 8. 💼 Finanzas SaaS, Legal Mercantil & Operaciones COO
+*Métricas financieras, contratos comerciales blindados y procedimientos operativos estándar.*
+
+| Skill | Especificación Técnica | Cuándo se Activa |
+| :--- | :--- | :--- |
+| **`saas-finance-metrics`** | **Economía Unitaria y Métricas Financieras SaaS.** Cálculo riguroso de LTV, CAC, Churn rate, Payback period, MRR/ARR Waterfall y la Regla del 40. | Modelado de suscripciones, viabilidad de producto y reporting a inversores. |
+| **`commercial-legal-counsel`** | **Auditoría y Redacción de Contratos Mercantiles.** Master Services Agreements (MSA), SLAs, NDAs, leasing de software, propiedad intelectual condicionada y cláusulas trampa. | Contratos de desarrollo de software, acuerdos con clientes y licencias. |
+| **`business-operations-coo`** | **Operaciones Ejecutivas y Coordinación de Equipos.** Procedimientos Operativos Estándar (SOPs) en 3 pasos, matrices RACI y diseño de OKRs trimestrales. | Organización de flujos de trabajo, delegación y escalado operativo. |
+
+### 9. 🌐 Redes Cisco, Robótica & Hardware IoT
 *Infraestructura de telecomunicaciones y firmware en C++ para microcontroladores.*
 
 | Skill | Especificación Técnica | Cuándo se Activa |
@@ -254,13 +268,14 @@ Nova Agent incorpora **119 skills de ingeniería de software** optimizadas para 
 | **`cisco-network-architect`** | **Ingeniería de Redes Cisco (CCNA / CCNP).** Cálculo de VLSM en subredes, configuración de VLANs (802.1Q), enrutamiento dinámico OSPF/BGP, ACLs, NAT y STP. | Diseño de topologías de red y configuración en Cisco Packet Tracer. |
 | **`embedded-robotics-maker`** | **Firmware y Robótica (Arduino & ESP32).** Programación no bloqueante con `millis()`, control PWM de motores (Puente H), sensores I2C/SPI y telemetría MQTT. | Proyectos IoT, domótica, robótica y firmware embebido. |
 
-### 9. 🧠 Optimización de Tokens, Memoria & Auto-Aprendizaje
+### 10. 🧠 Optimización de Tokens, Gimnasio & Auto-Aprendizaje
 *El sistema nervioso que hace a Nova inteligente entre sesiones sin inflar tu factura.*
 
-| Skill | Especificación Técnica | Cuándo se Activa |
+| Skill / Plantilla | Especificación Técnica | Cuándo se Activa |
 | :--- | :--- | :--- |
-| **`gemini-continuous-learner`** | **Bucle de Auto-Aprendizaje Persistente.** Registra patrones de trabajo y correcciones del desarrollador para generar directrices inmediatas y no tropezar dos veces. | Cada vez que el usuario corrige o refina una directiva. |
-| **`gemini-runbook-napkin`** | **La Servilleta de Lecciones Aprendidas.** Almacén de micro-recetas técnicas en formato `[Problema] -> [Causa] -> [Do instead]` para recuperación instantánea. | Registro y consulta de errores comunes resueltos. |
+| **`gemini-continuous-learner`** | **Bucle de Auto-Aprendizaje Persistente.** Registra patrones de trabajo y correcciones del desarrollador (`learnings.template.md`) comparando la Forma genérica A (rechazada) vs la Forma B de Saúl (adoptada). | Cada vez que el usuario corrige o refina una directiva. |
+| **`gemini-runbook-napkin`** | **La Servilleta de Lecciones Aprendidas (`napkin.template.md`).** Almacén de micro-recetas técnicas en formato `[Problema] -> [Causa] -> [Do instead]` actualizado con 12 auditorías open-source (Supabase, Cal.com, Vite). | Registro y consulta de errores comunes resueltos. |
+| **`gimnasio.template.md`** | **Gimnasio de Razonamiento y Antipatrones.** 20 preguntas senior de debate arquitectónico y 10 antipatrones forenses de la industria para calibrar decisiones antes de codificar. | Planificación de nuevos sistemas y prevención de sobre-ingeniería. |
 | **`gemini-prompt-distiller`** | **Destilador de Contexto y Poda de Tokens.** Filtra el ruido conversacional y reduce el prompt unificando referencias sin perder directrices técnicas. | Consultas de contexto denso y preparación de prompts. |
 | **`gemini-concise-clean-code`** | **Código Ultra-Conciso (KISS & YAGNI).** Genera soluciones en el menor número de líneas legibles, con early returns y cero sobre-ingeniería. | Generación y refactorización de código en cualquier lenguaje. |
 | **`cursorrules-advisor`** | **Catálogo de +250 Reglas Especializadas.** Adapta reglas `.cursorrules` y `.mdc` para Expo, React Native, Supabase, Spring Boot y Next.js. | Creación y auditoría de reglas locales por proyecto. |

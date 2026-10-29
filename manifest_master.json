@@ -1,1152 +1,1295 @@
 {
-  "Version": "2.0",
-  "Engine": "NovaCommunity-LocalOnly",
-  "GeneratedAt": "2026-10-28 12:02:16",
-  "Author": "Saul Alexander Martinez Rivas (@Luaz2021)",
-  "TotalComponents": 127,
-  "Components": [
-    {
-      "Id": "rule_gemini_md",
-      "Name": "GEMINI.md",
-      "Type": "Rule",
-      "RelativePath": "GEMINI.md",
-      "TargetRelative": "config/GEMINI.md",
-      "SizeBytes": 11037,
-      "SHA256": "E39E45CFC35F0A368AB33022FDF3144E834EDDEC2C2E4D8C85C83A41EF73110C"
-    },
-    {
-      "Id": "doc_ayuda_md",
-      "Name": "AYUDA.md",
-      "Type": "Config",
-      "RelativePath": "AYUDA.md",
-      "TargetRelative": "config/AYUDA.md",
-      "SizeBytes": 4198,
-      "SHA256": "D540415FC3B34B1DE5D1642C9F52DD378FAB2CA97917290F20375B72DABD143A"
-    },
-    {
-      "Id": "script_enviar_feedback",
-      "Name": "enviar_feedback.py",
-      "Type": "Script",
-      "RelativePath": "scripts/enviar_feedback.py",
-      "TargetRelative": "antigravity/scripts/enviar_feedback.py",
-      "SizeBytes": 3842,
-      "SHA256": "E2FD0E033DF4507B6EF9853836B711EAE309B5497502898E31C1248132FDFA82"
-    },
-    {
-      "Id": "script_nova_awake_sentinel",
-      "Name": "nova_awake_sentinel.py",
-      "Type": "Script",
-      "RelativePath": "scripts/nova_awake_sentinel.py",
-      "TargetRelative": "antigravity/scripts/nova_awake_sentinel.py",
-      "SizeBytes": 6493,
-      "SHA256": "8BAF71FE077A85ADA426DA351619CF181C784CF75990EC57EAB3CBA7343F0C2A"
-    },
-    {
-      "Id": "script_nova_buffer_guardian",
-      "Name": "nova_buffer_guardian.py",
-      "Type": "Script",
-      "RelativePath": "scripts/nova_buffer_guardian.py",
-      "TargetRelative": "antigravity/scripts/nova_buffer_guardian.py",
-      "SizeBytes": 15602,
-      "SHA256": "F145B026CBF927AFD77DD470FA504D818D3FC4F2E9AF904EB0C3334EB20AA6DD"
-    },
-    {
-      "Id": "script_nova_cost_logger",
-      "Name": "nova_cost_logger.py",
-      "Type": "Script",
-      "RelativePath": "scripts/nova_cost_logger.py",
-      "TargetRelative": "antigravity/scripts/nova_cost_logger.py",
-      "SizeBytes": 7856,
-      "SHA256": "418FE8FE20E8AC1A5D4273487839119E82CDAE2EF02B871BD4A647292C8045FA"
-    },
-    {
-      "Id": "script_nova_local_worker",
-      "Name": "nova_local_worker.py",
-      "Type": "Script",
-      "RelativePath": "scripts/nova_local_worker.py",
-      "TargetRelative": "antigravity/scripts/nova_local_worker.py",
-      "SizeBytes": 7405,
-      "SHA256": "D9B73A5DB8499A628F9B7B98BA30EFB35B2B23D5DC19E3D71715BDC05034BC95"
-    },
-    {
-      "Id": "script_start_awake_sentinel",
-      "Name": "start_awake_sentinel.vbs",
-      "Type": "Script",
-      "RelativePath": "scripts/start_awake_sentinel.vbs",
-      "TargetRelative": "antigravity/scripts/start_awake_sentinel.vbs",
-      "SizeBytes": 143,
-      "SHA256": "622F8EDD48DA6E0152C9EECDD3145B3B1DB5A81FB2417B7CB26E6140327478F1"
-    },
-    {
-      "Id": "skill_agent-introspection-debugging",
-      "Name": "agent-introspection-debugging",
-      "Type": "Skill",
-      "RelativePath": "skills/agent-introspection-debugging/SKILL.md",
-      "TargetRelative": "config/skills/agent-introspection-debugging/SKILL.md",
-      "SizeBytes": 5665,
-      "SHA256": "57CC6B61CBA8025F2455B79A02BEBD78E44BE5E1BD1505D65B5B8634708BED20"
-    },
-    {
-      "Id": "skill_agent-security-hardening",
-      "Name": "agent-security-hardening",
-      "Type": "Skill",
-      "RelativePath": "skills/agent-security-hardening/SKILL.md",
-      "TargetRelative": "config/skills/agent-security-hardening/SKILL.md",
-      "SizeBytes": 10586,
-      "SHA256": "487E0827C37560D467FEAF43C5DF400DFA14EAB2D085FD65B8CE2A9C339482E2"
-    },
-    {
-      "Id": "skill_agentic-engineering",
-      "Name": "agentic-engineering",
-      "Type": "Skill",
-      "RelativePath": "skills/agentic-engineering/SKILL.md",
-      "TargetRelative": "config/skills/agentic-engineering/SKILL.md",
-      "SizeBytes": 1798,
-      "SHA256": "5546EE5A93189F2D792E0AABCE7A0EFC67ADE057F5DC0C0EAE3C2F820F9BE569"
-    },
-    {
-      "Id": "skill_ai-deploy-advisor",
-      "Name": "ai-deploy-advisor",
-      "Type": "Skill",
-      "RelativePath": "skills/ai-deploy-advisor/SKILL.md",
-      "TargetRelative": "config/skills/ai-deploy-advisor/SKILL.md",
-      "SizeBytes": 2966,
-      "SHA256": "E69AB15D6F6A6C769B9AD5DD9C6427CD0A93A9CFAE4C80C81107AB13343BA000"
-    },
-    {
-      "Id": "skill_api-design",
-      "Name": "api-design",
-      "Type": "Skill",
-      "RelativePath": "skills/api-design/SKILL.md",
-      "TargetRelative": "config/skills/api-design/SKILL.md",
-      "SizeBytes": 13587,
-      "SHA256": "5234332CB68A381B86FB7AD2630045155A6BA18D687F216B4C098DB8E3FEC486"
-    },
-    {
-      "Id": "skill_architecture-decision-records",
-      "Name": "architecture-decision-records",
-      "Type": "Skill",
-      "RelativePath": "skills/architecture-decision-records/SKILL.md",
-      "TargetRelative": "config/skills/architecture-decision-records/SKILL.md",
-      "SizeBytes": 7140,
-      "SHA256": "FBB2293D49179B50AE959B358104B22044ACE1B8B95554C7E4EC490B3ACE191F"
-    },
-    {
-      "Id": "skill_autonomous-loops",
-      "Name": "autonomous-loops",
-      "Type": "Skill",
-      "RelativePath": "skills/autonomous-loops/SKILL.md",
-      "TargetRelative": "config/skills/autonomous-loops/SKILL.md",
-      "SizeBytes": 25314,
-      "SHA256": "2D44269024548101915D21A20A6DB1DCC4F2EB43E5B0ED8DAF560B86804F6F0F"
-    },
-    {
-      "Id": "skill_backend-patterns",
-      "Name": "backend-patterns",
-      "Type": "Skill",
-      "RelativePath": "skills/backend-patterns/SKILL.md",
-      "TargetRelative": "config/skills/backend-patterns/SKILL.md",
-      "SizeBytes": 13774,
-      "SHA256": "307BCA8E501D6EC99A6A9B653CA3EE156CC4E04F87074367327E7A13BAF6AB78"
-    },
-    {
-      "Id": "skill_benchmark-optimization-loop",
-      "Name": "benchmark-optimization-loop",
-      "Type": "Skill",
-      "RelativePath": "skills/benchmark-optimization-loop/SKILL.md",
-      "TargetRelative": "config/skills/benchmark-optimization-loop/SKILL.md",
-      "SizeBytes": 2401,
-      "SHA256": "DF8DA349671D511F658FAA6506B154526A97825BD6B786A94FB07DC256931A6D"
-    },
-    {
-      "Id": "skill_brand-design",
-      "Name": "brand-design",
-      "Type": "Skill",
-      "RelativePath": "skills/brand-design/SKILL.md",
-      "TargetRelative": "config/skills/brand-design/SKILL.md",
-      "SizeBytes": 17420,
-      "SHA256": "D03931C5184CCA53185A91501ECC1600DA9167238881D7B3EB79B51E8C92BF4C"
-    },
-    {
-      "Id": "skill_brand-guidelines",
-      "Name": "brand-guidelines",
-      "Type": "Skill",
-      "RelativePath": "skills/brand-guidelines/SKILL.md",
-      "TargetRelative": "config/skills/brand-guidelines/SKILL.md",
-      "SizeBytes": 3333,
-      "SHA256": "A21B273AAB12832C2B3840025F3EB370D913660AE611971E17E573F46A794D31"
-    },
-    {
-      "Id": "skill_brand-identity",
-      "Name": "brand-identity",
-      "Type": "Skill",
-      "RelativePath": "skills/brand-identity/SKILL.md",
-      "TargetRelative": "config/skills/brand-identity/SKILL.md",
-      "SizeBytes": 4814,
-      "SHA256": "98F880C027D85DD7F28E9B36A7F0AF7B00CE2DF5B6423A17DE920A02CDD2FBD6"
-    },
-    {
-      "Id": "skill_brand-md",
-      "Name": "brand-md",
-      "Type": "Skill",
-      "RelativePath": "skills/brand-md/SKILL.md",
-      "TargetRelative": "config/skills/brand-md/SKILL.md",
-      "SizeBytes": 3637,
-      "SHA256": "BC2EC219A0EE646F308C4E3C1B7E80D33C3D5F48F305898AA859DCC0C0027BE7"
-    },
-    {
-      "Id": "skill_brand-naming",
-      "Name": "brand-naming",
-      "Type": "Skill",
-      "RelativePath": "skills/brand-naming/SKILL.md",
-      "TargetRelative": "config/skills/brand-naming/SKILL.md",
-      "SizeBytes": 6521,
-      "SHA256": "151E28B06781BDE3E7039285376ECDE637DC4A62F18983B2724088FA5BD02D61"
-    },
-    {
-      "Id": "skill_brand-to-design-md",
-      "Name": "brand-to-design-md",
-      "Type": "Skill",
-      "RelativePath": "skills/brand-to-design-md/SKILL.md",
-      "TargetRelative": "config/skills/brand-to-design-md/SKILL.md",
-      "SizeBytes": 5052,
-      "SHA256": "F3D0C0AB055609B280DC55539DB51D73E4BFA71553C0D47E0FB7A596A2C31749"
-    },
-    {
-      "Id": "skill_build-awwwards-quality-sites",
-      "Name": "build-awwwards-quality-sites",
-      "Type": "Skill",
-      "RelativePath": "skills/build-awwwards-quality-sites/SKILL.md",
-      "TargetRelative": "config/skills/build-awwwards-quality-sites/SKILL.md",
-      "SizeBytes": 6907,
-      "SHA256": "24EAE0F8B612B82A5C860FA826A31FBA3F4BF8F1BEA1B1DB4EA86332BD9341BC"
-    },
-    {
-      "Id": "skill_cinematic-gsap-lenis-motion-system",
-      "Name": "cinematic-gsap-lenis-motion-system",
-      "Type": "Skill",
-      "RelativePath": "skills/cinematic-gsap-lenis-motion-system/SKILL.md",
-      "TargetRelative": "config/skills/cinematic-gsap-lenis-motion-system/SKILL.md",
-      "SizeBytes": 18014,
-      "SHA256": "A6541A7017F7ECCEF733AF70ED0CA6EF1C3C2EBCE43D6EE5D7CE8E1ACF044CB4"
-    },
-    {
-      "Id": "skill_cisco-network-architect",
-      "Name": "cisco-network-architect",
-      "Type": "Skill",
-      "RelativePath": "skills/cisco-network-architect/SKILL.md",
-      "TargetRelative": "config/skills/cisco-network-architect/SKILL.md",
-      "SizeBytes": 3187,
-      "SHA256": "BA44AF5CA0EB77178CAA73CF5A35285FF33F8F24B5A39BA9F90B6723631F55D8"
-    },
-    {
-      "Id": "skill_color-palette-builder",
-      "Name": "color-palette-builder",
-      "Type": "Skill",
-      "RelativePath": "skills/color-palette-builder/SKILL.md",
-      "TargetRelative": "config/skills/color-palette-builder/SKILL.md",
-      "SizeBytes": 7106,
-      "SHA256": "079CFBABC693D3A2DA78B78324F7D8233E22D639DE5675F833A68B004CEC27B0"
-    },
-    {
-      "Id": "skill_council-multi-model",
-      "Name": "council-multi-model",
-      "Type": "Skill",
-      "RelativePath": "skills/council-multi-model/SKILL.md",
-      "TargetRelative": "config/skills/council-multi-model/SKILL.md",
-      "SizeBytes": 5835,
-      "SHA256": "6DE34C261145ADF0914A454D3BA9F5610D083EEA67410479BE08D7A459533BFA"
-    },
-    {
-      "Id": "skill_council",
-      "Name": "council",
-      "Type": "Skill",
-      "RelativePath": "skills/council/SKILL.md",
-      "TargetRelative": "config/skills/council/SKILL.md",
-      "SizeBytes": 6495,
-      "SHA256": "354F3176DE778C70E0E789F48019541FBCC11A740F928600270A8FA1F0336827"
-    },
-    {
-      "Id": "skill_cursorrules-advisor",
-      "Name": "cursorrules-advisor",
-      "Type": "Skill",
-      "RelativePath": "skills/cursorrules-advisor/SKILL.md",
-      "TargetRelative": "config/skills/cursorrules-advisor/SKILL.md",
-      "SizeBytes": 1776,
-      "SHA256": "B8D9060EAB9674635F29F7C71FF83F74B57CFCC1B004857DE25B13499A2CABB1"
-    },
-    {
-      "Id": "skill_database-migrations",
-      "Name": "database-migrations",
-      "Type": "Skill",
-      "RelativePath": "skills/database-migrations/SKILL.md",
-      "TargetRelative": "config/skills/database-migrations/SKILL.md",
-      "SizeBytes": 12179,
-      "SHA256": "0AA43DFAB83CFF1AA1CDE7A67F8842858BDD7FF0BE7F8EFBFDEBD8DFD14BCB30"
-    },
-    {
-      "Id": "skill_dependency-time-traveler",
-      "Name": "dependency-time-traveler",
-      "Type": "Skill",
-      "RelativePath": "skills/dependency-time-traveler/SKILL.md",
-      "TargetRelative": "config/skills/dependency-time-traveler/SKILL.md",
-      "SizeBytes": 1145,
-      "SHA256": "FA2174D7481337F263F8BA2727001BACC7BF8970B94910DE73279A8B8333EB0E"
-    },
-    {
-      "Id": "skill_deployment-patterns",
-      "Name": "deployment-patterns",
-      "Type": "Skill",
-      "RelativePath": "skills/deployment-patterns/SKILL.md",
-      "TargetRelative": "config/skills/deployment-patterns/SKILL.md",
-      "SizeBytes": 11373,
-      "SHA256": "2714E4DBD6F56685A666A560A4674431E0194A2C216129AF03025E0DD738E921"
-    },
-    {
-      "Id": "skill_design-critique",
-      "Name": "design-critique",
-      "Type": "Skill",
-      "RelativePath": "skills/design-critique/SKILL.md",
-      "TargetRelative": "config/skills/design-critique/SKILL.md",
-      "SizeBytes": 4284,
-      "SHA256": "CF2BA1F8153B5F3E41598ADBCB5658D4213AE3E8B7A94E22C66A955B6E28638B"
-    },
-    {
-      "Id": "skill_design-doctrine",
-      "Name": "design-doctrine",
-      "Type": "Skill",
-      "RelativePath": "skills/design-doctrine/SKILL.md",
-      "TargetRelative": "config/skills/design-doctrine/SKILL.md",
-      "SizeBytes": 9477,
-      "SHA256": "18643A41741742ABF238BD66FB4616DEFD96193C4EFFE3C821DE4E383F8EE65D"
-    },
-    {
-      "Id": "skill_design-qa",
-      "Name": "design-qa",
-      "Type": "Skill",
-      "RelativePath": "skills/design-qa/SKILL.md",
-      "TargetRelative": "config/skills/design-qa/SKILL.md",
-      "SizeBytes": 2399,
-      "SHA256": "13CE7D69028C5365D5E74CA3B7C00EFDC4F96F151976882BA1E418604981D3AB"
-    },
-    {
-      "Id": "skill_design-system",
-      "Name": "design-system",
-      "Type": "Skill",
-      "RelativePath": "skills/design-system/SKILL.md",
-      "TargetRelative": "config/skills/design-system/SKILL.md",
-      "SizeBytes": 2561,
-      "SHA256": "7793503C86E83D2FABE1F9BAD98400D5EC7514234A1D3A079636140A818E047C"
-    },
-    {
-      "Id": "skill_docker-patterns",
-      "Name": "docker-patterns",
-      "Type": "Skill",
-      "RelativePath": "skills/docker-patterns/SKILL.md",
-      "TargetRelative": "config/skills/docker-patterns/SKILL.md",
-      "SizeBytes": 17153,
-      "SHA256": "8CD6CB618D241B731348F4BA2B2D352DE270CECA93B1747259D42647B16623B5"
-    },
-    {
-      "Id": "skill_embedded-robotics-maker",
-      "Name": "embedded-robotics-maker",
-      "Type": "Skill",
-      "RelativePath": "skills/embedded-robotics-maker/SKILL.md",
-      "TargetRelative": "config/skills/embedded-robotics-maker/SKILL.md",
-      "SizeBytes": 3757,
-      "SHA256": "006F915CA6665D4D67B36938DC01969511E1943BE6501ACD1119D9A1F2992701"
-    },
-    {
-      "Id": "skill_fastapi-patterns",
-      "Name": "fastapi-patterns",
-      "Type": "Skill",
-      "RelativePath": "skills/fastapi-patterns/SKILL.md",
-      "TargetRelative": "config/skills/fastapi-patterns/SKILL.md",
-      "SizeBytes": 15935,
-      "SHA256": "DC10E2F72D5361786E11FBBCD8816F5ABD865A6191224FFF958BB1959D206B2B"
-    },
-    {
-      "Id": "skill_find-skills",
-      "Name": "find-skills",
-      "Type": "Skill",
-      "RelativePath": "skills/find-skills/SKILL.md",
-      "TargetRelative": "config/skills/find-skills/SKILL.md",
-      "SizeBytes": 1247,
-      "SHA256": "098C4B62A2A9565BBE814668B14378E390AACA7EE1FB1295A663F1CD078ACE77"
-    },
-    {
-      "Id": "skill_frontend-a11y",
-      "Name": "frontend-a11y",
-      "Type": "Skill",
-      "RelativePath": "skills/frontend-a11y/SKILL.md",
-      "TargetRelative": "config/skills/frontend-a11y/SKILL.md",
-      "SizeBytes": 13078,
-      "SHA256": "B1FD1F84B53D33740FB226641AC2F86620A7DDE50E3DC4F522FF04521A300EC5"
-    },
-    {
-      "Id": "skill_frontend-design-direction",
-      "Name": "frontend-design-direction",
-      "Type": "Skill",
-      "RelativePath": "skills/frontend-design-direction/SKILL.md",
-      "TargetRelative": "config/skills/frontend-design-direction/SKILL.md",
-      "SizeBytes": 8834,
-      "SHA256": "AE362B0CBCD0F37C7CB1E69665B5DE74F9A0DA48D501871E7BF1E8AABA452CE6"
-    },
-    {
-      "Id": "skill_frontend-patterns",
-      "Name": "frontend-patterns",
-      "Type": "Skill",
-      "RelativePath": "skills/frontend-patterns/SKILL.md",
-      "TargetRelative": "config/skills/frontend-patterns/SKILL.md",
-      "SizeBytes": 15984,
-      "SHA256": "331CE92A1954F7028A939C96283FA490568DBFAD343D718F8AB7EEAEEB7A6FE0"
-    },
-    {
-      "Id": "skill_gemini-brand-tokens",
-      "Name": "gemini-brand-tokens",
-      "Type": "Skill",
-      "RelativePath": "skills/gemini-brand-tokens/SKILL.md",
-      "TargetRelative": "config/skills/gemini-brand-tokens/SKILL.md",
-      "SizeBytes": 3493,
-      "SHA256": "EC745153CEC0084335189FFB45F78C26EE07AA79A13844B45EBF7C03206109E7"
-    },
-    {
-      "Id": "skill_gemini-brave-sentinel",
-      "Name": "gemini-brave-sentinel",
-      "Type": "Skill",
-      "RelativePath": "skills/gemini-brave-sentinel/SKILL.md",
-      "TargetRelative": "config/skills/gemini-brave-sentinel/SKILL.md",
-      "SizeBytes": 2432,
-      "SHA256": "B271065AA665FA51B80E62D05ADF9883EF54032AC376DD4D67D4EA6709CCC6AF"
-    },
-    {
-      "Id": "skill_gemini-chaos-qa",
-      "Name": "gemini-chaos-qa",
-      "Type": "Skill",
-      "RelativePath": "skills/gemini-chaos-qa/SKILL.md",
-      "TargetRelative": "config/skills/gemini-chaos-qa/SKILL.md",
-      "SizeBytes": 4316,
-      "SHA256": "7AB265B13D853992AC7EECE00EE7A682AC048E72A45D8F37B317B68D9F1006AA"
-    },
-    {
-      "Id": "skill_gemini-clean-architecture",
-      "Name": "gemini-clean-architecture",
-      "Type": "Skill",
-      "RelativePath": "skills/gemini-clean-architecture/SKILL.md",
-      "TargetRelative": "config/skills/gemini-clean-architecture/SKILL.md",
-      "SizeBytes": 1315,
-      "SHA256": "B5EF4014A8FB1DB9536D45481AD3BD3CD2BFF520154B3393B915EA5D9612D933"
-    },
-    {
-      "Id": "skill_gemini-concise-clean-code",
-      "Name": "gemini-concise-clean-code",
-      "Type": "Skill",
-      "RelativePath": "skills/gemini-concise-clean-code/SKILL.md",
-      "TargetRelative": "config/skills/gemini-concise-clean-code/SKILL.md",
-      "SizeBytes": 2265,
-      "SHA256": "7FACF9CAEEECAE0A3A526F85B7FEB216C16DF6A37373A434A6C37BDAC37990F5"
-    },
-    {
-      "Id": "skill_gemini-concise-voice",
-      "Name": "gemini-concise-voice",
-      "Type": "Skill",
-      "RelativePath": "skills/gemini-concise-voice/SKILL.md",
-      "TargetRelative": "config/skills/gemini-concise-voice/SKILL.md",
-      "SizeBytes": 1950,
-      "SHA256": "12182232C67BDE2E4A1BD956DE0B972F708AC8078C7BB6740101D02E830D9E5C"
-    },
-    {
-      "Id": "skill_gemini-continuous-learner",
-      "Name": "gemini-continuous-learner",
-      "Type": "Skill",
-      "RelativePath": "skills/gemini-continuous-learner/SKILL.md",
-      "TargetRelative": "config/skills/gemini-continuous-learner/SKILL.md",
-      "SizeBytes": 3287,
-      "SHA256": "FBED5F567A6A5B7D73486A70819D156301E93026EAA95DB08F313935362FDECB"
-    },
-    {
-      "Id": "skill_gemini-daily-briefing",
-      "Name": "gemini-daily-briefing",
-      "Type": "Skill",
-      "RelativePath": "skills/gemini-daily-briefing/SKILL.md",
-      "TargetRelative": "config/skills/gemini-daily-briefing/SKILL.md",
-      "SizeBytes": 2753,
-      "SHA256": "B3CC8A53D74298C5BE57752DA836C8B6D84DD176807B4BBECE0A688B48E36C39"
-    },
-    {
-      "Id": "skill_gemini-database-mastery",
-      "Name": "gemini-database-mastery",
-      "Type": "Skill",
-      "RelativePath": "skills/gemini-database-mastery/SKILL.md",
-      "TargetRelative": "config/skills/gemini-database-mastery/SKILL.md",
-      "SizeBytes": 2228,
-      "SHA256": "2C657B3139F4F85D19255EF7E4C2043F5EFD33E4EE0BAC81F3F3269089778A7D"
-    },
-    {
-      "Id": "skill_gemini-git-guardian",
-      "Name": "gemini-git-guardian",
-      "Type": "Skill",
-      "RelativePath": "skills/gemini-git-guardian/SKILL.md",
-      "TargetRelative": "config/skills/gemini-git-guardian/SKILL.md",
-      "SizeBytes": 2522,
-      "SHA256": "1B9842E350B72320F0A4E73593F3896E9AE0E98230CC573A0E810368B99AB754"
-    },
-    {
-      "Id": "skill_gemini-humanizer-prose",
-      "Name": "gemini-humanizer-prose",
-      "Type": "Skill",
-      "RelativePath": "skills/gemini-humanizer-prose/SKILL.md",
-      "TargetRelative": "config/skills/gemini-humanizer-prose/SKILL.md",
-      "SizeBytes": 2673,
-      "SHA256": "8F22BB9716082D114DBE64CC965F8D13C8CA07056D83380DBCF0660CB7EAAE87"
-    },
-    {
-      "Id": "skill_gemini-lecture-transcriber",
-      "Name": "gemini-lecture-transcriber",
-      "Type": "Skill",
-      "RelativePath": "skills/gemini-lecture-transcriber/SKILL.md",
-      "TargetRelative": "config/skills/gemini-lecture-transcriber/SKILL.md",
-      "SizeBytes": 2156,
-      "SHA256": "459751F468CFAECA5AA46F48FA594439E0A30B73045521C07701937878AB4E2E"
-    },
-    {
-      "Id": "skill_gemini-mcp-app",
-      "Name": "gemini-mcp-app",
-      "Type": "Skill",
-      "RelativePath": "skills/gemini-mcp-app/SKILL.md",
-      "TargetRelative": "config/skills/gemini-mcp-app/SKILL.md",
-      "SizeBytes": 19445,
-      "SHA256": "9FAA2D7B8CCFD4667E4B9D5E8B7CB1C05648D69D2ED9E937B5ED017B8635CD67"
-    },
-    {
-      "Id": "skill_gemini-mem",
-      "Name": "gemini-mem",
-      "Type": "Skill",
-      "RelativePath": "skills/gemini-mem/SKILL.md",
-      "TargetRelative": "config/skills/gemini-mem/SKILL.md",
-      "SizeBytes": 3678,
-      "SHA256": "A2F6367DE023662CA875C8014CB660FFBB7EC71E396DE58B9646FAB1E701B602"
-    },
-    {
-      "Id": "skill_gemini-military-cybersec",
-      "Name": "gemini-military-cybersec",
-      "Type": "Skill",
-      "RelativePath": "skills/gemini-military-cybersec/SKILL.md",
-      "TargetRelative": "config/skills/gemini-military-cybersec/SKILL.md",
-      "SizeBytes": 1531,
-      "SHA256": "D8EDB9D38C4125FCD89B880E4AD34D18133F3EB1D71D3B68F5A4191E994B6781"
-    },
-    {
-      "Id": "skill_gemini-motion-artifacts",
-      "Name": "gemini-motion-artifacts",
-      "Type": "Skill",
-      "RelativePath": "skills/gemini-motion-artifacts/SKILL.md",
-      "TargetRelative": "config/skills/gemini-motion-artifacts/SKILL.md",
-      "SizeBytes": 6357,
-      "SHA256": "BAB8E309166227811559DEFBE5596FFD2131AA13DF33DC6301FEAAE5BC70B9CF"
-    },
-    {
-      "Id": "skill_gemini-multiagent-router",
-      "Name": "gemini-multiagent-router",
-      "Type": "Skill",
-      "RelativePath": "skills/gemini-multiagent-router/SKILL.md",
-      "TargetRelative": "config/skills/gemini-multiagent-router/SKILL.md",
-      "SizeBytes": 3856,
-      "SHA256": "54DB72B2DA7B0E2A7CAFC7220EF0DA9E2A448D0FB70CE0BAB8550EE3911B9A7B"
-    },
-    {
-      "Id": "skill_gemini-omniroute-manager",
-      "Name": "gemini-omniroute-manager",
-      "Type": "Skill",
-      "RelativePath": "skills/gemini-omniroute-manager/SKILL.md",
-      "TargetRelative": "config/skills/gemini-omniroute-manager/SKILL.md",
-      "SizeBytes": 1553,
-      "SHA256": "B353572A27A1DA9CFE21C8FC6BBD0954B7BDF3C8F75DB52094F2667DEBD03800"
-    },
-    {
-      "Id": "skill_gemini-owasp-sentinel",
-      "Name": "gemini-owasp-sentinel",
-      "Type": "Skill",
-      "RelativePath": "skills/gemini-owasp-sentinel/SKILL.md",
-      "TargetRelative": "config/skills/gemini-owasp-sentinel/SKILL.md",
-      "SizeBytes": 1444,
-      "SHA256": "0D82950D08E5A6017D49E67AB3A1D1D23A8978116B16BAB423D78A1543D9A232"
-    },
-    {
-      "Id": "skill_gemini-playwright-tester",
-      "Name": "gemini-playwright-tester",
-      "Type": "Skill",
-      "RelativePath": "skills/gemini-playwright-tester/SKILL.md",
-      "TargetRelative": "config/skills/gemini-playwright-tester/SKILL.md",
-      "SizeBytes": 15945,
-      "SHA256": "FCA633DF2B605F9A7357FEC4A5C18729104D1A02342AB2F2496FCAC496D69DD4"
-    },
-    {
-      "Id": "skill_gemini-prompt-distiller",
-      "Name": "gemini-prompt-distiller",
-      "Type": "Skill",
-      "RelativePath": "skills/gemini-prompt-distiller/SKILL.md",
-      "TargetRelative": "config/skills/gemini-prompt-distiller/SKILL.md",
-      "SizeBytes": 2451,
-      "SHA256": "6376EDAFD82152CD3127370AABEE2FA3D14B6D845AFE075D6A269F136362B7F4"
-    },
-    {
-      "Id": "skill_gemini-reverse-engineering",
-      "Name": "gemini-reverse-engineering",
-      "Type": "Skill",
-      "RelativePath": "skills/gemini-reverse-engineering/SKILL.md",
-      "TargetRelative": "config/skills/gemini-reverse-engineering/SKILL.md",
-      "SizeBytes": 1084,
-      "SHA256": "6747C5EF1DD8C7F7D92AA9F70BEA99C6433BE55207F40E70C38522F64A2A085C"
-    },
-    {
-      "Id": "skill_gemini-runbook-napkin",
-      "Name": "gemini-runbook-napkin",
-      "Type": "Skill",
-      "RelativePath": "skills/gemini-runbook-napkin/SKILL.md",
-      "TargetRelative": "config/skills/gemini-runbook-napkin/SKILL.md",
-      "SizeBytes": 2483,
-      "SHA256": "6EA2A998231D259CBE401A1C2F8A0B13AA38C2C33B2081B2C8914B2AA8C04657"
-    },
-    {
-      "Id": "skill_gemini-safe-refactor",
-      "Name": "gemini-safe-refactor",
-      "Type": "Skill",
-      "RelativePath": "skills/gemini-safe-refactor/SKILL.md",
-      "TargetRelative": "config/skills/gemini-safe-refactor/SKILL.md",
-      "SizeBytes": 2770,
-      "SHA256": "4D719707A425903E371545F6AED6969A7C87F187BB0D32B2C753C218F854D3FC"
-    },
-    {
-      "Id": "skill_gemini-security-bastion",
-      "Name": "gemini-security-bastion",
-      "Type": "Skill",
-      "RelativePath": "skills/gemini-security-bastion/SKILL.md",
-      "TargetRelative": "config/skills/gemini-security-bastion/SKILL.md",
-      "SizeBytes": 4556,
-      "SHA256": "0AE96C2705C5855240B02BB6235380885DC732DBCBF3AB8D49ACA34C6160ECF9"
-    },
-    {
-      "Id": "skill_gemini-skill-architect",
-      "Name": "gemini-skill-architect",
-      "Type": "Skill",
-      "RelativePath": "skills/gemini-skill-architect/SKILL.md",
-      "TargetRelative": "config/skills/gemini-skill-architect/SKILL.md",
-      "SizeBytes": 3720,
-      "SHA256": "EC4D06614E3B5169F53D6168B89318183A71DEC061808B63260638C9435AEB65"
-    },
-    {
-      "Id": "skill_gemini-stack-advisor",
-      "Name": "gemini-stack-advisor",
-      "Type": "Skill",
-      "RelativePath": "skills/gemini-stack-advisor/SKILL.md",
-      "TargetRelative": "config/skills/gemini-stack-advisor/SKILL.md",
-      "SizeBytes": 4894,
-      "SHA256": "A4724F84770056037EDFF508D8D74A659103A4C1843AA9918272C92F30398D7C"
-    },
-    {
-      "Id": "skill_gemini-stride-security",
-      "Name": "gemini-stride-security",
-      "Type": "Skill",
-      "RelativePath": "skills/gemini-stride-security/SKILL.md",
-      "TargetRelative": "config/skills/gemini-stride-security/SKILL.md",
-      "SizeBytes": 2303,
-      "SHA256": "F0C7C544B42418A99D89F5D1EF17760AEBC285789F5BB3AA1FDA361D07CCE93A"
-    },
-    {
-      "Id": "skill_gemini-supabase-security",
-      "Name": "gemini-supabase-security",
-      "Type": "Skill",
-      "RelativePath": "skills/gemini-supabase-security/SKILL.md",
-      "TargetRelative": "config/skills/gemini-supabase-security/SKILL.md",
-      "SizeBytes": 3257,
-      "SHA256": "8E56C71F191F33752BCFB4EADB29713F6B7D1C6ED6A73157C7E413DBF072A9A9"
-    },
-    {
-      "Id": "skill_gemini-superpowers-engine",
-      "Name": "gemini-superpowers-engine",
-      "Type": "Skill",
-      "RelativePath": "skills/gemini-superpowers-engine/SKILL.md",
-      "TargetRelative": "config/skills/gemini-superpowers-engine/SKILL.md",
-      "SizeBytes": 2505,
-      "SHA256": "CB823B08A13EE40962322ECB617C4137A568C1727B24EA5D304CC8592E862217"
-    },
-    {
-      "Id": "skill_gemini-system-architect",
-      "Name": "gemini-system-architect",
-      "Type": "Skill",
-      "RelativePath": "skills/gemini-system-architect/SKILL.md",
-      "TargetRelative": "config/skills/gemini-system-architect/SKILL.md",
-      "SizeBytes": 4156,
-      "SHA256": "65A15FCC95E2F1D4F360DD81B2C0BB2D85AE87C2AE910929108080A3F0BCDCB6"
-    },
-    {
-      "Id": "skill_gemini-systematic-debugger",
-      "Name": "gemini-systematic-debugger",
-      "Type": "Skill",
-      "RelativePath": "skills/gemini-systematic-debugger/SKILL.md",
-      "TargetRelative": "config/skills/gemini-systematic-debugger/SKILL.md",
-      "SizeBytes": 1716,
-      "SHA256": "AE1172F4B151417B05DBE79F0D3926803B93850C7B1EED3A6B7D27D88C807D6F"
-    },
-    {
-      "Id": "skill_gemini-tdd-enforcer",
-      "Name": "gemini-tdd-enforcer",
-      "Type": "Skill",
-      "RelativePath": "skills/gemini-tdd-enforcer/SKILL.md",
-      "TargetRelative": "config/skills/gemini-tdd-enforcer/SKILL.md",
-      "SizeBytes": 2096,
-      "SHA256": "F7BD4E6D508999FB6C6B1C1A23F52521430B1F3B37650C09F29E82F36121EDBE"
-    },
-    {
-      "Id": "skill_gemini-ui-artisan",
-      "Name": "gemini-ui-artisan",
-      "Type": "Skill",
-      "RelativePath": "skills/gemini-ui-artisan/SKILL.md",
-      "TargetRelative": "config/skills/gemini-ui-artisan/SKILL.md",
-      "SizeBytes": 38200,
-      "SHA256": "E589D8E09C0AD64397481E25EB1AEF055A6EF360266FBD5FB7711505C62925AB"
-    },
-    {
-      "Id": "skill_gemini-ui-guidelines",
-      "Name": "gemini-ui-guidelines",
-      "Type": "Skill",
-      "RelativePath": "skills/gemini-ui-guidelines/SKILL.md",
-      "TargetRelative": "config/skills/gemini-ui-guidelines/SKILL.md",
-      "SizeBytes": 3695,
-      "SHA256": "FCE3A21AF3E88C4B149A5B6D0E91193DA24EF3F5CBAC9D9F3C658FBB17B8DD7E"
-    },
-    {
-      "Id": "skill_gemini-video-intelligence",
-      "Name": "gemini-video-intelligence",
-      "Type": "Skill",
-      "RelativePath": "skills/gemini-video-intelligence/SKILL.md",
-      "TargetRelative": "config/skills/gemini-video-intelligence/SKILL.md",
-      "SizeBytes": 929,
-      "SHA256": "AB8AB3B3D1CDFDEE039519D5477F6148CBB7A7B6943EEC2DE4062664C8812DD6"
-    },
-    {
-      "Id": "skill_gemini-vision-to-code",
-      "Name": "gemini-vision-to-code",
-      "Type": "Skill",
-      "RelativePath": "skills/gemini-vision-to-code/SKILL.md",
-      "TargetRelative": "config/skills/gemini-vision-to-code/SKILL.md",
-      "SizeBytes": 3108,
-      "SHA256": "472C2AC6E88C8025BA0EF33F4394D18E4FB2861D7E24EE7E3F7F3467C4AB1A0B"
-    },
-    {
-      "Id": "skill_gemini-webperf",
-      "Name": "gemini-webperf",
-      "Type": "Skill",
-      "RelativePath": "skills/gemini-webperf/SKILL.md",
-      "TargetRelative": "config/skills/gemini-webperf/SKILL.md",
-      "SizeBytes": 3286,
-      "SHA256": "7650A8F76BD807B25015C957DB3E3D9E0103EA67863AE2215AA34A8F8F093D8A"
-    },
-    {
-      "Id": "skill_gemini-xlsx-mastery",
-      "Name": "gemini-xlsx-mastery",
-      "Type": "Skill",
-      "RelativePath": "skills/gemini-xlsx-mastery/SKILL.md",
-      "TargetRelative": "config/skills/gemini-xlsx-mastery/SKILL.md",
-      "SizeBytes": 5288,
-      "SHA256": "2E7BBE6CA44E7F1643B5566BC0F565D7FD5B04775CB1DE0B0FE3F491A8A9E39D"
-    },
-    {
-      "Id": "skill_generative-media-director",
-      "Name": "generative-media-director",
-      "Type": "Skill",
-      "RelativePath": "skills/generative-media-director/SKILL.md",
-      "TargetRelative": "config/skills/generative-media-director/SKILL.md",
-      "SizeBytes": 3048,
-      "SHA256": "91C5A13549E54869929CE6D72BDCD644D1895362CCA05B73CB1CB84882F6782D"
-    },
-    {
-      "Id": "skill_gsap-core",
-      "Name": "gsap-core",
-      "Type": "Skill",
-      "RelativePath": "skills/gsap-core/SKILL.md",
-      "TargetRelative": "config/skills/gsap-core/SKILL.md",
-      "SizeBytes": 14615,
-      "SHA256": "50C0BC6FB9D891E5D055C838F0BB0CCF56E2F03A4CEA5424DD05A81C2041C066"
-    },
-    {
-      "Id": "skill_gsap-frameworks",
-      "Name": "gsap-frameworks",
-      "Type": "Skill",
-      "RelativePath": "skills/gsap-frameworks/SKILL.md",
-      "TargetRelative": "config/skills/gsap-frameworks/SKILL.md",
-      "SizeBytes": 10646,
-      "SHA256": "F45E0115ECB5BE0EF22FE449859BF6567A5B646104241B9DD237266AB88E0230"
-    },
-    {
-      "Id": "skill_gsap-performance",
-      "Name": "gsap-performance",
-      "Type": "Skill",
-      "RelativePath": "skills/gsap-performance/SKILL.md",
-      "TargetRelative": "config/skills/gsap-performance/SKILL.md",
-      "SizeBytes": 4093,
-      "SHA256": "C44BEC7CEE02AE8B4A4636083A6532D63C0752519B9BD9799C1A5C8088CBC813"
-    },
-    {
-      "Id": "skill_gsap-plugins",
-      "Name": "gsap-plugins",
-      "Type": "Skill",
-      "RelativePath": "skills/gsap-plugins/SKILL.md",
-      "TargetRelative": "config/skills/gsap-plugins/SKILL.md",
-      "SizeBytes": 21768,
-      "SHA256": "F026344EE5953D4A743ACDC4E718488B20FC59E135B00E6204E87ACB0A9E789F"
-    },
-    {
-      "Id": "skill_gsap-react",
-      "Name": "gsap-react",
-      "Type": "Skill",
-      "RelativePath": "skills/gsap-react/SKILL.md",
-      "TargetRelative": "config/skills/gsap-react/SKILL.md",
-      "SizeBytes": 6528,
-      "SHA256": "5FF3D42AC2448B2A929B1F63456A0C640857FEACDA9F4C9AE2343E2E3A41F3B6"
-    },
-    {
-      "Id": "skill_gsap-scrolltrigger",
-      "Name": "gsap-scrolltrigger",
-      "Type": "Skill",
-      "RelativePath": "skills/gsap-scrolltrigger/SKILL.md",
-      "TargetRelative": "config/skills/gsap-scrolltrigger/SKILL.md",
-      "SizeBytes": 18451,
-      "SHA256": "14744D90BC97E224143D2B34D6325B9DEEFB0A04D15955E0EB82FBF9AC83AABF"
-    },
-    {
-      "Id": "skill_gsap-timeline",
-      "Name": "gsap-timeline",
-      "Type": "Skill",
-      "RelativePath": "skills/gsap-timeline/SKILL.md",
-      "TargetRelative": "config/skills/gsap-timeline/SKILL.md",
-      "SizeBytes": 4314,
-      "SHA256": "F82B0853792ABBD1FD1A39DA7D9234FF2C074F1278EB9CED170981FD420AD433"
-    },
-    {
-      "Id": "skill_gsap-utils",
-      "Name": "gsap-utils",
-      "Type": "Skill",
-      "RelativePath": "skills/gsap-utils/SKILL.md",
-      "TargetRelative": "config/skills/gsap-utils/SKILL.md",
-      "SizeBytes": 12258,
-      "SHA256": "576A893B9F68E50CB350E5E93FB347A8D7B82B8C1495506A0FEF345A9B0101DC"
-    },
-    {
-      "Id": "skill_html-to-interaction-prompts",
-      "Name": "html-to-interaction-prompts",
-      "Type": "Skill",
-      "RelativePath": "skills/html-to-interaction-prompts/SKILL.md",
-      "TargetRelative": "config/skills/html-to-interaction-prompts/SKILL.md",
-      "SizeBytes": 14964,
-      "SHA256": "710C002882B8F31E48681FF963AB043CBC6D9F864BC0DBC6D440A481B5B3F509"
-    },
-    {
-      "Id": "skill_icon-system",
-      "Name": "icon-system",
-      "Type": "Skill",
-      "RelativePath": "skills/icon-system/SKILL.md",
-      "TargetRelative": "config/skills/icon-system/SKILL.md",
-      "SizeBytes": 7497,
-      "SHA256": "99BFDC3C4288C84E31A3B4369C8427F8A40877A2BE8DC0931E57B458F586A9C2"
-    },
-    {
-      "Id": "skill_ig-audience-insights",
-      "Name": "ig-audience-insights",
-      "Type": "Skill",
-      "RelativePath": "skills/ig-audience-insights/SKILL.md",
-      "TargetRelative": "config/skills/ig-audience-insights/SKILL.md",
-      "SizeBytes": 5964,
-      "SHA256": "4B6B7BF7025076858DB3EDBEF0CF31B06721EE380AF84A9101AC9347DB954397"
-    },
-    {
-      "Id": "skill_ig-caption-writer",
-      "Name": "ig-caption-writer",
-      "Type": "Skill",
-      "RelativePath": "skills/ig-caption-writer/SKILL.md",
-      "TargetRelative": "config/skills/ig-caption-writer/SKILL.md",
-      "SizeBytes": 6698,
-      "SHA256": "76F96A769A472BCCF034A0DA275B305F4914218FCC49953DFC97B2BC2DECEA72"
-    },
-    {
-      "Id": "skill_ig-carousel-planner",
-      "Name": "ig-carousel-planner",
-      "Type": "Skill",
-      "RelativePath": "skills/ig-carousel-planner/SKILL.md",
-      "TargetRelative": "config/skills/ig-carousel-planner/SKILL.md",
-      "SizeBytes": 7300,
-      "SHA256": "F5C8AD4A3100990A00705C780ACCC25DAEC5D34B4535B642DD698411F0B090A8"
-    },
-    {
-      "Id": "skill_ig-content-planner",
-      "Name": "ig-content-planner",
-      "Type": "Skill",
-      "RelativePath": "skills/ig-content-planner/SKILL.md",
-      "TargetRelative": "config/skills/ig-content-planner/SKILL.md",
-      "SizeBytes": 5634,
-      "SHA256": "20E82B601340F7A08901B76773897DEB0F8F80548839804C6195287231E9AC12"
-    },
-    {
-      "Id": "skill_ig-hashtag-strategist",
-      "Name": "ig-hashtag-strategist",
-      "Type": "Skill",
-      "RelativePath": "skills/ig-hashtag-strategist/SKILL.md",
-      "TargetRelative": "config/skills/ig-hashtag-strategist/SKILL.md",
-      "SizeBytes": 4232,
-      "SHA256": "E0F961F521EDB0C501F14E7DD4022A1B116DA08061E7DF1112395D000040EAC5"
-    },
-    {
-      "Id": "skill_ig-hook-extractor",
-      "Name": "ig-hook-extractor",
-      "Type": "Skill",
-      "RelativePath": "skills/ig-hook-extractor/SKILL.md",
-      "TargetRelative": "config/skills/ig-hook-extractor/SKILL.md",
-      "SizeBytes": 4768,
-      "SHA256": "746E3C98B27216690871A1D195033A816C76D87F9CAD275C9853B6E31C4BEA2C"
-    },
-    {
-      "Id": "skill_ig-humanizer",
-      "Name": "ig-humanizer",
-      "Type": "Skill",
-      "RelativePath": "skills/ig-humanizer/SKILL.md",
-      "TargetRelative": "config/skills/ig-humanizer/SKILL.md",
-      "SizeBytes": 16035,
-      "SHA256": "77003AD92971DC715C3871D034B36E98565592735D0B268345F9D12062ED6F07"
-    },
-    {
-      "Id": "skill_ig-profile-optimizer",
-      "Name": "ig-profile-optimizer",
-      "Type": "Skill",
-      "RelativePath": "skills/ig-profile-optimizer/SKILL.md",
-      "TargetRelative": "config/skills/ig-profile-optimizer/SKILL.md",
-      "SizeBytes": 6417,
-      "SHA256": "040BDFE2F1A5952DE62489E60CFE78740E4F36606F6A4049A2843BE5A96CEB62"
-    },
-    {
-      "Id": "skill_ig-repurposer",
-      "Name": "ig-repurposer",
-      "Type": "Skill",
-      "RelativePath": "skills/ig-repurposer/SKILL.md",
-      "TargetRelative": "config/skills/ig-repurposer/SKILL.md",
-      "SizeBytes": 8441,
-      "SHA256": "A91EA0E1D9A507BD7EFBABEFAF5AB6CE3A5C9837F60ABE89D6AECFD58A9F90E0"
-    },
-    {
-      "Id": "skill_instagram-common",
-      "Name": "instagram-common",
-      "Type": "Skill",
-      "RelativePath": "skills/instagram-common/SKILL.md",
-      "TargetRelative": "config/skills/instagram-common/SKILL.md",
-      "SizeBytes": 488,
-      "SHA256": "2DB31D0BB299AC0053427DBB79CC7699CCCE2614C62BFBAF10B8B575955A0DEA"
-    },
-    {
-      "Id": "skill_logo-brief-writer",
-      "Name": "logo-brief-writer",
-      "Type": "Skill",
-      "RelativePath": "skills/logo-brief-writer/SKILL.md",
-      "TargetRelative": "config/skills/logo-brief-writer/SKILL.md",
-      "SizeBytes": 6826,
-      "SHA256": "01CA6DB4E4DEAA46E41426A2670517FD62F3245FD628B12F438C51F1320637EC"
-    },
-    {
-      "Id": "skill_moodboard-builder",
-      "Name": "moodboard-builder",
-      "Type": "Skill",
-      "RelativePath": "skills/moodboard-builder/SKILL.md",
-      "TargetRelative": "config/skills/moodboard-builder/SKILL.md",
-      "SizeBytes": 6696,
-      "SHA256": "718609A672C51D430271BCCFBD64EBEC7953CB83AC32B7DC0B22FC24862AD736"
-    },
-    {
-      "Id": "skill_motion-design",
-      "Name": "motion-design",
-      "Type": "Skill",
-      "RelativePath": "skills/motion-design/SKILL.md",
-      "TargetRelative": "config/skills/motion-design/SKILL.md",
-      "SizeBytes": 12535,
-      "SHA256": "2278A7F662D89400D808AAD69FD2396165185F2CE156618188003C907642B717"
-    },
-    {
-      "Id": "skill_nextjs-turbopack",
-      "Name": "nextjs-turbopack",
-      "Type": "Skill",
-      "RelativePath": "skills/nextjs-turbopack/SKILL.md",
-      "TargetRelative": "config/skills/nextjs-turbopack/SKILL.md",
-      "SizeBytes": 2937,
-      "SHA256": "CC9154F1858733D9FA23CBEE358E3D8EF85884FB2A963CDC8383403E1660A02B"
-    },
-    {
-      "Id": "skill_nova-awake-sentinel",
-      "Name": "nova-awake-sentinel",
-      "Type": "Skill",
-      "RelativePath": "skills/nova-awake-sentinel/SKILL.md",
-      "TargetRelative": "config/skills/nova-awake-sentinel/SKILL.md",
-      "SizeBytes": 1114,
-      "SHA256": "13C323B9189D936A73D10E1810DEBCF00493647005AD1DBA7BE238FDCA36CC3D"
-    },
-    {
-      "Id": "skill_nova-community-feedback",
-      "Name": "nova-community-feedback",
-      "Type": "Skill",
-      "RelativePath": "skills/nova-community-feedback/SKILL.md",
-      "TargetRelative": "config/skills/nova-community-feedback/SKILL.md",
-      "SizeBytes": 1809,
-      "SHA256": "C64F2A4FEB430778D9DA1CCB5A95FE89969E590E026489C1CA127D61F0390122"
-    },
-    {
-      "Id": "skill_procedural-film",
-      "Name": "procedural-film",
-      "Type": "Skill",
-      "RelativePath": "skills/procedural-film/SKILL.md",
-      "TargetRelative": "config/skills/procedural-film/SKILL.md",
-      "SizeBytes": 3771,
-      "SHA256": "BCCC5F9755ABEC5B211A19C72809301E7558E5BE32A8F28A705A7656A81C8412"
-    },
-    {
-      "Id": "skill_production-audit",
-      "Name": "production-audit",
-      "Type": "Skill",
-      "RelativePath": "skills/production-audit/SKILL.md",
-      "TargetRelative": "config/skills/production-audit/SKILL.md",
-      "SizeBytes": 7732,
-      "SHA256": "D31F501B97694F29AC93499337976EDC4735BDE6E92808D1D44A0481E33CA69E"
-    },
-    {
-      "Id": "skill_react-patterns",
-      "Name": "react-patterns",
-      "Type": "Skill",
-      "RelativePath": "skills/react-patterns/SKILL.md",
-      "TargetRelative": "config/skills/react-patterns/SKILL.md",
-      "SizeBytes": 11648,
-      "SHA256": "9D14A16F22037045093DB75EFF4E57D2C1DDE7185C8E5632742FE1B3CF92B6BC"
-    },
-    {
-      "Id": "skill_react-performance",
-      "Name": "react-performance",
-      "Type": "Skill",
-      "RelativePath": "skills/react-performance/SKILL.md",
-      "TargetRelative": "config/skills/react-performance/SKILL.md",
-      "SizeBytes": 18467,
-      "SHA256": "700C94EAF60C817C135B2C3CAF186FB98BE9956ADF561E9EC8E4224EADC3A950"
-    },
-    {
-      "Id": "skill_react-testing",
-      "Name": "react-testing",
-      "Type": "Skill",
-      "RelativePath": "skills/react-testing/SKILL.md",
-      "TargetRelative": "config/skills/react-testing/SKILL.md",
-      "SizeBytes": 13403,
-      "SHA256": "CB41AA759A6868062526BEF6D09B1C5FFD50BBF5EECF32024AFC2BBC6EC7E89E"
-    },
-    {
-      "Id": "skill_remotion-video-agent",
-      "Name": "remotion-video-agent",
-      "Type": "Skill",
-      "RelativePath": "skills/remotion-video-agent/SKILL.md",
-      "TargetRelative": "config/skills/remotion-video-agent/SKILL.md",
-      "SizeBytes": 1060,
-      "SHA256": "F9E88693EBDE800BDAD70C6933FA50C488F25EACFF5B2A11381773AE3A4163A5"
-    },
-    {
-      "Id": "skill_site-motion-excellence-director",
-      "Name": "site-motion-excellence-director",
-      "Type": "Skill",
-      "RelativePath": "skills/site-motion-excellence-director/SKILL.md",
-      "TargetRelative": "config/skills/site-motion-excellence-director/SKILL.md",
-      "SizeBytes": 2346,
-      "SHA256": "6D9D058E3729300B28BEF577C2E699F428084FDFEE90FEC013C246AED268E100"
-    },
-    {
-      "Id": "skill_threejs-web-experience",
-      "Name": "threejs-web-experience",
-      "Type": "Skill",
-      "RelativePath": "skills/threejs-web-experience/SKILL.md",
-      "TargetRelative": "config/skills/threejs-web-experience/SKILL.md",
-      "SizeBytes": 3502,
-      "SHA256": "892D6B0FBDAB3B0FD9D40D8931E1DA99232897CAAA3EDA7048F12E904F9406EF"
-    },
-    {
-      "Id": "skill_typography-system",
-      "Name": "typography-system",
-      "Type": "Skill",
-      "RelativePath": "skills/typography-system/SKILL.md",
-      "TargetRelative": "config/skills/typography-system/SKILL.md",
-      "SizeBytes": 6046,
-      "SHA256": "539C998562E928B9C98041A57569B892A8BE112C9AB8C1A20DF6064828BA47F7"
-    },
-    {
-      "Id": "skill_user-intent-reader",
-      "Name": "user-intent-reader",
-      "Type": "Skill",
-      "RelativePath": "skills/user-intent-reader/SKILL.md",
-      "TargetRelative": "config/skills/user-intent-reader/SKILL.md",
-      "SizeBytes": 1064,
-      "SHA256": "F483DF8658D3B28C982CA6C639D9F80D43B5BB92665884B0FA01550AFDAACCAA"
-    },
-    {
-      "Id": "skill_ux-writing",
-      "Name": "ux-writing",
-      "Type": "Skill",
-      "RelativePath": "skills/ux-writing/SKILL.md",
-      "TargetRelative": "config/skills/ux-writing/SKILL.md",
-      "SizeBytes": 2470,
-      "SHA256": "BFFC85DEE3446061183F314432ABD63BFFC1E0CEA36EB4BDFC421339F5B6E35C"
-    },
-    {
-      "Id": "skill_video-to-superprompt",
-      "Name": "video-to-superprompt",
-      "Type": "Skill",
-      "RelativePath": "skills/video-to-superprompt/SKILL.md",
-      "TargetRelative": "config/skills/video-to-superprompt/SKILL.md",
-      "SizeBytes": 5314,
-      "SHA256": "C46DCCEFE1A7FA2F9911D0880A13CFD6407BF11A933C8BB19FC448E44CE474B8"
-    },
-    {
-      "Id": "skill_visual-hierarchy",
-      "Name": "visual-hierarchy",
-      "Type": "Skill",
-      "RelativePath": "skills/visual-hierarchy/SKILL.md",
-      "TargetRelative": "config/skills/visual-hierarchy/SKILL.md",
-      "SizeBytes": 6585,
-      "SHA256": "5EC3EFB851D58B44CD7CC133E0AB3AE8B419F930FEF02240AE694F2EA012B158"
-    },
-    {
-      "Id": "skill_web-legal-compliance",
-      "Name": "web-legal-compliance",
-      "Type": "Skill",
-      "RelativePath": "skills/web-legal-compliance/SKILL.md",
-      "TargetRelative": "config/skills/web-legal-compliance/SKILL.md",
-      "SizeBytes": 4187,
-      "SHA256": "7ECF032C6DB03D10AB0AEF6C21C410F03EEA29E980D4C7E9B714C32E31A43FC1"
-    },
-    {
-      "Id": "skill_web-motion-auditor",
-      "Name": "web-motion-auditor",
-      "Type": "Skill",
-      "RelativePath": "skills/web-motion-auditor/SKILL.md",
-      "TargetRelative": "config/skills/web-motion-auditor/SKILL.md",
-      "SizeBytes": 949,
-      "SHA256": "80144654A765B588E1D3647FF3E4BA17C47CC29E179D3614E40A42AB5AB6570D"
-    },
-    {
-      "Id": "skill_web-seo-mastery",
-      "Name": "web-seo-mastery",
-      "Type": "Skill",
-      "RelativePath": "skills/web-seo-mastery/SKILL.md",
-      "TargetRelative": "config/skills/web-seo-mastery/SKILL.md",
-      "SizeBytes": 3526,
-      "SHA256": "FCE91277D373ECA384BB3100AFBEABAAA98DAE4F65F83949D4C970F97AA74836"
-    },
-    {
-      "Id": "skill_zero-token-scraper-forge",
-      "Name": "zero-token-scraper-forge",
-      "Type": "Skill",
-      "RelativePath": "skills/zero-token-scraper-forge/SKILL.md",
-      "TargetRelative": "config/skills/zero-token-scraper-forge/SKILL.md",
-      "SizeBytes": 1148,
-      "SHA256": "150D20B7DE0CF6426790E97DED309E56D38FEBC36C11D370C6963672DEB5AA6D"
-    }
-  ]
+    "Version": "2.2",
+    "Engine": "NovaManifestGuardian",
+    "GeneratedAt": "2026-10-29 16:39:00",
+    "TotalComponents": 143,
+    "Components": [
+        {
+            "Id": "rule_gemini_md",
+            "Name": "GEMINI.md",
+            "Type": "Rule",
+            "RelativePath": "GEMINI.md",
+            "TargetRelative": "config/GEMINI.md",
+            "SizeBytes": 11616,
+            "SHA256": "FAECD876FB7598C1809E693CA4CDAC9F89EEF16B789D122E5C27514651A56DC0"
+        },
+        {
+            "Id": "doc_ayuda_md",
+            "Name": "AYUDA.md",
+            "Type": "Config",
+            "RelativePath": "AYUDA.md",
+            "TargetRelative": "config/AYUDA.md",
+            "SizeBytes": 4269,
+            "SHA256": "6E7350C5BD88FE3DDAD64937C91D2C8D8A00AB9AECA28881D2C389AA6553F53E"
+        },
+        {
+            "Id": "script_enviar_feedback_py",
+            "Name": "enviar_feedback.py",
+            "Type": "Script",
+            "RelativePath": "scripts/enviar_feedback.py",
+            "TargetRelative": "antigravity/scripts/enviar_feedback.py",
+            "SizeBytes": 3749,
+            "SHA256": "958592DC5D83D14911BACBD8B2FC10C0CEFEA913A17E87BEF262C03FC4DEAD64"
+        },
+        {
+            "Id": "script_nova_awake_sentinel_py",
+            "Name": "nova_awake_sentinel.py",
+            "Type": "Script",
+            "RelativePath": "scripts/nova_awake_sentinel.py",
+            "TargetRelative": "antigravity/scripts/nova_awake_sentinel.py",
+            "SizeBytes": 6493,
+            "SHA256": "8BAF71FE077A85ADA426DA351619CF181C784CF75990EC57EAB3CBA7343F0C2A"
+        },
+        {
+            "Id": "script_nova_buffer_guardian_py",
+            "Name": "nova_buffer_guardian.py",
+            "Type": "Script",
+            "RelativePath": "scripts/nova_buffer_guardian.py",
+            "TargetRelative": "antigravity/scripts/nova_buffer_guardian.py",
+            "SizeBytes": 15254,
+            "SHA256": "FBC3C0FEE9CA8D8BFD8036DB584103C40D2953730BC1EE46195FC3E428E75454"
+        },
+        {
+            "Id": "script_nova_buffer_guardian_sh",
+            "Name": "nova_buffer_guardian.sh",
+            "Type": "Script",
+            "RelativePath": "scripts/nova_buffer_guardian.sh",
+            "TargetRelative": "antigravity/scripts/nova_buffer_guardian.sh",
+            "SizeBytes": 839,
+            "SHA256": "CEA3C1A6F9F38461ED089748DD99BF912B58B00E0F1D91A137654941714FF4AF"
+        },
+        {
+            "Id": "script_nova_cost_logger_py",
+            "Name": "nova_cost_logger.py",
+            "Type": "Script",
+            "RelativePath": "scripts/nova_cost_logger.py",
+            "TargetRelative": "antigravity/scripts/nova_cost_logger.py",
+            "SizeBytes": 7660,
+            "SHA256": "E6A22CFA0EA5CEEA48921D568CB7E653A41A096D86C07458F28382D02B136BCF"
+        },
+        {
+            "Id": "script_nova_local_worker_py",
+            "Name": "nova_local_worker.py",
+            "Type": "Script",
+            "RelativePath": "scripts/nova_local_worker.py",
+            "TargetRelative": "antigravity/scripts/nova_local_worker.py",
+            "SizeBytes": 7226,
+            "SHA256": "6D785221F1A5A6418CD1E805B4843E6EFF6FF743389F8E4DA8C5E28B0730F759"
+        },
+        {
+            "Id": "script_nova_voice_lite_py",
+            "Name": "nova_voice_lite.py",
+            "Type": "Script",
+            "RelativePath": "scripts/nova_voice_lite.py",
+            "TargetRelative": "antigravity/scripts/nova_voice_lite.py",
+            "SizeBytes": 1852,
+            "SHA256": "F64BAFBC7AE03A59613BB942DD728DA66B96F90215B0A109595CE80CFBCAF61A"
+        },
+        {
+            "Id": "script_start_awake_sentinel_vbs",
+            "Name": "start_awake_sentinel.vbs",
+            "Type": "Script",
+            "RelativePath": "scripts/start_awake_sentinel.vbs",
+            "TargetRelative": "antigravity/scripts/start_awake_sentinel.vbs",
+            "SizeBytes": 143,
+            "SHA256": "622F8EDD48DA6E0152C9EECDD3145B3B1DB5A81FB2417B7CB26E6140327478F1"
+        },
+        {
+            "Id": "script_free_ai_router_py",
+            "Name": "free_ai_router.py",
+            "Type": "Script",
+            "RelativePath": "scripts/scrapers/free_ai_router.py",
+            "TargetRelative": "antigravity/scripts/scrapers/free_ai_router.py",
+            "SizeBytes": 5135,
+            "SHA256": "969B746E29AE9511D40D4A9F0E3B62C0325D5D2BB7577CEB7D4CFE427061BE8F"
+        },
+        {
+            "Id": "script_youtube_api_client_py",
+            "Name": "youtube_api_client.py",
+            "Type": "Script",
+            "RelativePath": "scripts/scrapers/youtube_api_client.py",
+            "TargetRelative": "antigravity/scripts/scrapers/youtube_api_client.py",
+            "SizeBytes": 3084,
+            "SHA256": "5CCCB1BB05FBF07945BD5AF85152251F074544D5B173238B6125677A7613E01A"
+        },
+        {
+            "Id": "template_gimnasio_template_md",
+            "Name": "gimnasio.template.md",
+            "Type": "Template",
+            "RelativePath": "memory_templates/gimnasio.template.md",
+            "TargetRelative": "antigravity/memory/gimnasio.template.md",
+            "SizeBytes": 7072,
+            "SHA256": "660A10812E59458F7A3DBE808CF5ED454E2CCA6B41C870C17A0C732DDAC300A5"
+        },
+        {
+            "Id": "template_learnings_template_md",
+            "Name": "learnings.template.md",
+            "Type": "Template",
+            "RelativePath": "memory_templates/learnings.template.md",
+            "TargetRelative": "antigravity/memory/learnings.template.md",
+            "SizeBytes": 2195,
+            "SHA256": "DDABDC7751A2B0F70619749067C5241024D001A52040D92DDA50ACAC158C02AE"
+        },
+        {
+            "Id": "template_napkin_template_md",
+            "Name": "napkin.template.md",
+            "Type": "Template",
+            "RelativePath": "memory_templates/napkin.template.md",
+            "TargetRelative": "antigravity/memory/napkin.template.md",
+            "SizeBytes": 5398,
+            "SHA256": "E3BC3B81187A6C38C562786E0EB124A26034D009FE2732B558A10C90AC1BAFFA"
+        },
+        {
+            "Id": "template_perfil_usuario_json",
+            "Name": "perfil_usuario.json",
+            "Type": "Template",
+            "RelativePath": "memory_templates/perfil_usuario.json",
+            "TargetRelative": "antigravity/memory/perfil_usuario.json",
+            "SizeBytes": 190,
+            "SHA256": "5A138587697C2E8DB9AD46E63EAE6E123D44A83C5C9D531A1955434B8C6B37C3"
+        },
+        {
+            "Id": "template_protocolo_costos_nova_claude_md",
+            "Name": "protocolo_costos_nova_claude.md",
+            "Type": "Template",
+            "RelativePath": "memory_templates/protocolo_costos_nova_claude.md",
+            "TargetRelative": "antigravity/memory/protocolo_costos_nova_claude.md",
+            "SizeBytes": 3517,
+            "SHA256": "60D872AAAE2D0BAC4B1C723141AB0A0D7565D7C3C4806065D0479C61DD0CB31C"
+        },
+        {
+            "Id": "template_tasks_template_md",
+            "Name": "tasks.template.md",
+            "Type": "Template",
+            "RelativePath": "memory_templates/tasks.template.md",
+            "TargetRelative": "antigravity/memory/tasks.template.md",
+            "SizeBytes": 349,
+            "SHA256": "D868F7EC1ACA27608F76C2E6923FA35D957F43E8066D61768A1E2E07C5E85C0E"
+        },
+        {
+            "Id": "skill_agent_introspection_debugging",
+            "Name": "agent-introspection-debugging",
+            "Type": "Skill",
+            "RelativePath": "skills/agent-introspection-debugging",
+            "TargetRelative": "config/skills/agent-introspection-debugging",
+            "SizeBytes": 5512,
+            "SHA256": "FFF7F445327F52B93E99C85903ECC423C53A9F40FDFC149432D88ACAA78B53EB"
+        },
+        {
+            "Id": "skill_agent_security_hardening",
+            "Name": "agent-security-hardening",
+            "Type": "Skill",
+            "RelativePath": "skills/agent-security-hardening",
+            "TargetRelative": "config/skills/agent-security-hardening",
+            "SizeBytes": 10410,
+            "SHA256": "CE374B4BB2F1C39C25002AEB3FC6AC6F892CFF4786A99A4A7D2D5C1458332951"
+        },
+        {
+            "Id": "skill_agentic_engineering",
+            "Name": "agentic-engineering",
+            "Type": "Skill",
+            "RelativePath": "skills/agentic-engineering",
+            "TargetRelative": "config/skills/agentic-engineering",
+            "SizeBytes": 1735,
+            "SHA256": "110A58363F6D5A6C8DE3514CE71E0AB61CE7342D53559220785A31C7F4784AFB"
+        },
+        {
+            "Id": "skill_ai_deploy_advisor",
+            "Name": "ai-deploy-advisor",
+            "Type": "Skill",
+            "RelativePath": "skills/ai-deploy-advisor",
+            "TargetRelative": "config/skills/ai-deploy-advisor",
+            "SizeBytes": 2918,
+            "SHA256": "262EB0EBC1402622E59E487C25BF8A3B9EE04742F9B62CD1D890BC5FC0807A59"
+        },
+        {
+            "Id": "skill_api_design",
+            "Name": "api-design",
+            "Type": "Skill",
+            "RelativePath": "skills/api-design",
+            "TargetRelative": "config/skills/api-design",
+            "SizeBytes": 13064,
+            "SHA256": "32E17C647E13D2769CBE317BB1D0AE3194E1468CA36EE7E2B5CD342CD9C7A257"
+        },
+        {
+            "Id": "skill_architecture_decision_records",
+            "Name": "architecture-decision-records",
+            "Type": "Skill",
+            "RelativePath": "skills/architecture-decision-records",
+            "TargetRelative": "config/skills/architecture-decision-records",
+            "SizeBytes": 6961,
+            "SHA256": "00330C023B892DA387C064538F85ACFEFECE8F3629CE28B087F5800ECEA4FFA3"
+        },
+        {
+            "Id": "skill_autonomous_loops",
+            "Name": "autonomous-loops",
+            "Type": "Skill",
+            "RelativePath": "skills/autonomous-loops",
+            "TargetRelative": "config/skills/autonomous-loops",
+            "SizeBytes": 24704,
+            "SHA256": "32A11CE0CB59E5E9198F032F66216BAAD180D791DC4A1AB25A908EA5A2FA82EA"
+        },
+        {
+            "Id": "skill_backend_patterns",
+            "Name": "backend-patterns",
+            "Type": "Skill",
+            "RelativePath": "skills/backend-patterns",
+            "TargetRelative": "config/skills/backend-patterns",
+            "SizeBytes": 13213,
+            "SHA256": "9E553DFA63B69A02EC0D4B9EAFC522D9FF7F9C473E49A3A69F335787652DBF43"
+        },
+        {
+            "Id": "skill_benchmark_optimization_loop",
+            "Name": "benchmark-optimization-loop",
+            "Type": "Skill",
+            "RelativePath": "skills/benchmark-optimization-loop",
+            "TargetRelative": "config/skills/benchmark-optimization-loop",
+            "SizeBytes": 2331,
+            "SHA256": "6D59DD32E4C376A2859F66AD485DEC5BD154B7DB6C702353B1409D1A8047AB8B"
+        },
+        {
+            "Id": "skill_brand_design",
+            "Name": "brand-design",
+            "Type": "Skill",
+            "RelativePath": "skills/brand-design",
+            "TargetRelative": "config/skills/brand-design",
+            "SizeBytes": 17052,
+            "SHA256": "D78FCE6FBFAF1A8F5588740F4B28B6599D16F3FC81CD7755BB6DF82FDBA3F7AE"
+        },
+        {
+            "Id": "skill_brand_guidelines",
+            "Name": "brand-guidelines",
+            "Type": "Skill",
+            "RelativePath": "skills/brand-guidelines",
+            "TargetRelative": "config/skills/brand-guidelines",
+            "SizeBytes": 3270,
+            "SHA256": "D30780B1E9D802359B55B9031BC7A007ABF375FD693AB1F0A772D1024FB86EA1"
+        },
+        {
+            "Id": "skill_brand_identity",
+            "Name": "brand-identity",
+            "Type": "Skill",
+            "RelativePath": "skills/brand-identity",
+            "TargetRelative": "config/skills/brand-identity",
+            "SizeBytes": 4673,
+            "SHA256": "6E17F4B3B591F3224B49FECFC3AD996017B8EC148D0E8976B062A065A4CD72DC"
+        },
+        {
+            "Id": "skill_brand_md",
+            "Name": "brand-md",
+            "Type": "Skill",
+            "RelativePath": "skills/brand-md",
+            "TargetRelative": "config/skills/brand-md",
+            "SizeBytes": 3538,
+            "SHA256": "EC21EDC9E805013824992563AD05C4CF86CCEC5EBD2F86F7958B8FB177DAF324"
+        },
+        {
+            "Id": "skill_brand_naming",
+            "Name": "brand-naming",
+            "Type": "Skill",
+            "RelativePath": "skills/brand-naming",
+            "TargetRelative": "config/skills/brand-naming",
+            "SizeBytes": 6432,
+            "SHA256": "C7530F526C360F5ACD4FDE277A17BA65EFE6192A078F4C8C1CEAA64814CFE641"
+        },
+        {
+            "Id": "skill_brand_to_design_md",
+            "Name": "brand-to-design-md",
+            "Type": "Skill",
+            "RelativePath": "skills/brand-to-design-md",
+            "TargetRelative": "config/skills/brand-to-design-md",
+            "SizeBytes": 4893,
+            "SHA256": "05097AB6EFE9C814F6C17F295CED79E944B66FE379CC364BA4E20181AC2B37FE"
+        },
+        {
+            "Id": "skill_build_awwwards_quality_sites",
+            "Name": "build-awwwards-quality-sites",
+            "Type": "Skill",
+            "RelativePath": "skills/build-awwwards-quality-sites",
+            "TargetRelative": "config/skills/build-awwwards-quality-sites",
+            "SizeBytes": 6842,
+            "SHA256": "275C6EBDC6E054ED8914DA9BD75F7CA43E8EF9BF108783825EECD277E67E25BD"
+        },
+        {
+            "Id": "skill_business_operations_coo",
+            "Name": "business-operations-coo",
+            "Type": "Skill",
+            "RelativePath": "skills/business-operations-coo",
+            "TargetRelative": "config/skills/business-operations-coo",
+            "SizeBytes": 1573,
+            "SHA256": "7F90C829331B94903FFA3E12D7106F6C710C150825AE3BE2EFB991DE3096A7FE"
+        },
+        {
+            "Id": "skill_cinematic_gsap_lenis_motion_system",
+            "Name": "cinematic-gsap-lenis-motion-system",
+            "Type": "Skill",
+            "RelativePath": "skills/cinematic-gsap-lenis-motion-system",
+            "TargetRelative": "config/skills/cinematic-gsap-lenis-motion-system",
+            "SizeBytes": 17397,
+            "SHA256": "368742463DB06D4986AC5D68A86C4BBAE89EB55A91A8BE4FE1EB87E9523D1F15"
+        },
+        {
+            "Id": "skill_cisco_network_architect",
+            "Name": "cisco-network-architect",
+            "Type": "Skill",
+            "RelativePath": "skills/cisco-network-architect",
+            "TargetRelative": "config/skills/cisco-network-architect",
+            "SizeBytes": 3142,
+            "SHA256": "7E0007CEEE1DB5B038294B6EA3B6DB22D457EE1403DDC5FFC566509C78792843"
+        },
+        {
+            "Id": "skill_color_palette_builder",
+            "Name": "color-palette-builder",
+            "Type": "Skill",
+            "RelativePath": "skills/color-palette-builder",
+            "TargetRelative": "config/skills/color-palette-builder",
+            "SizeBytes": 7005,
+            "SHA256": "12AC88EA053CFFCFC55B37FFB29CF446DF0669639CCCB4EB7E0BDE3A75EBCE10"
+        },
+        {
+            "Id": "skill_commercial_legal_counsel",
+            "Name": "commercial-legal-counsel",
+            "Type": "Skill",
+            "RelativePath": "skills/commercial-legal-counsel",
+            "TargetRelative": "config/skills/commercial-legal-counsel",
+            "SizeBytes": 1442,
+            "SHA256": "D173B72FF33E8780084F57F215E9D3074893074A4D4778AC7096CD95527364B3"
+        },
+        {
+            "Id": "skill_council",
+            "Name": "council",
+            "Type": "Skill",
+            "RelativePath": "skills/council",
+            "TargetRelative": "config/skills/council",
+            "SizeBytes": 6292,
+            "SHA256": "EAD7DC1EFC8DEC9B2A019CD0C0A4F90F9B9322A8619F067C9CF887A40D24A992"
+        },
+        {
+            "Id": "skill_council_multi_model",
+            "Name": "council-multi-model",
+            "Type": "Skill",
+            "RelativePath": "skills/council-multi-model",
+            "TargetRelative": "config/skills/council-multi-model",
+            "SizeBytes": 5669,
+            "SHA256": "47F4741CA07AC5E30841AC76E9398958A08876BDD83E64D3246F9374D055C27A"
+        },
+        {
+            "Id": "skill_cursorrules_advisor",
+            "Name": "cursorrules-advisor",
+            "Type": "Skill",
+            "RelativePath": "skills/cursorrules-advisor",
+            "TargetRelative": "config/skills/cursorrules-advisor",
+            "SizeBytes": 1743,
+            "SHA256": "4FC6E5F3CD91EF491B6E5670E1222F0C4A1A8ED0D738348F89C100D90A622C77"
+        },
+        {
+            "Id": "skill_database_migrations",
+            "Name": "database-migrations",
+            "Type": "Skill",
+            "RelativePath": "skills/database-migrations",
+            "TargetRelative": "config/skills/database-migrations",
+            "SizeBytes": 11750,
+            "SHA256": "CF2FA56E9B8AB3E3605D7B6A60C255158E4524D5F425A989F870FCA1E5302A2F"
+        },
+        {
+            "Id": "skill_dependency_time_traveler",
+            "Name": "dependency-time-traveler",
+            "Type": "Skill",
+            "RelativePath": "skills/dependency-time-traveler",
+            "TargetRelative": "config/skills/dependency-time-traveler",
+            "SizeBytes": 1127,
+            "SHA256": "F7780825C8C9EDF74ADCC18999384F11BC86D699A7923CF7323561097654C027"
+        },
+        {
+            "Id": "skill_deployment_patterns",
+            "Name": "deployment-patterns",
+            "Type": "Skill",
+            "RelativePath": "skills/deployment-patterns",
+            "TargetRelative": "config/skills/deployment-patterns",
+            "SizeBytes": 10946,
+            "SHA256": "DB40E1CEF3829166D1EB029E7CFAC75030F29B9955E50E61F187D3CD240F2BBC"
+        },
+        {
+            "Id": "skill_design_critique",
+            "Name": "design-critique",
+            "Type": "Skill",
+            "RelativePath": "skills/design-critique",
+            "TargetRelative": "config/skills/design-critique",
+            "SizeBytes": 4188,
+            "SHA256": "2CB785FA0E89E5606CC9EB4BD3EECF38AE59B153606A69D8711458F7BCB35506"
+        },
+        {
+            "Id": "skill_design_doctrine",
+            "Name": "design-doctrine",
+            "Type": "Skill",
+            "RelativePath": "skills/design-doctrine",
+            "TargetRelative": "config/skills/design-doctrine",
+            "SizeBytes": 9318,
+            "SHA256": "FFE09A78535A60F69B14693DD6AF880F29FDD49744319F330A4533C5BC3D9146"
+        },
+        {
+            "Id": "skill_design_qa",
+            "Name": "design-qa",
+            "Type": "Skill",
+            "RelativePath": "skills/design-qa",
+            "TargetRelative": "config/skills/design-qa",
+            "SizeBytes": 2372,
+            "SHA256": "7F15ECCE87CC026CF50CE515A122FBB8C85C3DB69D05606D6F9B691B6E572BA1"
+        },
+        {
+            "Id": "skill_design_system",
+            "Name": "design-system",
+            "Type": "Skill",
+            "RelativePath": "skills/design-system",
+            "TargetRelative": "config/skills/design-system",
+            "SizeBytes": 2479,
+            "SHA256": "3A85BD78BBBA4174B67052D0DEC21492A1630C0A5FD8BC51FF7ABF67C46FC57E"
+        },
+        {
+            "Id": "skill_docker_patterns",
+            "Name": "docker-patterns",
+            "Type": "Skill",
+            "RelativePath": "skills/docker-patterns",
+            "TargetRelative": "config/skills/docker-patterns",
+            "SizeBytes": 16594,
+            "SHA256": "ED40AEE1805552F1ED62189C4E70F6F5C1FE387DE8F7E212E6915E33F4296BC8"
+        },
+        {
+            "Id": "skill_embedded_robotics_maker",
+            "Name": "embedded-robotics-maker",
+            "Type": "Skill",
+            "RelativePath": "skills/embedded-robotics-maker",
+            "TargetRelative": "config/skills/embedded-robotics-maker",
+            "SizeBytes": 3710,
+            "SHA256": "3DBAED98FB4953CBB0EAEF16921BF45E180869B938909032D2075738D59F9E5D"
+        },
+        {
+            "Id": "skill_fastapi_patterns",
+            "Name": "fastapi-patterns",
+            "Type": "Skill",
+            "RelativePath": "skills/fastapi-patterns",
+            "TargetRelative": "config/skills/fastapi-patterns",
+            "SizeBytes": 15422,
+            "SHA256": "EAFB7FB4990BF1EFE3165DEDAC4E8F485B702649B8B927894CC910B795B10A7B"
+        },
+        {
+            "Id": "skill_ffmpeg_toolkit",
+            "Name": "ffmpeg-toolkit",
+            "Type": "Skill",
+            "RelativePath": "skills/ffmpeg-toolkit",
+            "TargetRelative": "config/skills/ffmpeg-toolkit",
+            "SizeBytes": 1322,
+            "SHA256": "84DF02D54D08B1D8F51FB4C4F5FB9B2F2813967778EDF9508C49B697B39CA6DB"
+        },
+        {
+            "Id": "skill_find_skills",
+            "Name": "find-skills",
+            "Type": "Skill",
+            "RelativePath": "skills/find-skills",
+            "TargetRelative": "config/skills/find-skills",
+            "SizeBytes": 1221,
+            "SHA256": "C3BF2EA0FCFC4AAC0959A1A86EAB7A29223B2ED8327E4F6F590A139FA1CA3B9E"
+        },
+        {
+            "Id": "skill_frontend_a11y",
+            "Name": "frontend-a11y",
+            "Type": "Skill",
+            "RelativePath": "skills/frontend-a11y",
+            "TargetRelative": "config/skills/frontend-a11y",
+            "SizeBytes": 12636,
+            "SHA256": "6AEF3E67FABB943087F0E13C4F1FBF060B13823A33DD19420A9ED24D0669101E"
+        },
+        {
+            "Id": "skill_frontend_design_direction",
+            "Name": "frontend-design-direction",
+            "Type": "Skill",
+            "RelativePath": "skills/frontend-design-direction",
+            "TargetRelative": "config/skills/frontend-design-direction",
+            "SizeBytes": 8663,
+            "SHA256": "2075CB068C297F00486E2509E64FC3171CA7C8704399F785370578C3BBA9F32D"
+        },
+        {
+            "Id": "skill_frontend_patterns",
+            "Name": "frontend-patterns",
+            "Type": "Skill",
+            "RelativePath": "skills/frontend-patterns",
+            "TargetRelative": "config/skills/frontend-patterns",
+            "SizeBytes": 15328,
+            "SHA256": "41534FE2B071E6B45E24E8B50270E6F4E780703374FC13E151774255EECE34DE"
+        },
+        {
+            "Id": "skill_gemini_brand_tokens",
+            "Name": "gemini-brand-tokens",
+            "Type": "Skill",
+            "RelativePath": "skills/gemini-brand-tokens",
+            "TargetRelative": "config/skills/gemini-brand-tokens",
+            "SizeBytes": 3439,
+            "SHA256": "65D61FB111E56ACBAD281DBFAAD84645B2F34542E1804848541B1E8CC4360F11"
+        },
+        {
+            "Id": "skill_gemini_brave_sentinel",
+            "Name": "gemini-brave-sentinel",
+            "Type": "Skill",
+            "RelativePath": "skills/gemini-brave-sentinel",
+            "TargetRelative": "config/skills/gemini-brave-sentinel",
+            "SizeBytes": 2389,
+            "SHA256": "54AEE8946B86E6BC455AB63A679963446633598A5B05504F4BD6EADF8A505793"
+        },
+        {
+            "Id": "skill_gemini_chaos_qa",
+            "Name": "gemini-chaos-qa",
+            "Type": "Skill",
+            "RelativePath": "skills/gemini-chaos-qa",
+            "TargetRelative": "config/skills/gemini-chaos-qa",
+            "SizeBytes": 4247,
+            "SHA256": "ED298F5D76E604087B1A97DAB429322D15A7F00C65C07589D02C8729BF201300"
+        },
+        {
+            "Id": "skill_gemini_clean_architecture",
+            "Name": "gemini-clean-architecture",
+            "Type": "Skill",
+            "RelativePath": "skills/gemini-clean-architecture",
+            "TargetRelative": "config/skills/gemini-clean-architecture",
+            "SizeBytes": 1295,
+            "SHA256": "DF207B94C200157E44C67C79F1BF7FAA22F074780FC172B766AACD74E4B32B50"
+        },
+        {
+            "Id": "skill_gemini_concise_clean_code",
+            "Name": "gemini-concise-clean-code",
+            "Type": "Skill",
+            "RelativePath": "skills/gemini-concise-clean-code",
+            "TargetRelative": "config/skills/gemini-concise-clean-code",
+            "SizeBytes": 2212,
+            "SHA256": "34D1430D6240FB1E8A3C19F4A45194C689C5796D459FB6F169F6349BF0EECE86"
+        },
+        {
+            "Id": "skill_gemini_concise_voice",
+            "Name": "gemini-concise-voice",
+            "Type": "Skill",
+            "RelativePath": "skills/gemini-concise-voice",
+            "TargetRelative": "config/skills/gemini-concise-voice",
+            "SizeBytes": 1910,
+            "SHA256": "EEC452EC38FC1A866F41257FCF05921A897D14F002813BA6860853CF274D7641"
+        },
+        {
+            "Id": "skill_gemini_continuous_learner",
+            "Name": "gemini-continuous-learner",
+            "Type": "Skill",
+            "RelativePath": "skills/gemini-continuous-learner",
+            "TargetRelative": "config/skills/gemini-continuous-learner",
+            "SizeBytes": 3221,
+            "SHA256": "6454E8B21C5C2D737CC2243AE88B808E0CD1895B7062635143996833F9A32D95"
+        },
+        {
+            "Id": "skill_gemini_daily_briefing",
+            "Name": "gemini-daily-briefing",
+            "Type": "Skill",
+            "RelativePath": "skills/gemini-daily-briefing",
+            "TargetRelative": "config/skills/gemini-daily-briefing",
+            "SizeBytes": 2694,
+            "SHA256": "98A34F8DF69C13D4C19A8F3653230F96A68166B2CD6057858AD4796BAC477CAB"
+        },
+        {
+            "Id": "skill_gemini_database_mastery",
+            "Name": "gemini-database-mastery",
+            "Type": "Skill",
+            "RelativePath": "skills/gemini-database-mastery",
+            "TargetRelative": "config/skills/gemini-database-mastery",
+            "SizeBytes": 2189,
+            "SHA256": "BC4E276719A2D1E199ECFBB6DE2D01B272F46436BE162BADD9122C9F500E70D1"
+        },
+        {
+            "Id": "skill_gemini_git_guardian",
+            "Name": "gemini-git-guardian",
+            "Type": "Skill",
+            "RelativePath": "skills/gemini-git-guardian",
+            "TargetRelative": "config/skills/gemini-git-guardian",
+            "SizeBytes": 2471,
+            "SHA256": "AB907ECFF91EB035A64EB9090C5D0591B282E58D7C46DDB92075EDC6D01D463D"
+        },
+        {
+            "Id": "skill_gemini_humanizer_prose",
+            "Name": "gemini-humanizer-prose",
+            "Type": "Skill",
+            "RelativePath": "skills/gemini-humanizer-prose",
+            "TargetRelative": "config/skills/gemini-humanizer-prose",
+            "SizeBytes": 2625,
+            "SHA256": "13D305D632008A86896D7E8DE3FD4CCE40F6D8F591A2501EF88D3EB7AFA100F8"
+        },
+        {
+            "Id": "skill_gemini_lecture_transcriber",
+            "Name": "gemini-lecture-transcriber",
+            "Type": "Skill",
+            "RelativePath": "skills/gemini-lecture-transcriber",
+            "TargetRelative": "config/skills/gemini-lecture-transcriber",
+            "SizeBytes": 2116,
+            "SHA256": "27563624FE38060A8785CAAAEE27DBC2CAAD559AF5D9F346DE4927AB04817061"
+        },
+        {
+            "Id": "skill_gemini_mcp_app",
+            "Name": "gemini-mcp-app",
+            "Type": "Skill",
+            "RelativePath": "skills/gemini-mcp-app",
+            "TargetRelative": "config/skills/gemini-mcp-app",
+            "SizeBytes": 19052,
+            "SHA256": "2B410C3FD33F6AF1E6B980FB21DDE157035D11E3A55A2FFE0C5EE02C3032C020"
+        },
+        {
+            "Id": "skill_gemini_mem",
+            "Name": "gemini-mem",
+            "Type": "Skill",
+            "RelativePath": "skills/gemini-mem",
+            "TargetRelative": "config/skills/gemini-mem",
+            "SizeBytes": 3601,
+            "SHA256": "8CF4A69A56DD4872E8BBC58DDB849B553FD5FC01716107189DC02B88565A1A19"
+        },
+        {
+            "Id": "skill_gemini_military_cybersec",
+            "Name": "gemini-military-cybersec",
+            "Type": "Skill",
+            "RelativePath": "skills/gemini-military-cybersec",
+            "TargetRelative": "config/skills/gemini-military-cybersec",
+            "SizeBytes": 1508,
+            "SHA256": "5CD72A39D75BF24CE6587946D6A629EF1F1CBDB802DE1814070FA295375AF1F7"
+        },
+        {
+            "Id": "skill_gemini_motion_artifacts",
+            "Name": "gemini-motion-artifacts",
+            "Type": "Skill",
+            "RelativePath": "skills/gemini-motion-artifacts",
+            "TargetRelative": "config/skills/gemini-motion-artifacts",
+            "SizeBytes": 6262,
+            "SHA256": "0921F0AF71A969C744210FF5C0AABD8515BC71919A99F1FB1E9323BEC0871CD6"
+        },
+        {
+            "Id": "skill_gemini_multiagent_router",
+            "Name": "gemini-multiagent-router",
+            "Type": "Skill",
+            "RelativePath": "skills/gemini-multiagent-router",
+            "TargetRelative": "config/skills/gemini-multiagent-router",
+            "SizeBytes": 3798,
+            "SHA256": "EDAC76D0398E1819627DF9F6E7D58547761B4BA6C1EC523FB2FDF598A9E88DB8"
+        },
+        {
+            "Id": "skill_gemini_omniroute_manager",
+            "Name": "gemini-omniroute-manager",
+            "Type": "Skill",
+            "RelativePath": "skills/gemini-omniroute-manager",
+            "TargetRelative": "config/skills/gemini-omniroute-manager",
+            "SizeBytes": 1521,
+            "SHA256": "9BAE69577A7731EDFBFCDE0ED0B2936DA471308CC92FBE5939FF7D9828340A79"
+        },
+        {
+            "Id": "skill_gemini_owasp_sentinel",
+            "Name": "gemini-owasp-sentinel",
+            "Type": "Skill",
+            "RelativePath": "skills/gemini-owasp-sentinel",
+            "TargetRelative": "config/skills/gemini-owasp-sentinel",
+            "SizeBytes": 1426,
+            "SHA256": "9F1DA194D66669B449DC481550A3314FA1AA6FE92C3C02F95DDB3AE95D8226EB"
+        },
+        {
+            "Id": "skill_gemini_playwright_tester",
+            "Name": "gemini-playwright-tester",
+            "Type": "Skill",
+            "RelativePath": "skills/gemini-playwright-tester",
+            "TargetRelative": "config/skills/gemini-playwright-tester",
+            "SizeBytes": 15455,
+            "SHA256": "8EA1C36D921550E58B91B16400BF8FDDD1D01C2BCC7CBAC0F7745319D7752E45"
+        },
+        {
+            "Id": "skill_gemini_prompt_distiller",
+            "Name": "gemini-prompt-distiller",
+            "Type": "Skill",
+            "RelativePath": "skills/gemini-prompt-distiller",
+            "TargetRelative": "config/skills/gemini-prompt-distiller",
+            "SizeBytes": 2413,
+            "SHA256": "2BAAB078AD7F6EFD5CA66ABF802D48916B199EC6CBE6473EDECF33FF75D059D1"
+        },
+        {
+            "Id": "skill_gemini_reverse_engineering",
+            "Name": "gemini-reverse-engineering",
+            "Type": "Skill",
+            "RelativePath": "skills/gemini-reverse-engineering",
+            "TargetRelative": "config/skills/gemini-reverse-engineering",
+            "SizeBytes": 1062,
+            "SHA256": "211A4B6F4A26F2FD20498AAFA41C939E04860F8C05AABFC6F791C1F386856610"
+        },
+        {
+            "Id": "skill_gemini_runbook_napkin",
+            "Name": "gemini-runbook-napkin",
+            "Type": "Skill",
+            "RelativePath": "skills/gemini-runbook-napkin",
+            "TargetRelative": "config/skills/gemini-runbook-napkin",
+            "SizeBytes": 2428,
+            "SHA256": "1113DACDE1724EEBC9AEBD3DC051E68CA1C91F7B48C660D24A94D29FF3A984C1"
+        },
+        {
+            "Id": "skill_gemini_safe_refactor",
+            "Name": "gemini-safe-refactor",
+            "Type": "Skill",
+            "RelativePath": "skills/gemini-safe-refactor",
+            "TargetRelative": "config/skills/gemini-safe-refactor",
+            "SizeBytes": 2713,
+            "SHA256": "785DD75BC18B237B39F8FA2C59195464C1AB7F3561D38EDEF7AF8982467FB181"
+        },
+        {
+            "Id": "skill_gemini_security_bastion",
+            "Name": "gemini-security-bastion",
+            "Type": "Skill",
+            "RelativePath": "skills/gemini-security-bastion",
+            "TargetRelative": "config/skills/gemini-security-bastion",
+            "SizeBytes": 4471,
+            "SHA256": "CCFD482E04216914B0008E9A6F494F52796E15578D7E138E77F0AB2EF9D616B0"
+        },
+        {
+            "Id": "skill_gemini_skill_architect",
+            "Name": "gemini-skill-architect",
+            "Type": "Skill",
+            "RelativePath": "skills/gemini-skill-architect",
+            "TargetRelative": "config/skills/gemini-skill-architect",
+            "SizeBytes": 3646,
+            "SHA256": "FE272460CFC86AE2FF18AE3ACB3D71F2FC55A54420BF6ECB135A680E6AC1D3F3"
+        },
+        {
+            "Id": "skill_gemini_stack_advisor",
+            "Name": "gemini-stack-advisor",
+            "Type": "Skill",
+            "RelativePath": "skills/gemini-stack-advisor",
+            "TargetRelative": "config/skills/gemini-stack-advisor",
+            "SizeBytes": 4798,
+            "SHA256": "36F7E6066048805F804034055DC5E6F00511487A8E8B6043A1D4C0FA7F01C23B"
+        },
+        {
+            "Id": "skill_gemini_stride_security",
+            "Name": "gemini-stride-security",
+            "Type": "Skill",
+            "RelativePath": "skills/gemini-stride-security",
+            "TargetRelative": "config/skills/gemini-stride-security",
+            "SizeBytes": 2272,
+            "SHA256": "540102F67ED042F29CD3ED691EF34F313034BF1E204E2449B802D3FF3D1F209C"
+        },
+        {
+            "Id": "skill_gemini_supabase_security",
+            "Name": "gemini-supabase-security",
+            "Type": "Skill",
+            "RelativePath": "skills/gemini-supabase-security",
+            "TargetRelative": "config/skills/gemini-supabase-security",
+            "SizeBytes": 3188,
+            "SHA256": "0CADCC4A165E6A506335B9A0277D7CC5879FF59131CF1D6FFDB4D0B2EA7F048C"
+        },
+        {
+            "Id": "skill_gemini_superpowers_engine",
+            "Name": "gemini-superpowers-engine",
+            "Type": "Skill",
+            "RelativePath": "skills/gemini-superpowers-engine",
+            "TargetRelative": "config/skills/gemini-superpowers-engine",
+            "SizeBytes": 2462,
+            "SHA256": "4626442F144EAB37459C3B83A668144B14BA4B45CDEC693003A9AB6D6750069F"
+        },
+        {
+            "Id": "skill_gemini_system_architect",
+            "Name": "gemini-system-architect",
+            "Type": "Skill",
+            "RelativePath": "skills/gemini-system-architect",
+            "TargetRelative": "config/skills/gemini-system-architect",
+            "SizeBytes": 4097,
+            "SHA256": "CE5BB8761410CDEA36B67F1EB1CC88AB47730CB2FD0355593005F0FDA0E80681"
+        },
+        {
+            "Id": "skill_gemini_systematic_debugger",
+            "Name": "gemini-systematic-debugger",
+            "Type": "Skill",
+            "RelativePath": "skills/gemini-systematic-debugger",
+            "TargetRelative": "config/skills/gemini-systematic-debugger",
+            "SizeBytes": 1684,
+            "SHA256": "E9D7A884FE277B90C50F3E78DCB24167608177833E638B3FA5A8F976AC5F57EF"
+        },
+        {
+            "Id": "skill_gemini_tdd_enforcer",
+            "Name": "gemini-tdd-enforcer",
+            "Type": "Skill",
+            "RelativePath": "skills/gemini-tdd-enforcer",
+            "TargetRelative": "config/skills/gemini-tdd-enforcer",
+            "SizeBytes": 2049,
+            "SHA256": "1339A449ADF2ED6E57D4A891CBA22D7331DA5FFC8C03D2C3B47DCACBE6311A89"
+        },
+        {
+            "Id": "skill_gemini_ui_artisan",
+            "Name": "gemini-ui-artisan",
+            "Type": "Skill",
+            "RelativePath": "skills/gemini-ui-artisan",
+            "TargetRelative": "config/skills/gemini-ui-artisan",
+            "SizeBytes": 37680,
+            "SHA256": "B2CF317EE1E653C4C96D3D2FBF2AFB65D74D6684544E19FECB3E9CBE6313D8D8"
+        },
+        {
+            "Id": "skill_gemini_ui_guidelines",
+            "Name": "gemini-ui-guidelines",
+            "Type": "Skill",
+            "RelativePath": "skills/gemini-ui-guidelines",
+            "TargetRelative": "config/skills/gemini-ui-guidelines",
+            "SizeBytes": 3628,
+            "SHA256": "CC7EAF88CB0330B4EC1EB450D6B49B355649A62F6E89B3321311990EAC299EA1"
+        },
+        {
+            "Id": "skill_gemini_video_intelligence",
+            "Name": "gemini-video-intelligence",
+            "Type": "Skill",
+            "RelativePath": "skills/gemini-video-intelligence",
+            "TargetRelative": "config/skills/gemini-video-intelligence",
+            "SizeBytes": 912,
+            "SHA256": "21E292AC6D11D55F782BB813A948A333B92BC6440747E8856AE2222DEADF4128"
+        },
+        {
+            "Id": "skill_gemini_vision_to_code",
+            "Name": "gemini-vision-to-code",
+            "Type": "Skill",
+            "RelativePath": "skills/gemini-vision-to-code",
+            "TargetRelative": "config/skills/gemini-vision-to-code",
+            "SizeBytes": 3055,
+            "SHA256": "44CF1AD206B3831BD532AAC64991FF5D4A3CF824933D7EB2EFB6FA5D9A9540DA"
+        },
+        {
+            "Id": "skill_gemini_webperf",
+            "Name": "gemini-webperf",
+            "Type": "Skill",
+            "RelativePath": "skills/gemini-webperf",
+            "TargetRelative": "config/skills/gemini-webperf",
+            "SizeBytes": 3224,
+            "SHA256": "06516E9EF4BF4D46E7127E777AB886EB6BDAE8647B117582F7F5526CF7A632C3"
+        },
+        {
+            "Id": "skill_gemini_xlsx_mastery",
+            "Name": "gemini-xlsx-mastery",
+            "Type": "Skill",
+            "RelativePath": "skills/gemini-xlsx-mastery",
+            "TargetRelative": "config/skills/gemini-xlsx-mastery",
+            "SizeBytes": 5184,
+            "SHA256": "EA298915866338BD5EBCCFAF8239EA9368CCB5874C40539925BB85F0880E6ADD"
+        },
+        {
+            "Id": "skill_generative_media_director",
+            "Name": "generative-media-director",
+            "Type": "Skill",
+            "RelativePath": "skills/generative-media-director",
+            "TargetRelative": "config/skills/generative-media-director",
+            "SizeBytes": 2924,
+            "SHA256": "A429FC4FA3BC93CCD111569D49638861632FC9710FE5AE31E02D10043EFABCEF"
+        },
+        {
+            "Id": "skill_gsap_core",
+            "Name": "gsap-core",
+            "Type": "Skill",
+            "RelativePath": "skills/gsap-core",
+            "TargetRelative": "config/skills/gsap-core",
+            "SizeBytes": 14361,
+            "SHA256": "F5669F5CFCBEE890B918B9F0DDE2E83A025F7D87DFB8348A9F51A2B9AA6AC94F"
+        },
+        {
+            "Id": "skill_gsap_frameworks",
+            "Name": "gsap-frameworks",
+            "Type": "Skill",
+            "RelativePath": "skills/gsap-frameworks",
+            "TargetRelative": "config/skills/gsap-frameworks",
+            "SizeBytes": 10380,
+            "SHA256": "42C4E3FB076CB28FA46F7E3D311679206B8BC060D506BB8070B023C22A17DF86"
+        },
+        {
+            "Id": "skill_gsap_performance",
+            "Name": "gsap-performance",
+            "Type": "Skill",
+            "RelativePath": "skills/gsap-performance",
+            "TargetRelative": "config/skills/gsap-performance",
+            "SizeBytes": 4014,
+            "SHA256": "CB728C2BE4EBA36510A78356245DC903C4185E74FB13EC6C60C10022084B0633"
+        },
+        {
+            "Id": "skill_gsap_plugins",
+            "Name": "gsap-plugins",
+            "Type": "Skill",
+            "RelativePath": "skills/gsap-plugins",
+            "TargetRelative": "config/skills/gsap-plugins",
+            "SizeBytes": 21335,
+            "SHA256": "98740F470ABD4D2D03DC69D3BB606E16BB756F50B2A61AC48F5AED43D800F8ED"
+        },
+        {
+            "Id": "skill_gsap_react",
+            "Name": "gsap-react",
+            "Type": "Skill",
+            "RelativePath": "skills/gsap-react",
+            "TargetRelative": "config/skills/gsap-react",
+            "SizeBytes": 6393,
+            "SHA256": "8B5132FE6261A549F642C43AC49DA99AE1634CD7BAECE2FAD99135C41DD15B3E"
+        },
+        {
+            "Id": "skill_gsap_scrolltrigger",
+            "Name": "gsap-scrolltrigger",
+            "Type": "Skill",
+            "RelativePath": "skills/gsap-scrolltrigger",
+            "TargetRelative": "config/skills/gsap-scrolltrigger",
+            "SizeBytes": 18155,
+            "SHA256": "F85CEEECD16A4A2DC1332EC224A24291508A086F8D2B7C9DA2D1B9EA692321C5"
+        },
+        {
+            "Id": "skill_gsap_timeline",
+            "Name": "gsap-timeline",
+            "Type": "Skill",
+            "RelativePath": "skills/gsap-timeline",
+            "TargetRelative": "config/skills/gsap-timeline",
+            "SizeBytes": 4207,
+            "SHA256": "297781627B1785C85057182DD69ECE86F333DE706A7E901D91DCE8A168F804B7"
+        },
+        {
+            "Id": "skill_gsap_utils",
+            "Name": "gsap-utils",
+            "Type": "Skill",
+            "RelativePath": "skills/gsap-utils",
+            "TargetRelative": "config/skills/gsap-utils",
+            "SizeBytes": 11974,
+            "SHA256": "C021BBCE6519F6126673F89467A85D7066BF735B672FFED4AB2ABF01099AE833"
+        },
+        {
+            "Id": "skill_html_to_interaction_prompts",
+            "Name": "html-to-interaction-prompts",
+            "Type": "Skill",
+            "RelativePath": "skills/html-to-interaction-prompts",
+            "TargetRelative": "config/skills/html-to-interaction-prompts",
+            "SizeBytes": 14831,
+            "SHA256": "C7B60D5E909ED2943F9D0BD1D2EC2F34FE44F6F394610548DFEEB548E185B743"
+        },
+        {
+            "Id": "skill_hyperframes_director",
+            "Name": "hyperframes-director",
+            "Type": "Skill",
+            "RelativePath": "skills/hyperframes-director",
+            "TargetRelative": "config/skills/hyperframes-director",
+            "SizeBytes": 6253,
+            "SHA256": "AF6019A1C5508356E7A6D3E3080D17391BA8B596E970C287833A54D13960226F"
+        },
+        {
+            "Id": "skill_icon_system",
+            "Name": "icon-system",
+            "Type": "Skill",
+            "RelativePath": "skills/icon-system",
+            "TargetRelative": "config/skills/icon-system",
+            "SizeBytes": 7366,
+            "SHA256": "9177FBC43B3DD9E0C5967D6E5A51B802B876480CCB1E81E3DA3C7518362E05C9"
+        },
+        {
+            "Id": "skill_ig_audience_insights",
+            "Name": "ig-audience-insights",
+            "Type": "Skill",
+            "RelativePath": "skills/ig-audience-insights",
+            "TargetRelative": "config/skills/ig-audience-insights",
+            "SizeBytes": 5885,
+            "SHA256": "22E06911ABEB9EB71C05645DBEA29A3AA29221E908BABFAA5726D322E82257F6"
+        },
+        {
+            "Id": "skill_ig_caption_writer",
+            "Name": "ig-caption-writer",
+            "Type": "Skill",
+            "RelativePath": "skills/ig-caption-writer",
+            "TargetRelative": "config/skills/ig-caption-writer",
+            "SizeBytes": 6578,
+            "SHA256": "76361BC417A63F04172839B212FD321ED778B91D03BE5BAF323A9F2CBBBE0FFB"
+        },
+        {
+            "Id": "skill_ig_carousel_planner",
+            "Name": "ig-carousel-planner",
+            "Type": "Skill",
+            "RelativePath": "skills/ig-carousel-planner",
+            "TargetRelative": "config/skills/ig-carousel-planner",
+            "SizeBytes": 7175,
+            "SHA256": "0184021015D8F3FD657950D9C9980DB61E7B5ACB4C30657592F78B687697BD60"
+        },
+        {
+            "Id": "skill_ig_content_planner",
+            "Name": "ig-content-planner",
+            "Type": "Skill",
+            "RelativePath": "skills/ig-content-planner",
+            "TargetRelative": "config/skills/ig-content-planner",
+            "SizeBytes": 5504,
+            "SHA256": "CFA9E03691F22111E65DDFE04B0EAB4065425C30AB18E541A2C3CC856500389E"
+        },
+        {
+            "Id": "skill_ig_hashtag_strategist",
+            "Name": "ig-hashtag-strategist",
+            "Type": "Skill",
+            "RelativePath": "skills/ig-hashtag-strategist",
+            "TargetRelative": "config/skills/ig-hashtag-strategist",
+            "SizeBytes": 4136,
+            "SHA256": "41D11409077BF75CC5BFDBC3C82189F434628BAC8514490671327ADF6E0E492D"
+        },
+        {
+            "Id": "skill_ig_hook_extractor",
+            "Name": "ig-hook-extractor",
+            "Type": "Skill",
+            "RelativePath": "skills/ig-hook-extractor",
+            "TargetRelative": "config/skills/ig-hook-extractor",
+            "SizeBytes": 4667,
+            "SHA256": "80051CC297CFA897D1E6D7750BE90DDE2CD7BAC8AC7701F5C0777D5D35403E06"
+        },
+        {
+            "Id": "skill_ig_humanizer",
+            "Name": "ig-humanizer",
+            "Type": "Skill",
+            "RelativePath": "skills/ig-humanizer",
+            "TargetRelative": "config/skills/ig-humanizer",
+            "SizeBytes": 15748,
+            "SHA256": "C2BDF52F553B67E60BDCA46CF020665DBE53A8878BB50874B912E94E0A1762CE"
+        },
+        {
+            "Id": "skill_ig_profile_optimizer",
+            "Name": "ig-profile-optimizer",
+            "Type": "Skill",
+            "RelativePath": "skills/ig-profile-optimizer",
+            "TargetRelative": "config/skills/ig-profile-optimizer",
+            "SizeBytes": 6307,
+            "SHA256": "6E12A2169B0FA9254CCAF7508BBEDFC25887A8074BAA0960BDB52E37E7CBCC5F"
+        },
+        {
+            "Id": "skill_ig_repurposer",
+            "Name": "ig-repurposer",
+            "Type": "Skill",
+            "RelativePath": "skills/ig-repurposer",
+            "TargetRelative": "config/skills/ig-repurposer",
+            "SizeBytes": 8301,
+            "SHA256": "7A528B47B408162459E0E28AFAFC9F1BA49074A789CDAEC69D469F402A9D157A"
+        },
+        {
+            "Id": "skill_instagram_common",
+            "Name": "instagram-common",
+            "Type": "Skill",
+            "RelativePath": "skills/instagram-common",
+            "TargetRelative": "config/skills/instagram-common",
+            "SizeBytes": 488,
+            "SHA256": "2DB31D0BB299AC0053427DBB79CC7699CCCE2614C62BFBAF10B8B575955A0DEA"
+        },
+        {
+            "Id": "skill_logo_brief_writer",
+            "Name": "logo-brief-writer",
+            "Type": "Skill",
+            "RelativePath": "skills/logo-brief-writer",
+            "TargetRelative": "config/skills/logo-brief-writer",
+            "SizeBytes": 6712,
+            "SHA256": "EB5C57588C6490A7263AC70CAE741ACAE71A5D663490B042D4F45F19090759CA"
+        },
+        {
+            "Id": "skill_moodboard_builder",
+            "Name": "moodboard-builder",
+            "Type": "Skill",
+            "RelativePath": "skills/moodboard-builder",
+            "TargetRelative": "config/skills/moodboard-builder",
+            "SizeBytes": 6591,
+            "SHA256": "E37334BCB4FC1F3F8CBEAD68F2C1094B465F42F23B35721A06105404F9328C84"
+        },
+        {
+            "Id": "skill_motion_design",
+            "Name": "motion-design",
+            "Type": "Skill",
+            "RelativePath": "skills/motion-design",
+            "TargetRelative": "config/skills/motion-design",
+            "SizeBytes": 12227,
+            "SHA256": "A5BB3B52032EAA61D039A63E2946FC2B0F54CEB590EE66F244AA5B8019D27162"
+        },
+        {
+            "Id": "skill_nextjs_turbopack",
+            "Name": "nextjs-turbopack",
+            "Type": "Skill",
+            "RelativePath": "skills/nextjs-turbopack",
+            "TargetRelative": "config/skills/nextjs-turbopack",
+            "SizeBytes": 2880,
+            "SHA256": "048FB3FFDB7E3E884695711903F505ED6757A96F5CF48AE02FB4018258BEFD50"
+        },
+        {
+            "Id": "skill_nova_awake_sentinel",
+            "Name": "nova-awake-sentinel",
+            "Type": "Skill",
+            "RelativePath": "skills/nova-awake-sentinel",
+            "TargetRelative": "config/skills/nova-awake-sentinel",
+            "SizeBytes": 1096,
+            "SHA256": "B9AA5A7A6F19749949D27ECDDD6033E0FB42DE3DFFF26978A0CBAC875F07954D"
+        },
+        {
+            "Id": "skill_nova_community_feedback",
+            "Name": "nova-community-feedback",
+            "Type": "Skill",
+            "RelativePath": "skills/nova-community-feedback",
+            "TargetRelative": "config/skills/nova-community-feedback",
+            "SizeBytes": 1787,
+            "SHA256": "94A20F5C7F0DD95BE508ABC3E1BAD793CD03D3B6DE04AFE6EE1DA651F408D9DB"
+        },
+        {
+            "Id": "skill_procedural_film",
+            "Name": "procedural-film",
+            "Type": "Skill",
+            "RelativePath": "skills/procedural-film",
+            "TargetRelative": "config/skills/procedural-film",
+            "SizeBytes": 3712,
+            "SHA256": "F4AA880031E374D3B2AE3D7B6A7B3C531FF7E1C16DABAC6E97134E6C663B45F9"
+        },
+        {
+            "Id": "skill_production_audit",
+            "Name": "production-audit",
+            "Type": "Skill",
+            "RelativePath": "skills/production-audit",
+            "TargetRelative": "config/skills/production-audit",
+            "SizeBytes": 7526,
+            "SHA256": "397AF812D1834DC2F19CD053DC82D2362254721B937111884D5F3675E7A27951"
+        },
+        {
+            "Id": "skill_react_patterns",
+            "Name": "react-patterns",
+            "Type": "Skill",
+            "RelativePath": "skills/react-patterns",
+            "TargetRelative": "config/skills/react-patterns",
+            "SizeBytes": 11307,
+            "SHA256": "ED0BE18BCE0B785CBCDF46D27670FA558628C5D200F2E893A6889833469244A1"
+        },
+        {
+            "Id": "skill_react_performance",
+            "Name": "react-performance",
+            "Type": "Skill",
+            "RelativePath": "skills/react-performance",
+            "TargetRelative": "config/skills/react-performance",
+            "SizeBytes": 17893,
+            "SHA256": "228863940FB904D554A59014FEDCFDB199E8AC221964CFAB5B2004D4237D343B"
+        },
+        {
+            "Id": "skill_react_testing",
+            "Name": "react-testing",
+            "Type": "Skill",
+            "RelativePath": "skills/react-testing",
+            "TargetRelative": "config/skills/react-testing",
+            "SizeBytes": 12980,
+            "SHA256": "021C09ADEE818C78FA7DE09D723C97F2F440FDD981AC273D34DC8E2EBDF5BF89"
+        },
+        {
+            "Id": "skill_remotion_video_agent",
+            "Name": "remotion-video-agent",
+            "Type": "Skill",
+            "RelativePath": "skills/remotion-video-agent",
+            "TargetRelative": "config/skills/remotion-video-agent",
+            "SizeBytes": 1027,
+            "SHA256": "DE64CB7BA950D2D0A33573B7B2C1D24602A6CFC1E60399A82A28B7E0A70486C8"
+        },
+        {
+            "Id": "skill_saas_finance_metrics",
+            "Name": "saas-finance-metrics",
+            "Type": "Skill",
+            "RelativePath": "skills/saas-finance-metrics",
+            "TargetRelative": "config/skills/saas-finance-metrics",
+            "SizeBytes": 1455,
+            "SHA256": "FBB9FFFA131A43F73FBAB45D029D4C7B9C7B1418A791DC1B72F7E8A45DD21F3B"
+        },
+        {
+            "Id": "skill_site_motion_excellence_director",
+            "Name": "site-motion-excellence-director",
+            "Type": "Skill",
+            "RelativePath": "skills/site-motion-excellence-director",
+            "TargetRelative": "config/skills/site-motion-excellence-director",
+            "SizeBytes": 2293,
+            "SHA256": "CD8E69B36EF73A2661AF5EC56BB85B0F0775B70B084C760F4BAEC819355C6B4F"
+        },
+        {
+            "Id": "skill_threejs_web_experience",
+            "Name": "threejs-web-experience",
+            "Type": "Skill",
+            "RelativePath": "skills/threejs-web-experience",
+            "TargetRelative": "config/skills/threejs-web-experience",
+            "SizeBytes": 3405,
+            "SHA256": "23FEB19A2AE2E1F3CDDA3BA759CE0DD06A4EBAEEBD8DBE26D839A1C49B763B99"
+        },
+        {
+            "Id": "skill_typography_system",
+            "Name": "typography-system",
+            "Type": "Skill",
+            "RelativePath": "skills/typography-system",
+            "TargetRelative": "config/skills/typography-system",
+            "SizeBytes": 5949,
+            "SHA256": "05B1A4A6E121071169F3860B28F7FD76BB3A8A7CFCE0E5D6C03D93C089AEAAB5"
+        },
+        {
+            "Id": "skill_user_intent_reader",
+            "Name": "user-intent-reader",
+            "Type": "Skill",
+            "RelativePath": "skills/user-intent-reader",
+            "TargetRelative": "config/skills/user-intent-reader",
+            "SizeBytes": 1048,
+            "SHA256": "A78B8CF18A940B727E3B0CA82841C821E08B35E6C72B2C7C8E44387A1F592803"
+        },
+        {
+            "Id": "skill_ux_writing",
+            "Name": "ux-writing",
+            "Type": "Skill",
+            "RelativePath": "skills/ux-writing",
+            "TargetRelative": "config/skills/ux-writing",
+            "SizeBytes": 2434,
+            "SHA256": "7BB72D991F35C9EF80C90BD37EBBA952E66D0DAE772C004D034519FEAD847E55"
+        },
+        {
+            "Id": "skill_video_script_storyteller",
+            "Name": "video-script-storyteller",
+            "Type": "Skill",
+            "RelativePath": "skills/video-script-storyteller",
+            "TargetRelative": "config/skills/video-script-storyteller",
+            "SizeBytes": 1368,
+            "SHA256": "691D3E4E1F4B0E197E9685FEB16252690AB43BD92B53351AF51018712A5C4325"
+        },
+        {
+            "Id": "skill_video_to_superprompt",
+            "Name": "video-to-superprompt",
+            "Type": "Skill",
+            "RelativePath": "skills/video-to-superprompt",
+            "TargetRelative": "config/skills/video-to-superprompt",
+            "SizeBytes": 5242,
+            "SHA256": "C3CFB83CB3A761EFC2101029DFB789A867EB572BD46CA646C7BB0190C0A14162"
+        },
+        {
+            "Id": "skill_visual_hierarchy",
+            "Name": "visual-hierarchy",
+            "Type": "Skill",
+            "RelativePath": "skills/visual-hierarchy",
+            "TargetRelative": "config/skills/visual-hierarchy",
+            "SizeBytes": 6505,
+            "SHA256": "7DA6433B2E6D47020E473376DE4922D71EFDD70860945BB72C3E168A565917EE"
+        },
+        {
+            "Id": "skill_web_legal_compliance",
+            "Name": "web-legal-compliance",
+            "Type": "Skill",
+            "RelativePath": "skills/web-legal-compliance",
+            "TargetRelative": "config/skills/web-legal-compliance",
+            "SizeBytes": 4116,
+            "SHA256": "54BAEBD8D572801031CBF84B13E0EF19A656B61A5E31F77FBC4EDB3E557264A1"
+        },
+        {
+            "Id": "skill_web_motion_auditor",
+            "Name": "web-motion-auditor",
+            "Type": "Skill",
+            "RelativePath": "skills/web-motion-auditor",
+            "TargetRelative": "config/skills/web-motion-auditor",
+            "SizeBytes": 920,
+            "SHA256": "D202E8ED7ADDB97A4B2E9B8EBAECA597EBFBBCF01276957A1EE5033B12DDCC0D"
+        },
+        {
+            "Id": "skill_web_seo_mastery",
+            "Name": "web-seo-mastery",
+            "Type": "Skill",
+            "RelativePath": "skills/web-seo-mastery",
+            "TargetRelative": "config/skills/web-seo-mastery",
+            "SizeBytes": 3464,
+            "SHA256": "9BA98ABCA4B2C55E11F389872A7E5FA6C16F469DB62FDF99130D419A4649C03B"
+        },
+        {
+            "Id": "skill_zero_token_scraper_forge",
+            "Name": "zero-token-scraper-forge",
+            "Type": "Skill",
+            "RelativePath": "skills/zero-token-scraper-forge",
+            "TargetRelative": "config/skills/zero-token-scraper-forge",
+            "SizeBytes": 1125,
+            "SHA256": "7B472D652379828F4FD218E0D81FEB7C9F34A888D96199092BEF373D9F5E18AD"
+        }
+    ]
 }
