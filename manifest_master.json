@@ -1,8 +1,8 @@
 {
     "Version": "2.2",
     "Engine": "NovaManifestGuardian",
-    "GeneratedAt": "2026-10-29 16:39:00",
-    "TotalComponents": 143,
+    "GeneratedAt": "2026-10-29 16:52:00",
+    "TotalComponents": 144,
     "Components": [
         {
             "Id": "rule_gemini_md",
@@ -10,8 +10,8 @@
             "Type": "Rule",
             "RelativePath": "GEMINI.md",
             "TargetRelative": "config/GEMINI.md",
-            "SizeBytes": 11616,
-            "SHA256": "FAECD876FB7598C1809E693CA4CDAC9F89EEF16B789D122E5C27514651A56DC0"
+            "SizeBytes": 11863,
+            "SHA256": "E665D867A5DED0823A8B37E93B0095172D8B2C2E937662E5CCBD0A7C45AC0DCF"
         },
         {
             "Id": "doc_ayuda_md",
@@ -19,8 +19,17 @@
             "Type": "Config",
             "RelativePath": "AYUDA.md",
             "TargetRelative": "config/AYUDA.md",
-            "SizeBytes": 4269,
-            "SHA256": "6E7350C5BD88FE3DDAD64937C91D2C8D8A00AB9AECA28881D2C389AA6553F53E"
+            "SizeBytes": 4364,
+            "SHA256": "491F099F67C09B9FB152A8352F216BD42C9426176759452F05E98C3AF17410F9"
+        },
+        {
+            "Id": "script_actualizar_nova_py",
+            "Name": "actualizar_nova.py",
+            "Type": "Script",
+            "RelativePath": "scripts/actualizar_nova.py",
+            "TargetRelative": "antigravity/scripts/actualizar_nova.py",
+            "SizeBytes": 8723,
+            "SHA256": "1AE17E3F57E157AD58F1689A03E3229C0810CCC60B47C692141073559FCBB19C"
         },
         {
             "Id": "script_enviar_feedback_py",

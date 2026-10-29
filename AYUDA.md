@@ -39,7 +39,7 @@ sobre tu rama activa y permiso primero antes de tocar tu terminal.
 | `/creador [mensaje]` o *"mandale un mensaje al creador: ..."* | Pasa el texto por `feedback_sanitizer.py` (borra rutas privadas o claves) y lo envia al buzon oficial en GitHub (`Luaz2021/Nova-Agent-Core-Demo`, etiqueta `buzon-creador`) via `gh issue create` o enlace directo en 1 clic. |
 | `/reportar-fallo` o *"reportar error al creador"* | Empaqueta el fallo resuelto bajo formato Servilleta (`[SO] -> [Error] -> [Fix]`) sin datos privados y lo envia con etiqueta `napkin-crowd`. |
 | `/compartir-skill [nombre]` | Empaqueta un `SKILL.md` creado o mejorado por el usuario y lo propone al Core oficial con etiqueta `skill-comunitaria` para revision y creditos de autor. |
-| `/actualizar-nova` | Compara el `manifest_master.json` local contra el repositorio oficial de Saul en GitHub y descarga mejoras sin tocar la memoria privada del usuario. |
+| `/actualizar-nova` o *"Nova, busca actualizaciones"* / *"Nova, ¿hay actualizaciones?"* | Ejecuta `actualizar_nova.py` con backup preventivo, descarga skills/scripts nuevos y el Napkin oficial de Saul (`napkin_oficial.md`) sin tocar tus notas personales ni tareas. |
 | *(Exclusivo Saul)* `revisa el buzon de la comunidad` | Escanea los issues recibidos (`buzon-creador`, `napkin-crowd`, `skill-comunitaria`), aplica el filtro forense de 4 puntos (KISS, Seguridad, SO, Originalidad) y presenta el resumen listo para aprobar. |
 
 ---
