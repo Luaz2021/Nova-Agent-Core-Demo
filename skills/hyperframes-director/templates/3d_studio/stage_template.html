@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nova Studio 3D - Stage (9:16 Reels)</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="runtime_studio.js"></script>
+  <style>
+    :root {
+      --bg: #0B0F1C;
+      --card: #161B2E;
+      --ink: #080B14;
+      --sun: #FFD66B;
+      --cyan: #38BDF8;
+      --purple: #A855F7;
+      --green: #22C55E;
+      --text: #F8FAFC;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #060911;
+      color: var(--text);
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      width: 1080px;
+      height: 1920px;
+    }
+    #stage-wrap {
+      position: relative;
+      width: 1080px;
+      height: 1920px;
+      overflow: hidden;
+      background: radial-gradient(circle at 50% 38%, #161B2E 0%, #080B14 70%);
+    }
+    #webgl-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 1080px;
+      height: 1920px;
+      z-index: 1;
+    }
+    #subtitles-layer {
+      position: absolute;
+      left: 60px;
+      right: 60px;
+      bottom: 340px;
+      min-height: 140px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      pointer-events: none;
+    }
+    .sub-pill {
+      background: rgba(8, 11, 20, 0.88);
+      border: 3px solid #F8FAFC;
+      border-radius: 24px;
+      padding: 16px 28px;
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.6);
+      text-align: center;
+      max-width: 960px;
+    }
+    .sub-speaker {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+    .sub-words {
+      font-size: 38px;
+      font-weight: 800;
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+      color: #F8FAFC;
+    }
+    .active-word {
+      color: #FFD66B;
+      text-shadow: 0 0 18px rgba(255, 214, 107, 0.6);
+      transform: scale(1.08);
+      display: inline-block;
+    }
+  </style>
+</head>
+<body>
+  <div id="stage-wrap">
+    <canvas id="webgl-canvas" width="1080" height="1920"></canvas>
+    <div id="subtitles-layer">
+      <div class="sub-pill">
+        <div id="sub-speaker" class="sub-speaker" style="color: #38BDF8;">DEV HUMANO</div>
+        <div id="sub-words" class="sub-words">CARGANDO REEL...</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Inicializar Studio 3D
+    let studio = null;
+    let timelineData = null;
+
+    window.addEventListener("DOMContentLoaded", () => {
+      const canvas = document.getElementById("webgl-canvas");
+      studio = new NovaStudio3D(canvas, { width: 1080, height: 1920 });
+      
+      // API expuesta para headless Chromium / Puppeteer
+      window.__novaStudio = {
+        frameAt: (t) => {
+          if (studio) {
+            studio.setTime(t);
+            studio.render();
+          }
+          if (timelineData) {
+            updateSubtitles(t);
+          }
+        },
+        loadTimeline: (data) => {
+          timelineData = data;
+        }
+      };
+    });
+
+    function updateSubtitles(t) {
+      if (!timelineData || !timelineData.subtitles) return;
+      const speakerEl = document.getElementById("sub-speaker");
+      const wordsEl = document.getElementById("sub-words");
+      
+      const current = timelineData.subtitles.find(s => t >= s.start && t <= s.end);
+      if (!current) {
+        wordsEl.innerHTML = "";
+        return;
+      }
+
+      speakerEl.textContent = current.speaker;
+      speakerEl.style.color = current.speaker.includes("NOVA") ? "#A855F7" : "#38BDF8";
+
+      const wordsHtml = (current.words || []).map(w => {
+        const isActive = t >= w.start && t < w.end;
+        return isActive 
+          ? `<span class="active-word">${w.word}</span>` 
+          : `<span>${w.word}</span>`;
+      }).join(" ");
+
+      wordsEl.innerHTML = wordsHtml || current.text;
+    }
+  </script>
+</body>
+</html>

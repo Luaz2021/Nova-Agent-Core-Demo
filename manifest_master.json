@@ -1,8 +1,8 @@
 {
-    "Version": "2.2",
+    "Version": "2.3",
     "Engine": "NovaManifestGuardian",
-    "GeneratedAt": "2026-10-29 16:52:00",
-    "TotalComponents": 144,
+    "GeneratedAt": "2026-10-29 17:49:12",
+    "TotalComponents": 145,
     "Components": [
         {
             "Id": "rule_gemini_md",
@@ -26,8 +26,8 @@
             "Id": "script_actualizar_nova_py",
             "Name": "actualizar_nova.py",
             "Type": "Script",
-            "RelativePath": "scripts/actualizar_nova.py",
-            "TargetRelative": "antigravity/scripts/actualizar_nova.py",
+            "RelativePath": "scripts\\actualizar_nova.py",
+            "TargetRelative": "antigravity/scripts\\actualizar_nova.py",
             "SizeBytes": 8723,
             "SHA256": "1AE17E3F57E157AD58F1689A03E3229C0810CCC60B47C692141073559FCBB19C"
         },
@@ -35,8 +35,8 @@
             "Id": "script_enviar_feedback_py",
             "Name": "enviar_feedback.py",
             "Type": "Script",
-            "RelativePath": "scripts/enviar_feedback.py",
-            "TargetRelative": "antigravity/scripts/enviar_feedback.py",
+            "RelativePath": "scripts\\enviar_feedback.py",
+            "TargetRelative": "antigravity/scripts\\enviar_feedback.py",
             "SizeBytes": 3749,
             "SHA256": "958592DC5D83D14911BACBD8B2FC10C0CEFEA913A17E87BEF262C03FC4DEAD64"
         },
@@ -44,8 +44,8 @@
             "Id": "script_nova_awake_sentinel_py",
             "Name": "nova_awake_sentinel.py",
             "Type": "Script",
-            "RelativePath": "scripts/nova_awake_sentinel.py",
-            "TargetRelative": "antigravity/scripts/nova_awake_sentinel.py",
+            "RelativePath": "scripts\\nova_awake_sentinel.py",
+            "TargetRelative": "antigravity/scripts\\nova_awake_sentinel.py",
             "SizeBytes": 6493,
             "SHA256": "8BAF71FE077A85ADA426DA351619CF181C784CF75990EC57EAB3CBA7343F0C2A"
         },
@@ -53,8 +53,8 @@
             "Id": "script_nova_buffer_guardian_py",
             "Name": "nova_buffer_guardian.py",
             "Type": "Script",
-            "RelativePath": "scripts/nova_buffer_guardian.py",
-            "TargetRelative": "antigravity/scripts/nova_buffer_guardian.py",
+            "RelativePath": "scripts\\nova_buffer_guardian.py",
+            "TargetRelative": "antigravity/scripts\\nova_buffer_guardian.py",
             "SizeBytes": 15254,
             "SHA256": "FBC3C0FEE9CA8D8BFD8036DB584103C40D2953730BC1EE46195FC3E428E75454"
         },
@@ -62,8 +62,8 @@
             "Id": "script_nova_buffer_guardian_sh",
             "Name": "nova_buffer_guardian.sh",
             "Type": "Script",
-            "RelativePath": "scripts/nova_buffer_guardian.sh",
-            "TargetRelative": "antigravity/scripts/nova_buffer_guardian.sh",
+            "RelativePath": "scripts\\nova_buffer_guardian.sh",
+            "TargetRelative": "antigravity/scripts\\nova_buffer_guardian.sh",
             "SizeBytes": 839,
             "SHA256": "CEA3C1A6F9F38461ED089748DD99BF912B58B00E0F1D91A137654941714FF4AF"
         },
@@ -71,8 +71,8 @@
             "Id": "script_nova_cost_logger_py",
             "Name": "nova_cost_logger.py",
             "Type": "Script",
-            "RelativePath": "scripts/nova_cost_logger.py",
-            "TargetRelative": "antigravity/scripts/nova_cost_logger.py",
+            "RelativePath": "scripts\\nova_cost_logger.py",
+            "TargetRelative": "antigravity/scripts\\nova_cost_logger.py",
             "SizeBytes": 7660,
             "SHA256": "E6A22CFA0EA5CEEA48921D568CB7E653A41A096D86C07458F28382D02B136BCF"
         },
@@ -80,17 +80,26 @@
             "Id": "script_nova_local_worker_py",
             "Name": "nova_local_worker.py",
             "Type": "Script",
-            "RelativePath": "scripts/nova_local_worker.py",
-            "TargetRelative": "antigravity/scripts/nova_local_worker.py",
+            "RelativePath": "scripts\\nova_local_worker.py",
+            "TargetRelative": "antigravity/scripts\\nova_local_worker.py",
             "SizeBytes": 7226,
             "SHA256": "6D785221F1A5A6418CD1E805B4843E6EFF6FF743389F8E4DA8C5E28B0730F759"
+        },
+        {
+            "Id": "script_nova_video_router_py",
+            "Name": "nova_video_router.py",
+            "Type": "Script",
+            "RelativePath": "scripts\\nova_video_router.py",
+            "TargetRelative": "antigravity/scripts\\nova_video_router.py",
+            "SizeBytes": 10450,
+            "SHA256": "6307CC7A87C059D2037084747426440EA133A6E9E925D5A83AEDEAD737F93022"
         },
         {
             "Id": "script_nova_voice_lite_py",
             "Name": "nova_voice_lite.py",
             "Type": "Script",
-            "RelativePath": "scripts/nova_voice_lite.py",
-            "TargetRelative": "antigravity/scripts/nova_voice_lite.py",
+            "RelativePath": "scripts\\nova_voice_lite.py",
+            "TargetRelative": "antigravity/scripts\\nova_voice_lite.py",
             "SizeBytes": 1852,
             "SHA256": "F64BAFBC7AE03A59613BB942DD728DA66B96F90215B0A109595CE80CFBCAF61A"
         },
@@ -98,8 +107,8 @@
             "Id": "script_start_awake_sentinel_vbs",
             "Name": "start_awake_sentinel.vbs",
             "Type": "Script",
-            "RelativePath": "scripts/start_awake_sentinel.vbs",
-            "TargetRelative": "antigravity/scripts/start_awake_sentinel.vbs",
+            "RelativePath": "scripts\\start_awake_sentinel.vbs",
+            "TargetRelative": "antigravity/scripts\\start_awake_sentinel.vbs",
             "SizeBytes": 143,
             "SHA256": "622F8EDD48DA6E0152C9EECDD3145B3B1DB5A81FB2417B7CB26E6140327478F1"
         },
@@ -107,8 +116,8 @@
             "Id": "script_free_ai_router_py",
             "Name": "free_ai_router.py",
             "Type": "Script",
-            "RelativePath": "scripts/scrapers/free_ai_router.py",
-            "TargetRelative": "antigravity/scripts/scrapers/free_ai_router.py",
+            "RelativePath": "scripts\\scrapers\\free_ai_router.py",
+            "TargetRelative": "antigravity/scripts\\scrapers\\free_ai_router.py",
             "SizeBytes": 5135,
             "SHA256": "969B746E29AE9511D40D4A9F0E3B62C0325D5D2BB7577CEB7D4CFE427061BE8F"
         },
@@ -116,64 +125,10 @@
             "Id": "script_youtube_api_client_py",
             "Name": "youtube_api_client.py",
             "Type": "Script",
-            "RelativePath": "scripts/scrapers/youtube_api_client.py",
-            "TargetRelative": "antigravity/scripts/scrapers/youtube_api_client.py",
+            "RelativePath": "scripts\\scrapers\\youtube_api_client.py",
+            "TargetRelative": "antigravity/scripts\\scrapers\\youtube_api_client.py",
             "SizeBytes": 3084,
             "SHA256": "5CCCB1BB05FBF07945BD5AF85152251F074544D5B173238B6125677A7613E01A"
-        },
-        {
-            "Id": "template_gimnasio_template_md",
-            "Name": "gimnasio.template.md",
-            "Type": "Template",
-            "RelativePath": "memory_templates/gimnasio.template.md",
-            "TargetRelative": "antigravity/memory/gimnasio.template.md",
-            "SizeBytes": 7072,
-            "SHA256": "660A10812E59458F7A3DBE808CF5ED454E2CCA6B41C870C17A0C732DDAC300A5"
-        },
-        {
-            "Id": "template_learnings_template_md",
-            "Name": "learnings.template.md",
-            "Type": "Template",
-            "RelativePath": "memory_templates/learnings.template.md",
-            "TargetRelative": "antigravity/memory/learnings.template.md",
-            "SizeBytes": 2195,
-            "SHA256": "DDABDC7751A2B0F70619749067C5241024D001A52040D92DDA50ACAC158C02AE"
-        },
-        {
-            "Id": "template_napkin_template_md",
-            "Name": "napkin.template.md",
-            "Type": "Template",
-            "RelativePath": "memory_templates/napkin.template.md",
-            "TargetRelative": "antigravity/memory/napkin.template.md",
-            "SizeBytes": 5398,
-            "SHA256": "E3BC3B81187A6C38C562786E0EB124A26034D009FE2732B558A10C90AC1BAFFA"
-        },
-        {
-            "Id": "template_perfil_usuario_json",
-            "Name": "perfil_usuario.json",
-            "Type": "Template",
-            "RelativePath": "memory_templates/perfil_usuario.json",
-            "TargetRelative": "antigravity/memory/perfil_usuario.json",
-            "SizeBytes": 190,
-            "SHA256": "5A138587697C2E8DB9AD46E63EAE6E123D44A83C5C9D531A1955434B8C6B37C3"
-        },
-        {
-            "Id": "template_protocolo_costos_nova_claude_md",
-            "Name": "protocolo_costos_nova_claude.md",
-            "Type": "Template",
-            "RelativePath": "memory_templates/protocolo_costos_nova_claude.md",
-            "TargetRelative": "antigravity/memory/protocolo_costos_nova_claude.md",
-            "SizeBytes": 3517,
-            "SHA256": "60D872AAAE2D0BAC4B1C723141AB0A0D7565D7C3C4806065D0479C61DD0CB31C"
-        },
-        {
-            "Id": "template_tasks_template_md",
-            "Name": "tasks.template.md",
-            "Type": "Template",
-            "RelativePath": "memory_templates/tasks.template.md",
-            "TargetRelative": "antigravity/memory/tasks.template.md",
-            "SizeBytes": 349,
-            "SHA256": "D868F7EC1ACA27608F76C2E6923FA35D957F43E8066D61768A1E2E07C5E85C0E"
         },
         {
             "Id": "skill_agent_introspection_debugging",
@@ -973,8 +928,8 @@
             "Type": "Skill",
             "RelativePath": "skills/hyperframes-director",
             "TargetRelative": "config/skills/hyperframes-director",
-            "SizeBytes": 6253,
-            "SHA256": "AF6019A1C5508356E7A6D3E3080D17391BA8B596E970C287833A54D13960226F"
+            "SizeBytes": 8425,
+            "SHA256": "E689A06F4B7AECA26051AC11EF0D8FB89E9C344B1AD3306D43BE9526BB3412B2"
         },
         {
             "Id": "skill_icon_system",
@@ -1299,6 +1254,60 @@
             "TargetRelative": "config/skills/zero-token-scraper-forge",
             "SizeBytes": 1125,
             "SHA256": "7B472D652379828F4FD218E0D81FEB7C9F34A888D96199092BEF373D9F5E18AD"
+        },
+        {
+            "Id": "template_gimnasio_template_md",
+            "Name": "gimnasio.template.md",
+            "Type": "Template",
+            "RelativePath": "memory_templates/gimnasio.template.md",
+            "TargetRelative": "antigravity/memory/gimnasio.template.md",
+            "SizeBytes": 7072,
+            "SHA256": "660A10812E59458F7A3DBE808CF5ED454E2CCA6B41C870C17A0C732DDAC300A5"
+        },
+        {
+            "Id": "template_learnings_template_md",
+            "Name": "learnings.template.md",
+            "Type": "Template",
+            "RelativePath": "memory_templates/learnings.template.md",
+            "TargetRelative": "antigravity/memory/learnings.template.md",
+            "SizeBytes": 2195,
+            "SHA256": "DDABDC7751A2B0F70619749067C5241024D001A52040D92DDA50ACAC158C02AE"
+        },
+        {
+            "Id": "template_napkin_template_md",
+            "Name": "napkin.template.md",
+            "Type": "Template",
+            "RelativePath": "memory_templates/napkin.template.md",
+            "TargetRelative": "antigravity/memory/napkin.template.md",
+            "SizeBytes": 5398,
+            "SHA256": "E3BC3B81187A6C38C562786E0EB124A26034D009FE2732B558A10C90AC1BAFFA"
+        },
+        {
+            "Id": "template_perfil_usuario_json",
+            "Name": "perfil_usuario.json",
+            "Type": "Template",
+            "RelativePath": "memory_templates/perfil_usuario.json",
+            "TargetRelative": "antigravity/memory/perfil_usuario.json",
+            "SizeBytes": 190,
+            "SHA256": "5A138587697C2E8DB9AD46E63EAE6E123D44A83C5C9D531A1955434B8C6B37C3"
+        },
+        {
+            "Id": "template_protocolo_costos_nova_claude_md",
+            "Name": "protocolo_costos_nova_claude.md",
+            "Type": "Template",
+            "RelativePath": "memory_templates/protocolo_costos_nova_claude.md",
+            "TargetRelative": "antigravity/memory/protocolo_costos_nova_claude.md",
+            "SizeBytes": 3517,
+            "SHA256": "60D872AAAE2D0BAC4B1C723141AB0A0D7565D7C3C4806065D0479C61DD0CB31C"
+        },
+        {
+            "Id": "template_tasks_template_md",
+            "Name": "tasks.template.md",
+            "Type": "Template",
+            "RelativePath": "memory_templates/tasks.template.md",
+            "TargetRelative": "antigravity/memory/tasks.template.md",
+            "SizeBytes": 349,
+            "SHA256": "D868F7EC1ACA27608F76C2E6923FA35D957F43E8066D61768A1E2E07C5E85C0E"
         }
     ]
 }

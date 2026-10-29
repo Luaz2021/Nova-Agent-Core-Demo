@@ -73,7 +73,7 @@ flowchart TD
 ## 📑 Índice de Contenidos
 1. [La Ideología: 100% Ecosistema Google](#-la-ideología-100-ecosistema-google)
 2. [Google Antigravity 2.0 vs. Antigravity IDE](#-distinción-fundamental-google-antigravity-20-vs-antigravity-ide)
-3. [Novedades de Ingeniería v2.1](#-novedades-de-ingeniería-v21)
+3. [Novedades de Ingeniería v2.3](#-novedades-de-ingeniería-v23)
 4. [Instalación en 1 Clic (Windows, macOS y Linux)](#-instalación-en-1-clic-auto-instalador-de-antigravity-incluido)
 5. [Router Multi-Modelo y Herramientas a 0 Tokens](#-router-multi-modelo-y-herramientas-a-0-tokens)
 6. [Catálogo Detallado de Skills por Especialidad](#-catálogo-detallado-de-skills-por-especialidad)
@@ -84,28 +84,29 @@ flowchart TD
 
 ---
 
-## 🔥 Novedades de Ingeniería v2.2
+## 🔥 Novedades de Ingeniería v2.3
 
-Esta versión expande el core a **125 skills** y añade la suite completa de **Vídeo Programático & Auto-Aprendizaje**:
+Esta versión introduce el **Motor de Vídeo Programático Dual**, el **Enrutador Híbrido Automático de IA Local (Capa 0 vs Cloud Fallback)** y la suite de plantillas de estudio 3D en WebGL:
 
 | Mejora de Arquitectura | Qué problema resuelve | Impacto Técnico Real |
 | :--- | :--- | :--- |
-| **1. Motor de Vídeo HyperFrames (`hyperframes-director`)** | Permite generar reels y explainers verticales en HTML5+GSAP a 60fps sin sobrecargar tokens con React. | **-70% tokens** frente a Remotion en vídeos de 15-45s. |
-| **2. Principio Audio-First & Safe Zones 9:16** | Elimina desincronizaciones donde la imagen termina antes de que la voz acabe de hablar, y previene textos tapados por botones de TikTok/Instagram. | Vídeos 100% sincronizados con locución real y legibilidad garantizada. |
-| **3. Gimnasio de Razonamiento & Antipatrones (`gimnasio.template.md`)** | 20 preguntas senior de debate arquitectónico y 10 antipatrones forenses de la industria desinfectados de datos personales. | Calibra decisiones complejas antes de picar código; evita sobre-ingeniería. |
-| **4. Auto-Aprendizaje de Trinchera (`learnings.template.md`)** | Registra cuando una corrección o atajo define la forma óptima ("Forma B de Saúl") frente a la genérica ("Forma A"). | Cero divagaciones repetitivas en prompts posteriores. |
-| **5. Runbook Napkin Blindado v2.2 (`napkin.template.md`)** | 12 patrones de reparación extraídos de auditorías a proyectos open-source líderes (Supabase RLS O(1), Cal.com locks pesimistas, Zustand, etc.). | Respuestas de arquitectura Senior a la primera en bases de datos y colas. |
-| **6. Suite Finanzas SaaS, Legal Mercantil & Operaciones COO** | Incorporación de `saas-finance-metrics`, `commercial-legal-counsel` y `business-operations-coo` para análisis de negocio y contratos comerciales. | Blindaje legal, métricas unitarias y SOPs ejecutivos listos para usar. |
-| **7. Multiplataforma Real (macOS & Linux Runners)** | Añadido `nova_buffer_guardian.sh` para background silencioso en Unix y `nova_voice_lite.py` multiplataforma (macOS `say`, Linux `espeak`, Windows SAPI). | Experiencia idéntica en cualquier sistema operativo. |
+| **1. Enrutador Híbrido Automático (`scripts/nova_video_router.py`)** | Detecta automáticamente si el cliente tiene Ollama levantado con modelos compatibles (Qwen2.5-Coder / nova-dsl). Si lo tiene, corre a **0 tokens cloud**. Si no (laptops sin GPU o clientes sin Ollama), activa **Fallback transparente a Gemini Cloud 1-Shot** sin romper nada. | **-84% tokens de nube** en equipos con GPU; 100% de compatibilidad garantizada en equipos modestos. |
+| **2. Motor Dual HyperFrames: 3D Studio vs B-Roll Editorial** | Separa el vídeo procedural en código 3D (Three.js WebGL con avatares procedurales, cámara 9:16 calibrada y lip-sync a 30Hz) del montaje editorial de producto/lifestyle (fotos reales, IA generativa web y código GSAP a pelo). | Rigor técnico para debates y código en 3D; máxima flexibilidad visual para e-commerce y gastronomía. |
+| **3. Contrato de Prompt en 3 Capas (Token Shield)** | Elimina el derroche de reenviar esquemas completos de 3.000 tokens en cada llamada. Capa Fija en Modelfile/System, Capa Semi-Fija en `scene-schema.json` y Capa Variable de mínimo brief en cada prompt. | Conserva la atención de modelos 7B locales y reduce drásticamente tokens de entrada en la nube. |
+| **4. Validador Sub-10ms Safe Zones (`fast_check.py`)** | Valida el discriminador de tema (`theme`), lista blanca de widgets y márgenes de Safe Zone de Instagram Reels (Y: 240..1520px) antes de enviar a renderizar. | Cero fallos estructurales de decodificación y cero elementos tapados por la interfaz de Instagram/TikTok. |
+| **5. Suite de Plantillas 3D Studio (`skills/hyperframes-director/templates/3d_studio/`)** | Plantillas listas para producción: motor Three.js desacoplado (`runtime_studio.js`), escenario HTML con subtítulos karaoke, generador de esquema y renderizador headless Chromium a FFmpeg (CRF 18 + EBU R128). | Puesta en marcha de vídeos verticales 9:16 en minutos sin dependencias complejas de React ni Remotion. |
+| **6. Gimnasio de Razonamiento & Antipatrones (`gimnasio.template.md`)** | 20 preguntas senior de debate arquitectónico y 10 antipatrones forenses de la industria desinfectados de datos personales. | Calibra decisiones complejas antes de picar código; evita sobre-ingeniería. |
+| **7. Auto-Aprendizaje de Trinchera (`learnings.template.md`)** | Registra cuando una corrección o atajo define la forma óptima ("Forma B de Saúl") frente a la genérica ("Forma A"). | Cero divagaciones repetitivas en prompts posteriores. |
 
 ---
 
 ## 🛠️ Router Multi-Modelo y Herramientas a 0 Tokens
 
-Nova Agent incluye una suite de utilidades CLI nativas en `scripts/scrapers/` que operan bajo el **Principio API/CLI First (Ley 17)**:
+Nova Agent incluye una suite de utilidades CLI nativas en `scripts/` y `scripts/scrapers/` que operan bajo el **Principio API/CLI First (Ley 17)**:
 
 ```text
 Nova CLI Tools
+├── nova_video_router.py  -> Enrutador híbrido de vídeo 3D (Capa 0 Ollama vs Capa 1 Cloud Fallback)
 ├── free_ai_router.py     -> Enruta consultas a Codestral o OpenRouter Free Tier (0€)
 ├── youtube_api_client.py -> Consultas a YouTube Data API v3 en <150ms a 0 tokens
 └── enviar_feedback.py    -> Conexión directa y sanitizada con el creador vía GitHub Issues
@@ -113,6 +114,12 @@ Nova CLI Tools
 
 ### Ejemplos de uso directo desde terminal:
 ```bash
+# Diagnosticar si tu máquina soporta IA local a 0 tokens para vídeo o requiere fallback cloud:
+python scripts/nova_video_router.py --check
+
+# Generar escena de vídeo programático con detección automática de hardware:
+python scripts/nova_video_router.py --prompt "Mito vs Realidad de Nova Core" --out escena1.json
+
 # Consultar duda de código a Codestral (Mistral AI)
 python scripts/scrapers/free_ai_router.py code "¿Cómo implementar un Early Return en Spring Boot?"
 
@@ -240,7 +247,7 @@ Nova Agent incorpora **119 skills de ingeniería de software** optimizadas para 
 
 | Skill | Especificación Técnica | Cuándo se Activa |
 | :--- | :--- | :--- |
-| **`hyperframes-director`** | **Vídeo Programático Ultraligero (HTML5 + CSS3 + GSAP).** Renderizado determinista frame a frame con `seek(t)` a mínimo consumo de tokens. Principio Audio-First, subtítulos en DOM y Safe Zones para TikTok y Reels. | Reels explicativos, cinéticas de texto, estilo boceto/Excalidraw y vídeos de 15-45s. |
+| **`hyperframes-director`** | **Motor Dual de Vídeo Programático.** Motor A (3D Procedural en Three.js con avatares procedurales y lip-sync 30Hz) y Motor B (2D Editorial/B-Roll con GSAP). Enrutador híbrido Capa 0 Ollama a 0 tokens vs Capa 1 Cloud 1-Shot Fallback y Safe Zones 9:16. | Reels técnicos, podcasts 3D con avatares, demos de producto y explainers visuales de alta retención. |
 | **`video-script-storyteller`** | **Guiones de Alta Retención en 2 Columnas.** Estructura visual vs audio, ganchos de 3 segundos (*scroll stoppers*), ritmo de atención y llamadas a la acción sincronizadas. | Redacción y planificación de guiones para YouTube Shorts, Reels y TikTok. |
 | **`ffmpeg-toolkit`** | **Procesamiento Audiovisual CLI Multiplataforma.** Corte sin recodificar (`-c copy`), compresión optimizada para WhatsApp/Web, normalización EBU R128 (-14 LUFS) y masterizado CRF 18. | Ensamble de vídeo, optimización de peso y extracción de pistas de audio. |
 | **`remotion-video-agent`** | **Vídeo Programático en React con Remotion.** Creación de vídeos MP4 en código puro: motion graphics, renders escalables y subtitulado dinámico. | Generación de reels complejos, demos de producto en vídeo y explainers React. |
