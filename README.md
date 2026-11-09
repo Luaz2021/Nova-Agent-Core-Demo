@@ -19,15 +19,6 @@ Diseñado, entrenado y probado a fuego durante más de un mes de pruebas de estr
 ---
 
 
-## Novedades v3.0 (parche gratuito para quien ya tiene Nova)
-- **Reglas automaticas (hooks):** el sistema, no el modelo, frena webs gigantes escritas desde la nube, comandos destructivos, ediciones en la rama principal, lectura de claves y el gasto de tokens (freno cada 300k reales). Ademas Nova apunta sola lo que aprende cuando la corriges.
-- **Biblioteca de webs local:** webs minimalistas con identidad propia por tipo de negocio (15 categorias, 36 estilos, efectos de scroll y 3D) montadas en tu equipo a 0 tokens de nube.
-- **Redactor de documentos:** PDF y Word con tablas, temas y portada, usando la IA local.
-- **IA local actualizada:** Ollama + qwen3.5 (9b o 4b) + InternVL3.5 segun tu equipo; Nova la instala si se lo pides.
-- **Windows, macOS y Linux:** avisos, voz, bateria y portapapeles nativos en los tres sistemas.
-- **Actualizador seguro:** firma SHA-256 por archivo, copia de seguridad previa y nunca toca tus notas, tu perfil ni tus claves. Si ya tienes Nova, di *"Nova, busca actualizaciones"* (dos veces la primera vez).
-- **Privacidad:** `/enviar-informe` solo comparte lecciones, servilleta y el tipo de errores, y tu decides si se envia.
-
 ## 🎯 La Ideología: 100% Ecosistema Google
 
 Mientras la inmensa mayoría de la comunidad open source compite por hacer wrappers y extensiones para Claude Code o Cursor, **Nova Agent fue concebido desde el primer día para exprimir al máximo el poder del ecosistema de Google**:
@@ -60,7 +51,7 @@ flowchart TD
     
     Nova --> Dispatcher{Enrutador de Tarea}
     
-    Dispatcher -->|Volumen Masivo / Logs / Offline| Capa0[💻 Capa 0: Hardware Propio<br>Ollama + Qwen 2.5 Coder 7B<br>0 Tokens API · 0,00 €]
+    Dispatcher -->|Volumen Masivo / Logs / Offline| Capa0[💻 Capa 0: Hardware Propio<br>Ollama + Qwen 3.5 + InternVL 3.5<br>0 Tokens API · 0,00 €]
     Dispatcher -->|Consultas Rápidas / Sintaxis / Whisper| Capa1[☁️ Capa 1: Escuadrón Cloud Free<br>Codestral + OpenRouter + Groq<br>0 Tokens Antigravity · 0,00 €]
     Dispatcher -->|Pair Programming / Edición / Testing| Capa2[⚡ Capa 2: Gemini 3.8 Flash<br>Modo 1-Shot Consolidado AAA<br>Costo Óptimo 1.0x]
     Dispatcher -->|Refactor Sistémico / Auditoría Forense| Capa3[🏛️ Capa 3 & 4: Argon / Claude Sonnet<br>Tribunal Supremo de Arquitectura<br>Uso Quirúrgico 4.0x]
@@ -73,7 +64,7 @@ flowchart TD
 
 | Capa | Motor / Proveedor | Rol Principal | Costo de Tokens |
 | :--- | :--- | :--- | :--- |
-| **Capa 0** | **Ollama Local (Qwen 2.5 Coder 7B)** | Tareas masivas (`>1.500` tokens repetitivos), volcados SQL, resúmenes locales de logs y desarrollo sin conexión. | **0 tokens de API (0,00 €)** |
+| **Capa 0** | **Ollama Local (Qwen 3.5 9B/4B + InternVL 3.5 visión)** | Webs de negocio desde la biblioteca, documentos PDF/Word, tareas masivas (`>1.500` tokens repetitivos), resúmenes locales y desarrollo sin conexión. | **0 tokens de API (0,00 €)** |
 | **Capa 1** | **OpenRouter Free + Codestral (Mistral) + Groq** | Consultas rápidas de sintaxis, transcripción Whisper de clases/audio y razonamiento ligero sin gastar cuota de Antigravity. | **0 tokens de Antigravity (0,00 €)** |
 | **Capa 2** | **Gemini 3.8 Flash** | Copiloto principal en el chat de Antigravity 2.0. Ejecución `1-Shot` consolidada, edición de archivos y testing TDD. | **Factor 1.0x (Máxima velocidad)** |
 | **Capa 3** | **Gemini 4 Argon / Claude Sonnet** | Cirugía mayor: rediseños sistémicos de arquitectura, incompatibilidades profundas o auditorías de seguridad militar. | **Factor 4.0x (Solo bajo demanda)** |
@@ -83,14 +74,34 @@ flowchart TD
 ## 📑 Índice de Contenidos
 1. [La Ideología: 100% Ecosistema Google](#-la-ideología-100-ecosistema-google)
 2. [Google Antigravity 2.0 vs. Antigravity IDE](#-distinción-fundamental-google-antigravity-20-vs-antigravity-ide)
-3. [Novedades de Ingeniería v2.3](#-novedades-de-ingeniería-v23)
-4. [Instalación en 1 Clic (Windows, macOS y Linux)](#-instalación-en-1-clic-auto-instalador-de-antigravity-incluido)
-5. [Router Multi-Modelo y Herramientas a 0 Tokens](#-router-multi-modelo-y-herramientas-a-0-tokens)
-6. [Catálogo Detallado de Skills por Especialidad](#-catálogo-detallado-de-skills-por-especialidad)
-7. [Atribuciones y Agradecimientos Open Source](#-atribuciones-y-agradecimientos-open-source-cero-cajas-negras)
-8. [Capa de Integridad Criptográfica y Anti-Plagio](#-capa-de-integridad-criptográfica-y-anti-plagio)
-9. [Llamada a Colaboradores: Proyecto Nova GUI](#-llamada-a-colaboradores-proyecto-nova-gui-open-source)
-10. [Créditos, Licencia y Autoría](#-créditos--autoría)
+3. [Novedades de Ingeniería v3.0](#-novedades-de-ingeniería-v30)
+4. [Novedades de Ingeniería v2.3](#-novedades-de-ingeniería-v23)
+5. [Instalación en 1 Clic (Windows, macOS y Linux)](#-instalación-en-1-clic-auto-instalador-de-antigravity-incluido)
+6. [¿Ya tienes Nova? Actualiza a v3.0 sin perder nada](#-ya-tienes-nova-actualiza-a-v30-sin-perder-nada)
+7. [Router Multi-Modelo y Herramientas a 0 Tokens](#-router-multi-modelo-y-herramientas-a-0-tokens)
+8. [Catálogo Detallado de Skills por Especialidad](#-catálogo-detallado-de-skills-por-especialidad)
+9. [Atribuciones y Agradecimientos Open Source](#-atribuciones-y-agradecimientos-open-source-cero-cajas-negras)
+10. [Capa de Integridad Criptográfica y Anti-Plagio](#-capa-de-integridad-criptográfica-y-anti-plagio)
+11. [Llamada a Colaboradores: Proyecto Nova GUI](#-llamada-a-colaboradores-proyecto-nova-gui-open-source)
+12. [Créditos, Licencia y Autoría](#-créditos--autoría)
+
+---
+
+## 🔥 Novedades de Ingeniería v3.0
+
+Esta versión acerca la Nova pública a la Nova completa del autor: **reglas que vigila el sistema (no el modelo)**, **webs y documentos hechos en local a 0 tokens**, la **IA local de nueva generación** y un **actualizador por parches** que nunca toca lo tuyo. Funciona igual en **Windows, macOS y Linux**.
+
+| Mejora de Arquitectura | Qué problema resuelve | Impacto Técnico Real |
+| :--- | :--- | :--- |
+| **1. Reglas automáticas con hooks (`nova_core/nova_hook.py`, `nova_hook_turno.py`)** | Las leyes de `GEMINI.md` son texto y el modelo a veces se las salta. Ahora Antigravity consulta a Nova **antes de cada herramienta**: bloquea escribir en carpetas protegidas o `.env`, pregunta ante comandos destructivos o ediciones en la rama principal, impide leer claves o archivos gigantes y frena webs de +150 líneas escritas desde la nube. | Las reglas se cumplen siempre. Un hook roto nunca bloquea a Nova (falla en abierto y lo apunta). |
+| **2. Freno de gasto con tokens reales** | Una sesión larga podía quemar millones de tokens sin avisar. El freno cuenta los tokens **reales** (la caché de Gemini al 10 %) y pregunta cada 300k; también avisa a los 100k de contexto para compactar y guarda copia del chat. | Control del gasto sin sorpresas. |
+| **3. Auto-aprendizaje vigilado** | Cuando corriges a Nova o fallan varios comandos seguidos, el hook le pide **una lección** en `memory/inbox_lecciones.md`; si no la apunta, insiste una vez y luego la guarda para revisar. | Nova no repite el mismo error. |
+| **4. Biblioteca de webs local (`almacen/biblioteca_web/`)** | Webs de negocio **minimalistas y con identidad propia** según el tipo de negocio: 15 categorías, 36 estilos inspirados en principios de webs reales (nunca marcas), fotos con licencia libre, efectos de scroll y 3D (Three.js) que se apagan en el móvil y con "reducir movimiento". | Una web completa en local **sin gastar tokens de nube**. Con una web de referencia, la nube puede escribirla. |
+| **5. Redactor de documentos (`nova_core/redactor.py`)** | PDF y Word con portada (u opción `sin_portada`), tablas con negrita y anchos de columna correctos, usando la IA local. Más `resumir.py` y `conversor.py` para leer documentos largos sin subirlos enteros. | Documentos profesionales a 0 tokens. |
+| **6. IA local de nueva generación (`scripts/nova_instalar_ia_local.py`)** | **Qwen 3.5** (9B o 4B) para código y textos + **InternVL 3.5** para visión, según tu equipo. Si falta Ollama, Nova lo instala (winget, Homebrew o el instalador oficial de Linux). Un único catálogo: `scripts/nova_modelos.json`. | Di *"Nova, instala la IA local"* y listo. |
+| **7. Actualizador por parches con firma SHA-256 (`scripts/actualizar_nova.py`)** | Compara **archivo por archivo**, verifica cada descarga, hace copia de seguridad antes de cambiar nada y **nunca toca** tus notas, tu perfil ni tus claves. Compatible con las instalaciones v2.x. | Parches seguros cada pocos meses con un *"Nova, busca actualizaciones"*. |
+| **8. Multiplataforma de verdad** | Avisos de escritorio, voz, batería, anti-suspensión y portapapeles nativos en Windows, macOS y Linux; el nombre del usuario se lee de su perfil. | La misma Nova en los tres sistemas. |
+| **9. Informe de aprendizaje con privacidad (`/enviar-informe`)** | Si quieres ayudar a mejorar Nova, prepara un informe con **solo** las lecciones, las entradas nuevas de tu servilleta y el **tipo** de errores. Nada de tu equipo, proyectos, rutas, correos ni claves. Tú lo revisas y decides si se envía. | Mejora colectiva sin robar información. |
 
 ---
 
@@ -119,6 +130,10 @@ Nova CLI Tools
 ├── nova_video_router.py  -> Enrutador híbrido de vídeo 3D (Capa 0 Ollama vs Capa 1 Cloud Fallback)
 ├── free_ai_router.py     -> Enruta consultas a Codestral o OpenRouter Free Tier (0€)
 ├── youtube_api_client.py -> Consultas a YouTube Data API v3 en <150ms a 0 tokens
+├── nova_instalar_ia_local.py -> Instala Ollama + Qwen 3.5 + InternVL 3.5 según tu equipo
+├── nova_claves.py        -> Asistente de claves gratis (se guardan solo en tu equipo)
+├── nova_revisor.py       -> Informe semanal local: qué hizo Nova, cuánto gastó y dónde falló
+├── actualizar_nova.py    -> Parches oficiales con firma SHA-256 y copia de seguridad
 └── enviar_feedback.py    -> Conexión directa y sanitizada con el creador vía GitHub Issues
 ```
 
@@ -138,6 +153,12 @@ python scripts/scrapers/free_ai_router.py ask "Explica el algoritmo de consenso 
 
 # Buscar vídeos en YouTube a 0 tokens de navegador
 python scripts/scrapers/youtube_api_client.py search "Arquitectura Limpia Hexagonal" 3
+
+# Montar una web de negocio desde la biblioteca local (0 tokens de nube)
+python ~/.gemini/antigravity/almacen/biblioteca_web/montar.py --datos mi_web/datos.json --categoria auto --out mi_web/index.html
+
+# Ver qué IA local te toca y qué tienes instalado
+python ~/.gemini/antigravity/scripts/nova_instalar_ia_local.py --estado
 ```
 
 ---
@@ -145,7 +166,10 @@ python scripts/scrapers/youtube_api_client.py search "Arquitectura Limpia Hexago
 ## ⚡ Instalación en 1 Clic (Auto-Instalador de Antigravity Incluido)
 
 > [!TIP]
-> **¿No tienes Google Antigravity instalado?** Al ejecutar el instalador en Windows, comprobará tu sistema y **te preguntará si deseas que descargue e instale Google Antigravity oficial automáticamente** antes de enlazar las 119 skills.
+> **¿No tienes Google Antigravity instalado?** Al ejecutar el instalador en Windows, comprobará tu sistema y **te preguntará si deseas que descargue e instale Google Antigravity oficial automáticamente** antes de enlazar las 125 skills.
+
+> [!NOTE]
+> **Requisitos:** Python 3.10 o superior y git (en Windows, si falta Python, el instalador te ofrece instalarlo con winget). La IA local es opcional y el instalador solo la ofrece si tu equipo tiene RAM y disco suficientes.
 
 ### 🪟 En Windows (PowerShell o Doble Clic)
 **Opción A (1 sola línea en PowerShell):**
@@ -165,6 +189,22 @@ curl -fsSL https://raw.githubusercontent.com/Luaz2021/Nova-Agent-Core-Demo/main/
 ```bash
 curl -fsSL https://raw.githubusercontent.com/Luaz2021/Nova-Agent-Core-Demo/main/instalar_nova.sh | bash
 ```
+
+El instalador es interactivo: te pregunta tu nombre y tu perfil, analiza tu equipo, te ofrece la IA local, registra las reglas automáticas (hooks) y, si quieres, te deja configurar tus claves gratuitas (como un inicio de sesión, sin mostrarlas en pantalla y solo en tu equipo).
+
+---
+
+## 🔄 ¿Ya tienes Nova? Actualiza a v3.0 sin perder nada
+
+No hace falta reinstalar. En el chat de Antigravity escribe:
+
+> **"Nova, busca actualizaciones"**
+
+- La **primera vez** desde la v2.x, Nova actualiza su propio actualizador. Dilo **una segunda vez** para que traiga el resto (reglas automáticas, biblioteca de webs, redactor, IA local nueva).
+- Antes de cambiar nada guarda una copia en `~/.gemini/antigravity/backups/`.
+- **Nunca toca** `memory/` (tareas, servilleta, lecciones), tu `perfil_usuario.json`, tus claves ni tu configuración del IDE.
+- Cuando termine, **cierra y abre Antigravity** para activar las reglas automáticas.
+- Para pasar a los modelos nuevos: *"Nova, instala la IA local"* (y opcionalmente borra los viejos `qwen2.5-coder` con `nova_instalar_ia_local.py --limpiar-obsoletos`).
 
 ---
 
