@@ -3,7 +3,7 @@ Nova Video Router v2.0 (Dual-Engine: Capa 0 Ollama vs Capa 1 Cloud Fallback)
 =============================================================================
 Enrutador inteligente para generacion de escenas en video programatico (Nova Studio 3D).
 - Detecta automaticamente si Ollama esta activo en http://127.0.0.1:11434 y si tiene
-  modelos compatibles (qwen2.5-coder:7b, qwen2.5-coder:3b, nova-dsl).
+  modelos compatibles (qwen3.5:9b, qwen3.5:4b, nova-dsl; ver nova_modelos.json).
 - Si la IA Local esta DISPONIBLE:
     -> Usa Capa 0 (Hardware Propio) con decodificacion restringida por JSON Schema.
     -> Coste: 0 tokens en la nube (0,00 EUR).
@@ -24,6 +24,8 @@ import urllib.error
 OLLAMA_BASE_URL = "http://127.0.0.1:11434"
 COMPATIBLE_MODELS = [
     "nova-dsl",
+    "qwen3.5:9b",
+    "qwen3.5:4b",
     "qwen2.5-coder:7b",
     "qwen2.5-coder:7b-instruct-q4_K_M",
     "qwen2.5-coder:3b",
@@ -92,6 +94,7 @@ def generate_with_ollama(prompt_text, model_name, schema_dict, max_retries=3):
             "prompt": prompt_text,
             "format": schema_dict,
             "stream": False,
+            "think": False,
             "options": {
                 "temperature": 0.1,
                 "num_ctx": 4096,
@@ -190,7 +193,7 @@ def route_scene_generation(prompt_text, schema_path=None, force_mode=None):
         engine_used = f"Ollama Local ({model_name})"
     else:
         print("[ENRUTAMIENTO] -> CAPA 1: CLOUD 1-SHOT FALLBACK (Gemini Flash)")
-        print("[AVISO] Para ejecutar a 0 tokens de API, instala Ollama y 'qwen2.5-coder:7b'.")
+        print("[AVISO] Para ejecutar a 0 tokens de API, instala la IA local: python nova_instalar_ia_local.py")
         # En modo fallback, devolvemos las instrucciones de invocacion 1-Shot para el agente
         sys_p, user_p = generate_cloud_fallback_prompt(prompt_text, schema_dict)
         scene_data = {

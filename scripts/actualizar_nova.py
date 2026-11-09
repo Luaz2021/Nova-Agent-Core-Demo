@@ -1,14 +1,24 @@
 """
-Nova Agent - Actualizador Oficial Anti-Roturas (Multiplataforma)
-================================================================
+Nova Agent - Actualizador Oficial Anti-Roturas v3 (Windows / macOS / Linux)
+===========================================================================
 Creado por Saul Alexander Martinez Rivas (@Luaz2021)
 
-Actualiza las skills, reglas y motor oficial de Nova Agent desde GitHub
-preservando al 100% las notas, tareas y datos privados del usuario.
+Trae los parches oficiales desde GitHub (manifest_master.json) SIN tocar lo privado del usuario:
+  - Compara archivo por archivo con SHA-256: solo baja lo que cambio (aunque el numero de version no cambie).
+  - Verifica el SHA-256 de cada descarga: si no coincide, NO se escribe (nada a medias ni manipulado).
+  - Antes de pisar un archivo guarda la copia en ~/.gemini/antigravity/backups/backup_previo_<fecha>/.
+  - Nunca toca: memory/ (tasks.md, napkin.md, perfil_usuario.json, lecciones...), claves, hooks.json ni config.json,
+    ni archivos marcados "Preserve" que ya existan (p. ej. la memoria de disenos de la biblioteca).
+  - Las plantillas de memoria se guardan como *_oficial.md al lado de las del usuario.
+  - Si cambian los hooks, vuelve a registrarlos en ~/.gemini/config/hooks.json (sin borrar hooks ajenos).
+
+Compatibilidad con Nova v2.x: el actualizador viejo solo entiende Rule/Config/Script/Skill/Template y se
+actualiza a si mismo a esta version; lo demas (tipo "File") lo trae esta version la siguiente vez que se pida.
 
 Uso:
-  python actualizar_nova.py --check   (Solo comprobar si hay novedades)
-  python actualizar_nova.py           (Actualizar de forma segura con backup previo)
+  python actualizar_nova.py --check   (solo comprobar si hay novedades)
+  python actualizar_nova.py           (actualizar con copia de seguridad previa)
+  python actualizar_nova.py --force   (revisa y repara todos los archivos)
 """
 
 from __future__ import annotations
@@ -18,208 +28,207 @@ import hashlib
 import json
 import os
 import shutil
+import subprocess
 import sys
 import urllib.request
+from pathlib import Path
 
-REPO_RAW_URL = "https://raw.githubusercontent.com/Luaz2021/Nova-Agent-Core-Demo/main"
+REPO_RAW_URL = os.environ.get("NOVA_REPO_RAW_URL", "https://raw.githubusercontent.com/Luaz2021/Nova-Agent-Core-Demo/main")
 MANIFEST_NAME = "manifest_master.json"
+GEMINI = Path.home() / ".gemini"
+ANTIGRAVITY = GEMINI / "antigravity"
+LOCAL_MANIFEST = ANTIGRAVITY / MANIFEST_NAME
+BACKUPS = ANTIGRAVITY / "backups"
+# Nunca se escriben desde el actualizador (datos y ajustes del usuario)
+INTOCABLES = {ANTIGRAVITY / "memory" / "perfil_usuario.json", GEMINI / "config" / "secrets.env",
+              GEMINI / "config" / "hooks.json", GEMINI / "config" / "config.json", GEMINI / "config" / "mcp_config.json"}
 
 
-def get_user_gemini_paths():
-    user_home = os.path.expanduser("~")
-    gemini_dir = os.path.join(user_home, ".gemini")
-    return {
-        "gemini_dir": gemini_dir,
-        "config_dir": os.path.join(gemini_dir, "config"),
-        "skills_dir": os.path.join(gemini_dir, "config", "skills"),
-        "antigravity_dir": os.path.join(gemini_dir, "antigravity"),
-        "memory_dir": os.path.join(gemini_dir, "antigravity", "memory"),
-        "scripts_dir": os.path.join(gemini_dir, "antigravity", "scripts"),
-        "backups_dir": os.path.join(gemini_dir, "antigravity", "backups"),
-        "manifest_path": os.path.join(gemini_dir, "antigravity", MANIFEST_NAME),
-    }
+def _get(ruta_relativa: str, timeout: int = 20) -> bytes | None:
+    ruta = ruta_relativa.replace("\\", "/").lstrip("/")
+    if REPO_RAW_URL.startswith("file://"):  # pruebas locales: NOVA_REPO_RAW_URL=file:///ruta/al/repo
+        try:
+            return (Path(REPO_RAW_URL[7:].lstrip("/") if os.name == "nt" else REPO_RAW_URL[7:]) / ruta).read_bytes()
+        except OSError:
+            return None
+    try:
+        req = urllib.request.Request(f"{REPO_RAW_URL}/{ruta}", headers={"User-Agent": "Nova-Agent-Updater"})
+        with urllib.request.urlopen(req, timeout=timeout) as resp:
+            if resp.status == 200:
+                return resp.read()
+    except Exception:
+        return None
+    return None
 
 
 def fetch_remote_json(endpoint: str) -> dict | None:
-    url = f"{REPO_RAW_URL}/{endpoint}"
+    datos = _get(endpoint)
     try:
-        req = urllib.request.Request(url, headers={"User-Agent": "Nova-Agent-Updater"})
-        with urllib.request.urlopen(req, timeout=10) as resp:
-            if resp.status == 200:
-                return json.loads(resp.read().decode("utf-8"))
-    except Exception:
+        return json.loads(datos.decode("utf-8-sig")) if datos else None
+    except ValueError:
         return None
-    return None
 
 
-def fetch_remote_text(endpoint: str) -> str | None:
-    url = f"{REPO_RAW_URL}/{endpoint}"
+def sha256_bytes(datos: bytes) -> str:
+    return hashlib.sha256(datos).hexdigest().upper()
+
+
+def sha256_file(path: Path) -> str:
     try:
-        req = urllib.request.Request(url, headers={"User-Agent": "Nova-Agent-Updater"})
-        with urllib.request.urlopen(req, timeout=10) as resp:
-            if resp.status == 200:
-                return resp.read().decode("utf-8")
-    except Exception:
+        return sha256_bytes(path.read_bytes())
+    except OSError:
+        return ""
+
+
+def leer_manifest_local() -> dict:
+    try:
+        return json.loads(LOCAL_MANIFEST.read_text(encoding="utf-8-sig"))
+    except (OSError, ValueError):
+        return {}
+
+
+def plan_de_componente(comp: dict) -> tuple[str, Path, str, bool] | None:
+    """(ruta en el repo, destino local, sha esperado, preservar) de un componente; None si no aplica."""
+    tipo = comp.get("Type")
+    rel = str(comp.get("RelativePath") or "").replace("\\", "/")
+    destino_rel = str(comp.get("TargetRelative") or "").replace("\\", "/")
+    esperado = str(comp.get("SHA256") or "").upper()
+    if not rel or not destino_rel or Path(destino_rel).is_absolute() or ".." in Path(destino_rel).parts:
         return None
-    return None
+    if tipo == "Skill":  # entrada heredada de v2 (carpeta) -> su SKILL.md; el SHA del SKILL.md va en SkillSHA256
+        rel, destino_rel = f"{rel.rstrip('/')}/SKILL.md", f"{destino_rel.rstrip('/')}/SKILL.md"
+        esperado = str(comp.get("SkillSHA256") or "").upper()
+    elif tipo == "Template":  # nunca pisa la nota del usuario: la version oficial va al lado
+        nombre = Path(destino_rel).name
+        if nombre == "perfil_usuario.json":
+            return None
+        destino_rel = str(Path(destino_rel).with_name(nombre.replace(".template", "_oficial"))).replace("\\", "/")
+    destino = GEMINI / destino_rel
+    if destino in INTOCABLES:
+        return None
+    return rel, destino, esperado, bool(comp.get("Preserve"))
 
 
-def sha256_file(path: str) -> str:
-    h = hashlib.sha256()
-    with open(path, "rb") as f:
-        while chunk := f.read(65536):
-            h.update(chunk)
-    return h.hexdigest().upper()
+def comprobar(forzar: bool = False) -> tuple[dict | None, list]:
+    """(manifiesto remoto, cambios [(comp, rel, destino, esperado)])."""
+    remoto = fetch_remote_json(MANIFEST_NAME)
+    if not remoto:
+        return None, []
+    cambios = []
+    for comp in remoto.get("Components", []):
+        plan = plan_de_componente(comp)
+        if not plan:
+            continue
+        rel, destino, esperado, preservar = plan
+        existe = destino.exists()
+        if preservar and existe:
+            continue
+        if forzar or not existe or (esperado and sha256_file(destino) != esperado):
+            cambios.append((comp, rel, destino, esperado))
+    return remoto, cambios
 
 
-def create_safety_backup(paths: dict) -> str:
-    timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-    backup_target = os.path.join(paths["backups_dir"], f"backup_previo_{timestamp}")
-    os.makedirs(backup_target, exist_ok=True)
-
-    # 1. Copiar memoria si existe
-    if os.path.exists(paths["memory_dir"]):
-        shutil.copytree(paths["memory_dir"], os.path.join(backup_target, "memory"), dirs_exist_ok=True)
-
-    # 2. Copiar reglas activas
-    for f in ["GEMINI.md", "AYUDA.md"]:
-        src = os.path.join(paths["config_dir"], f)
-        if os.path.exists(src):
-            shutil.copy2(src, os.path.join(backup_target, f))
-
-    return backup_target
+def respaldar(destino: Path, carpeta: Path) -> None:
+    if destino.is_file():
+        copia = carpeta / destino.relative_to(GEMINI)
+        copia.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(destino, copia)
 
 
-def check_updates():
-    paths = get_user_gemini_paths()
-    remote_manifest = fetch_remote_json(MANIFEST_NAME)
+def respaldo_memoria(carpeta: Path) -> None:
+    mem = ANTIGRAVITY / "memory"
+    if mem.exists():
+        shutil.copytree(mem, carpeta / "antigravity" / "memory", dirs_exist_ok=True,
+                        ignore=shutil.ignore_patterns("chat_logs", "registros"))
 
-    if not remote_manifest:
+
+def registrar_hooks() -> None:
+    script = GEMINI / "nova_core" / "instalar_hooks.py"
+    if script.exists():
+        subprocess.run([sys.executable, str(script)], check=False)
+
+
+def apply_update(forzar: bool = False) -> int:
+    remoto, cambios = comprobar(forzar)
+    if remoto is None:
         print("[AVISO] No se pudo conectar con GitHub para buscar actualizaciones (revisa tu conexion).")
-        return False, None
+        return 1
+    ver_r, ver_l = remoto.get("Version", "?"), leer_manifest_local().get("Version", "1.0")
+    LOCAL_MANIFEST.parent.mkdir(parents=True, exist_ok=True)
+    if not cambios:
+        LOCAL_MANIFEST.write_text(json.dumps(remoto, indent=2, ensure_ascii=False), encoding="utf-8")
+        print(f"[OK] Ya tienes la version mas reciente de Nova Agent (v{ver_r}). No hay parches pendientes.")
+        return 0
 
-    local_manifest = None
-    if os.path.exists(paths["manifest_path"]):
+    print("----------------------------------------------------------------------")
+    print(f"[ACTUALIZADOR] Parche disponible: v{ver_r} (tenias v{ver_l}) | {len(cambios)} archivos nuevos o cambiados")
+    print("----------------------------------------------------------------------")
+    carpeta = BACKUPS / f"backup_previo_{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}"
+    carpeta.mkdir(parents=True, exist_ok=True)
+    respaldo_memoria(carpeta)
+    print(f"[OK] Copia de seguridad creada en: backups/{carpeta.name}")
+
+    escritos, fallidos, nuevas_skills, hooks_tocados, auto = 0, [], [], False, False
+    for comp, rel, destino, esperado in cambios:
+        datos = _get(rel)
+        if datos is None:
+            fallidos.append(rel)
+            continue
+        if esperado and sha256_bytes(datos) != esperado:
+            fallidos.append(f"{rel} (la firma SHA-256 no coincide: no se instala)")
+            continue
+        es_nueva = not destino.exists()
         try:
-            with open(paths["manifest_path"], "r", encoding="utf-8") as f:
-                local_manifest = json.load(f)
-        except Exception:
-            local_manifest = None
+            respaldar(destino, carpeta)
+            destino.parent.mkdir(parents=True, exist_ok=True)
+            tmp = destino.with_name(destino.name + ".nova_tmp")
+            tmp.write_bytes(datos)
+            os.replace(tmp, destino)
+            escritos += 1
+        except OSError as e:
+            fallidos.append(f"{rel} ({e})")
+            continue
+        if comp.get("Type") == "Skill" and es_nueva:
+            nuevas_skills.append(comp.get("Name", rel))
+        if rel.startswith("nova_core/"):
+            hooks_tocados = True
+        if rel == "scripts/actualizar_nova.py":
+            auto = True
 
-    remote_ver = remote_manifest.get("Version", "2.0")
-    local_ver = local_manifest.get("Version", "1.0") if local_manifest else "1.0"
-    remote_total = remote_manifest.get("TotalComponents", 0)
-    local_total = local_manifest.get("TotalComponents", 0) if local_manifest else 0
+    if not fallidos:
+        LOCAL_MANIFEST.write_text(json.dumps(remoto, indent=2, ensure_ascii=False), encoding="utf-8")
+    if hooks_tocados:
+        registrar_hooks()
 
-    has_updates = (remote_ver != local_ver) or (remote_total > local_total)
-    return has_updates, {
-        "local_ver": local_ver,
-        "remote_ver": remote_ver,
-        "local_total": local_total,
-        "remote_total": remote_total,
-        "remote_manifest": remote_manifest,
-    }
+    print(f"[OK] Parche v{ver_r} aplicado: {escritos} archivos actualizados.")
+    if nuevas_skills:
+        print(f"[INFO] Nuevas skills ({len(nuevas_skills)}): {', '.join(nuevas_skills[:6])}")
+    if fallidos:
+        print(f"[AVISO] {len(fallidos)} archivos no se pudieron traer (se reintentara la proxima vez):")
+        for f in fallidos[:10]:
+            print(f"   - {f}")
+    if hooks_tocados:
+        print("[INFO] Reglas automaticas (hooks) actualizadas: cierra y abre Antigravity para activarlas.")
+    if auto:
+        print("[INFO] El actualizador se actualizo a si mismo: ejecutalo otra vez para revisar el resto con la version nueva.")
+    print("[SEGURIDAD] Tus notas (memory/), tu perfil y tus claves no se han tocado.")
+    return 0 if not fallidos else 2
 
 
-def apply_update():
-    paths = get_user_gemini_paths()
-    has_updates, info = check_updates()
-
-    if not info:
-        print("[ERROR] Imposible obtener informacion de version.")
-        return
-
-    if not has_updates and "--force" not in sys.argv:
-        print(f"[OK] Ya tienes la version mas reciente de Nova Agent (v{info['local_ver']} con {info['local_total']} componentes).")
-        print("No hay cambios pendientes de actualizar.")
-        return
-
-    print("----------------------------------------------------------------------")
-    print(f"[ACTUALIZADOR] Nueva version disponible: v{info['remote_ver']} (Remoto: {info['remote_total']} comps | Local: {info['local_total']} comps)")
-    print("----------------------------------------------------------------------")
-
-    # 1. Crear backup preventivo
-    backup_path = create_safety_backup(paths)
-    print(f"[OK] Copia de seguridad preventiva creada en: {os.path.basename(backup_path)}")
-
-    remote_manifest = info["remote_manifest"]
-    components = remote_manifest.get("Components", [])
-    updated_count = 0
-    new_skills = []
-
-    # 2. Descargar o actualizar componentes
-    for comp in components:
-        ctype = comp.get("Type")
-        rel_path = comp.get("RelativePath")
-        comp_id = comp.get("Id", "")
-
-        # A) Reglas y Documentacion
-        if ctype in {"Rule", "Config"}:
-            content = fetch_remote_text(rel_path)
-            if content:
-                dest = os.path.join(paths["config_dir"], os.path.basename(rel_path))
-                os.makedirs(os.path.dirname(dest), exist_ok=True)
-                with open(dest, "w", encoding="utf-8") as f:
-                    f.write(content)
-                updated_count += 1
-
-        # B) Skills (solo actualizar o anadir nuevas)
-        elif ctype == "Skill":
-            skill_name = comp.get("Name")
-            skill_dest_dir = os.path.join(paths["skills_dir"], skill_name)
-            skill_file = os.path.join(skill_dest_dir, "SKILL.md")
-            
-            is_new = not os.path.exists(skill_file)
-            content = fetch_remote_text(f"skills/{skill_name}/SKILL.md")
-            if content:
-                os.makedirs(skill_dest_dir, exist_ok=True)
-                with open(skill_file, "w", encoding="utf-8") as f:
-                    f.write(content)
-                updated_count += 1
-                if is_new:
-                    new_skills.append(skill_name)
-
-        # C) Scripts
-        elif ctype == "Script":
-            script_name = comp.get("Name")
-            content = fetch_remote_text(f"scripts/{script_name}")
-            if content:
-                dest = os.path.join(paths["scripts_dir"], script_name)
-                os.makedirs(os.path.dirname(dest), exist_ok=True)
-                with open(dest, "w", encoding="utf-8") as f:
-                    f.write(content)
-                updated_count += 1
-
-        # D) Templates de Memoria Oficial (SE GUARDAN CON PREFIJO OFICIAL PARA NO PISAR AL USUARIO)
-        elif ctype == "Template":
-            tpl_name = comp.get("Name")
-            content = fetch_remote_text(f"memory_templates/{tpl_name}")
-            if content:
-                # Guardar siempre la version oficial de Saul
-                clean_name = tpl_name.replace(".template", "_oficial")
-                dest = os.path.join(paths["memory_dir"], clean_name)
-                os.makedirs(paths["memory_dir"], exist_ok=True)
-                with open(dest, "w", encoding="utf-8") as f:
-                    f.write(content)
-                updated_count += 1
-
-    # 3. Guardar el nuevo manifiesto local
-    with open(paths["manifest_path"], "w", encoding="utf-8") as f:
-        json.dump(remote_manifest, f, indent=4, ensure_ascii=False)
-
-    print(f"[OK] Actualizacion a v{info['remote_ver']} completada con exito ({updated_count} archivos actualizados).")
-    if new_skills:
-        print(f"[INFO] Nuevas skills agregadas ({len(new_skills)}): {', '.join(new_skills[:6])}")
-    print("[SEGURIDAD] Tus notas privadas (tasks.md, napkin.md y perfil_usuario.json) se mantuvieron intactas al 100%.")
+def check_updates() -> int:
+    remoto, cambios = comprobar()
+    if remoto is None:
+        print("[AVISO] No se pudo conectar con GitHub para buscar actualizaciones (revisa tu conexion).")
+        return 1
+    if cambios:
+        print(f"[NOVEDAD] Hay parches disponibles: v{remoto.get('Version', '?')} ({len(cambios)} archivos). "
+              f"Tu version: v{leer_manifest_local().get('Version', '1.0')}.")
+    else:
+        print(f"[AL_DIA] Tienes la version mas reciente (v{remoto.get('Version', '?')}).")
+    return 0
 
 
 if __name__ == "__main__":
     if "--check" in sys.argv:
-        has_up, info = check_updates()
-        if info:
-            if has_up:
-                print(f"[NOVEDAD] Hay una nueva version disponible: v{info['remote_ver']} (Tu version actual: v{info['local_ver']}).")
-            else:
-                print(f"[AL_DIA] Tienes la version mas reciente (v{info['local_ver']}).")
-    else:
-        apply_update()
+        sys.exit(check_updates())
+    sys.exit(apply_update(forzar="--force" in sys.argv))

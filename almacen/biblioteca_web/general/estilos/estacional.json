@@ -1,0 +1,67 @@
+{
+ "idea": "cocina de autor: mucho aire, texto pequeno y sereno, la foto de temporada manda",
+ "referencia": "noma.dk",
+ "variantes": {
+  "cabecera": "barra",
+  "hero": "foto",
+  "destacados": "lista"
+ },
+ "efecto": null,
+ "cierre": null,
+ "orden": [
+  "cabecera",
+  "hero",
+  "destacados",
+  "carta",
+  "reservar",
+  "eventos",
+  "horario",
+  "resenas",
+  "visitanos",
+  "faq",
+  "pie"
+ ],
+ "quitar": [
+  "cinta"
+ ],
+ "pistas": [],
+ "tipos": [
+  "restaurante",
+  "bar",
+  "panaderia"
+ ],
+ "paletas": [
+  "estacional-1",
+  "estacional-2",
+  "estacional-3"
+ ],
+ "rasgos": {
+  "radius": 0,
+  "mayus": false,
+  "tracking": "-0.01em",
+  "escala": "media"
+ },
+ "tipografia": {
+  "class": "serif-display",
+  "display": {
+   "family": "Instrument Serif",
+   "weights": [
+    400
+   ],
+   "settings": "tracking -0.01em"
+  },
+  "text": {
+   "family": "Inter"
+  },
+  "links": [
+   "https://fonts.googleapis.com/css2?family=Instrument+Serif:wght@400&family=Inter:wght@400;500;700&display=swap"
+  ]
+ },
+ "fondo": null,
+ "decoradores": [
+  "titular"
+ ],
+ "tres_d": {
+  "ligero": "profundidad"
+ }
+}

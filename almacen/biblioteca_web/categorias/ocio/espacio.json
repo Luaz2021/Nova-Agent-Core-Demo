@@ -1,0 +1,17 @@
+{
+ "fotos": "concert|music|stage|cinema|theat|crowd|dj\b|festival",
+ "no_fotos": "",
+ "buscar": [
+  "concert stage lights",
+  "live music venue",
+  "theatre stage"
+ ],
+ "paletas": [
+  "charcoal-primaries",
+  "plum-black-pink",
+  "ultramarine-yellow",
+  "black-crimson",
+  "candy-on-black",
+  "soot-pale-lime"
+ ]
+}

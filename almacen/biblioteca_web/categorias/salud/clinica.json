@@ -1,0 +1,33 @@
+{
+ "fotos": "clinic|dental|dentist|doctor|medical|health|hospital|smile|nurse|therap",
+ "no_fotos": "",
+ "buscar": [
+  "dental clinic",
+  "dentist treatment",
+  "medical clinic interior",
+  "doctor patient"
+ ],
+ "buscar_si": {
+  "dent|odont|sonrisa|ortodon": [
+   "dentist patient",
+   "dental chair treatment",
+   "dental clinic"
+  ],
+  "fisio|rehabil": [
+   "physiotherapy treatment",
+   "physical therapy clinic"
+  ],
+  "psico|terapia": [
+   "therapy session calm",
+   "psychologist office"
+  ]
+ },
+ "paletas": [
+  "clinica-menta",
+  "cool-white-slate",
+  "teal-on-paper",
+  "white-link-blue",
+  "three-stones",
+  "mint-pink-accounts"
+ ]
+}

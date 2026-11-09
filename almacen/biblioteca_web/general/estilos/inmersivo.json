@@ -1,0 +1,40 @@
+{
+ "idea": "cine: foto a sangre en portada, los servicios como pasos con la imagen fija que cambia y un zoom final antes de reservar",
+ "variantes": {
+  "cabecera": "barra",
+  "hero": "foto"
+ },
+ "efecto": "pasos",
+ "cierre": "zoom",
+ "orden": [
+  "cabecera",
+  "hero",
+  "destacados",
+  "carta",
+  "eventos",
+  "reservar",
+  "horario",
+  "resenas",
+  "visitanos",
+  "faq",
+  "pie"
+ ],
+ "quitar": [
+  "cinta"
+ ],
+ "pistas": [
+  "photo",
+  "image",
+  "cinematic",
+  "full",
+  "bleed",
+  "immersive",
+  "stage",
+  "film",
+  "night",
+  "dark",
+  "travel",
+  "landscape"
+ ],
+ "tres_d": {}
+}

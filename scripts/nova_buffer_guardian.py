@@ -13,8 +13,10 @@ import sys
 import json
 import time
 import glob
-import subprocess
 from datetime import datetime
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import nova_comun  # noqa: E402
 
 def get_memory_dir():
     """Carpeta de memoria 100% local para Community Edition (Sin sincronizacion Cloud)."""
@@ -36,6 +38,7 @@ LAST_MTIME_MAP = {}
 CACHED_RESULTS = {}
 
 os.makedirs(CHAT_LOGS_DIR, exist_ok=True)
+ETIQUETA_USUARIO = (nova_comun.nombre_usuario("USUARIO") or "USUARIO").upper()
 
 
 def purge_old_logs():
@@ -110,7 +113,7 @@ def parse_and_sync_transcript(conv_id, transcript_path):
                     if content:
                         user_msg_count += 1
                         last_user_goal = content[:200]
-                        dialogues.append(f"[{created}] ALEXANDER: {content}")
+                        dialogues.append(f"[{created}] {ETIQUETA_USUARIO}: {content}")
 
                 elif step_type == "PLANNER_RESPONSE":
                     inp = obj.get("input_tokens", 0) or 0
@@ -160,7 +163,7 @@ def parse_and_sync_transcript(conv_id, transcript_path):
                 f.write(f"- ACTUALIZADO: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} (Chat: `{conv_id[:8]}`)\n")
                 f.write(f"- CARGA_TOKENS: {current_tokens:,} tokens ({user_msg_count} mensajes)\n")
                 f.write(f"- ARCHIVOS_TOCADOS: [{files_str}]\n")
-                f.write(f"- ULTIMA_ORDEN_ALEXANDER: {last_user_goal}\n")
+                f.write(f"- ULTIMA_ORDEN_USUARIO: {last_user_goal}\n")
                 f.write(f"- ULTIMO_PASO_NOVA: {last_nova_action}\n")
                 f.write(f"- RUTA_LOG_HISTORICO: {log_file}\n\n")
                 f.write("## Ultimas lineas habladas (Retomar desde aqui):\n\n")
@@ -175,62 +178,18 @@ def parse_and_sync_transcript(conv_id, transcript_path):
 
 
 def trigger_alert(current_tokens):
-    """Dispara alerta sonora, notificacion toast no bloqueante y aviso de voz."""
+    """Alerta sonora, notificacion de escritorio y aviso de voz (Windows / macOS / Linux)."""
     k_tokens = int(current_tokens / 1000)
     print(f"[ALERTA BUFFER] Sesion en {current_tokens:,} tokens ({k_tokens}k). Puente persistido en local.")
-
-    # 1. Chime acustico doble + Beep nativo del sistema
-    try:
-        import winsound
-        winsound.MessageBeep(winsound.MB_ICONEXCLAMATION)
-        winsound.Beep(880, 180)
-        winsound.Beep(1175, 240)
-    except Exception:
-        pass
-
-    # 2. Notificacion Toast de Windows 11 (usando AUMID registrado de Antigravity + NotifyIcon fallback)
-    try:
-        msg_body = f"Sesion en {current_tokens:,} tokens ({k_tokens}k). Puente guardado en local. Abre ventana nueva para ahorrar tokens."
-        ps_toast = f"""
-        try {{
-            [Windows.UI.Notifications.ToastNotificationManager, Windows.UI.Notifications, ContentType = WindowsRuntime] > $null
-            [Windows.Data.Xml.Dom.XmlDocument, Windows.Data.Xml.Dom.XmlDocument, ContentType = WindowsRuntime] > $null
-            $template = [Windows.UI.Notifications.ToastNotificationManager]::GetTemplateContent([Windows.UI.Notifications.ToastTemplateType]::ToastText02)
-            $textNodes = $template.GetElementsByTagName('text')
-            $textNodes.Item(0).AppendChild($template.CreateTextNode('Nova Token Guardian ({k_tokens}k tokens)')) > $null
-            $textNodes.Item(1).AppendChild($template.CreateTextNode('{msg_body}')) > $null
-            $toast = [Windows.UI.Notifications.ToastNotification]::new($template)
-            [Windows.UI.Notifications.ToastNotificationManager]::CreateToastNotifier('Google.AntigravityIDE').Show($toast)
-        }} catch {{
-            Add-Type -AssemblyName System.Windows.Forms
-            Add-Type -AssemblyName System.Drawing
-            $n = New-Object System.Windows.Forms.NotifyIcon
-            $n.Icon = [System.Drawing.SystemIcons]::Warning
-            $n.Visible = $true
-            $n.ShowBalloonTip(7000, 'Nova Token Guardian ({k_tokens}k tokens)', '{msg_body}', [System.Windows.Forms.ToolTipIcon]::Warning)
-            Start-Sleep -Seconds 7
-            $n.Dispose()
-        }}
-        """
-        subprocess.Popen(
-            ["powershell.exe", "-NoProfile", "-WindowStyle", "Hidden", "-Command", ps_toast],
-            stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
-            creationflags=0x08000000 if sys.platform == "win32" else 0
-        )
-    except Exception:
-        pass
-
-    # 3. Aviso por voz asincrono (SAPI)
-    try:
-        voice_text = f"Alexander, la sesion supero los {k_tokens} mil tokens. El puente esta guardado en local para saltar cuando quieras."
-        ps_voice = f"Add-Type -AssemblyName System.Speech; $s = New-Object System.Speech.Synthesis.SpeechSynthesizer; $s.Volume = 100; try {{ $s.SelectVoice('Microsoft Helena Desktop') }} catch {{}}; $s.Speak('{voice_text}')"
-        subprocess.Popen(
-            ["powershell.exe", "-NoProfile", "-WindowStyle", "Hidden", "-Command", ps_voice],
-            stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
-            creationflags=0x08000000 if sys.platform == "win32" else 0
-        )
-    except Exception:
-        pass
+    nova_comun.pitido()
+    nova_comun.notificar(
+        f"Nova Token Guardian ({k_tokens}k tokens)",
+        f"Sesion en {current_tokens:,} tokens ({k_tokens}k). Puente guardado en local. Abre ventana nueva para ahorrar tokens.",
+    )
+    nombre = nova_comun.nombre_usuario()
+    saludo = f"{nombre}, " if nombre else ""
+    nova_comun.hablar(f"{saludo}la sesion supero los {k_tokens} mil tokens. "
+                      "El puente esta guardado en local para saltar cuando quieras.")
 
 
 def check_once(silent=False):

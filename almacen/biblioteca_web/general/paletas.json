@@ -1,0 +1,1986 @@
+{
+ "_que_es": "Paletas propias de Nova (ademas de las 56 de la skill gemini-ui-artisan). Cada una: bg (fondo), surface (tarjetas), ink (texto), muted (texto suave), accent (botones), accentInk (texto del boton).",
+ "paletas": [
+  {
+   "id": "espresso-crema",
+   "name": "Espresso y crema",
+   "tags": [
+    "light-neutral",
+    "earth",
+    "coffee"
+   ],
+   "bg": "#f3ece1",
+   "surface": "#e7dccb",
+   "ink": "#2b1a10",
+   "muted": "#6b5442",
+   "accent": "#8a4b2a",
+   "accentInk": "#fff8ef",
+   "fields": [
+    {
+     "bg": "#2b1a10",
+     "ink": "#f3ece1"
+    }
+   ],
+   "note": "Crema de leche de fondo, texto espresso y acento de grano tostado."
+  },
+  {
+   "id": "tostado-terracota",
+   "name": "Tostado y terracota",
+   "tags": [
+    "light-neutral",
+    "earth",
+    "coffee"
+   ],
+   "bg": "#efe6da",
+   "surface": "#e3d5c3",
+   "ink": "#3a2418",
+   "muted": "#6e5546",
+   "accent": "#a8472a",
+   "accentInk": "#ffffff",
+   "fields": [
+    {
+     "bg": "#3a2418",
+     "ink": "#efe6da"
+    }
+   ],
+   "note": "Papel kraft, marron tostado y terracota de barro cocido."
+  },
+  {
+   "id": "negro-cafe-crema",
+   "name": "Negro cafe y crema",
+   "tags": [
+    "dark-neutral",
+    "earth",
+    "coffee"
+   ],
+   "bg": "#15100c",
+   "surface": "#211912",
+   "ink": "#efe4d2",
+   "muted": "#bba98f",
+   "accent": "#c8955c",
+   "accentInk": "#15100c",
+   "fields": [
+    {
+     "bg": "#efe4d2",
+     "ink": "#15100c"
+    }
+   ],
+   "note": "Fondo de cafe solo, texto crema y acento caramelo."
+  },
+  {
+   "id": "harina-trigo",
+   "name": "Harina y trigo",
+   "tags": [
+    "light-neutral",
+    "earth",
+    "bakery"
+   ],
+   "bg": "#f7f1e6",
+   "surface": "#ece2cf",
+   "ink": "#33261a",
+   "muted": "#6f5d4a",
+   "accent": "#b07a2a",
+   "accentInk": "#ffffff",
+   "fields": [
+    {
+     "bg": "#33261a",
+     "ink": "#f7f1e6"
+    }
+   ],
+   "note": "Blanco harina, marron corteza y dorado de horno."
+  },
+  {
+   "id": "clinica-menta",
+   "name": "Clinica menta",
+   "tags": [
+    "light-neutral",
+    "health"
+   ],
+   "bg": "#f6faf9",
+   "surface": "#e6f1ef",
+   "ink": "#12302d",
+   "muted": "#4d6764",
+   "accent": "#0f7a6c",
+   "accentInk": "#ffffff",
+   "fields": [
+    {
+     "bg": "#0f3d38",
+     "ink": "#f6faf9"
+    }
+   ],
+   "note": "Blanco limpio con verde menta clinico: confianza y calma."
+  },
+  {
+   "id": "galeria-blanca",
+   "name": "Galeria blanca",
+   "tags": [
+    "light-neutral",
+    "photographic-neutral",
+    "shop"
+   ],
+   "bg": "#ffffff",
+   "surface": "#f6f6f3",
+   "ink": "#111111",
+   "muted": "#5f5b57",
+   "accent": "#111111",
+   "accentInk": "#ffffff",
+   "fields": [
+    {
+     "bg": "#f6f6f3",
+     "ink": "#111111"
+    }
+   ],
+   "note": "Blanco y gris piedra, todo el texto negro; el color lo ponen las fotos."
+  },
+  {
+   "id": "galeria-piedra",
+   "name": "Galeria piedra",
+   "tags": [
+    "light-neutral",
+    "photographic-neutral",
+    "shop"
+   ],
+   "bg": "#f6f6f3",
+   "surface": "#eaeae7",
+   "ink": "#151515",
+   "muted": "#5f5b57",
+   "accent": "#151515",
+   "accentInk": "#f6f6f3",
+   "fields": [
+    {
+     "bg": "#151515",
+     "ink": "#f6f6f3"
+    }
+   ],
+   "note": "Piedra clara de fondo, tarjetas un paso mas oscuras, pie negro."
+  },
+  {
+   "id": "galeria-noche",
+   "name": "Galeria noche",
+   "tags": [
+    "dark-neutral",
+    "photographic-neutral",
+    "shop"
+   ],
+   "bg": "#131313",
+   "surface": "#1f1f1e",
+   "ink": "#f2f2ee",
+   "muted": "#aaa59e",
+   "accent": "#f2f2ee",
+   "accentInk": "#131313",
+   "fields": [
+    {
+     "bg": "#f2f2ee",
+     "ink": "#131313"
+    }
+   ],
+   "note": "Negro suave, texto hueso; las fotos de producto brillan encima."
+  },
+  {
+   "id": "tostador-ladrillo",
+   "name": "Tostador ladrillo",
+   "tags": [
+    "light-neutral",
+    "earth",
+    "coffee"
+   ],
+   "bg": "#f4eee5",
+   "surface": "#e9e3d9",
+   "ink": "#222222",
+   "muted": "#5c564d",
+   "accent": "#a8402b",
+   "accentInk": "#ffffff",
+   "fields": [
+    {
+     "bg": "#6d775c",
+     "ink": "#ffffff"
+    }
+   ],
+   "note": "Crema calida, carbon, boton rojo ladrillo y franja salvia."
+  },
+  {
+   "id": "tostador-cobre",
+   "name": "Tostador cobre",
+   "tags": [
+    "light-neutral",
+    "earth",
+    "coffee"
+   ],
+   "bg": "#f4eee5",
+   "surface": "#e9e3d9",
+   "ink": "#222222",
+   "muted": "#5c564d",
+   "accent": "#222222",
+   "accentInk": "#f4eee5",
+   "fields": [
+    {
+     "bg": "#9a5a22",
+     "ink": "#ffffff"
+    }
+   ],
+   "note": "Crema calida, botones carbon y franja de cobre tostado."
+  },
+  {
+   "id": "tostador-carbon",
+   "name": "Tostador carbon",
+   "tags": [
+    "dark-neutral",
+    "earth",
+    "coffee"
+   ],
+   "bg": "#1e1c1a",
+   "surface": "#2a2724",
+   "ink": "#f4eee5",
+   "muted": "#bdb4a6",
+   "accent": "#d0763a",
+   "accentInk": "#1e1c1a",
+   "fields": [
+    {
+     "bg": "#f4eee5",
+     "ink": "#1e1c1a"
+    }
+   ],
+   "note": "Carbon de tostadero, texto crema y acento naranja de tueste."
+  },
+  {
+   "id": "estacional-1",
+   "name": "Estacional 1",
+   "tags": [
+    "light-neutral",
+    "estilo"
+   ],
+   "bg": "#f6f3ec",
+   "surface": "#e9e6df",
+   "ink": "#1c1b18",
+   "muted": "#6f6d69",
+   "accent": "#8a3b23",
+   "accentInk": "#ffffff",
+   "fields": [
+    {
+     "bg": "#8a3b23",
+     "ink": "#ffffff"
+    }
+   ]
+  },
+  {
+   "id": "estacional-2",
+   "name": "Estacional 2",
+   "tags": [
+    "light-neutral",
+    "estilo"
+   ],
+   "bg": "#ecebe3",
+   "surface": "#e0dfd7",
+   "ink": "#1c1b18",
+   "muted": "#6b6a65",
+   "accent": "#1c1b18",
+   "accentInk": "#ffffff",
+   "fields": [
+    {
+     "bg": "#1c1b18",
+     "ink": "#ecebe3"
+    }
+   ]
+  },
+  {
+   "id": "estacional-3",
+   "name": "Estacional 3",
+   "tags": [
+    "dark-neutral",
+    "estilo"
+   ],
+   "bg": "#141412",
+   "surface": "#21211e",
+   "ink": "#ece9e0",
+   "muted": "#9a9892",
+   "accent": "#c49a5a",
+   "accentInk": "#111111",
+   "fields": [
+    {
+     "bg": "#c49a5a",
+     "ink": "#111111"
+    }
+   ]
+  },
+  {
+   "id": "fuerza-1",
+   "name": "Fuerza 1",
+   "tags": [
+    "dark-neutral",
+    "estilo"
+   ],
+   "bg": "#0d0d0d",
+   "surface": "#1b1b1b",
+   "ink": "#f4f4f4",
+   "muted": "#9c9c9c",
+   "accent": "#d63a2f",
+   "accentInk": "#ffffff",
+   "fields": [
+    {
+     "bg": "#d63a2f",
+     "ink": "#ffffff"
+    }
+   ]
+  },
+  {
+   "id": "fuerza-2",
+   "name": "Fuerza 2",
+   "tags": [
+    "light-neutral",
+    "estilo"
+   ],
+   "bg": "#ffffff",
+   "surface": "#f0f0f0",
+   "ink": "#0d0d0d",
+   "muted": "#696969",
+   "accent": "#0d0d0d",
+   "accentInk": "#ffffff",
+   "fields": [
+    {
+     "bg": "#0d0d0d",
+     "ink": "#ffffff"
+    }
+   ]
+  },
+  {
+   "id": "fuerza-3",
+   "name": "Fuerza 3",
+   "tags": [
+    "dark-neutral",
+    "estilo"
+   ],
+   "bg": "#1a1a1a",
+   "surface": "#272727",
+   "ink": "#f2f2f2",
+   "muted": "#a0a0a0",
+   "accent": "#c9a227",
+   "accentInk": "#111111",
+   "fields": [
+    {
+     "bg": "#c9a227",
+     "ink": "#111111"
+    }
+   ]
+  },
+  {
+   "id": "club-1",
+   "name": "Club 1",
+   "tags": [
+    "dark-neutral",
+    "estilo"
+   ],
+   "bg": "#000000",
+   "surface": "#0f0f0f",
+   "ink": "#ffffff",
+   "muted": "#9e9e9e",
+   "accent": "#ffffff",
+   "accentInk": "#111111",
+   "fields": [
+    {
+     "bg": "#ffffff",
+     "ink": "#000000"
+    }
+   ]
+  },
+  {
+   "id": "club-2",
+   "name": "Club 2",
+   "tags": [
+    "light-neutral",
+    "estilo"
+   ],
+   "bg": "#f3f2ef",
+   "surface": "#e5e4e2",
+   "ink": "#111111",
+   "muted": "#676665",
+   "accent": "#111111",
+   "accentInk": "#ffffff",
+   "fields": [
+    {
+     "bg": "#111111",
+     "ink": "#f3f2ef"
+    }
+   ]
+  },
+  {
+   "id": "club-3",
+   "name": "Club 3",
+   "tags": [
+    "dark-neutral",
+    "estilo"
+   ],
+   "bg": "#121417",
+   "surface": "#1f2123",
+   "ink": "#e9e7e2",
+   "muted": "#979795",
+   "accent": "#a88c63",
+   "accentInk": "#111111",
+   "fields": [
+    {
+     "bg": "#a88c63",
+     "ink": "#111111"
+    }
+   ]
+  },
+  {
+   "id": "cercana-1",
+   "name": "Cercana 1",
+   "tags": [
+    "light-neutral",
+    "estilo"
+   ],
+   "bg": "#fbf4ee",
+   "surface": "#eee7e1",
+   "ink": "#2a1f1a",
+   "muted": "#79706b",
+   "accent": "#b9502c",
+   "accentInk": "#ffffff",
+   "fields": [
+    {
+     "bg": "#b9502c",
+     "ink": "#ffffff"
+    }
+   ]
+  },
+  {
+   "id": "cercana-2",
+   "name": "Cercana 2",
+   "tags": [
+    "light-neutral",
+    "estilo"
+   ],
+   "bg": "#f3f6f2",
+   "surface": "#e6eae6",
+   "ink": "#1f2a24",
+   "muted": "#707872",
+   "accent": "#2f6b4f",
+   "accentInk": "#ffffff",
+   "fields": [
+    {
+     "bg": "#2f6b4f",
+     "ink": "#ffffff"
+    }
+   ]
+  },
+  {
+   "id": "cercana-3",
+   "name": "Cercana 3",
+   "tags": [
+    "light-neutral",
+    "estilo"
+   ],
+   "bg": "#ffffff",
+   "surface": "#f1f2f3",
+   "ink": "#1b2433",
+   "muted": "#727781",
+   "accent": "#3552c9",
+   "accentInk": "#ffffff",
+   "fields": [
+    {
+     "bg": "#3552c9",
+     "ink": "#ffffff"
+    }
+   ]
+  },
+  {
+   "id": "clinica-moderna-1",
+   "name": "Clinica moderna 1",
+   "tags": [
+    "light-neutral",
+    "estilo"
+   ],
+   "bg": "#ffffff",
+   "surface": "#f1f2f3",
+   "ink": "#0f2a3a",
+   "muted": "#6a7b85",
+   "accent": "#1c7c7a",
+   "accentInk": "#ffffff",
+   "fields": [
+    {
+     "bg": "#1c7c7a",
+     "ink": "#ffffff"
+    }
+   ]
+  },
+  {
+   "id": "clinica-moderna-2",
+   "name": "Clinica moderna 2",
+   "tags": [
+    "light-neutral",
+    "estilo"
+   ],
+   "bg": "#f4f7f8",
+   "surface": "#e6ebed",
+   "ink": "#0f2a3a",
+   "muted": "#667882",
+   "accent": "#0f2a3a",
+   "accentInk": "#ffffff",
+   "fields": [
+    {
+     "bg": "#0f2a3a",
+     "ink": "#f4f7f8"
+    }
+   ]
+  },
+  {
+   "id": "clinica-moderna-3",
+   "name": "Clinica moderna 3",
+   "tags": [
+    "dark-neutral",
+    "estilo"
+   ],
+   "bg": "#0f2a3a",
+   "surface": "#1c3645",
+   "ink": "#eef4f5",
+   "muted": "#99a7ae",
+   "accent": "#8fd3ca",
+   "accentInk": "#111111",
+   "fields": [
+    {
+     "bg": "#8fd3ca",
+     "ink": "#111111"
+    }
+   ]
+  },
+  {
+   "id": "botica-1",
+   "name": "Botica 1",
+   "tags": [
+    "light-neutral",
+    "estilo"
+   ],
+   "bg": "#f6f5e8",
+   "surface": "#e9e9dc",
+   "ink": "#252525",
+   "muted": "#74746f",
+   "accent": "#252525",
+   "accentInk": "#ffffff",
+   "fields": [
+    {
+     "bg": "#252525",
+     "ink": "#f6f5e8"
+    }
+   ]
+  },
+  {
+   "id": "botica-2",
+   "name": "Botica 2",
+   "tags": [
+    "light-neutral",
+    "estilo"
+   ],
+   "bg": "#ebe6dc",
+   "surface": "#dfdad1",
+   "ink": "#2b2620",
+   "muted": "#746f67",
+   "accent": "#7a5c3e",
+   "accentInk": "#ffffff",
+   "fields": [
+    {
+     "bg": "#7a5c3e",
+     "ink": "#ffffff"
+    }
+   ]
+  },
+  {
+   "id": "botica-3",
+   "name": "Botica 3",
+   "tags": [
+    "dark-neutral",
+    "estilo"
+   ],
+   "bg": "#1f1d1a",
+   "surface": "#2b2926",
+   "ink": "#ece8df",
+   "muted": "#9e9b94",
+   "accent": "#b89b6e",
+   "accentInk": "#111111",
+   "fields": [
+    {
+     "bg": "#b89b6e",
+     "ink": "#111111"
+    }
+   ]
+  },
+  {
+   "id": "perfumeria-1",
+   "name": "Perfumeria 1",
+   "tags": [
+    "light-neutral",
+    "estilo"
+   ],
+   "bg": "#ffffff",
+   "surface": "#f0f0f0",
+   "ink": "#000000",
+   "muted": "#616161",
+   "accent": "#000000",
+   "accentInk": "#ffffff",
+   "fields": [
+    {
+     "bg": "#000000",
+     "ink": "#ffffff"
+    }
+   ]
+  },
+  {
+   "id": "perfumeria-2",
+   "name": "Perfumeria 2",
+   "tags": [
+    "light-neutral",
+    "estilo"
+   ],
+   "bg": "#f2f2f2",
+   "surface": "#e3e3e3",
+   "ink": "#000000",
+   "muted": "#5c5c5c",
+   "accent": "#000000",
+   "accentInk": "#ffffff",
+   "fields": [
+    {
+     "bg": "#000000",
+     "ink": "#f2f2f2"
+    }
+   ]
+  },
+  {
+   "id": "perfumeria-3",
+   "name": "Perfumeria 3",
+   "tags": [
+    "dark-neutral",
+    "estilo"
+   ],
+   "bg": "#000000",
+   "surface": "#0f0f0f",
+   "ink": "#ffffff",
+   "muted": "#9e9e9e",
+   "accent": "#ffffff",
+   "accentInk": "#111111",
+   "fields": [
+    {
+     "bg": "#ffffff",
+     "ink": "#000000"
+    }
+   ]
+  },
+  {
+   "id": "retiro-1",
+   "name": "Retiro 1",
+   "tags": [
+    "light-neutral",
+    "estilo"
+   ],
+   "bg": "#f4f1ec",
+   "surface": "#e8e5e0",
+   "ink": "#2b2a27",
+   "muted": "#777672",
+   "accent": "#2b2a27",
+   "accentInk": "#ffffff",
+   "fields": [
+    {
+     "bg": "#2b2a27",
+     "ink": "#f4f1ec"
+    }
+   ]
+  },
+  {
+   "id": "retiro-2",
+   "name": "Retiro 2",
+   "tags": [
+    "light-neutral",
+    "estilo"
+   ],
+   "bg": "#e7e2d9",
+   "surface": "#dcd7ce",
+   "ink": "#2b2a27",
+   "muted": "#72706b",
+   "accent": "#6b5b45",
+   "accentInk": "#ffffff",
+   "fields": [
+    {
+     "bg": "#6b5b45",
+     "ink": "#ffffff"
+    }
+   ]
+  },
+  {
+   "id": "retiro-3",
+   "name": "Retiro 3",
+   "tags": [
+    "dark-neutral",
+    "estilo"
+   ],
+   "bg": "#1c1b19",
+   "surface": "#282725",
+   "ink": "#ece7de",
+   "muted": "#9d9993",
+   "accent": "#b8a27c",
+   "accentInk": "#111111",
+   "fields": [
+    {
+     "bg": "#b8a27c",
+     "ink": "#111111"
+    }
+   ]
+  },
+  {
+   "id": "naturaleza-1",
+   "name": "Naturaleza 1",
+   "tags": [
+    "light-neutral",
+    "estilo"
+   ],
+   "bg": "#f3efe6",
+   "surface": "#e7e4db",
+   "ink": "#2f3a2c",
+   "muted": "#797f73",
+   "accent": "#5b6b3f",
+   "accentInk": "#ffffff",
+   "fields": [
+    {
+     "bg": "#5b6b3f",
+     "ink": "#ffffff"
+    }
+   ]
+  },
+  {
+   "id": "naturaleza-2",
+   "name": "Naturaleza 2",
+   "tags": [
+    "light-neutral",
+    "estilo"
+   ],
+   "bg": "#efe6da",
+   "surface": "#e4dbcf",
+   "ink": "#3a2c22",
+   "muted": "#7f7368",
+   "accent": "#9a6b3f",
+   "accentInk": "#ffffff",
+   "fields": [
+    {
+     "bg": "#9a6b3f",
+     "ink": "#ffffff"
+    }
+   ]
+  },
+  {
+   "id": "naturaleza-3",
+   "name": "Naturaleza 3",
+   "tags": [
+    "dark-neutral",
+    "estilo"
+   ],
+   "bg": "#232a22",
+   "surface": "#2f352d",
+   "ink": "#eee9df",
+   "muted": "#a1a097",
+   "accent": "#c2a878",
+   "accentInk": "#111111",
+   "fields": [
+    {
+     "bg": "#c2a878",
+     "ink": "#111111"
+    }
+   ]
+  },
+  {
+   "id": "vanguardia-1",
+   "name": "Vanguardia 1",
+   "tags": [
+    "light-neutral",
+    "estilo"
+   ],
+   "bg": "#ffffff",
+   "surface": "#f0f0f0",
+   "ink": "#000000",
+   "muted": "#616161",
+   "accent": "#000000",
+   "accentInk": "#ffffff",
+   "fields": [
+    {
+     "bg": "#000000",
+     "ink": "#ffffff"
+    }
+   ]
+  },
+  {
+   "id": "vanguardia-2",
+   "name": "Vanguardia 2",
+   "tags": [
+    "light-neutral",
+    "estilo"
+   ],
+   "bg": "#f4f4f4",
+   "surface": "#e5e5e5",
+   "ink": "#000000",
+   "muted": "#5d5d5d",
+   "accent": "#000000",
+   "accentInk": "#ffffff",
+   "fields": [
+    {
+     "bg": "#000000",
+     "ink": "#f4f4f4"
+    }
+   ]
+  },
+  {
+   "id": "vanguardia-3",
+   "name": "Vanguardia 3",
+   "tags": [
+    "dark-neutral",
+    "estilo"
+   ],
+   "bg": "#0b0b0b",
+   "surface": "#191919",
+   "ink": "#f2f2f2",
+   "muted": "#9a9a9a",
+   "accent": "#f2f2f2",
+   "accentInk": "#111111",
+   "fields": [
+    {
+     "bg": "#f2f2f2",
+     "ink": "#0b0b0b"
+    }
+   ]
+  },
+  {
+   "id": "streetwear-1",
+   "name": "Streetwear 1",
+   "tags": [
+    "light-neutral",
+    "estilo"
+   ],
+   "bg": "#ffffff",
+   "surface": "#f1f1f1",
+   "ink": "#111111",
+   "muted": "#6b6b6b",
+   "accent": "#111111",
+   "accentInk": "#ffffff",
+   "fields": [
+    {
+     "bg": "#111111",
+     "ink": "#ffffff"
+    }
+   ]
+  },
+  {
+   "id": "streetwear-2",
+   "name": "Streetwear 2",
+   "tags": [
+    "light-neutral",
+    "estilo"
+   ],
+   "bg": "#f1efe9",
+   "surface": "#e4e2dc",
+   "ink": "#111111",
+   "muted": "#666563",
+   "accent": "#8c1d18",
+   "accentInk": "#ffffff",
+   "fields": [
+    {
+     "bg": "#8c1d18",
+     "ink": "#ffffff"
+    }
+   ]
+  },
+  {
+   "id": "streetwear-3",
+   "name": "Streetwear 3",
+   "tags": [
+    "dark-neutral",
+    "estilo"
+   ],
+   "bg": "#111111",
+   "surface": "#1f1f1f",
+   "ink": "#f5f5f5",
+   "muted": "#9e9e9e",
+   "accent": "#f5f5f5",
+   "accentInk": "#111111",
+   "fields": [
+    {
+     "bg": "#f5f5f5",
+     "ink": "#111111"
+    }
+   ]
+  },
+  {
+   "id": "estudio-arq-1",
+   "name": "Estudio arq 1",
+   "tags": [
+    "light-neutral",
+    "estilo"
+   ],
+   "bg": "#ffffff",
+   "surface": "#f1f1f1",
+   "ink": "#111111",
+   "muted": "#6b6b6b",
+   "accent": "#111111",
+   "accentInk": "#ffffff",
+   "fields": [
+    {
+     "bg": "#111111",
+     "ink": "#ffffff"
+    }
+   ]
+  },
+  {
+   "id": "estudio-arq-2",
+   "name": "Estudio arq 2",
+   "tags": [
+    "light-neutral",
+    "estilo"
+   ],
+   "bg": "#f2f2f0",
+   "surface": "#e4e4e3",
+   "ink": "#111111",
+   "muted": "#666666",
+   "accent": "#d9481a",
+   "accentInk": "#111111",
+   "fields": [
+    {
+     "bg": "#d9481a",
+     "ink": "#111111"
+    }
+   ]
+  },
+  {
+   "id": "estudio-arq-3",
+   "name": "Estudio arq 3",
+   "tags": [
+    "dark-neutral",
+    "estilo"
+   ],
+   "bg": "#111111",
+   "surface": "#1e1e1e",
+   "ink": "#f2f2f2",
+   "muted": "#9c9c9c",
+   "accent": "#f2f2f2",
+   "accentInk": "#111111",
+   "fields": [
+    {
+     "bg": "#f2f2f2",
+     "ink": "#111111"
+    }
+   ]
+  },
+  {
+   "id": "portafolio-1",
+   "name": "Portafolio 1",
+   "tags": [
+    "light-neutral",
+    "estilo"
+   ],
+   "bg": "#ffffff",
+   "surface": "#f0f0f0",
+   "ink": "#000000",
+   "muted": "#616161",
+   "accent": "#000000",
+   "accentInk": "#ffffff",
+   "fields": [
+    {
+     "bg": "#000000",
+     "ink": "#ffffff"
+    }
+   ]
+  },
+  {
+   "id": "portafolio-2",
+   "name": "Portafolio 2",
+   "tags": [
+    "light-neutral",
+    "estilo"
+   ],
+   "bg": "#ecece8",
+   "surface": "#dededa",
+   "ink": "#000000",
+   "muted": "#5a5a58",
+   "accent": "#000000",
+   "accentInk": "#ffffff",
+   "fields": [
+    {
+     "bg": "#000000",
+     "ink": "#ecece8"
+    }
+   ]
+  },
+  {
+   "id": "portafolio-3",
+   "name": "Portafolio 3",
+   "tags": [
+    "dark-neutral",
+    "estilo"
+   ],
+   "bg": "#000000",
+   "surface": "#0f0f0f",
+   "ink": "#ffffff",
+   "muted": "#9e9e9e",
+   "accent": "#ffffff",
+   "accentInk": "#111111",
+   "fields": [
+    {
+     "bg": "#ffffff",
+     "ink": "#000000"
+    }
+   ]
+  },
+  {
+   "id": "escuela-creativa-1",
+   "name": "Escuela creativa 1",
+   "tags": [
+    "light-neutral",
+    "estilo"
+   ],
+   "bg": "#f5f3ee",
+   "surface": "#e8e6e1",
+   "ink": "#141414",
+   "muted": "#6a6967",
+   "accent": "#e8502e",
+   "accentInk": "#111111",
+   "fields": [
+    {
+     "bg": "#e8502e",
+     "ink": "#111111"
+    }
+   ]
+  },
+  {
+   "id": "escuela-creativa-2",
+   "name": "Escuela creativa 2",
+   "tags": [
+    "light-neutral",
+    "estilo"
+   ],
+   "bg": "#ffffff",
+   "surface": "#f1f1f1",
+   "ink": "#141414",
+   "muted": "#6d6d6d",
+   "accent": "#2b4bd6",
+   "accentInk": "#ffffff",
+   "fields": [
+    {
+     "bg": "#2b4bd6",
+     "ink": "#ffffff"
+    }
+   ]
+  },
+  {
+   "id": "escuela-creativa-3",
+   "name": "Escuela creativa 3",
+   "tags": [
+    "dark-neutral",
+    "estilo"
+   ],
+   "bg": "#141414",
+   "surface": "#222121",
+   "ink": "#f5f3ee",
+   "muted": "#a09e9b",
+   "accent": "#f2c94c",
+   "accentInk": "#111111",
+   "fields": [
+    {
+     "bg": "#f2c94c",
+     "ink": "#111111"
+    }
+   ]
+  },
+  {
+   "id": "clase-magistral-1",
+   "name": "Clase magistral 1",
+   "tags": [
+    "dark-neutral",
+    "estilo"
+   ],
+   "bg": "#0d0d0d",
+   "surface": "#1b1b1b",
+   "ink": "#f2f2f2",
+   "muted": "#9b9b9b",
+   "accent": "#d72a3a",
+   "accentInk": "#ffffff",
+   "fields": [
+    {
+     "bg": "#d72a3a",
+     "ink": "#ffffff"
+    }
+   ]
+  },
+  {
+   "id": "clase-magistral-2",
+   "name": "Clase magistral 2",
+   "tags": [
+    "dark-neutral",
+    "estilo"
+   ],
+   "bg": "#151515",
+   "surface": "#222222",
+   "ink": "#f2f2f2",
+   "muted": "#9e9e9e",
+   "accent": "#d9b26a",
+   "accentInk": "#111111",
+   "fields": [
+    {
+     "bg": "#d9b26a",
+     "ink": "#111111"
+    }
+   ]
+  },
+  {
+   "id": "clase-magistral-3",
+   "name": "Clase magistral 3",
+   "tags": [
+    "light-neutral",
+    "estilo"
+   ],
+   "bg": "#f4f3f0",
+   "surface": "#e6e5e3",
+   "ink": "#111111",
+   "muted": "#676766",
+   "accent": "#c42a35",
+   "accentInk": "#ffffff",
+   "fields": [
+    {
+     "bg": "#c42a35",
+     "ink": "#ffffff"
+    }
+   ]
+  },
+  {
+   "id": "obra-calida-1",
+   "name": "Obra calida 1",
+   "tags": [
+    "light-neutral",
+    "estilo"
+   ],
+   "bg": "#f3f0ea",
+   "surface": "#e7e4de",
+   "ink": "#2a2925",
+   "muted": "#767570",
+   "accent": "#2a2925",
+   "accentInk": "#ffffff",
+   "fields": [
+    {
+     "bg": "#2a2925",
+     "ink": "#f3f0ea"
+    }
+   ]
+  },
+  {
+   "id": "obra-calida-2",
+   "name": "Obra calida 2",
+   "tags": [
+    "light-neutral",
+    "estilo"
+   ],
+   "bg": "#e9e4da",
+   "surface": "#ded9cf",
+   "ink": "#2a2925",
+   "muted": "#73706a",
+   "accent": "#8a5a3b",
+   "accentInk": "#ffffff",
+   "fields": [
+    {
+     "bg": "#8a5a3b",
+     "ink": "#ffffff"
+    }
+   ]
+  },
+  {
+   "id": "obra-calida-3",
+   "name": "Obra calida 3",
+   "tags": [
+    "dark-neutral",
+    "estilo"
+   ],
+   "bg": "#22211e",
+   "surface": "#2e2d2a",
+   "ink": "#ece8e0",
+   "muted": "#9f9c96",
+   "accent": "#b48c5e",
+   "accentInk": "#111111",
+   "fields": [
+    {
+     "bg": "#b48c5e",
+     "ink": "#111111"
+    }
+   ]
+  },
+  {
+   "id": "taller-moderno-1",
+   "name": "Taller moderno 1",
+   "tags": [
+    "light-neutral",
+    "estilo"
+   ],
+   "bg": "#ffffff",
+   "surface": "#f1f1f1",
+   "ink": "#1d1d1b",
+   "muted": "#737372",
+   "accent": "#b98422",
+   "accentInk": "#111111",
+   "fields": [
+    {
+     "bg": "#b98422",
+     "ink": "#111111"
+    }
+   ]
+  },
+  {
+   "id": "taller-moderno-2",
+   "name": "Taller moderno 2",
+   "tags": [
+    "light-neutral",
+    "estilo"
+   ],
+   "bg": "#f2f0eb",
+   "surface": "#e5e3df",
+   "ink": "#1d1d1b",
+   "muted": "#6e6d6a",
+   "accent": "#1d1d1b",
+   "accentInk": "#ffffff",
+   "fields": [
+    {
+     "bg": "#1d1d1b",
+     "ink": "#f2f0eb"
+    }
+   ]
+  },
+  {
+   "id": "taller-moderno-3",
+   "name": "Taller moderno 3",
+   "tags": [
+    "dark-neutral",
+    "estilo"
+   ],
+   "bg": "#1d1d1b",
+   "surface": "#2a2a27",
+   "ink": "#f2f0eb",
+   "muted": "#a1a09c",
+   "accent": "#c8962c",
+   "accentInk": "#111111",
+   "fields": [
+    {
+     "bg": "#c8962c",
+     "ink": "#111111"
+    }
+   ]
+  },
+  {
+   "id": "fiesta-1",
+   "name": "Fiesta 1",
+   "tags": [
+    "light-neutral",
+    "estilo"
+   ],
+   "bg": "#f2ece2",
+   "surface": "#e4dfd5",
+   "ink": "#111111",
+   "muted": "#666460",
+   "accent": "#c8352a",
+   "accentInk": "#ffffff",
+   "fields": [
+    {
+     "bg": "#c8352a",
+     "ink": "#ffffff"
+    }
+   ]
+  },
+  {
+   "id": "fiesta-2",
+   "name": "Fiesta 2",
+   "tags": [
+    "dark-neutral",
+    "estilo"
+   ],
+   "bg": "#111111",
+   "surface": "#1e1e1e",
+   "ink": "#f2ece2",
+   "muted": "#9c9993",
+   "accent": "#f2ece2",
+   "accentInk": "#111111",
+   "fields": [
+    {
+     "bg": "#f2ece2",
+     "ink": "#111111"
+    }
+   ]
+  },
+  {
+   "id": "fiesta-3",
+   "name": "Fiesta 3",
+   "tags": [
+    "light-neutral",
+    "estilo"
+   ],
+   "bg": "#efe3d3",
+   "surface": "#e3d7c8",
+   "ink": "#2a1b14",
+   "muted": "#75675d",
+   "accent": "#2a1b14",
+   "accentInk": "#ffffff",
+   "fields": [
+    {
+     "bg": "#2a1b14",
+     "ink": "#efe3d3"
+    }
+   ]
+  },
+  {
+   "id": "evento-lujo-1",
+   "name": "Evento lujo 1",
+   "tags": [
+    "light-neutral",
+    "estilo"
+   ],
+   "bg": "#ffffff",
+   "surface": "#f1f1f1",
+   "ink": "#1a1a1a",
+   "muted": "#717171",
+   "accent": "#1a1a1a",
+   "accentInk": "#ffffff",
+   "fields": [
+    {
+     "bg": "#1a1a1a",
+     "ink": "#ffffff"
+    }
+   ]
+  },
+  {
+   "id": "evento-lujo-2",
+   "name": "Evento lujo 2",
+   "tags": [
+    "light-neutral",
+    "estilo"
+   ],
+   "bg": "#f4efe9",
+   "surface": "#e7e2dd",
+   "ink": "#1a1a1a",
+   "muted": "#6d6b69",
+   "accent": "#9b2c4a",
+   "accentInk": "#ffffff",
+   "fields": [
+    {
+     "bg": "#9b2c4a",
+     "ink": "#ffffff"
+    }
+   ]
+  },
+  {
+   "id": "evento-lujo-3",
+   "name": "Evento lujo 3",
+   "tags": [
+    "dark-neutral",
+    "estilo"
+   ],
+   "bg": "#161616",
+   "surface": "#232323",
+   "ink": "#f1ede7",
+   "muted": "#9e9b98",
+   "accent": "#c9a45a",
+   "accentInk": "#111111",
+   "fields": [
+    {
+     "bg": "#c9a45a",
+     "ink": "#111111"
+    }
+   ]
+  },
+  {
+   "id": "industrial-1",
+   "name": "Industrial 1",
+   "tags": [
+    "dark-neutral",
+    "estilo"
+   ],
+   "bg": "#0e0e0e",
+   "surface": "#1c1c1c",
+   "ink": "#f0f0f0",
+   "muted": "#9a9a9a",
+   "accent": "#f0f0f0",
+   "accentInk": "#111111",
+   "fields": [
+    {
+     "bg": "#f0f0f0",
+     "ink": "#0e0e0e"
+    }
+   ]
+  },
+  {
+   "id": "industrial-2",
+   "name": "Industrial 2",
+   "tags": [
+    "light-neutral",
+    "estilo"
+   ],
+   "bg": "#ececec",
+   "surface": "#dfdfdf",
+   "ink": "#0e0e0e",
+   "muted": "#626262",
+   "accent": "#0e0e0e",
+   "accentInk": "#ffffff",
+   "fields": [
+    {
+     "bg": "#0e0e0e",
+     "ink": "#ececec"
+    }
+   ]
+  },
+  {
+   "id": "industrial-3",
+   "name": "Industrial 3",
+   "tags": [
+    "dark-neutral",
+    "estilo"
+   ],
+   "bg": "#1b1b1b",
+   "surface": "#282828",
+   "ink": "#ececec",
+   "muted": "#9d9d9d",
+   "accent": "#e2401c",
+   "accentInk": "#111111",
+   "fields": [
+    {
+     "bg": "#e2401c",
+     "ink": "#111111"
+    }
+   ]
+  },
+  {
+   "id": "carnaval-1",
+   "name": "Carnaval 1",
+   "tags": [
+    "light-neutral",
+    "estilo"
+   ],
+   "bg": "#f2c230",
+   "surface": "#e5b730",
+   "ink": "#1a1033",
+   "muted": "#6c5432",
+   "accent": "#d9482b",
+   "accentInk": "#111111",
+   "fields": [
+    {
+     "bg": "#d9482b",
+     "ink": "#111111"
+    }
+   ]
+  },
+  {
+   "id": "carnaval-2",
+   "name": "Carnaval 2",
+   "tags": [
+    "light-neutral",
+    "estilo"
+   ],
+   "bg": "#f4b3c2",
+   "surface": "#e7a9b9",
+   "ink": "#1a1033",
+   "muted": "#6d4e69",
+   "accent": "#2b2d9e",
+   "accentInk": "#ffffff",
+   "fields": [
+    {
+     "bg": "#2b2d9e",
+     "ink": "#ffffff"
+    }
+   ]
+  },
+  {
+   "id": "carnaval-3",
+   "name": "Carnaval 3",
+   "tags": [
+    "dark-neutral",
+    "estilo"
+   ],
+   "bg": "#2b1a4a",
+   "surface": "#382753",
+   "ink": "#fff3e0",
+   "muted": "#aea1a7",
+   "accent": "#f2c230",
+   "accentInk": "#111111",
+   "fields": [
+    {
+     "bg": "#f2c230",
+     "ink": "#111111"
+    }
+   ]
+  },
+  {
+   "id": "lujo-editorial-1",
+   "name": "Lujo editorial 1",
+   "tags": [
+    "light-neutral",
+    "estilo"
+   ],
+   "bg": "#ffffff",
+   "surface": "#f1f1f1",
+   "ink": "#111111",
+   "muted": "#6b6b6b",
+   "accent": "#111111",
+   "accentInk": "#ffffff",
+   "fields": [
+    {
+     "bg": "#111111",
+     "ink": "#ffffff"
+    }
+   ]
+  },
+  {
+   "id": "lujo-editorial-2",
+   "name": "Lujo editorial 2",
+   "tags": [
+    "dark-neutral",
+    "estilo"
+   ],
+   "bg": "#111111",
+   "surface": "#1e1e1e",
+   "ink": "#f2f2f2",
+   "muted": "#9c9c9c",
+   "accent": "#f2f2f2",
+   "accentInk": "#111111",
+   "fields": [
+    {
+     "bg": "#f2f2f2",
+     "ink": "#111111"
+    }
+   ]
+  },
+  {
+   "id": "lujo-editorial-3",
+   "name": "Lujo editorial 3",
+   "tags": [
+    "light-neutral",
+    "estilo"
+   ],
+   "bg": "#f2efe9",
+   "surface": "#e4e2dc",
+   "ink": "#111111",
+   "muted": "#666563",
+   "accent": "#8c7350",
+   "accentInk": "#111111",
+   "fields": [
+    {
+     "bg": "#8c7350",
+     "ink": "#111111"
+    }
+   ]
+  },
+  {
+   "id": "clasica-1",
+   "name": "Clasica 1",
+   "tags": [
+    "light-neutral",
+    "estilo"
+   ],
+   "bg": "#ffffff",
+   "surface": "#f0f2f4",
+   "ink": "#0a1f44",
+   "muted": "#67748b",
+   "accent": "#0a1f44",
+   "accentInk": "#ffffff",
+   "fields": [
+    {
+     "bg": "#0a1f44",
+     "ink": "#ffffff"
+    }
+   ]
+  },
+  {
+   "id": "clasica-2",
+   "name": "Clasica 2",
+   "tags": [
+    "light-neutral",
+    "estilo"
+   ],
+   "bg": "#f4f2ee",
+   "surface": "#e6e5e4",
+   "ink": "#0a1f44",
+   "muted": "#636f85",
+   "accent": "#9a7b4f",
+   "accentInk": "#111111",
+   "fields": [
+    {
+     "bg": "#9a7b4f",
+     "ink": "#111111"
+    }
+   ]
+  },
+  {
+   "id": "clasica-3",
+   "name": "Clasica 3",
+   "tags": [
+    "dark-neutral",
+    "estilo"
+   ],
+   "bg": "#0a1f44",
+   "surface": "#182c4e",
+   "ink": "#f4f2ee",
+   "muted": "#9ba2ad",
+   "accent": "#c9a96e",
+   "accentInk": "#111111",
+   "fields": [
+    {
+     "bg": "#c9a96e",
+     "ink": "#111111"
+    }
+   ]
+  },
+  {
+   "id": "producto-tech-1",
+   "name": "Producto tech 1",
+   "tags": [
+    "light-neutral",
+    "estilo"
+   ],
+   "bg": "#f2f2f2",
+   "surface": "#e4e4e4",
+   "ink": "#111111",
+   "muted": "#666666",
+   "accent": "#111111",
+   "accentInk": "#ffffff",
+   "fields": [
+    {
+     "bg": "#111111",
+     "ink": "#f2f2f2"
+    }
+   ]
+  },
+  {
+   "id": "producto-tech-2",
+   "name": "Producto tech 2",
+   "tags": [
+    "light-neutral",
+    "estilo"
+   ],
+   "bg": "#ffffff",
+   "surface": "#f1f1f1",
+   "ink": "#111111",
+   "muted": "#6b6b6b",
+   "accent": "#3f6b5a",
+   "accentInk": "#ffffff",
+   "fields": [
+    {
+     "bg": "#3f6b5a",
+     "ink": "#ffffff"
+    }
+   ]
+  },
+  {
+   "id": "producto-tech-3",
+   "name": "Producto tech 3",
+   "tags": [
+    "dark-neutral",
+    "estilo"
+   ],
+   "bg": "#111111",
+   "surface": "#1e1e1e",
+   "ink": "#f2f2f2",
+   "muted": "#9c9c9c",
+   "accent": "#e8e8e8",
+   "accentInk": "#111111",
+   "fields": [
+    {
+     "bg": "#e8e8e8",
+     "ink": "#111111"
+    }
+   ]
+  },
+  {
+   "id": "deportivo-1",
+   "name": "Deportivo 1",
+   "tags": [
+    "light-neutral",
+    "estilo"
+   ],
+   "bg": "#ffffff",
+   "surface": "#f1f1f1",
+   "ink": "#0e0e12",
+   "muted": "#6a6a6c",
+   "accent": "#0e0e12",
+   "accentInk": "#ffffff",
+   "fields": [
+    {
+     "bg": "#0e0e12",
+     "ink": "#ffffff"
+    }
+   ]
+  },
+  {
+   "id": "deportivo-2",
+   "name": "Deportivo 2",
+   "tags": [
+    "dark-neutral",
+    "estilo"
+   ],
+   "bg": "#0e0e12",
+   "surface": "#1c1c1f",
+   "ink": "#f2f2f2",
+   "muted": "#9b9b9d",
+   "accent": "#c8001a",
+   "accentInk": "#ffffff",
+   "fields": [
+    {
+     "bg": "#c8001a",
+     "ink": "#ffffff"
+    }
+   ]
+  },
+  {
+   "id": "deportivo-3",
+   "name": "Deportivo 3",
+   "tags": [
+    "light-neutral",
+    "estilo"
+   ],
+   "bg": "#eeeff2",
+   "surface": "#e1e2e5",
+   "ink": "#0e0e12",
+   "muted": "#636467",
+   "accent": "#0e0e12",
+   "accentInk": "#ffffff",
+   "fields": [
+    {
+     "bg": "#0e0e12",
+     "ink": "#eeeff2"
+    }
+   ]
+  },
+  {
+   "id": "oscuro-tech-1",
+   "name": "Oscuro tech 1",
+   "tags": [
+    "dark-neutral",
+    "estilo"
+   ],
+   "bg": "#08090a",
+   "surface": "#161718",
+   "ink": "#f7f8f8",
+   "muted": "#9c9d9e",
+   "accent": "#5e6ad2",
+   "accentInk": "#ffffff",
+   "fields": [
+    {
+     "bg": "#5e6ad2",
+     "ink": "#ffffff"
+    }
+   ]
+  },
+  {
+   "id": "oscuro-tech-2",
+   "name": "Oscuro tech 2",
+   "tags": [
+    "dark-neutral",
+    "estilo"
+   ],
+   "bg": "#0f1011",
+   "surface": "#1d1e1f",
+   "ink": "#f7f8f8",
+   "muted": "#9fa0a0",
+   "accent": "#f7f8f8",
+   "accentInk": "#111111",
+   "fields": [
+    {
+     "bg": "#f7f8f8",
+     "ink": "#0f1011"
+    }
+   ]
+  },
+  {
+   "id": "oscuro-tech-3",
+   "name": "Oscuro tech 3",
+   "tags": [
+    "light-neutral",
+    "estilo"
+   ],
+   "bg": "#f7f8f8",
+   "surface": "#e9eaea",
+   "ink": "#08090a",
+   "muted": "#636464",
+   "accent": "#5e6ad2",
+   "accentInk": "#ffffff",
+   "fields": [
+    {
+     "bg": "#5e6ad2",
+     "ink": "#ffffff"
+    }
+   ]
+  },
+  {
+   "id": "gradiente-suave-1",
+   "name": "Gradiente suave 1",
+   "tags": [
+    "light-neutral",
+    "estilo"
+   ],
+   "bg": "#ffffff",
+   "surface": "#f0f2f4",
+   "ink": "#0a2540",
+   "muted": "#677889",
+   "accent": "#635bff",
+   "accentInk": "#ffffff",
+   "fields": [
+    {
+     "bg": "#635bff",
+     "ink": "#ffffff"
+    }
+   ]
+  },
+  {
+   "id": "gradiente-suave-2",
+   "name": "Gradiente suave 2",
+   "tags": [
+    "light-neutral",
+    "estilo"
+   ],
+   "bg": "#f6f9fc",
+   "surface": "#e8ecf1",
+   "ink": "#0a2540",
+   "muted": "#647687",
+   "accent": "#0a2540",
+   "accentInk": "#ffffff",
+   "fields": [
+    {
+     "bg": "#0a2540",
+     "ink": "#f6f9fc"
+    }
+   ]
+  },
+  {
+   "id": "gradiente-suave-3",
+   "name": "Gradiente suave 3",
+   "tags": [
+    "dark-neutral",
+    "estilo"
+   ],
+   "bg": "#0a2540",
+   "surface": "#18324b",
+   "ink": "#f6f9fc",
+   "muted": "#9ca8b5",
+   "accent": "#a29dff",
+   "accentInk": "#111111",
+   "fields": [
+    {
+     "bg": "#a29dff",
+     "ink": "#111111"
+    }
+   ]
+  },
+  {
+   "id": "historia-1",
+   "name": "Historia 1",
+   "tags": [
+    "light-neutral",
+    "estilo"
+   ],
+   "bg": "#ffffff",
+   "surface": "#f1f1f1",
+   "ink": "#1b1b1b",
+   "muted": "#727272",
+   "accent": "#ffc907",
+   "accentInk": "#111111",
+   "fields": [
+    {
+     "bg": "#ffc907",
+     "ink": "#111111"
+    }
+   ]
+  },
+  {
+   "id": "historia-2",
+   "name": "Historia 2",
+   "tags": [
+    "light-neutral",
+    "estilo"
+   ],
+   "bg": "#f7f4ee",
+   "surface": "#eae7e1",
+   "ink": "#1b1b1b",
+   "muted": "#6f6d6b",
+   "accent": "#1b1b1b",
+   "accentInk": "#ffffff",
+   "fields": [
+    {
+     "bg": "#1b1b1b",
+     "ink": "#f7f4ee"
+    }
+   ]
+  },
+  {
+   "id": "historia-3",
+   "name": "Historia 3",
+   "tags": [
+    "dark-neutral",
+    "estilo"
+   ],
+   "bg": "#1b1b1b",
+   "surface": "#282828",
+   "ink": "#f7f4ee",
+   "muted": "#a3a29e",
+   "accent": "#ffc907",
+   "accentInk": "#111111",
+   "fields": [
+    {
+     "bg": "#ffc907",
+     "ink": "#111111"
+    }
+   ]
+  },
+  {
+   "id": "institucional-1",
+   "name": "Institucional 1",
+   "tags": [
+    "light-neutral",
+    "estilo"
+   ],
+   "bg": "#ffffff",
+   "surface": "#f1f1f1",
+   "ink": "#111111",
+   "muted": "#6b6b6b",
+   "accent": "#111111",
+   "accentInk": "#ffffff",
+   "fields": [
+    {
+     "bg": "#111111",
+     "ink": "#ffffff"
+    }
+   ]
+  },
+  {
+   "id": "institucional-2",
+   "name": "Institucional 2",
+   "tags": [
+    "light-neutral",
+    "estilo"
+   ],
+   "bg": "#f3f3f0",
+   "surface": "#e5e5e3",
+   "ink": "#111111",
+   "muted": "#676766",
+   "accent": "#2f6b2f",
+   "accentInk": "#ffffff",
+   "fields": [
+    {
+     "bg": "#2f6b2f",
+     "ink": "#ffffff"
+    }
+   ]
+  },
+  {
+   "id": "institucional-3",
+   "name": "Institucional 3",
+   "tags": [
+    "dark-neutral",
+    "estilo"
+   ],
+   "bg": "#111111",
+   "surface": "#1f1f1e",
+   "ink": "#f3f3f0",
+   "muted": "#9d9d9b",
+   "accent": "#f3f3f0",
+   "accentInk": "#111111",
+   "fields": [
+    {
+     "bg": "#f3f3f0",
+     "ink": "#111111"
+    }
+   ]
+  }
+ ]
+}

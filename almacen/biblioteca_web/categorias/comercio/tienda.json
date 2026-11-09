@@ -1,0 +1,17 @@
+{
+ "fotos": "shop|store|boutique|product|retail|shelf|market",
+ "no_fotos": "",
+ "buscar": [
+  "shop interior",
+  "retail store display",
+  "boutique shop"
+ ],
+ "paletas": [
+  "white-navy-tab",
+  "paper-grey-brass",
+  "stone-blueprint",
+  "card-pastels",
+  "cool-grey-cobalt",
+  "offwhite-bottle-yellow"
+ ]
+}

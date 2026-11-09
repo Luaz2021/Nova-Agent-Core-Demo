@@ -18,6 +18,16 @@ Diseñado, entrenado y probado a fuego durante más de un mes de pruebas de estr
 
 ---
 
+
+## Novedades v3.0 (parche gratuito para quien ya tiene Nova)
+- **Reglas automaticas (hooks):** el sistema, no el modelo, frena webs gigantes escritas desde la nube, comandos destructivos, ediciones en la rama principal, lectura de claves y el gasto de tokens (freno cada 300k reales). Ademas Nova apunta sola lo que aprende cuando la corriges.
+- **Biblioteca de webs local:** webs minimalistas con identidad propia por tipo de negocio (15 categorias, 36 estilos, efectos de scroll y 3D) montadas en tu equipo a 0 tokens de nube.
+- **Redactor de documentos:** PDF y Word con tablas, temas y portada, usando la IA local.
+- **IA local actualizada:** Ollama + qwen3.5 (9b o 4b) + InternVL3.5 segun tu equipo; Nova la instala si se lo pides.
+- **Windows, macOS y Linux:** avisos, voz, bateria y portapapeles nativos en los tres sistemas.
+- **Actualizador seguro:** firma SHA-256 por archivo, copia de seguridad previa y nunca toca tus notas, tu perfil ni tus claves. Si ya tienes Nova, di *"Nova, busca actualizaciones"* (dos veces la primera vez).
+- **Privacidad:** `/enviar-informe` solo comparte lecciones, servilleta y el tipo de errores, y tu decides si se envia.
+
 ## 🎯 La Ideología: 100% Ecosistema Google
 
 Mientras la inmensa mayoría de la comunidad open source compite por hacer wrappers y extensiones para Claude Code o Cursor, **Nova Agent fue concebido desde el primer día para exprimir al máximo el poder del ecosistema de Google**:

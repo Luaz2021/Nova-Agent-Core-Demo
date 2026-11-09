@@ -36,11 +36,14 @@ sobre tu rama activa y permiso primero antes de tocar tu terminal.
 ## 3. Linea Directa con el Creador (Saul Alexander Martinez Rivas)
 | Atajo Comunitario / Frase | Que hace Nova por detras (Sanitizado y Seguro) |
 | :--- | :--- |
-| `/creador [mensaje]` o *"mandale un mensaje al creador: ..."* | Pasa el texto por `feedback_sanitizer.py` (borra rutas privadas o claves) y lo envia al buzon oficial en GitHub (`Luaz2021/Nova-Agent-Core-Demo`, etiqueta `buzon-creador`) via `gh issue create` o enlace directo en 1 clic. |
-| `/reportar-fallo` o *"reportar error al creador"* | Empaqueta el fallo resuelto bajo formato Servilleta (`[SO] -> [Error] -> [Fix]`) sin datos privados y lo envia con etiqueta `napkin-crowd`. |
+| `/creador [mensaje]` o *"mandale un mensaje al creador: ..."* | Pasa el texto por `enviar_feedback.py` (borra rutas privadas, correos y claves) y abre el formulario del buzon oficial en GitHub (`Luaz2021/Nova-Agent-Core-Demo`, etiqueta `buzon-creador`); tu decides si lo envias. |
+| `/reportar-fallo` o *"reportar error al creador"* | Empaqueta el fallo resuelto bajo formato Servilleta (`[SO] -> [Error] -> [Fix]`) sin datos privados y abre el formulario con etiquetas `fix-esquivado` y `napkin`. |
 | `/compartir-skill [nombre]` | Empaqueta un `SKILL.md` creado o mejorado por el usuario y lo propone al Core oficial con etiqueta `skill-comunitaria` para revision y creditos de autor. |
-| `/actualizar-nova` o *"Nova, busca actualizaciones"* / *"Nova, ¿hay actualizaciones?"* | Ejecuta `actualizar_nova.py` con backup preventivo, descarga skills/scripts nuevos y el Napkin oficial de Saul (`napkin_oficial.md`) sin tocar tus notas personales ni tareas. |
-| *(Exclusivo Saul)* `revisa el buzon de la comunidad` | Escanea los issues recibidos (`buzon-creador`, `napkin-crowd`, `skill-comunitaria`), aplica el filtro forense de 4 puntos (KISS, Seguridad, SO, Originalidad) y presenta el resumen listo para aprobar. |
+| `/enviar-informe` | Prepara un informe SOLO con las lecciones de autoaprendizaje, las entradas nuevas de tu servilleta y el tipo de errores de Nova (nada de tu equipo, proyectos, rutas ni claves). Lo revisas y decides si lo envias. |
+| *"Nova, instala la IA local"* | Instala Ollama si falta y descarga qwen3.5 + InternVL3.5 segun tu equipo (0 tokens de nube despues). |
+| *"Nova, configura mis claves"* | Te indica el comando `nova_claves.py` para poner tus claves gratis en tu equipo (nunca en el chat). |
+| `/actualizar-nova` o *"Nova, busca actualizaciones"* / *"Nova, ¿hay actualizaciones?"* | Ejecuta `actualizar_nova.py` con backup preventivo, compara archivo por archivo (SHA-256), descarga solo lo que cambio y el Napkin oficial de Saul (`napkin_oficial.md`) sin tocar tus notas personales ni tareas. |
+| *(Exclusivo Saul)* `revisa el buzon de la comunidad` | Escanea los issues recibidos (`buzon-creador`, `napkin`, `skill-comunitaria`, `informe-uso`), aplica el filtro forense de 4 puntos (KISS, Seguridad, SO, Originalidad) y presenta el resumen listo para aprobar. |
 
 ---
 

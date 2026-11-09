@@ -1,0 +1,17 @@
+{
+ "detectar": "panader|pasteler|bolleri|obrador|horno de pan|reposter",
+ "fotos": "bread|bakery|baker|pastr|croissant|dough|flour|oven|cake",
+ "no_fotos": "",
+ "buscar": [
+  "artisan bakery bread",
+  "baker kneading dough",
+  "pastry shop",
+  "sourdough bread"
+ ],
+ "paletas": [
+  "harina-trigo",
+  "espresso-crema",
+  "tostado-terracota",
+  "walnut-tan"
+ ]
+}

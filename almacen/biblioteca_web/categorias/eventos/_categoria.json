@@ -1,0 +1,41 @@
+{
+ "sector": "event",
+ "rotulos": {
+  "nav_carta": "Paquetes",
+  "nav_visitanos": "Contacto",
+  "destacados_ceja": "Servicios",
+  "destacados": "Lo que hacemos",
+  "carta_ceja": "Paquetes",
+  "carta": "Paquetes y precios",
+  "eventos_ceja": "Agenda",
+  "eventos": "Fechas",
+  "reservar": "Cuéntanos tu evento",
+  "accion": "Consultar fecha",
+  "accion_whatsapp": "Consultar por WhatsApp",
+  "accion_telefono": "Llamar",
+  "visitanos_ceja": "Contacto",
+  "visitanos": "Dónde estamos",
+  "resenas_ceja": "Parejas y clientes",
+  "resenas": "Opiniones"
+ },
+ "creativo": {
+  "descripcion": "cortador de jamon, cortador, fotografo, wedding planner, bodas, dj, catering, floristeria de eventos, video, decoracion de eventos",
+  "schema": "ProfessionalService",
+  "bloques": [
+   "cabecera",
+   "hero",
+   "destacados",
+   "carta",
+   "eventos",
+   "resenas",
+   "reservar",
+   "visitanos",
+   "faq",
+   "pie"
+  ]
+ },
+ "_fotografica": true,
+ "_tipos": [
+  "creativo"
+ ]
+}

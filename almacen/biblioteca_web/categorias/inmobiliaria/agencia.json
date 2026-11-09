@@ -1,0 +1,17 @@
+{
+ "fotos": "house|home|living room|apartment|architecture|interior|kitchen|facade|building",
+ "no_fotos": "",
+ "buscar": [
+  "modern house interior",
+  "apartment living room",
+  "house facade"
+ ],
+ "paletas": [
+  "three-stones",
+  "putty-black-teal",
+  "white-navy-tab",
+  "moss-sand",
+  "walnut-tan",
+  "stone-blueprint"
+ ]
+}

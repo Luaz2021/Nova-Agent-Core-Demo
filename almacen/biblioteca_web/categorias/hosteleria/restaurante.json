@@ -1,0 +1,19 @@
+{
+ "fotos": "restaurant|dining|dinner|plate|dish|chef|kitchen|meal|food|table set|wine",
+ "no_fotos": "bedding|bedside",
+ "buscar": [
+  "restaurant interior dining",
+  "chef plating food",
+  "gourmet dish",
+  "restaurant table"
+ ],
+ "paletas": [
+  "warm-black-gold",
+  "walnut-tan",
+  "oxblood-grey",
+  "green-black-bone",
+  "moss-sand",
+  "tobacco-olive",
+  "post-red-mustard"
+ ]
+}

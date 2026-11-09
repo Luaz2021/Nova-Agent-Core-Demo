@@ -1,0 +1,63 @@
+{
+ "idea": "tienda de moda de vanguardia: blanco y negro, letra mono pequena en MAYUSCULAS, rejilla densa",
+ "referencia": "ssense.com",
+ "variantes": {
+  "cabecera": "centrada",
+  "hero": "partido",
+  "destacados": "tarjetas"
+ },
+ "efecto": null,
+ "cierre": null,
+ "orden": [
+  "cabecera",
+  "hero",
+  "destacados",
+  "carta",
+  "reservar",
+  "eventos",
+  "horario",
+  "resenas",
+  "visitanos",
+  "faq",
+  "pie"
+ ],
+ "quitar": [
+  "cinta"
+ ],
+ "pistas": [],
+ "tipos": [
+  "tienda"
+ ],
+ "paletas": [
+  "vanguardia-1",
+  "vanguardia-2",
+  "vanguardia-3"
+ ],
+ "rasgos": {
+  "radius": 0,
+  "mayus": true,
+  "tracking": "0.04em",
+  "escala": "pequena"
+ },
+ "tipografia": {
+  "class": "sans-display",
+  "display": {
+   "family": "IBM Plex Mono",
+   "weights": [
+    400
+   ],
+   "settings": "tracking 0.04em"
+  },
+  "text": {
+   "family": "Inter"
+  },
+  "links": [
+   "https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400&family=Inter:wght@400;500;700&display=swap"
+  ]
+ },
+ "fondo": null,
+ "decoradores": [],
+ "tres_d": {
+  "ligero": "profundidad"
+ }
+}

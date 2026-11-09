@@ -1,0 +1,70 @@
+{
+ "idea": "tienda de especialidad limpia: logo centrado, portada con foto grande y un boton, rejilla de productos con foto, titulos pequenos en MAYUSCULAS, esquinas rectas; el color lo ponen las fotos",
+ "variantes": {
+  "cabecera": "centrada",
+  "hero": "foto",
+  "destacados": "tarjetas"
+ },
+ "efecto": null,
+ "cierre": null,
+ "orden": [
+  "cabecera",
+  "hero",
+  "destacados",
+  "cinta",
+  "carta",
+  "reservar",
+  "horario",
+  "resenas",
+  "visitanos",
+  "faq",
+  "pie"
+ ],
+ "quitar": [
+  "eventos"
+ ],
+ "pistas": [
+  "shop",
+  "product",
+  "clean",
+  "gallery",
+  "white",
+  "minimal",
+  "store",
+  "coffee"
+ ],
+ "tipos": [
+  "cafeteria",
+  "panaderia",
+  "tienda",
+  "bar"
+ ],
+ "paletas": [
+  "galeria-blanca",
+  "galeria-piedra",
+  "galeria-noche"
+ ],
+ "tipografia": {
+  "class": "serif-display",
+  "display": {
+   "family": "Libre Caslon Text",
+   "weights": [
+    400
+   ],
+   "settings": "tracking 0.08em · leading 1.15"
+  },
+  "text": {
+   "family": "Instrument Sans"
+  },
+  "links": [
+   "https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:wght@400&family=Instrument+Sans:wght@400;500;600&display=swap"
+  ]
+ },
+ "fondo": null,
+ "decoradores": [
+  "titular"
+ ],
+ "tres_d": {
+  "ligero": "profundidad"
+ }
+}

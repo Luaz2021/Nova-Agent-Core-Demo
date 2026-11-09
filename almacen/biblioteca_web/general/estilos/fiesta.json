@@ -1,0 +1,66 @@
+{
+ "idea": "bodas con actitud: titulares gigantes en MAYUSCULAS, crema y negro con un rojo vivo",
+ "referencia": "laputasuegra.com",
+ "variantes": {
+  "cabecera": "barra",
+  "hero": "tipografico",
+  "destacados": "zigzag"
+ },
+ "efecto": "horizontal",
+ "cierre": null,
+ "orden": [
+  "cabecera",
+  "hero",
+  "destacados",
+  "carta",
+  "reservar",
+  "eventos",
+  "horario",
+  "resenas",
+  "visitanos",
+  "faq",
+  "pie"
+ ],
+ "quitar": [
+  "cinta"
+ ],
+ "pistas": [],
+ "tipos": [
+  "creativo"
+ ],
+ "paletas": [
+  "fiesta-1",
+  "fiesta-2",
+  "fiesta-3"
+ ],
+ "rasgos": {
+  "radius": 0,
+  "mayus": true,
+  "tracking": "0.01em",
+  "escala": "enorme"
+ },
+ "tipografia": {
+  "class": "sans-display",
+  "display": {
+   "family": "Anton",
+   "weights": [
+    400
+   ],
+   "settings": "tracking 0.01em"
+  },
+  "text": {
+   "family": "Inter"
+  },
+  "links": [
+   "https://fonts.googleapis.com/css2?family=Anton:wght@400&family=Inter:wght@400;500;700&display=swap"
+  ]
+ },
+ "fondo": null,
+ "decoradores": [
+  "titular"
+ ],
+ "tres_d": {
+  "protagonista": "formas",
+  "ligero": "profundidad"
+ }
+}

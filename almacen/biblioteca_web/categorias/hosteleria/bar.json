@@ -1,0 +1,18 @@
+{
+ "fotos": "\\bbar\\b|cocktail|beer|wine|drink|glass|bartender|pub",
+ "no_fotos": "bedding",
+ "buscar": [
+  "cocktail bar",
+  "bartender cocktail",
+  "craft beer bar",
+  "wine bar"
+ ],
+ "paletas": [
+  "black-crimson",
+  "warm-black-gold",
+  "plum-black-pink",
+  "bottle-green-gold",
+  "charcoal-room-sage",
+  "burgundy-bubblegum"
+ ]
+}

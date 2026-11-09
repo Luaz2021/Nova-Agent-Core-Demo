@@ -45,7 +45,7 @@ if !errorlevel! equ 0 (
 
 echo [INFO] Descargando instalador directo oficial de Google Antigravity...
 set "TEMP_INSTALLER=%TEMP%\AntigravitySetup.exe"
-powershell -NoProfile -Command "Invoke-WebRequest -Uri 'https://storage.googleapis.com/antigravity-public/antigravity-hub/2.26.0-6546645232517120/windows-x64/Antigravity-x64.exe' -OutFile '$env:TEMP_INSTALLER'"
+powershell -NoProfile -Command "Invoke-WebRequest -Uri 'https://storage.googleapis.com/antigravity-public/antigravity-hub/2.26.0-6546645232517120/windows-x64/Antigravity-x64.exe' -OutFile $env:TEMP_INSTALLER"
 if exist "%TEMP_INSTALLER%" (
     echo [INFO] Ejecutando instalador de Google Antigravity...
     start /wait "" "%TEMP_INSTALLER%"
@@ -60,15 +60,26 @@ set "INSTALL_SCRIPT=%~dp0adapters\windows\install.ps1"
 if exist "!INSTALL_SCRIPT!" goto :CONFIGURAR_NOVA
 
 set "NOVA_ROOT=%USERPROFILE%\.nova-agent"
+set "NOVA_NUEVO=%USERPROFILE%\.nova-agent-nuevo"
 echo.
 echo [INFO] Descargando nucleo de Nova Agent en !NOVA_ROOT!...
+if exist "!NOVA_NUEVO!" rmdir /s /q "!NOVA_NUEVO!"
 where git >nul 2>&1
 if !errorlevel! equ 0 (
-    if exist "!NOVA_ROOT!" rmdir /s /q "!NOVA_ROOT!"
-    git clone --depth 1 https://github.com/Luaz2021/Nova-Agent-Core-Demo.git "!NOVA_ROOT!" >nul 2>&1
+    git clone --depth 1 https://github.com/Luaz2021/Nova-Agent-Core-Demo.git "!NOVA_NUEVO!" >nul 2>&1
 ) else (
-    powershell -NoProfile -Command "$zip = Join-Path $env:TEMP 'nova_core.zip'; Invoke-WebRequest -Uri 'https://github.com/Luaz2021/Nova-Agent-Core-Demo/archive/refs/heads/main.zip' -OutFile $zip; Expand-Archive -Path $zip -DestinationPath $env:TEMP -Force; if (Test-Path '$env:USERPROFILE\.nova-agent') { Remove-Item '$env:USERPROFILE\.nova-agent' -Recurse -Force }; Move-Item (Join-Path $env:TEMP 'Nova-Agent-Core-Demo-main') '$env:USERPROFILE\.nova-agent'"
+    echo [INFO] No hay git: descargo el ZIP oficial de GitHub...
+    powershell -NoProfile -Command "$ErrorActionPreference='Stop'; $zip = Join-Path $env:TEMP 'nova_core.zip'; $tmp = Join-Path $env:TEMP 'nova_core_zip'; if (Test-Path $tmp) { Remove-Item $tmp -Recurse -Force }; Invoke-WebRequest -Uri 'https://github.com/Luaz2021/Nova-Agent-Core-Demo/archive/refs/heads/main.zip' -OutFile $zip; Expand-Archive -Path $zip -DestinationPath $tmp -Force; Move-Item (Join-Path $tmp 'Nova-Agent-Core-Demo-main') $env:NOVA_NUEVO"
 )
+if not exist "!NOVA_NUEVO!\adapters\windows\install.ps1" (
+    echo [ERROR] No se pudo descargar Nova ^(revisa tu conexion a internet o que GitHub este accesible^).
+    echo         Tu instalacion anterior, si la habia, sigue intacta.
+    pause
+    exit /b 1
+)
+REM Solo ahora, con la descarga completa, se reemplaza la version anterior (las notas viven en .gemini, no aqui)
+if exist "!NOVA_ROOT!" rmdir /s /q "!NOVA_ROOT!"
+move "!NOVA_NUEVO!" "!NOVA_ROOT!" >nul
 set "INSTALL_SCRIPT=!NOVA_ROOT!\adapters\windows\install.ps1"
 
 :CONFIGURAR_NOVA

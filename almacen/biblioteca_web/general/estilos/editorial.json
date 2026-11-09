@@ -1,0 +1,38 @@
+{
+ "idea": "revista: titular tipografico enorme, lista numerada, mucho texto bien compuesto y aire; pocas fotos",
+ "variantes": {
+  "cabecera": "centrada",
+  "hero": "tipografico",
+  "destacados": "lista"
+ },
+ "orden": [
+  "cabecera",
+  "hero",
+  "destacados",
+  "carta",
+  "eventos",
+  "resenas",
+  "horario",
+  "reservar",
+  "visitanos",
+  "faq",
+  "pie"
+ ],
+ "quitar": [
+  "cinta"
+ ],
+ "pistas": [
+  "editorial",
+  "serif",
+  "column",
+  "print",
+  "annual",
+  "magazine",
+  "letter",
+  "type",
+  "book",
+  "paper",
+  "journal"
+ ],
+ "tres_d": {}
+}

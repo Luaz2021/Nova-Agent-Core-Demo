@@ -1,0 +1,37 @@
+{
+ "idea": "rejilla modular: portada partida, servicios en cajas de distinto tamano con foto, ritmo compacto",
+ "variantes": {
+  "cabecera": "barra",
+  "hero": "partido",
+  "destacados": "bento"
+ },
+ "orden": [
+  "cabecera",
+  "hero",
+  "cinta",
+  "destacados",
+  "carta",
+  "reservar",
+  "eventos",
+  "resenas",
+  "horario",
+  "visitanos",
+  "faq",
+  "pie"
+ ],
+ "quitar": [],
+ "pistas": [
+  "grid",
+  "bento",
+  "modular",
+  "tile",
+  "box",
+  "dashboard",
+  "playful",
+  "app",
+  "product",
+  "card",
+  "tarjetas"
+ ],
+ "tres_d": {}
+}

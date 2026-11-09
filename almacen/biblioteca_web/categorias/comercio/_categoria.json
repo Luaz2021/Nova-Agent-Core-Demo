@@ -1,0 +1,39 @@
+{
+ "sector": "ecommerce",
+ "rotulos": {
+  "nav_carta": "Productos",
+  "destacados_ceja": "En tienda",
+  "destacados": "Lo más buscado",
+  "carta_ceja": "Catálogo",
+  "carta": "Productos",
+  "horario": "Horario de la tienda",
+  "reservar": "¿Lo tenemos?",
+  "accion": "Ver la tienda online",
+  "accion_whatsapp": "Pregunta por WhatsApp",
+  "accion_telefono": "Llámanos",
+  "visitanos": "Visita la tienda",
+  "resenas_ceja": "Clientes",
+  "resenas": "Opiniones"
+ },
+ "tienda": {
+  "descripcion": "tienda, floristeria, libreria, boutique, moda, joyeria, ferreteria, papeleria, tienda online",
+  "schema": "Store",
+  "bloques": [
+   "cabecera",
+   "hero",
+   "cinta",
+   "destacados",
+   "carta",
+   "reservar",
+   "horario",
+   "resenas",
+   "visitanos",
+   "faq",
+   "pie"
+  ]
+ },
+ "_fotografica": false,
+ "_tipos": [
+  "tienda"
+ ]
+}

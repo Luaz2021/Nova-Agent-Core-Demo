@@ -1,0 +1,66 @@
+{
+ "idea": "producto pulido: blanco, marino profundo, un violeta de marca y tarjetas limpias",
+ "referencia": "stripe.com",
+ "variantes": {
+  "cabecera": "barra",
+  "hero": "partido",
+  "destacados": "tarjetas"
+ },
+ "efecto": null,
+ "cierre": null,
+ "orden": [
+  "cabecera",
+  "hero",
+  "destacados",
+  "carta",
+  "reservar",
+  "eventos",
+  "horario",
+  "resenas",
+  "visitanos",
+  "faq",
+  "pie"
+ ],
+ "quitar": [
+  "cinta"
+ ],
+ "pistas": [],
+ "tipos": [
+  "producto"
+ ],
+ "paletas": [
+  "gradiente-suave-1",
+  "gradiente-suave-2",
+  "gradiente-suave-3"
+ ],
+ "rasgos": {
+  "radius": 8,
+  "mayus": false,
+  "tracking": "-0.025em",
+  "escala": "grande"
+ },
+ "tipografia": {
+  "class": "sans-display",
+  "display": {
+   "family": "Plus Jakarta Sans",
+   "weights": [
+    700
+   ],
+   "settings": "tracking -0.025em"
+  },
+  "text": {
+   "family": "Plus Jakarta Sans"
+  },
+  "links": [
+   "https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700&display=swap"
+  ]
+ },
+ "fondo": null,
+ "decoradores": [
+  "magnetico"
+ ],
+ "tres_d": {
+  "protagonista": "liquido",
+  "ligero": "profundidad"
+ }
+}

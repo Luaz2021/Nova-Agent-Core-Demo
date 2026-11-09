@@ -1,0 +1,19 @@
+{
+ "fotos": "hotel|bedroom|hotel room|pool|resort|lobby|cabin|villa",
+ "no_fotos": "",
+ "buscar": [
+  "boutique hotel room",
+  "hotel lobby interior",
+  "resort pool",
+  "cozy cabin interior"
+ ],
+ "paletas": [
+  "walnut-tan",
+  "warm-black-gold",
+  "three-stones",
+  "moss-sand",
+  "putty-black-teal",
+  "olive-on-bone",
+  "green-black-bone"
+ ]
+}

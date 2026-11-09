@@ -1,0 +1,16 @@
+{
+ "fotos": "cars?\b|mechanic|garage|engine|motorcycle|tyre|tire\b",
+ "no_fotos": "",
+ "buscar": [
+  "car mechanic garage",
+  "auto repair workshop",
+  "motorcycle workshop"
+ ],
+ "paletas": [
+  "graphite-safety-orange",
+  "black-crimson",
+  "mustard-field",
+  "charcoal-primaries",
+  "blue-black-cornflower"
+ ]
+}

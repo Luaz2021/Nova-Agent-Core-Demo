@@ -1,0 +1,38 @@
+{
+ "sector": "health",
+ "rotulos": {
+  "nav_carta": "Tratamientos",
+  "destacados_ceja": "Especialidades",
+  "destacados": "En qué te ayudamos",
+  "carta_ceja": "Tratamientos",
+  "carta": "Servicios y tarifas",
+  "horario": "Horario de consulta",
+  "reservar": "Pide tu cita",
+  "accion": "Pedir cita",
+  "accion_whatsapp": "Pedir cita por WhatsApp",
+  "accion_telefono": "Llamar para cita",
+  "visitanos": "Dónde está la clínica",
+  "resenas_ceja": "Pacientes",
+  "resenas": "Opiniones"
+ },
+ "clinica": {
+  "descripcion": "clinica, fisioterapia, fisio, dentista, dental, psicologo, nutricionista, podologo, osteopata, veterinario",
+  "schema": "MedicalClinic",
+  "bloques": [
+   "cabecera",
+   "hero",
+   "destacados",
+   "carta",
+   "reservar",
+   "horario",
+   "resenas",
+   "visitanos",
+   "faq",
+   "pie"
+  ]
+ },
+ "_fotografica": false,
+ "_tipos": [
+  "clinica"
+ ]
+}

@@ -1,13 +1,48 @@
 # ==============================================================================
-# INSTALADOR INTERACTIVO UNIVERSAL DE NOVA AGENT - WINDOWS (POWERSHELL)
-# Zero-Tokens | Escaner de Hardware Inteligente | Inyeccion Unica Optimizada
-# Creado por Saul Alexander Martinez Rivas (@Luaz2021 - Torrevieja, Espana)
+# INSTALADOR INTERACTIVO DE NOVA AGENT v3.0 - WINDOWS (POWERSHELL)
+# Zero-Tokens | Escaner de Hardware | IA local opcional (Ollama) | Reglas automaticas (hooks)
+# Creado por Saul Alexander Martinez Rivas (@Luaz2021)
 # ==============================================================================
 $ErrorActionPreference = "SilentlyContinue"
 
+# 0. Requisito: Python 3.10 o superior (hooks, redactor, biblioteca de webs, actualizador)
+function Find-NovaPython {
+    $cands = @()
+    $py = Get-Command py -ErrorAction SilentlyContinue
+    if ($py) { $p = (& py -3 -c "import sys; print(sys.executable)" 2>$null); if ($p) { $cands += $p.Trim() } }
+    foreach ($n in @("python", "python3")) {
+        $c = Get-Command $n -ErrorAction SilentlyContinue
+        if ($c -and $c.Source -notmatch "WindowsApps") { $cands += $c.Source }
+    }
+    $cands += (Get-ChildItem "$env:LOCALAPPDATA\Programs\Python\Python3*\python.exe" -ErrorAction SilentlyContinue | Sort-Object FullName -Descending | ForEach-Object { $_.FullName })
+    $cands += (Get-ChildItem "$env:LOCALAPPDATA\Python\pythoncore-3*\python.exe" -ErrorAction SilentlyContinue | Sort-Object FullName -Descending | ForEach-Object { $_.FullName })
+    foreach ($c in $cands) {
+        if ($c -and (Test-Path $c)) {
+            & $c -c "import sys; sys.exit(0 if sys.version_info >= (3, 10) else 1)" 2>$null
+            if ($LASTEXITCODE -eq 0) { return $c }
+        }
+    }
+    return $null
+}
+$novaPython = Find-NovaPython
+if (-not $novaPython) {
+    Write-Host "[AVISO] Nova necesita Python 3.10 o superior y no lo encuentro." -ForegroundColor Yellow
+    if (Get-Command winget -ErrorAction SilentlyContinue) {
+        $askPy = Read-Host "Lo instalo ahora con winget (Python 3.12 oficial)? (s/n) [s]"
+        if (-not $askPy -or $askPy.ToLower() -ne "n") {
+            winget install -e --id Python.Python.3.12 --accept-source-agreements --accept-package-agreements
+            $novaPython = Find-NovaPython
+        }
+    }
+    if (-not $novaPython) {
+        Write-Host "[ERROR] Instala Python desde https://www.python.org/downloads/ (marca 'Add python.exe to PATH') y repite." -ForegroundColor Red
+        exit 1
+    }
+}
+
 Clear-Host
 Write-Host "==========================================================" -ForegroundColor Cyan
-Write-Host "   BIENVENIDO AL INSTALADOR OFICIAL DE NOVA AGENT v2.0    " -ForegroundColor Cyan
+Write-Host "   BIENVENIDO AL INSTALADOR OFICIAL DE NOVA AGENT v3.0    " -ForegroundColor Cyan
 Write-Host "   Arquitecta de Software & Copiloto Tecnico Senior       " -ForegroundColor Gray
 Write-Host "==========================================================" -ForegroundColor Cyan
 Write-Host ""
@@ -19,11 +54,10 @@ if ([string]::IsNullOrWhiteSpace($nombre)) { $nombre = "Desarrollador" }
 # Aviso etico de telemetria
 Write-Host ""
 Write-Host "[AVISO DE PRIVACIDAD Y MEJORA CONTINUA]" -ForegroundColor Cyan
-Write-Host "Nova Agent esta basado en Google Gemini. Para mejorar y evolucionar el sistema:" -ForegroundColor Gray
-Write-Host "- Una vez al mes genera un resumen anonimo de manifiesto (skills y errores esquivados)." -ForegroundColor Gray
-Write-Host "- Cero rutas privadas, cero codigo confidencial, cero contrasenas." -ForegroundColor Gray
-Write-Host "- Puedes activar o desactivar este envio ahora o en cualquier momento." -ForegroundColor Gray
-$optIn = Read-Host "Deseas habilitar la telemetria etica anonima? (s/n) [s]"
+Write-Host "Si quieres ayudar a mejorar Nova, una vez al mes te propondra enviar un informe con:" -ForegroundColor Gray
+Write-Host "- las lecciones que aprendio, las entradas nuevas de tu servilleta y el TIPO de errores que cometio." -ForegroundColor Gray
+Write-Host "- Nada de tu equipo, tus proyectos, rutas, correos ni claves. Tu lo revisas y decides si lo envias." -ForegroundColor Gray
+$optIn = Read-Host "Quieres que Nova te lo proponga? (s/n) [s]"
 $telemetryEnabled = if ($optIn -and $optIn.ToLower() -eq "n") { $false } else { $true }
 
 Write-Host ""
@@ -90,60 +124,24 @@ Write-Host "  - Memoria RAM: $ramGB GB" -ForegroundColor Gray
 Write-Host "  - Tarjeta GPU: $bestGpuName" -ForegroundColor Gray
 Write-Host "  - Disco Libre: $freeDiskGB GB disponibles en $sysDrive" -ForegroundColor Gray
 
-$localAiInstalled = $false
-$localAiModel = "ninguno"
+$quiereIA = $false
 $hwTier = "BASICO_CLOUD_ONLY"
 
 if ($ramGB -lt 11.5 -or $freeDiskGB -lt 15.0) {
-    # EQUIPO BASICO: Prohibido instalar IA local para no ahogar RAM ni disco
     $hwTier = "BASICO_CLOUD_ONLY"
-    Write-Host "  - Veredicto  : MODO NUBE EXCLUSIVO (Proteccion de RAM y Bateria)" -ForegroundColor Yellow
-    Write-Host "----------------------------------------------------------" -ForegroundColor DarkCyan
-    Write-Host "[OPTIMIZACION AUTOMATICA] Tu equipo tiene $ramGB GB de RAM / $freeDiskGB GB libres." -ForegroundColor Yellow
-    Write-Host "Para evitar que tu PC se congele o gaste bateria, Nova NO instalara modelos pesados" -ForegroundColor Gray
-    Write-Host "en local y operara con el Modo 1-Shot Cloud Optimizado (~38% menos consumo de tokens)." -ForegroundColor Gray
-} elseif ($hasDedicatedGpu -and $ramGB -ge 15.0) {
-    # EQUIPO POTENTE / GPU DEDICADA
+    Write-Host "  - Veredicto  : MODO NUBE (protegemos tu RAM y tu bateria; sin IA local)" -ForegroundColor Yellow
+} elseif ($ramGB -ge 15.0) {
     $hwTier = "OPTIMO_GPU"
-    Write-Host "  - Veredicto  : POTENCIA OPTIMA PARA IA LOCAL (Aceleracion GPU)" -ForegroundColor Green
-    Write-Host "----------------------------------------------------------" -ForegroundColor DarkCyan
-    Write-Host "Tu PC tiene potencia de sobra para correr el Obrero Local (Ollama + Qwen 2.5 Coder 7B)" -ForegroundColor Gray
-    Write-Host "en tareas masivas (>1.500 tokens repetitivos, mocks y lectura pesada) para ahorrar cuota." -ForegroundColor Gray
-    $askAi = Read-Host "Deseas instalar y activar la IA Local en tu equipo? (s/n) [s]"
-    if (-not $askAi -or $askAi.ToLower() -ne "n") {
-        $localAiModel = "qwen2.5-coder:7b"
-        $localAiInstalled = $true
-    }
+    Write-Host "  - Veredicto  : POTENCIA OPTIMA PARA IA LOCAL" -ForegroundColor Green
+    $askAi = Read-Host "Activo la IA local (Ollama + qwen3.5:9b + InternVL3.5 8B, ~12 GB)? (s/n) [s]"
+    if (-not $askAi -or $askAi.ToLower() -ne "n") { $quiereIA = $true }
 } else {
-    # EQUIPO GAMA MEDIA (12-16 GB RAM sin GPU dedicada potente)
     $hwTier = "GAMA_MEDIA"
-    Write-Host "  - Veredicto  : GAMA MEDIA (Opcional Obrero Ultraligero 3B)" -ForegroundColor Cyan
-    Write-Host "----------------------------------------------------------" -ForegroundColor DarkCyan
-    Write-Host "Tu equipo cuenta con buena RAM ($ramGB GB) pero sin GPU dedicada pesada." -ForegroundColor Gray
-    Write-Host "Puedes operar 100% en la nube (Modo 1-Shot) o instalar el modelo ligero Qwen 2.5 Coder 3B (1.9 GB)." -ForegroundColor Gray
-    $askAi = Read-Host "Deseas instalar el Obrero Local Ligero (3B)? (s/n) [n]"
-    if ($askAi -and $askAi.ToLower() -eq "s") {
-        $localAiModel = "qwen2.5-coder:3b"
-        $localAiInstalled = $true
-    }
+    Write-Host "  - Veredicto  : GAMA MEDIA (IA local ligera opcional)" -ForegroundColor Cyan
+    $askAi = Read-Host "Activo la IA local ligera (Ollama + qwen3.5:4b + InternVL3.5 4B, ~6,5 GB)? (s/n) [n]"
+    if ($askAi -and $askAi.ToLower() -eq "s") { $quiereIA = $true }
 }
-
-if ($localAiInstalled) {
-    Write-Host "[INFO] Verificando motor Ollama para descargar $localAiModel..." -ForegroundColor Cyan
-    $ollamaExe = if (Test-Path "$env:LOCALAPPDATA\Programs\Ollama\ollama.exe") { "$env:LOCALAPPDATA\Programs\Ollama\ollama.exe" } else { (Get-Command ollama -ErrorAction SilentlyContinue).Source }
-    if (-not $ollamaExe) {
-        Write-Host "[INFO] Instalando Ollama via winget..." -ForegroundColor Yellow
-        winget install --id Ollama.Ollama --silent --accept-package-agreements --accept-source-agreements
-        $ollamaExe = "$env:LOCALAPPDATA\Programs\Ollama\ollama.exe"
-    }
-    if (Test-Path $ollamaExe) {
-        Start-Process -FilePath $ollamaExe -ArgumentList "serve" -WindowStyle Hidden
-        Start-Sleep -Seconds 2
-        Write-Host "[INFO] Descargando modelo $localAiModel..." -ForegroundColor Yellow
-        & $ollamaExe pull $localAiModel
-        Write-Host "[OK] IA Local ($localAiModel) lista y vinculada." -ForegroundColor Green
-    }
-}
+Write-Host "----------------------------------------------------------" -ForegroundColor DarkCyan
 
 Write-Host ""
 Write-Host "[INFO] Configurando a Nova para $nombre ($profesion)..." -ForegroundColor Cyan
@@ -154,6 +152,10 @@ $novaLocalSkills = "$geminiDir\antigravity\skills"
 $novaConfigSkills = "$geminiDir\config\skills"
 $novaLocalMemory = "$geminiDir\antigravity\memory"
 $novaLocalScripts = "$geminiDir\antigravity\scripts"
+$novaCore = "$geminiDir\nova_core"
+$novaAlmacen = "$geminiDir\antigravity\almacen"
+New-Item -ItemType Directory -Path $novaCore -Force | Out-Null
+New-Item -ItemType Directory -Path $novaAlmacen -Force | Out-Null
 New-Item -ItemType Directory -Path $novaLocalSkills -Force | Out-Null
 New-Item -ItemType Directory -Path $novaConfigSkills -Force | Out-Null
 New-Item -ItemType Directory -Path $novaLocalMemory -Force | Out-Null
@@ -175,19 +177,21 @@ $perfilData = @{
         tier = $hwTier
     }
     ia_local = @{
-        instalada = $localAiInstalled
-        modelo = $localAiModel
+        instalada = $false
+        modelo = "ninguno"
+        modelo_vl = "ninguno"
         regla_activacion = "solo_tareas_masivas_mayor_1500_tokens"
     }
 } | ConvertTo-Json -Depth 4
 
-Set-Content -Path "$novaLocalMemory\perfil_usuario.json" -Value $perfilData -Encoding UTF8
+# UTF-8 SIN BOM (con BOM, algunos lectores JSON fallan)
+[System.IO.File]::WriteAllText("$novaLocalMemory\perfil_usuario.json", $perfilData, (New-Object System.Text.UTF8Encoding $false))
 
-# 5. Enlace de las 119 Skills mediante Junctions
+# 5. Enlace de las Skills mediante Junctions
 $repoRoot = (Resolve-Path (Join-Path $PSScriptRoot "..\..")).Path
 $repoSkills = Join-Path $repoRoot "skills"
 if (Test-Path $repoSkills) {
-    Write-Host "[INFO] Enlazando el catalogo de 119 skills optimizadas..." -ForegroundColor Cyan
+    Write-Host "[INFO] Enlazando el catalogo de skills..." -ForegroundColor Cyan
     Get-ChildItem -Path $repoSkills -Directory | ForEach-Object {
         foreach ($targetDir in @($novaLocalSkills, $novaConfigSkills)) {
             $dest = Join-Path $targetDir $_.Name
@@ -196,16 +200,18 @@ if (Test-Path $repoSkills) {
             }
         }
     }
-    Write-Host "[OK] 119 Skills enlazadas correctamente (-60% peso en frontmatter)." -ForegroundColor Green
+    Write-Host "[OK] Skills enlazadas correctamente." -ForegroundColor Green
 }
 
-# 6. Copiar Scripts de Guardian y Feedback a ~/.gemini/antigravity/scripts
+# 6. Copiar scripts (con subcarpetas), nucleo (hooks, redactor) y biblioteca de webs
 $repoScripts = Join-Path $repoRoot "scripts"
-if (Test-Path $repoScripts) {
-    Get-ChildItem -Path $repoScripts -File | ForEach-Object {
-        Copy-Item $_.FullName (Join-Path $novaLocalScripts $_.Name) -Force
-    }
-}
+if (Test-Path $repoScripts) { Copy-Item -Path "$repoScripts\*" -Destination $novaLocalScripts -Recurse -Force }
+$repoCore = Join-Path $repoRoot "nova_core"
+if (Test-Path $repoCore) { Copy-Item -Path "$repoCore\*" -Destination $novaCore -Recurse -Force }
+$repoAlmacen = Join-Path $repoRoot "almacen"
+if (Test-Path $repoAlmacen) { Copy-Item -Path "$repoAlmacen\*" -Destination $novaAlmacen -Recurse -Force }
+Copy-Item (Join-Path $repoRoot "manifest_master.json") "$geminiDir\antigravity\manifest_master.json" -Force
+Get-ChildItem -Path $novaLocalScripts, $novaCore, $novaAlmacen -Recurse -Directory -Filter "__pycache__" | Remove-Item -Recurse -Force
 
 # 7. Plantillas de Memoria
 $templatesDir = Join-Path $repoRoot "memory_templates"
@@ -216,6 +222,7 @@ if (Test-Path $templatesDir) {
     if (-not (Test-Path "$novaLocalMemory\napkin.md")) {
         Copy-Item "$templatesDir\napkin.template.md" "$novaLocalMemory\napkin.md" -Force
     }
+    Copy-Item "$templatesDir\napkin.template.md" "$novaLocalMemory\napkin_oficial.md" -Force
 }
 
 # 8. Inyeccion UNICA de GEMINI.md y AYUDA.md (Eliminando duplicado legacy en ~/.gemini/GEMINI.md)
@@ -232,12 +239,28 @@ if (Test-Path $ayudaFile) {
     Copy-Item $ayudaFile "$geminiDir\config\AYUDA.md" -Force
 }
 
+# Reglas automaticas (hooks): el sistema vigila las leyes, no el modelo
+& $novaPython "$novaCore\instalar_hooks.py"
+
+# IA local (opcional): instala Ollama si falta y descarga los 2 modelos del perfil
+if ($quiereIA) {
+    & $novaPython "$novaLocalScripts\nova_instalar_ia_local.py" --perfil $hwTier
+    if ($LASTEXITCODE -ne 0) {
+        Write-Host "[AVISO] La IA local no quedo lista. Repitelo cuando quieras o di 'Nova, instala la IA local'." -ForegroundColor Yellow
+    }
+}
+
+# Claves opcionales (tipo 'iniciar sesion'): se guardan solo en este equipo
+Write-Host ""
+$askKeys = Read-Host "Quieres configurar ahora tus claves gratuitas opcionales (OpenRouter, Groq...)? (s/n) [n]"
+if ($askKeys -and $askKeys.ToLower() -eq "s") { & $novaPython "$novaLocalScripts\nova_claves.py" }
+
 # Configuracion transparente de permisos del IDE (Opt-In)
 Write-Host ""
 Write-Host "[CONFIGURACION DE PERMISOS DEL IDE]" -ForegroundColor Cyan
 Write-Host "Nova respeta siempre la Ley 1 (pedir tu permiso en el chat antes de tocar tu codigo)." -ForegroundColor Gray
 Write-Host "Sin embargo, Antigravity IDE pide confirmacion manual cada vez que Nova lee sus propias" -ForegroundColor Gray
-Write-Host "119 skills o su memoria en ~/.gemini/antigravity/memory." -ForegroundColor Gray
+Write-Host "skills o su memoria en ~/.gemini/antigravity/memory." -ForegroundColor Gray
 $askTurbo = Read-Host "Deseas habilitar el acceso fluido a archivos de memoria/skills sin popups? (s/n) [s]"
 $configJsonPath = "$geminiDir\config\config.json"
 if ((-not $askTurbo -or $askTurbo.ToLower() -ne "n") -and (-not (Test-Path $configJsonPath))) {
@@ -260,7 +283,7 @@ try { Set-Clipboard -Value $promptCorto } catch {}
 
 Write-Host ""
 Write-Host "==========================================================================" -ForegroundColor Green
-Write-Host "   NOVA COPILOT ENGINE v2.0 - INSTALACION COMPLETADA ($nombre)" -ForegroundColor Green
+Write-Host "   NOVA AGENT v3.0 - INSTALACION COMPLETADA ($nombre)" -ForegroundColor Green
 Write-Host "   Arquitectura creada por Saul Alexander Martinez Rivas (@Luaz2021)" -ForegroundColor Cyan
 Write-Host "==========================================================================" -ForegroundColor Green
 Write-Host "ATAJOS RAPIDOS EN EL CHAT (Coste 0 tokens de redaccion):" -ForegroundColor Yellow
@@ -274,6 +297,7 @@ Write-Host "LINEA DIRECTA CON EL CREADOR (SAUL MARTINEZ):" -ForegroundColor Yell
 Write-Host "  - '/creador [mensaje]'          -> Envia una duda, idea o saludo directo al buzon de Saul." -ForegroundColor White
 Write-Host "  - '/reportar-fallo'             -> Envia un bug resuelto para mejorar el Core." -ForegroundColor White
 Write-Host "  - '/compartir-skill [nombre]'   -> Propone una skill tuya para incluirla con creditos." -ForegroundColor White
+Write-Host "  - '/enviar-informe'             -> Lecciones y errores de Nova (tu lo revisas antes)." -ForegroundColor White
 Write-Host "  - '/actualizar-nova'            -> Busca e instala mejoras oficiales sin borrar tus notas." -ForegroundColor White
 Write-Host "==========================================================================" -ForegroundColor Green
 Write-Host "[!] Tu primer mensaje corto YA ESTA COPIADO al portapapeles (Ctrl + V):" -ForegroundColor Cyan

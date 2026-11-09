@@ -1,0 +1,66 @@
+{
+ "idea": "producto de movilidad: grises suaves, sans moderna, esquinas redondeadas, el producto en grande",
+ "referencia": "cowboy.com",
+ "variantes": {
+  "cabecera": "barra",
+  "hero": "partido",
+  "destacados": "tarjetas"
+ },
+ "efecto": "pasos",
+ "cierre": null,
+ "orden": [
+  "cabecera",
+  "hero",
+  "destacados",
+  "carta",
+  "reservar",
+  "eventos",
+  "horario",
+  "resenas",
+  "visitanos",
+  "faq",
+  "pie"
+ ],
+ "quitar": [
+  "cinta"
+ ],
+ "pistas": [],
+ "tipos": [
+  "taller"
+ ],
+ "paletas": [
+  "producto-tech-1",
+  "producto-tech-2",
+  "producto-tech-3"
+ ],
+ "rasgos": {
+  "radius": 16,
+  "mayus": false,
+  "tracking": "-0.03em",
+  "escala": "grande"
+ },
+ "tipografia": {
+  "class": "sans-display",
+  "display": {
+   "family": "Sora",
+   "weights": [
+    600
+   ],
+   "settings": "tracking -0.03em"
+  },
+  "text": {
+   "family": "Sora"
+  },
+  "links": [
+   "https://fonts.googleapis.com/css2?family=Sora:wght@600&display=swap"
+  ]
+ },
+ "fondo": null,
+ "decoradores": [
+  "titular"
+ ],
+ "tres_d": {
+  "protagonista": "formas",
+  "ligero": "profundidad"
+ }
+}

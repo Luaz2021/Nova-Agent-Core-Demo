@@ -1,0 +1,67 @@
+{
+ "idea": "fiesta de color: colores calidos y saturados (sin neon), letra redonda y gorda, tarjetas muy redondas",
+ "referencia": "elrow.com",
+ "variantes": {
+  "cabecera": "barra",
+  "hero": "partido",
+  "destacados": "bento"
+ },
+ "efecto": null,
+ "cierre": null,
+ "orden": [
+  "cabecera",
+  "hero",
+  "destacados",
+  "carta",
+  "reservar",
+  "eventos",
+  "horario",
+  "resenas",
+  "visitanos",
+  "faq",
+  "pie"
+ ],
+ "quitar": [
+  "cinta"
+ ],
+ "pistas": [],
+ "tipos": [
+  "espacio"
+ ],
+ "paletas": [
+  "carnaval-1",
+  "carnaval-2",
+  "carnaval-3"
+ ],
+ "rasgos": {
+  "radius": 24,
+  "mayus": false,
+  "tracking": "-0.02em",
+  "escala": "enorme"
+ },
+ "tipografia": {
+  "class": "sans-display",
+  "display": {
+   "family": "Bricolage Grotesque",
+   "weights": [
+    800
+   ],
+   "settings": "tracking -0.02em"
+  },
+  "text": {
+   "family": "Inter"
+  },
+  "links": [
+   "https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@800&family=Inter:wght@400;500;700&display=swap"
+  ]
+ },
+ "fondo": null,
+ "decoradores": [
+  "titular",
+  "magnetico"
+ ],
+ "tres_d": {
+  "protagonista": "formas",
+  "ligero": "profundidad"
+ }
+}

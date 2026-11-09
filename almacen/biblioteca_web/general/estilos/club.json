@@ -1,0 +1,66 @@
+{
+ "idea": "club premium: negro, letra fina en MAYUSCULAS muy espaciada, fotografia de cuerpo y luz",
+ "referencia": "equinox.com",
+ "variantes": {
+  "cabecera": "centrada",
+  "hero": "foto",
+  "destacados": "zigzag"
+ },
+ "efecto": null,
+ "cierre": null,
+ "orden": [
+  "cabecera",
+  "hero",
+  "destacados",
+  "carta",
+  "reservar",
+  "eventos",
+  "horario",
+  "resenas",
+  "visitanos",
+  "faq",
+  "pie"
+ ],
+ "quitar": [
+  "cinta"
+ ],
+ "pistas": [],
+ "tipos": [
+  "gimnasio",
+  "estudio"
+ ],
+ "paletas": [
+  "club-1",
+  "club-2",
+  "club-3"
+ ],
+ "rasgos": {
+  "radius": 0,
+  "mayus": true,
+  "tracking": "0.2em",
+  "escala": "media"
+ },
+ "tipografia": {
+  "class": "sans-display",
+  "display": {
+   "family": "Jost",
+   "weights": [
+    300
+   ],
+   "settings": "tracking 0.2em"
+  },
+  "text": {
+   "family": "Jost"
+  },
+  "links": [
+   "https://fonts.googleapis.com/css2?family=Jost:wght@300&display=swap"
+  ]
+ },
+ "fondo": null,
+ "decoradores": [
+  "titular"
+ ],
+ "tres_d": {
+  "ligero": "profundidad"
+ }
+}

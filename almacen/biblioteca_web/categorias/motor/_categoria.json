@@ -1,0 +1,38 @@
+{
+ "sector": "other",
+ "rotulos": {
+  "nav_carta": "Servicios",
+  "destacados_ceja": "Taller",
+  "destacados": "Qué reparamos",
+  "carta_ceja": "Precios",
+  "carta": "Servicios y precios",
+  "horario": "Horario del taller",
+  "reservar": "Pide cita en el taller",
+  "accion": "Pedir cita",
+  "accion_whatsapp": "Cita por WhatsApp",
+  "accion_telefono": "Llamar al taller",
+  "visitanos": "Dónde está el taller",
+  "resenas_ceja": "Clientes",
+  "resenas": "Opiniones"
+ },
+ "taller": {
+  "descripcion": "taller mecanico, taller, concesionario, lavado de coches, neumaticos, motos, chapa y pintura",
+  "schema": "AutoRepair",
+  "bloques": [
+   "cabecera",
+   "hero",
+   "destacados",
+   "carta",
+   "reservar",
+   "horario",
+   "resenas",
+   "visitanos",
+   "faq",
+   "pie"
+  ]
+ },
+ "_fotografica": false,
+ "_tipos": [
+  "taller"
+ ]
+}

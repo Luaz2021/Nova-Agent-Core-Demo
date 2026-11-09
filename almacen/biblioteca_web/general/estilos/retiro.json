@@ -1,0 +1,65 @@
+{
+ "idea": "retiro de lujo: piedra suave, serif fina en MAYUSCULAS espaciadas, silencio y foto a sangre",
+ "referencia": "aman.com",
+ "variantes": {
+  "cabecera": "centrada",
+  "hero": "foto",
+  "destacados": "zigzag"
+ },
+ "efecto": null,
+ "cierre": "mascara",
+ "orden": [
+  "cabecera",
+  "hero",
+  "destacados",
+  "carta",
+  "reservar",
+  "eventos",
+  "horario",
+  "resenas",
+  "visitanos",
+  "faq",
+  "pie"
+ ],
+ "quitar": [
+  "cinta"
+ ],
+ "pistas": [],
+ "tipos": [
+  "hotel"
+ ],
+ "paletas": [
+  "retiro-1",
+  "retiro-2",
+  "retiro-3"
+ ],
+ "rasgos": {
+  "radius": 0,
+  "mayus": true,
+  "tracking": "0.15em",
+  "escala": "media"
+ },
+ "tipografia": {
+  "class": "serif-display",
+  "display": {
+   "family": "Cormorant Garamond",
+   "weights": [
+    300
+   ],
+   "settings": "tracking 0.15em"
+  },
+  "text": {
+   "family": "Figtree"
+  },
+  "links": [
+   "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300&family=Figtree:wght@400;500;700&display=swap"
+  ]
+ },
+ "fondo": null,
+ "decoradores": [
+  "titular"
+ ],
+ "tres_d": {
+  "ligero": "profundidad"
+ }
+}

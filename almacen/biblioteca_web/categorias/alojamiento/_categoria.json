@@ -1,0 +1,40 @@
+{
+ "sector": "hospitality",
+ "rotulos": {
+  "nav_carta": "Habitaciones",
+  "destacados_ceja": "El lugar",
+  "destacados": "Por qué quedarte",
+  "carta_ceja": "Habitaciones",
+  "carta": "Habitaciones y tarifas",
+  "horario": "Entrada y salida",
+  "eventos_ceja": "Alrededores",
+  "eventos": "Qué hacer cerca",
+  "reservar": "Reserva tu estancia",
+  "accion": "Consultar disponibilidad",
+  "accion_whatsapp": "Consultar por WhatsApp",
+  "accion_telefono": "Llamar para reservar",
+  "visitanos": "Cómo llegar",
+  "resenas_ceja": "Huéspedes",
+  "resenas": "Opiniones"
+ },
+ "hotel": {
+  "descripcion": "hotel, hostal, casa rural, apartamento turistico, alojamiento, camping, albergue",
+  "schema": "LodgingBusiness",
+  "bloques": [
+   "cabecera",
+   "hero",
+   "destacados",
+   "carta",
+   "eventos",
+   "reservar",
+   "resenas",
+   "visitanos",
+   "faq",
+   "pie"
+  ]
+ },
+ "_fotografica": true,
+ "_tipos": [
+  "hotel"
+ ]
+}

@@ -1,0 +1,41 @@
+{
+ "sector": "culture",
+ "rotulos": {
+  "nav_carta": "Entradas",
+  "destacados_ceja": "Experiencias",
+  "destacados": "Qué vas a vivir",
+  "carta_ceja": "Entradas",
+  "carta": "Entradas y precios",
+  "horario": "Horario",
+  "eventos_ceja": "Programación",
+  "eventos": "Próximamente",
+  "reservar": "Reserva",
+  "accion": "Comprar entradas",
+  "accion_whatsapp": "Reservar por WhatsApp",
+  "accion_telefono": "Llamar",
+  "visitanos": "Cómo llegar",
+  "resenas_ceja": "Visitantes",
+  "resenas": "Opiniones"
+ },
+ "espacio": {
+  "descripcion": "escape room, museo, galeria, teatro, sala de conciertos, bolera, parque, centro cultural, discoteca",
+  "schema": "EntertainmentBusiness",
+  "bloques": [
+   "cabecera",
+   "hero",
+   "cinta",
+   "eventos",
+   "destacados",
+   "carta",
+   "reservar",
+   "horario",
+   "visitanos",
+   "faq",
+   "pie"
+  ]
+ },
+ "_fotografica": true,
+ "_tipos": [
+  "espacio"
+ ]
+}

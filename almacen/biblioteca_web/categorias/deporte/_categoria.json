@@ -1,0 +1,59 @@
+{
+ "sector": "health",
+ "rotulos": {
+  "nav_carta": "Tarifas",
+  "destacados_ceja": "Entrena con nosotros",
+  "destacados": "Disciplinas",
+  "carta_ceja": "Tarifas",
+  "carta": "Elige tu plan",
+  "horario": "Horario del centro",
+  "eventos_ceja": "Clases",
+  "eventos": "Horario de clases",
+  "reservar": "Ven a probar",
+  "accion": "Reservar clase de prueba",
+  "accion_whatsapp": "Escríbenos por WhatsApp",
+  "accion_telefono": "Llámanos",
+  "visitanos": "Dónde entrenamos",
+  "resenas_ceja": "Socios",
+  "resenas": "Lo que dicen"
+ },
+ "gimnasio": {
+  "descripcion": "gimnasio, gym, crossfit, box, centro deportivo, boxeo, artes marciales",
+  "schema": "ExerciseGym",
+  "bloques": [
+   "cabecera",
+   "hero",
+   "cinta",
+   "destacados",
+   "eventos",
+   "carta",
+   "reservar",
+   "horario",
+   "resenas",
+   "visitanos",
+   "faq",
+   "pie"
+  ]
+ },
+ "estudio": {
+  "descripcion": "yoga, pilates, barre, danza, academia de baile, estudio",
+  "schema": "SportsActivityLocation",
+  "bloques": [
+   "cabecera",
+   "hero",
+   "destacados",
+   "eventos",
+   "carta",
+   "reservar",
+   "resenas",
+   "visitanos",
+   "faq",
+   "pie"
+  ]
+ },
+ "_fotografica": true,
+ "_tipos": [
+  "gimnasio",
+  "estudio"
+ ]
+}

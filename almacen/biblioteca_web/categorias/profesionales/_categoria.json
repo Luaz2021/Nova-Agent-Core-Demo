@@ -1,0 +1,39 @@
+{
+ "sector": "agency",
+ "rotulos": {
+  "nav_carta": "Servicios",
+  "nav_visitanos": "Contacto",
+  "destacados_ceja": "Áreas",
+  "destacados": "En qué te ayudamos",
+  "carta_ceja": "Servicios",
+  "carta": "Servicios y honorarios",
+  "horario": "Horario de atención",
+  "reservar": "Hablemos",
+  "accion": "Pedir una consulta",
+  "accion_whatsapp": "Escribir por WhatsApp",
+  "accion_telefono": "Llamar",
+  "visitanos_ceja": "Contacto",
+  "visitanos": "Dónde trabajamos",
+  "resenas_ceja": "Clientes",
+  "resenas": "Lo que dicen"
+ },
+ "despacho": {
+  "descripcion": "abogado, gestoria, asesoria, arquitecto, consultor, notaria, contable, agencia, estudio de diseno",
+  "schema": "ProfessionalService",
+  "bloques": [
+   "cabecera",
+   "hero",
+   "destacados",
+   "carta",
+   "resenas",
+   "reservar",
+   "visitanos",
+   "faq",
+   "pie"
+  ]
+ },
+ "_fotografica": false,
+ "_tipos": [
+  "despacho"
+ ]
+}

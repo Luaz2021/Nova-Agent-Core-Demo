@@ -1,0 +1,36 @@
+{
+  "_nota": "Unica lista de recursos externos que puede usar una web de Nova. Todo gratis y open source, con VERSION FIJA (nunca @latest). Si una version cambia, se cambia aqui y en ningun otro sitio. Comprobado con curl el 2026-11-08.",
+  "fuentes": {
+    "proveedor": "Google Fonts (OFL)",
+    "base": "https://fonts.googleapis.com/css2",
+    "uso": "las elige la direccion sorteada (draw.mjs); montar.py pone una sola hoja con display=swap"
+  },
+  "lenis": {
+    "licencia": "MIT",
+    "version": "1.1.13",
+    "js": "https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js",
+    "css": "https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.css",
+    "uso": "scroll suave; montar.py lo pone solo si no hay reduced-motion y el puntero es fino (raton)"
+  },
+  "gsap": {
+    "licencia": "GSAP Standard License (gratis, incluido uso comercial)",
+    "version": "3.12.5",
+    "js": "https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js",
+    "scrolltrigger": "https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js",
+    "uso": "SOLO si un bloque lo pide (animaciones encadenadas). Los bloques actuales usan CSS + IntersectionObserver: no hace falta cargarlo"
+  },
+  "iconos": {
+    "proveedor": "Lucide (ISC)",
+    "version": "lucide-static 0.460.0",
+    "origen": "https://cdn.jsdelivr.net/npm/lucide-static@0.460.0/icons/<nombre>.svg",
+    "uso": "copiados en iconos/ y pegados en linea con bloques.icono(nombre): cero peticiones. Para uno nuevo: descargarlo de 'origen' a iconos/"
+  },
+  "mapas": {
+    "proveedor": "Google Maps embed (sin clave)",
+    "uso": "iframe que solo carga al hacer clic (bloques.mapa_embebido), aviso de cookies"
+  },
+  "fotos": {
+    "proveedor": "Unsplash / Pexels (licencia libre) via assets.mjs",
+    "uso": "solo si el usuario no da fotos propias; siempre con credito en el pie"
+  }
+}

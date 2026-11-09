@@ -1,0 +1,32 @@
+{
+ "fotos": "hairdress|haircut|salon|beauty|nails?\b|makeup|spa\b|cosmetic|barber|manicure",
+ "no_fotos": "",
+ "buscar": [
+  "hair salon",
+  "beauty salon interior",
+  "nail salon manicure",
+  "barber shop"
+ ],
+ "buscar_si": {
+  "u[nñ]as|manicur|nail": [
+   "nail salon manicure",
+   "nail art"
+  ],
+  "barber": [
+   "barber shop",
+   "barber haircut"
+  ],
+  "spa|masaj|estetic": [
+   "spa massage",
+   "beauty spa treatment"
+  ]
+ },
+ "paletas": [
+  "blush-aubergine",
+  "rose-grey-green",
+  "card-pastels",
+  "blush-sage-slate",
+  "putty-black-teal",
+  "plum-black-pink"
+ ]
+}

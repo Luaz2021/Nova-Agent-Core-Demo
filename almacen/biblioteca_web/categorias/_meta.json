@@ -1,0 +1,20 @@
+{
+ "_nota": "Recetas: orden de bloques por categoria y tipo de negocio + ROTULOS (el vocabulario de cada sector) + tipo schema.org + sector de draw.mjs. Los bloques son los mismos para todos (servicios = destacados, precios = carta, agenda = eventos, cita = reservar); cambia lo que se lee. Un bloque sin datos reales se omite solo. Base estable: hosteleria. El resto: version 1, se mejora con las valoraciones de los usuarios.",
+ "_orden": [
+  "hosteleria",
+  "deporte",
+  "salud",
+  "belleza",
+  "alojamiento",
+  "comercio",
+  "profesionales",
+  "educacion",
+  "oficios",
+  "eventos",
+  "ocio",
+  "inmobiliaria",
+  "motor",
+  "digital",
+  "asociaciones"
+ ]
+}

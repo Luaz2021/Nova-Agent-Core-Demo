@@ -1,0 +1,143 @@
+/* ============================================================================================
+   BIBLIOTECA WEB DE NOVA · sistema de diseño base
+   Las variables de :root las rellena montar.py con la dirección de arte sorteada (draw.mjs):
+   paleta, tipografías y escala. Los bloques NO llevan colores ni tamaños sueltos: solo variables.
+   Reglas de las skills aplicadas aquí:
+   - typography-system: 5 pasos de escala, texto >= 16px, titulares con leading corto, medida 45-75ch
+   - color-palette-builder: colores por ROL (fondo, superficie, tinta, apagado, acento, tinta-acento)
+   - visual-hierarchy: un solo acento, espacio generoso entre secciones, una acción principal por bloque
+   - frontend-a11y: foco visible, objetivos táctiles >= 44px, prefers-reduced-motion
+   ============================================================================================ */
+:root {
+  --bg: #f4f1ec;
+  --surface: #ebe6de;
+  --ink: #22201d;
+  --muted: #6d665e;
+  --accent: #9c4a2b;
+  --accent-ink: #ffffff;
+  --field: #d9cfc1;
+  --field-ink: #22201d;
+  --font-display: Georgia, serif;
+  --font-text: system-ui, sans-serif;
+  --display-tracking: -0.02em;
+  --display-leading: 1.0;
+  --display-weight: 400;
+  --step-small: clamp(0.8125rem, 0.79rem + 0.1vw, 0.875rem);
+  --step-body: clamp(1rem, 0.96rem + 0.2vw, 1.125rem);
+  --step-lead: clamp(1.2rem, 1.1rem + 0.6vw, 1.5rem);
+  --step-head: clamp(1.9rem, 1.3rem + 2.6vw, 3.4rem);
+  --step-display: clamp(2.8rem, 1.6rem + 6vw, 7rem);
+  --radius: 4px;
+  --gutter: clamp(20px, 5vw, 64px);
+  --section: clamp(72px, 10vw, 160px);
+  --measure: 62ch;
+  --max: 1240px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-text);
+  font-size: var(--step-body);
+  line-height: 1.6;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+img, svg, video { display: block; max-width: 100%; height: auto; }
+a { color: inherit; text-underline-offset: 0.2em; text-decoration-thickness: 1px; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+h1, h2, h3, h4 { margin: 0; font-weight: var(--display-weight); }
+p, ul, ol, dl, figure { margin: 0; }
+ul[role="list"], ol[role="list"] { list-style: none; padding: 0; }
+
+/* ---------- tipografía por rol (5 pasos) ---------- */
+.t-display { font-family: var(--font-display); font-size: var(--step-display); line-height: var(--display-leading);
+  letter-spacing: var(--display-tracking); font-weight: var(--display-weight); text-wrap: balance; }
+.t-head { font-family: var(--font-display); font-size: var(--step-head); line-height: 1.08;
+  letter-spacing: var(--display-tracking); font-weight: var(--display-weight); text-wrap: balance; }
+.t-lead { font-size: var(--step-lead); line-height: 1.45; color: var(--ink); text-wrap: pretty; }
+.t-small { font-size: var(--step-small); line-height: 1.5; color: var(--muted); }
+.t-eyebrow { font-size: var(--step-small); letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+.medida { max-width: var(--measure); }
+
+/* ---------- estructura ---------- */
+.contenedor { width: min(100% - 2 * var(--gutter), var(--max)); margin-inline: auto; }
+.seccion { padding-block: var(--section); }
+.seccion--superficie { background: var(--surface); }
+.seccion--campo { background: var(--field); color: var(--field-ink); }
+.seccion--invertida { background: var(--ink); color: var(--bg); }
+.seccion--invertida .t-lead, .seccion--campo .t-lead, .seccion--invertida .t-head, .seccion--campo .t-head { color: inherit; }
+.seccion--invertida .t-small, .seccion--invertida .t-eyebrow { color: color-mix(in srgb, var(--bg) 70%, transparent); }
+.pila > * + * { margin-top: var(--pila, 1rem); }
+.cabecera-seccion { display: grid; gap: 1rem; margin-bottom: clamp(40px, 6vw, 80px); }
+.rejilla-2 { display: grid; gap: clamp(32px, 5vw, 80px); }
+@media (min-width: 860px) { .rejilla-2 { grid-template-columns: 1fr 1fr; align-items: start; } }
+
+/* ---------- botones (una forma, un radio en toda la página) ---------- */
+.boton { display: inline-flex; align-items: center; justify-content: center; gap: 0.6em; min-height: 48px;
+  padding: 0.8em 1.5em; border-radius: var(--radius); border: 1px solid transparent; font: inherit;
+  font-weight: 600; text-decoration: none; cursor: pointer; transition: transform .2s ease, background .2s ease; }
+.boton--principal { background: var(--accent); color: var(--accent-ink); }
+.boton--principal:hover { transform: translateY(-1px); background: color-mix(in srgb, var(--accent) 88%, var(--ink)); }
+.boton--secundario { border-color: currentColor; color: inherit; background: transparent; }
+.boton--secundario:hover { background: color-mix(in srgb, currentColor 8%, transparent); }
+.acciones { display: flex; flex-wrap: wrap; gap: 12px; }
+
+/* ---------- motivo gráfico sin fotos (cuando no hay fotografías reales) ---------- */
+.motivo { position: relative; overflow: hidden; background: var(--field); color: var(--field-ink); border-radius: var(--radius); }
+.motivo svg { width: 100%; height: 100%; }
+
+/* ---------- aparición suave (respeta prefers-reduced-motion) ---------- */
+.revelar { opacity: 1; transform: none; }
+.js .revelar { opacity: 0; transform: translateY(14px); transition: opacity .8s ease, transform .8s ease; }
+.js .revelar.visto { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .js .revelar { opacity: 1; transform: none; transition: none; }
+}
+
+/* ---------- utilidades ---------- */
+.solo-lector { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.pendiente { background: color-mix(in srgb, var(--accent) 14%, transparent); padding: 0 .3em; border-radius: 2px; }
+
+/* iconos Lucide en linea (bloques.icono) */
+.icono { display: inline-block; width: 1.1em; height: 1.1em; flex: none; vertical-align: -0.18em; margin-right: .45em; stroke-width: 1.75; }
+.boton .icono { margin-right: 0; }
+
+/* esqueletos: retoques de composicion por pagina (montar.py pone body.pag--<esqueleto>) */
+.pag--minimal .hero__marca, .pag--minimal .hero__motivo { display: none; }
+.pag--minimal .hero .contenedor, .pag--minimal .hero__texto { text-align: center; margin-inline: auto; }
+.pag--minimal .hero .t-display { margin-inline: auto; max-width: 12ch; font-size: clamp(2.8rem, 1.2rem + 6vw, 7rem); }
+.pag--minimal .hero .t-lead { margin-inline: auto; }
+.pag--minimal .hero .acciones { justify-content: center; }
+.pag--minimal .seccion { padding-block: calc(var(--section) * 1.35); }
+.pag--editorial .hero .t-display { font-size: clamp(3.6rem, 1rem + 11vw, 12rem); max-width: 11ch; line-height: .92; }
+.pag--editorial .hero .t-eyebrow { border-top: 1px solid currentColor; padding-top: .8rem; display: inline-block; }
+.pag--editorial .seccion .t-head { font-size: clamp(2.2rem, 1rem + 4vw, 4.4rem); }
+.pag--bento .seccion { padding-block: calc(var(--section) * .8); }
+
+/* estilos de TIENDA DE CAFE (esqueletos galeria y tostador, solo cafeteria,
+   panaderia, tienda y bar). Principios de las buenas webs de tostadores: el color lo ponen las fotos, titulos pequenos
+   en MAYUSCULAS espaciadas, esquinas rectas, rejilla de productos con foto, logo centrado. */
+.pag--galeria { --radius: 0px; }
+.pag--tostador { --radius: 3px; }
+.pag--galeria .t-display, .pag--galeria .t-head,
+.pag--tostador .t-display, .pag--tostador .t-head { text-transform: uppercase; text-wrap: balance; }
+.pag--galeria .t-display { font-size: clamp(1.8rem, 1.1rem + 2.4vw, 3rem); letter-spacing: .08em; line-height: 1.15; }
+.pag--galeria .t-head { font-size: clamp(1.25rem, 1rem + 1vw, 1.75rem); letter-spacing: .08em; line-height: 1.2; }
+.pag--tostador .t-display { font-size: clamp(2rem, 1.2rem + 2.6vw, 3.4rem); letter-spacing: .12em; line-height: 1.2; font-weight: 300; }
+.pag--tostador .t-head { font-size: clamp(1.4rem, 1rem + 1.4vw, 2.1rem); letter-spacing: .12em; line-height: 1.2; font-weight: 300; }
+.pag--galeria .boton, .pag--tostador .boton { text-transform: uppercase; letter-spacing: .1em; font-size: .82rem; padding: 1.05em 2.3em; }
+.pag--galeria .des__nombre, .pag--tostador .des__nombre { font-family: var(--font-text); text-transform: uppercase;
+  letter-spacing: .06em; font-size: 1rem; font-weight: 500; }
+.pag--galeria .des__tarjeta img, .pag--tostador .des__tarjeta img { background: var(--surface); }
+.pag--galeria .cab, .pag--tostador .cab { border-bottom: 1px solid color-mix(in srgb, var(--ink) 12%, transparent); }
+.pag--galeria .cab__nav a, .pag--tostador .cab__nav a { text-transform: uppercase; letter-spacing: .1em; font-size: .78rem; }
+.pag--tostador .cinta { background: var(--field); color: var(--field-ink); border: 0; padding-block: 10px;
+  text-transform: uppercase; letter-spacing: .14em; font-size: .78rem; }
+.pag--galeria .cinta { background: var(--surface); text-transform: uppercase; letter-spacing: .12em; font-size: .8rem; }
+.pag--galeria .hero--foto .hero__texto { text-align: left; }
+.pag--galeria .seccion { padding-block: calc(var(--section) * 1.1); }

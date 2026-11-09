@@ -1,0 +1,65 @@
+{
+ "idea": "lujo desnudo: blanco y negro absolutos, letra pequena en MAYUSCULAS, foto de producto enorme",
+ "referencia": "byredo.com",
+ "variantes": {
+  "cabecera": "centrada",
+  "hero": "foto",
+  "destacados": "tarjetas"
+ },
+ "efecto": null,
+ "cierre": null,
+ "orden": [
+  "cabecera",
+  "hero",
+  "destacados",
+  "carta",
+  "reservar",
+  "eventos",
+  "horario",
+  "resenas",
+  "visitanos",
+  "faq",
+  "pie"
+ ],
+ "quitar": [
+  "cinta"
+ ],
+ "pistas": [],
+ "tipos": [
+  "salon"
+ ],
+ "paletas": [
+  "perfumeria-1",
+  "perfumeria-2",
+  "perfumeria-3"
+ ],
+ "rasgos": {
+  "radius": 0,
+  "mayus": true,
+  "tracking": "0.08em",
+  "escala": "pequena"
+ },
+ "tipografia": {
+  "class": "sans-display",
+  "display": {
+   "family": "Archivo",
+   "weights": [
+    500
+   ],
+   "settings": "tracking 0.08em"
+  },
+  "text": {
+   "family": "Archivo"
+  },
+  "links": [
+   "https://fonts.googleapis.com/css2?family=Archivo:wght@500&display=swap"
+  ]
+ },
+ "fondo": null,
+ "decoradores": [
+  "titular"
+ ],
+ "tres_d": {
+  "ligero": "profundidad"
+ }
+}

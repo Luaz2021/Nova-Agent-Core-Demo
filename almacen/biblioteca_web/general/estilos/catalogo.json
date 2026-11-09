@@ -1,0 +1,35 @@
+{
+ "idea": "escaparate: precios y servicios primero, filas en zigzag con foto, portada partida",
+ "variantes": {
+  "cabecera": "barra",
+  "hero": "partido",
+  "destacados": "zigzag"
+ },
+ "orden": [
+  "cabecera",
+  "hero",
+  "carta",
+  "destacados",
+  "reservar",
+  "eventos",
+  "horario",
+  "resenas",
+  "visitanos",
+  "faq",
+  "pie"
+ ],
+ "quitar": [],
+ "pistas": [
+  "shop",
+  "store",
+  "catalog",
+  "market",
+  "product",
+  "price",
+  "commerce",
+  "menu",
+  "goods",
+  "precios"
+ ],
+ "tres_d": {}
+}

@@ -1,0 +1,19 @@
+{
+ "detectar": "cafeter|\\bcaf[eé]\\b|coffee|barista|tostador|espresso",
+ "fotos": "coffee|cafe\\b|espresso|latte|cappuccino|barista|pour-over|dripper|roast|coffee beans|pastr|croissant",
+ "no_fotos": "raspberr|grape|spruce|beanie|bedding|bedside|bright red",
+ "buscar": [
+  "specialty coffee",
+  "barista coffee",
+  "latte art",
+  "coffee shop interior",
+  "coffee beans roasting"
+ ],
+ "paletas": [
+  "espresso-crema",
+  "tostado-terracota",
+  "negro-cafe-crema",
+  "walnut-tan",
+  "warm-black-gold"
+ ]
+}

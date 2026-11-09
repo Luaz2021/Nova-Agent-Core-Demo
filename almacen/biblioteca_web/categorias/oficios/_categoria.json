@@ -1,0 +1,40 @@
+{
+ "sector": "architecture",
+ "rotulos": {
+  "nav_carta": "Servicios",
+  "nav_visitanos": "Contacto",
+  "destacados_ceja": "Trabajos",
+  "destacados": "Qué hacemos",
+  "carta_ceja": "Precios orientativos",
+  "carta": "Servicios",
+  "horario": "Horario y urgencias",
+  "reservar": "Pide presupuesto",
+  "accion": "Pedir presupuesto",
+  "accion_whatsapp": "Presupuesto por WhatsApp",
+  "accion_telefono": "Llamar ahora",
+  "visitanos_ceja": "Zona de trabajo",
+  "visitanos": "Dónde trabajamos",
+  "resenas_ceja": "Clientes",
+  "resenas": "Opiniones"
+ },
+ "reformas": {
+  "descripcion": "fontanero, electricista, reformas, limpieza, cerrajero, pintor, jardineria, mudanzas, carpinteria",
+  "schema": "HomeAndConstructionBusiness",
+  "bloques": [
+   "cabecera",
+   "hero",
+   "destacados",
+   "reservar",
+   "carta",
+   "resenas",
+   "horario",
+   "visitanos",
+   "faq",
+   "pie"
+  ]
+ },
+ "_fotografica": false,
+ "_tipos": [
+  "reformas"
+ ]
+}

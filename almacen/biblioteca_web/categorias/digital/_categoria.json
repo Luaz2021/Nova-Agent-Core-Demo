@@ -1,0 +1,40 @@
+{
+ "sector": "saas",
+ "rotulos": {
+  "nav_carta": "Precios",
+  "nav_visitanos": "Contacto",
+  "destacados_ceja": "Producto",
+  "destacados": "Qué hace",
+  "carta_ceja": "Planes",
+  "carta": "Precios",
+  "eventos_ceja": "Novedades",
+  "eventos": "Lo último",
+  "reservar": "Empieza hoy",
+  "accion": "Probar gratis",
+  "accion_whatsapp": "Hablar por WhatsApp",
+  "accion_telefono": "Llamar a ventas",
+  "visitanos_ceja": "Contacto",
+  "visitanos": "Dónde estamos",
+  "resenas_ceja": "Clientes",
+  "resenas": "Lo que dicen"
+ },
+ "producto": {
+  "descripcion": "app, saas, startup, software, producto digital, agencia digital, plataforma",
+  "schema": "Organization",
+  "bloques": [
+   "cabecera",
+   "hero",
+   "cinta",
+   "destacados",
+   "carta",
+   "resenas",
+   "reservar",
+   "faq",
+   "pie"
+  ]
+ },
+ "_fotografica": false,
+ "_tipos": [
+  "producto"
+ ]
+}

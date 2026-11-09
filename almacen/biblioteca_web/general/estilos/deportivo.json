@@ -1,0 +1,66 @@
+{
+ "idea": "automocion premium: precision, blanco y negro, sans ancha en MAYUSCULAS, un rojo de competicion",
+ "referencia": "porsche.com",
+ "variantes": {
+  "cabecera": "barra",
+  "hero": "foto",
+  "destacados": "zigzag"
+ },
+ "efecto": null,
+ "cierre": "zoom",
+ "orden": [
+  "cabecera",
+  "hero",
+  "destacados",
+  "carta",
+  "reservar",
+  "eventos",
+  "horario",
+  "resenas",
+  "visitanos",
+  "faq",
+  "pie"
+ ],
+ "quitar": [
+  "cinta"
+ ],
+ "pistas": [],
+ "tipos": [
+  "taller"
+ ],
+ "paletas": [
+  "deportivo-1",
+  "deportivo-2",
+  "deportivo-3"
+ ],
+ "rasgos": {
+  "radius": 4,
+  "mayus": true,
+  "tracking": "0.06em",
+  "escala": "grande"
+ },
+ "tipografia": {
+  "class": "sans-display",
+  "display": {
+   "family": "Saira",
+   "weights": [
+    500
+   ],
+   "settings": "tracking 0.06em"
+  },
+  "text": {
+   "family": "Inter"
+  },
+  "links": [
+   "https://fonts.googleapis.com/css2?family=Saira:wght@500&family=Inter:wght@400;500;700&display=swap"
+  ]
+ },
+ "fondo": null,
+ "decoradores": [
+  "titular"
+ ],
+ "tres_d": {
+  "protagonista": "liquido",
+  "ligero": "profundidad"
+ }
+}

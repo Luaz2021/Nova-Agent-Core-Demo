@@ -1,0 +1,36 @@
+{
+  "_instrucciones": "Plantilla para CUALQUIER negocio (las 14 categorias de recetas.json). Rellena SOLO con datos REALES que de el usuario o el cliente; lo que no sepas, vacio (\"\" o []): saldra [PENDIENTE] o la seccion no se pinta. eslogan y descripciones vacios los escribe Qwen (sin inventar datos). Que es cada lista segun el negocio: destacados = platos / disciplinas / tratamientos / servicios / inmuebles / proyectos; carta = carta / tarifas / precios / habitaciones / cursos / paquetes (categorias con items y precio); eventos = agenda / horario de clases / proximos cursos / actividades; reservas = como se pide (url, telefono o whatsapp). dias_semana: 0=domingo ... 6=sabado. fotos: las del cliente; si no tiene, deja [] y la biblioteca pone fotos DEL TEMA (biblioteca o internet libre). estilo: solo si el cliente pide colores (\"#hex\", el 1o = botones/acentos, el 2o = texto) o un tono (\"oscuro y elegante\", \"claro y luminoso\"); si no, vacio. Borra esta clave si quieres.",
+  "negocio": {
+    "nombre": "",
+    "tipo": "en palabras normales: gimnasio, clinica de fisioterapia, peluqueria, casa rural, abogado, taller mecanico...",
+    "ciudad": "",
+    "barrio": "",
+    "direccion": "",
+    "como_llegar": "",
+    "telefono": "",
+    "email": "",
+    "instagram": "",
+    "eslogan": "",
+    "descripcion": "",
+    "notas": "lo que diga el dueno: tono, historia, a quien se dirige, lo que lo hace distinto"
+  },
+  "destacados": [
+    {"nombre": "", "etiqueta": "", "descripcion": "", "precio": ""}
+  ],
+  "carta": [
+    {"categoria": "", "items": [{"nombre": "", "descripcion": "", "precio": "", "alergenos": []}]}
+  ],
+  "horario": [
+    {"dias": "Lunes a viernes", "dias_semana": [1, 2, 3, 4, 5], "abre": "", "cierra": ""}
+  ],
+  "reservas": {"tipo": "", "valor": ""},
+  "eventos": [],
+  "resenas": [],
+  "faq": [],
+  "estilo": {"_nota": "SOLO si el cliente lo pide; si no, vacio y Nova decide en automatico (identidad.py)", "colores": [], "tono": "", "paleta": ""},
+  "fotos": [],
+  "video": null,
+  "producto_3d": {"_nota": "SOLO si el cliente tiene un modelo 3D real (.glb)", "glb": "", "titulo": "", "texto": ""},
+  "lottie": {"_nota": "SOLO si el cliente da una animacion Lottie (.json)", "json": ""},
+  "legal": {"pais": "ES", "titular": ""}
+}

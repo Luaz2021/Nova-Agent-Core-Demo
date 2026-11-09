@@ -1,0 +1,66 @@
+{
+ "idea": "clase magistral: fondo oscuro de cine, retratos grandes, titulares condensados en MAYUSCULAS",
+ "referencia": "masterclass.com",
+ "variantes": {
+  "cabecera": "barra",
+  "hero": "foto",
+  "destacados": "tarjetas"
+ },
+ "efecto": "horizontal",
+ "cierre": null,
+ "orden": [
+  "cabecera",
+  "hero",
+  "destacados",
+  "carta",
+  "reservar",
+  "eventos",
+  "horario",
+  "resenas",
+  "visitanos",
+  "faq",
+  "pie"
+ ],
+ "quitar": [
+  "cinta"
+ ],
+ "pistas": [],
+ "tipos": [
+  "academia"
+ ],
+ "paletas": [
+  "clase-magistral-1",
+  "clase-magistral-2",
+  "clase-magistral-3"
+ ],
+ "rasgos": {
+  "radius": 4,
+  "mayus": true,
+  "tracking": "0.03em",
+  "escala": "grande"
+ },
+ "tipografia": {
+  "class": "sans-display",
+  "display": {
+   "family": "Barlow Condensed",
+   "weights": [
+    600
+   ],
+   "settings": "tracking 0.03em"
+  },
+  "text": {
+   "family": "Inter"
+  },
+  "links": [
+   "https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600&family=Inter:wght@400;500;700&display=swap"
+  ]
+ },
+ "fondo": null,
+ "decoradores": [
+  "titular"
+ ],
+ "tres_d": {
+  "protagonista": "liquido",
+  "ligero": "profundidad"
+ }
+}

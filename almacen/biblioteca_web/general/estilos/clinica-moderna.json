@@ -1,0 +1,63 @@
+{
+ "idea": "clinica dental moderna: blanco, azul petroleo, sans geometrica firme y tarjetas redondeadas",
+ "referencia": "hellotend.com",
+ "variantes": {
+  "cabecera": "barra",
+  "hero": "partido",
+  "destacados": "bento"
+ },
+ "efecto": null,
+ "cierre": null,
+ "orden": [
+  "cabecera",
+  "hero",
+  "destacados",
+  "carta",
+  "reservar",
+  "eventos",
+  "horario",
+  "resenas",
+  "visitanos",
+  "faq",
+  "pie"
+ ],
+ "quitar": [
+  "cinta"
+ ],
+ "pistas": [],
+ "tipos": [
+  "clinica"
+ ],
+ "paletas": [
+  "clinica-moderna-1",
+  "clinica-moderna-2",
+  "clinica-moderna-3"
+ ],
+ "rasgos": {
+  "radius": 12,
+  "mayus": false,
+  "tracking": "-0.02em",
+  "escala": "grande"
+ },
+ "tipografia": {
+  "class": "sans-display",
+  "display": {
+   "family": "Manrope",
+   "weights": [
+    700
+   ],
+   "settings": "tracking -0.02em"
+  },
+  "text": {
+   "family": "Manrope"
+  },
+  "links": [
+   "https://fonts.googleapis.com/css2?family=Manrope:wght@700&display=swap"
+  ]
+ },
+ "fondo": null,
+ "decoradores": [
+  "titular"
+ ],
+ "tres_d": {}
+}

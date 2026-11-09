@@ -1,0 +1,62 @@
+{
+ "sector": "restaurant",
+ "rotulos": {},
+ "cafeteria": {
+  "descripcion": "cafeteria, cafe de especialidad, brunch, panaderia, pasteleria",
+  "schema": "CafeOrCoffeeShop",
+  "bloques": [
+   "cabecera",
+   "hero",
+   "cinta",
+   "destacados",
+   "carta",
+   "horario",
+   "reservar",
+   "resenas",
+   "visitanos",
+   "faq",
+   "pie"
+  ]
+ },
+ "restaurante": {
+  "descripcion": "restaurante, bistro, tasca, asador, cocina de autor",
+  "schema": "Restaurant",
+  "bloques": [
+   "cabecera",
+   "hero",
+   "cinta",
+   "destacados",
+   "reservar",
+   "carta",
+   "eventos",
+   "horario",
+   "resenas",
+   "visitanos",
+   "faq",
+   "pie"
+  ]
+ },
+ "bar": {
+  "descripcion": "bar, cocteleria, vermuteria, cerveceria, bar de vinos",
+  "schema": "BarOrPub",
+  "bloques": [
+   "cabecera",
+   "hero",
+   "cinta",
+   "eventos",
+   "destacados",
+   "carta",
+   "horario",
+   "reservar",
+   "visitanos",
+   "pie"
+  ]
+ },
+ "_fotografica": true,
+ "_tipos": [
+  "cafeteria",
+  "restaurante",
+  "bar",
+  "panaderia"
+ ]
+}

@@ -1,0 +1,39 @@
+{
+ "sector": "real-estate",
+ "rotulos": {
+  "nav_carta": "Inmuebles",
+  "nav_visitanos": "Oficina",
+  "destacados_ceja": "Inmuebles",
+  "destacados": "Destacados",
+  "carta_ceja": "Servicios",
+  "carta": "Lo que hacemos por ti",
+  "horario": "Horario de oficina",
+  "reservar": "¿Vendes o buscas?",
+  "accion": "Pedir valoración",
+  "accion_whatsapp": "Escribir por WhatsApp",
+  "accion_telefono": "Llamar",
+  "visitanos": "Nuestra oficina",
+  "resenas_ceja": "Clientes",
+  "resenas": "Opiniones"
+ },
+ "agencia": {
+  "descripcion": "inmobiliaria, agencia inmobiliaria, administrador de fincas, promotora",
+  "schema": "RealEstateAgent",
+  "bloques": [
+   "cabecera",
+   "hero",
+   "destacados",
+   "carta",
+   "reservar",
+   "resenas",
+   "horario",
+   "visitanos",
+   "faq",
+   "pie"
+  ]
+ },
+ "_fotografica": true,
+ "_tipos": [
+  "agencia"
+ ]
+}

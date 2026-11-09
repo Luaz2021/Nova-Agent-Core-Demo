@@ -1,0 +1,67 @@
+{
+ "idea": "box de entrenamiento: blanco y negro duro, titulares enormes condensados en MAYUSCULAS",
+ "referencia": "thedogpound.com",
+ "variantes": {
+  "cabecera": "barra",
+  "hero": "foto",
+  "destacados": "tarjetas"
+ },
+ "efecto": null,
+ "cierre": null,
+ "orden": [
+  "cabecera",
+  "hero",
+  "destacados",
+  "carta",
+  "reservar",
+  "eventos",
+  "horario",
+  "resenas",
+  "visitanos",
+  "faq",
+  "pie"
+ ],
+ "quitar": [
+  "cinta"
+ ],
+ "pistas": [],
+ "tipos": [
+  "gimnasio"
+ ],
+ "paletas": [
+  "fuerza-1",
+  "fuerza-2",
+  "fuerza-3"
+ ],
+ "rasgos": {
+  "radius": 0,
+  "mayus": true,
+  "tracking": "0.01em",
+  "escala": "enorme"
+ },
+ "tipografia": {
+  "class": "sans-display",
+  "display": {
+   "family": "Anton",
+   "weights": [
+    400
+   ],
+   "settings": "tracking 0.01em"
+  },
+  "text": {
+   "family": "Inter"
+  },
+  "links": [
+   "https://fonts.googleapis.com/css2?family=Anton:wght@400&family=Inter:wght@400;500;700&display=swap"
+  ]
+ },
+ "fondo": null,
+ "decoradores": [
+  "titular",
+  "magnetico"
+ ],
+ "tres_d": {
+  "protagonista": "particulas3d",
+  "ligero": "profundidad"
+ }
+}

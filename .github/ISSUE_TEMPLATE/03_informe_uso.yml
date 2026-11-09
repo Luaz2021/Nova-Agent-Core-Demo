@@ -1,0 +1,31 @@
+name: Informe de aprendizaje de Nova (lecciones, servilleta y fallos)
+description: Lo que Nova aprendio y en que se equivoco. Lo genera /enviar-informe; tu decides si lo envias.
+title: "[Informe]: "
+labels: ["informe-uso"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Gracias por ayudar a mejorar Nova. Este informe SOLO lleva las lecciones de autoaprendizaje, las entradas
+        nuevas de tu servilleta y el TIPO de errores que cometio Nova. Nada de tu equipo, tus proyectos, rutas,
+        correos ni claves (el script los borra antes de abrir esta pagina). Revisalo y quita lo que no quieras.
+  - type: input
+    id: version
+    attributes:
+      label: Version de Nova
+  - type: textarea
+    id: lecciones
+    attributes:
+      label: Lecciones de autoaprendizaje (inbox_lecciones.md)
+  - type: textarea
+    id: napkin
+    attributes:
+      label: Entradas nuevas de la servilleta (napkin.md)
+  - type: textarea
+    id: fallos
+    attributes:
+      label: Errores que cometio Nova (por tipo)
+  - type: textarea
+    id: comentario
+    attributes:
+      label: Algo mas que quieras contar (opcional)

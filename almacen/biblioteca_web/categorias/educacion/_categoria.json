@@ -1,0 +1,41 @@
+{
+ "sector": "education",
+ "rotulos": {
+  "nav_carta": "Cursos",
+  "destacados_ceja": "Formación",
+  "destacados": "Qué enseñamos",
+  "carta_ceja": "Cursos",
+  "carta": "Cursos y precios",
+  "horario": "Horario",
+  "eventos_ceja": "Calendario",
+  "eventos": "Próximos cursos",
+  "reservar": "Apúntate",
+  "accion": "Pedir información",
+  "accion_whatsapp": "Info por WhatsApp",
+  "accion_telefono": "Llamar",
+  "visitanos": "Dónde estamos",
+  "resenas_ceja": "Alumnos",
+  "resenas": "Opiniones"
+ },
+ "academia": {
+  "descripcion": "academia, autoescuela, clases particulares, escuela de idiomas, escuela de musica, guarderia",
+  "schema": "EducationalOrganization",
+  "bloques": [
+   "cabecera",
+   "hero",
+   "destacados",
+   "eventos",
+   "carta",
+   "reservar",
+   "horario",
+   "resenas",
+   "visitanos",
+   "faq",
+   "pie"
+  ]
+ },
+ "_fotografica": false,
+ "_tipos": [
+  "academia"
+ ]
+}

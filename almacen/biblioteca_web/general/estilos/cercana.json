@@ -1,0 +1,65 @@
+{
+ "idea": "salud cercana: crema calida, serif amable, esquinas suaves y botones de pastilla",
+ "referencia": "asktia.com",
+ "variantes": {
+  "cabecera": "barra",
+  "hero": "partido",
+  "destacados": "tarjetas"
+ },
+ "efecto": null,
+ "cierre": null,
+ "orden": [
+  "cabecera",
+  "hero",
+  "destacados",
+  "carta",
+  "reservar",
+  "eventos",
+  "horario",
+  "resenas",
+  "visitanos",
+  "faq",
+  "pie"
+ ],
+ "quitar": [
+  "cinta"
+ ],
+ "pistas": [],
+ "tipos": [
+  "clinica"
+ ],
+ "paletas": [
+  "cercana-1",
+  "cercana-2",
+  "cercana-3"
+ ],
+ "rasgos": {
+  "radius": 16,
+  "mayus": false,
+  "tracking": "-0.015em",
+  "escala": "grande",
+  "boton": "pastilla"
+ },
+ "tipografia": {
+  "class": "serif-display",
+  "display": {
+   "family": "Fraunces",
+   "weights": [
+    400
+   ],
+   "settings": "tracking -0.015em"
+  },
+  "text": {
+   "family": "DM Sans"
+  },
+  "links": [
+   "https://fonts.googleapis.com/css2?family=Fraunces:wght@400&family=DM+Sans:wght@400;500;700&display=swap"
+  ]
+ },
+ "fondo": null,
+ "decoradores": [
+  "titular",
+  "magnetico"
+ ],
+ "tres_d": {}
+}

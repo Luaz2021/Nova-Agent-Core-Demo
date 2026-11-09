@@ -1,0 +1,39 @@
+{
+ "sector": "fashion",
+ "rotulos": {
+  "nav_carta": "Servicios",
+  "destacados_ceja": "Lo que hacemos",
+  "destacados": "Nuestros servicios",
+  "carta_ceja": "Precios",
+  "carta": "Servicios y precios",
+  "horario": "Horario",
+  "reservar": "Reserva tu hueco",
+  "accion": "Reservar cita",
+  "accion_whatsapp": "Reservar por WhatsApp",
+  "accion_telefono": "Reservar por teléfono",
+  "visitanos": "Dónde estamos",
+  "resenas_ceja": "Clientas y clientes",
+  "resenas": "Opiniones"
+ },
+ "salon": {
+  "descripcion": "peluqueria, barberia, estetica, unas, manicura, spa, masajes, maquillaje, tatuajes",
+  "schema": "BeautySalon",
+  "bloques": [
+   "cabecera",
+   "hero",
+   "cinta",
+   "destacados",
+   "carta",
+   "reservar",
+   "horario",
+   "resenas",
+   "visitanos",
+   "faq",
+   "pie"
+  ]
+ },
+ "_fotografica": true,
+ "_tipos": [
+  "salon"
+ ]
+}

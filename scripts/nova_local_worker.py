@@ -1,8 +1,8 @@
 """
 Nova Local Worker v2.0 (Obrero Local Portable + Contrato 2-Llamadas Consenso Claude)
 ====================================================================================
-- Lee dinamicamente ~/.gemini/antigravity/memory/perfil_usuario.json (o Google Drive en Central)
-  para detectar que modelo instalo el Escaner de Hardware (qwen2.5-coder:7b, qwen2.5-coder:3b)
+- Lee dinamicamente ~/.gemini/antigravity/memory/perfil_usuario.json
+  para detectar que modelo instalo el Escaner de Hardware (qwen3.5:9b o qwen3.5:4b, ver nova_modelos.json)
   o si el equipo es Basico (ia_local.instalada = false), evitando ahogar equipos sin RAM/GPU.
 - Soporta ejecucion clasica (--task / --file) y Modo Contrato 1-Shot (--brief-json + auto-test)
   para que Nova Cloud gaste maximo 2 llamadas API (Brief -> Reporte compacto con unittest).
@@ -26,6 +26,16 @@ def get_memory_dir():
     return local_mem
 
 
+def modelo_catalogo(clave="coder", defecto="qwen3.5:9b"):
+    """Modelo del catalogo scripts/nova_modelos.json (unico sitio para cambiar de version)."""
+    ruta = os.path.join(os.path.dirname(os.path.abspath(__file__)), "nova_modelos.json")
+    try:
+        with open(ruta, "r", encoding="utf-8") as f:
+            return json.load(f).get(clave) or defecto
+    except Exception:
+        return defecto
+
+
 def load_local_ai_config():
     """Lee perfil_usuario.json para saber el modelo asignado al hardware del usuario."""
     perfil_path = os.path.expanduser(os.path.join("~", ".gemini", "antigravity", "memory", "perfil_usuario.json"))
@@ -34,19 +44,19 @@ def load_local_ai_config():
 
     default_cfg = {
         "instalada": True,
-        "modelo": "qwen2.5-coder:7b",
+        "modelo": modelo_catalogo(),
         "tier": "OPTIMO_GPU",
         "regla_activacion": "solo_tareas_masivas_mayor_1500_tokens",
     }
     if os.path.exists(perfil_path):
         try:
-            with open(perfil_path, "r", encoding="utf-8") as f:
+            with open(perfil_path, "r", encoding="utf-8-sig") as f:
                 data = json.load(f)
             ia_cfg = data.get("ia_local", {})
             hw_cfg = data.get("hardware", {})
             return {
                 "instalada": bool(ia_cfg.get("instalada", True)),
-                "modelo": ia_cfg.get("modelo") or "qwen2.5-coder:7b",
+                "modelo": (ia_cfg.get("modelo") if ia_cfg.get("modelo") not in (None, "", "ninguno") else modelo_catalogo()),
                 "tier": hw_cfg.get("tier", "OPTIMO_GPU"),
                 "regla_activacion": ia_cfg.get("regla_activacion", "solo_tareas_masivas_mayor_1500_tokens"),
             }
@@ -105,22 +115,29 @@ def run_local_coder(prompt, model_name=None, system_instructions=None):
         )
 
     ensure_ollama_service()
+    # /api/chat nativo con think=False: qwen3.5 por /v1/chat/completions "piensa" sin limite y se agota el tiempo.
+    # num_ctx explicito: sin el, Ollama usa 4096 y el codigo largo sale cortado.
     payload = {
         "model": chosen_model,
         "messages": [
             {"role": "system", "content": system_instructions},
             {"role": "user", "content": prompt},
         ],
-        "temperature": 0.15,
+        "stream": False,
+        "think": False,
+        "keep_alive": "10m",
+        "options": {"temperature": 0.15, "num_ctx": 24576, "num_predict": 16384},
     }
     req = urllib.request.Request(
-        "http://127.0.0.1:11434/v1/chat/completions",
+        "http://127.0.0.1:11434/api/chat",
         data=json.dumps(payload).encode("utf-8"),
         headers={"Content-Type": "application/json"},
     )
-    with urllib.request.urlopen(req, timeout=300) as resp:
+    with urllib.request.urlopen(req, timeout=900) as resp:
         result = json.loads(resp.read().decode("utf-8"))
-        raw_code = result["choices"][0]["message"]["content"].strip()
+        raw_code = ((result.get("message") or {}).get("content") or "").strip()
+        if result.get("done_reason") == "length":
+            print("[AVISO] El modelo local agoto el tope de tokens: el resultado puede estar incompleto.")
         return clean_markdown_code(raw_code), chosen_model
 
 

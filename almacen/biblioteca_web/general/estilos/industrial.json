@@ -1,0 +1,65 @@
+{
+ "idea": "nave industrial: monocromo brutal, negritas puras, listas en vez de tarjetas",
+ "referencia": "printworkslondon.co.uk",
+ "variantes": {
+  "cabecera": "barra",
+  "hero": "tipografico",
+  "destacados": "lista"
+ },
+ "efecto": null,
+ "cierre": null,
+ "orden": [
+  "cabecera",
+  "hero",
+  "destacados",
+  "carta",
+  "reservar",
+  "eventos",
+  "horario",
+  "resenas",
+  "visitanos",
+  "faq",
+  "pie"
+ ],
+ "quitar": [
+  "cinta"
+ ],
+ "pistas": [],
+ "tipos": [
+  "espacio"
+ ],
+ "paletas": [
+  "industrial-1",
+  "industrial-2",
+  "industrial-3"
+ ],
+ "rasgos": {
+  "radius": 0,
+  "mayus": true,
+  "tracking": "-0.01em",
+  "escala": "enorme"
+ },
+ "tipografia": {
+  "class": "sans-display",
+  "display": {
+   "family": "Archivo",
+   "weights": [
+    800
+   ],
+   "settings": "tracking -0.01em"
+  },
+  "text": {
+   "family": "Archivo"
+  },
+  "links": [
+   "https://fonts.googleapis.com/css2?family=Archivo:wght@800&display=swap"
+  ]
+ },
+ "fondo": null,
+ "decoradores": [
+  "titular"
+ ],
+ "tres_d": {
+  "ligero": "profundidad"
+ }
+}

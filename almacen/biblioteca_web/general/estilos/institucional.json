@@ -1,0 +1,63 @@
+{
+ "idea": "institucion clara: bloques de informacion limpios, blanco y negro, un boton de donar que destaca",
+ "referencia": "worldwildlife.org",
+ "variantes": {
+  "cabecera": "barra",
+  "hero": "partido",
+  "destacados": "tarjetas"
+ },
+ "efecto": null,
+ "cierre": null,
+ "orden": [
+  "cabecera",
+  "hero",
+  "destacados",
+  "carta",
+  "reservar",
+  "eventos",
+  "horario",
+  "resenas",
+  "visitanos",
+  "faq",
+  "pie"
+ ],
+ "quitar": [
+  "cinta"
+ ],
+ "pistas": [],
+ "tipos": [
+  "ong"
+ ],
+ "paletas": [
+  "institucional-1",
+  "institucional-2",
+  "institucional-3"
+ ],
+ "rasgos": {
+  "radius": 4,
+  "mayus": false,
+  "tracking": "-0.015em",
+  "escala": "media"
+ },
+ "tipografia": {
+  "class": "sans-display",
+  "display": {
+   "family": "Work Sans",
+   "weights": [
+    700
+   ],
+   "settings": "tracking -0.015em"
+  },
+  "text": {
+   "family": "Work Sans"
+  },
+  "links": [
+   "https://fonts.googleapis.com/css2?family=Work+Sans:wght@700&display=swap"
+  ]
+ },
+ "fondo": null,
+ "decoradores": [
+  "magnetico"
+ ],
+ "tres_d": {}
+}

@@ -1,0 +1,63 @@
+{
+ "idea": "arquitectura y obra con oficio: beige, serif sobria, proyectos en zigzag con foto",
+ "referencia": "marmol-radziner.com",
+ "variantes": {
+  "cabecera": "barra",
+  "hero": "foto",
+  "destacados": "zigzag"
+ },
+ "efecto": null,
+ "cierre": "mascara",
+ "orden": [
+  "cabecera",
+  "hero",
+  "destacados",
+  "carta",
+  "reservar",
+  "eventos",
+  "horario",
+  "resenas",
+  "visitanos",
+  "faq",
+  "pie"
+ ],
+ "quitar": [
+  "cinta"
+ ],
+ "pistas": [],
+ "tipos": [
+  "reformas"
+ ],
+ "paletas": [
+  "obra-calida-1",
+  "obra-calida-2",
+  "obra-calida-3"
+ ],
+ "rasgos": {
+  "radius": 0,
+  "mayus": false,
+  "tracking": "0em",
+  "escala": "media"
+ },
+ "tipografia": {
+  "class": "serif-display",
+  "display": {
+   "family": "Spectral",
+   "weights": [
+    400
+   ],
+   "settings": "tracking 0em"
+  },
+  "text": {
+   "family": "Work Sans"
+  },
+  "links": [
+   "https://fonts.googleapis.com/css2?family=Spectral:wght@400&family=Work+Sans:wght@400;500;700&display=swap"
+  ]
+ },
+ "fondo": null,
+ "decoradores": [],
+ "tres_d": {
+  "ligero": "profundidad"
+ }
+}

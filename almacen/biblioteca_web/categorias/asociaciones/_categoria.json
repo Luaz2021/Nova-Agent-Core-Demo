@@ -1,0 +1,41 @@
+{
+ "sector": "nonprofit",
+ "rotulos": {
+  "nav_carta": "Colabora",
+  "nav_visitanos": "Contacto",
+  "destacados_ceja": "Qué hacemos",
+  "destacados": "Nuestros proyectos",
+  "carta_ceja": "Colabora",
+  "carta": "Cuotas y donaciones",
+  "eventos_ceja": "Agenda",
+  "eventos": "Próximas actividades",
+  "reservar": "Súmate",
+  "accion": "Hacerte socio",
+  "accion_whatsapp": "Escríbenos",
+  "accion_telefono": "Llamar",
+  "visitanos_ceja": "Contacto",
+  "visitanos": "Dónde estamos",
+  "resenas_ceja": "Voces",
+  "resenas": "Lo que dicen"
+ },
+ "ong": {
+  "descripcion": "asociacion, ong, fundacion, club, parroquia, cooperativa, sindicato, colegio profesional",
+  "schema": "NGO",
+  "bloques": [
+   "cabecera",
+   "hero",
+   "destacados",
+   "eventos",
+   "carta",
+   "reservar",
+   "resenas",
+   "visitanos",
+   "faq",
+   "pie"
+  ]
+ },
+ "_fotografica": false,
+ "_tipos": [
+  "ong"
+ ]
+}

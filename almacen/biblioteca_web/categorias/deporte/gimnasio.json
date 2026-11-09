@@ -1,0 +1,18 @@
+{
+ "fotos": "gym|fitness|workout|weights?\b|weightlift|training|athlete|boxing|exercise|dumbbell|barbell",
+ "no_fotos": "",
+ "buscar": [
+  "gym training weights",
+  "fitness workout",
+  "crossfit training",
+  "personal trainer gym"
+ ],
+ "paletas": [
+  "graphite-safety-orange",
+  "soot-pale-lime",
+  "black-crimson",
+  "white-signal-red",
+  "blue-black-cornflower",
+  "charcoal-primaries"
+ ]
+}

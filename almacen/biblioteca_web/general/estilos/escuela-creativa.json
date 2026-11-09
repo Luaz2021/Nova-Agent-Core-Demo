@@ -1,0 +1,65 @@
+{
+ "idea": "escuela creativa: sans grotesca grande, bloques planos de color calido, energia sin neon",
+ "referencia": "hyperisland.com",
+ "variantes": {
+  "cabecera": "barra",
+  "hero": "partido",
+  "destacados": "bento"
+ },
+ "efecto": "apiladas",
+ "cierre": null,
+ "orden": [
+  "cabecera",
+  "hero",
+  "destacados",
+  "carta",
+  "reservar",
+  "eventos",
+  "horario",
+  "resenas",
+  "visitanos",
+  "faq",
+  "pie"
+ ],
+ "quitar": [
+  "cinta"
+ ],
+ "pistas": [],
+ "tipos": [
+  "academia"
+ ],
+ "paletas": [
+  "escuela-creativa-1",
+  "escuela-creativa-2",
+  "escuela-creativa-3"
+ ],
+ "rasgos": {
+  "radius": 0,
+  "mayus": false,
+  "tracking": "-0.02em",
+  "escala": "grande"
+ },
+ "tipografia": {
+  "class": "sans-display",
+  "display": {
+   "family": "Space Grotesk",
+   "weights": [
+    600
+   ],
+   "settings": "tracking -0.02em"
+  },
+  "text": {
+   "family": "Space Grotesk"
+  },
+  "links": [
+   "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600&display=swap"
+  ]
+ },
+ "fondo": null,
+ "decoradores": [
+  "magnetico"
+ ],
+ "tres_d": {
+  "ligero": "profundidad"
+ }
+}

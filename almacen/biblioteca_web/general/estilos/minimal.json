@@ -1,0 +1,38 @@
+{
+ "idea": "calma: titular tipografico, servicios como tarjetas que se apilan al bajar, una sola llamada a la accion y mucho espacio",
+ "variantes": {
+  "cabecera": "centrada",
+  "hero": "tipografico"
+ },
+ "efecto": "apiladas",
+ "orden": [
+  "cabecera",
+  "hero",
+  "destacados",
+  "reservar",
+  "carta",
+  "horario",
+  "visitanos",
+  "faq",
+  "pie"
+ ],
+ "quitar": [
+  "cinta",
+  "eventos"
+ ],
+ "pistas": [
+  "minimal",
+  "quiet",
+  "calm",
+  "air",
+  "space",
+  "white",
+  "fog",
+  "soft",
+  "clean",
+  "spa",
+  "health",
+  "wellness"
+ ],
+ "tres_d": {}
+}

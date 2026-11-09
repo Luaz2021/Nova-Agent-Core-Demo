@@ -1,0 +1,63 @@
+{
+ "idea": "inmobiliaria clasica: azul marino, serif elegante, oro discreto, rejilla de inmuebles",
+ "referencia": "sothebysrealty.com",
+ "variantes": {
+  "cabecera": "barra",
+  "hero": "partido",
+  "destacados": "tarjetas"
+ },
+ "efecto": null,
+ "cierre": null,
+ "orden": [
+  "cabecera",
+  "hero",
+  "destacados",
+  "carta",
+  "reservar",
+  "eventos",
+  "horario",
+  "resenas",
+  "visitanos",
+  "faq",
+  "pie"
+ ],
+ "quitar": [
+  "cinta"
+ ],
+ "pistas": [],
+ "tipos": [
+  "agencia"
+ ],
+ "paletas": [
+  "clasica-1",
+  "clasica-2",
+  "clasica-3"
+ ],
+ "rasgos": {
+  "radius": 0,
+  "mayus": false,
+  "tracking": "0em",
+  "escala": "grande"
+ },
+ "tipografia": {
+  "class": "serif-display",
+  "display": {
+   "family": "Cormorant Garamond",
+   "weights": [
+    500
+   ],
+   "settings": "tracking 0em"
+  },
+  "text": {
+   "family": "Source Sans 3"
+  },
+  "links": [
+   "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500&family=Source+Sans+3:wght@400;500;700&display=swap"
+  ]
+ },
+ "fondo": null,
+ "decoradores": [
+  "titular"
+ ],
+ "tres_d": {}
+}
