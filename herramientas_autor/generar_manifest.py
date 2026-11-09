@@ -65,6 +65,9 @@ def generar(version: str) -> dict:
         comps.append(componente("Template", p.name, rel, f"antigravity/memory/{p.name}", p))
     for p, rel in archivos(RAIZ / "nova_core"):
         comps.append(componente("File", p.name, rel, rel, p))
+    for carpeta in ("herramientas", "clonador"):
+        for p, rel in archivos(RAIZ / carpeta):
+            comps.append(componente("File", p.name, rel, f"antigravity/{rel}", p))
     for p, rel in archivos(RAIZ / "almacen"):
         comps.append(componente("File", p.name, rel, f"antigravity/{rel}", p))
     for carpeta in sorted(d for d in (RAIZ / "skills").iterdir() if d.is_dir()):

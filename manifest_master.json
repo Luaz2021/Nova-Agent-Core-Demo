@@ -1,8 +1,8 @@
 {
     "Version": "3.0",
     "Engine": "NovaManifestGuardian v3",
-    "GeneratedAt": "2026-11-09 23:07:03",
-    "TotalComponents": 729,
+    "GeneratedAt": "2026-11-09 23:29:15",
+    "TotalComponents": 838,
     "Components": [
         {
             "Id": "rule_gemini_md",
@@ -20,7 +20,7 @@
             "RelativePath": "AYUDA.md",
             "TargetRelative": "config/AYUDA.md",
             "SizeBytes": 4935,
-            "SHA256": "D693B0DDB8A3C09ECDBB484540F5F757131FAF30286EB5A3BFF39692ADA1C386"
+            "SHA256": "05A127F84A9D7641B303A65A70F19FE7A33CF9B16605DA1E2DF20D1199FF3FF1"
         },
         {
             "Id": "script_scripts_actualizar_nova_py",
@@ -39,6 +39,24 @@
             "TargetRelative": "antigravity/scripts/enviar_feedback.py",
             "SizeBytes": 10758,
             "SHA256": "6F413E15A12D23144E0B2E004D2D226106C65FEA0C3D8B591545B11FFF210F9C"
+        },
+        {
+            "Id": "script_scripts_humanize_check_py",
+            "Name": "humanize_check.py",
+            "Type": "Script",
+            "RelativePath": "scripts/humanize_check.py",
+            "TargetRelative": "antigravity/scripts/humanize_check.py",
+            "SizeBytes": 13503,
+            "SHA256": "93E14E6A97C3DDC6B32D280A22E18B92025BB7EA0AB8849E4ACB2D738CAAF22D"
+        },
+        {
+            "Id": "script_scripts_nova_auditoria_py",
+            "Name": "nova_auditoria.py",
+            "Type": "Script",
+            "RelativePath": "scripts/nova_auditoria.py",
+            "TargetRelative": "antigravity/scripts/nova_auditoria.py",
+            "SizeBytes": 15233,
+            "SHA256": "BF9D6B61611959318ED999C31E19D30907014C965FBE74490297BE886A06C1A9"
         },
         {
             "Id": "script_scripts_nova_awake_sentinel_py",
@@ -113,6 +131,15 @@
             "SHA256": "526B8278063BACE3A2A3A4A2A9DB934366AF1E0E55B757D4C6DB6BB0CA3B8DEC"
         },
         {
+            "Id": "script_scripts_nova_mcp_py",
+            "Name": "nova_mcp.py",
+            "Type": "Script",
+            "RelativePath": "scripts/nova_mcp.py",
+            "TargetRelative": "antigravity/scripts/nova_mcp.py",
+            "SizeBytes": 6542,
+            "SHA256": "43467AE131E9E653A3B70C18EEE34A6856B7594880266A53567443A0BD86849C"
+        },
+        {
             "Id": "script_scripts_nova_modelos_json",
             "Name": "nova_modelos.json",
             "Type": "Script",
@@ -122,6 +149,24 @@
             "SHA256": "C7DDB355026124DC72A38E87835B6B62890DF25D546644B047D31F2D8A9D4D3E"
         },
         {
+            "Id": "script_scripts_nova_pipeline_local_py",
+            "Name": "nova_pipeline_local.py",
+            "Type": "Script",
+            "RelativePath": "scripts/nova_pipeline_local.py",
+            "TargetRelative": "antigravity/scripts/nova_pipeline_local.py",
+            "SizeBytes": 40408,
+            "SHA256": "CA0C88836FAD31C97C7EE3C689B3F29E28BE6F4BA97F799F1EBDD67BA7431933"
+        },
+        {
+            "Id": "script_scripts_nova_puente_capturas_py",
+            "Name": "nova_puente_capturas.py",
+            "Type": "Script",
+            "RelativePath": "scripts/nova_puente_capturas.py",
+            "TargetRelative": "antigravity/scripts/nova_puente_capturas.py",
+            "SizeBytes": 9825,
+            "SHA256": "592CF88EAC8E8AD68992BA56DDBBC52DBFBCC1DE7716641A73FE78962218AE49"
+        },
+        {
             "Id": "script_scripts_nova_revisor_py",
             "Name": "nova_revisor.py",
             "Type": "Script",
@@ -129,6 +174,24 @@
             "TargetRelative": "antigravity/scripts/nova_revisor.py",
             "SizeBytes": 15098,
             "SHA256": "A1CE088B9C3C0D285D2041E9CB9AF288C4B8FC44E5F1FCC8E33410158484C40D"
+        },
+        {
+            "Id": "script_scripts_nova_secciones_py",
+            "Name": "nova_secciones.py",
+            "Type": "Script",
+            "RelativePath": "scripts/nova_secciones.py",
+            "TargetRelative": "antigravity/scripts/nova_secciones.py",
+            "SizeBytes": 20772,
+            "SHA256": "EC6FEDCCCD867157DFD317A9ADEAEE5BC102C2651A2C1035C34FB159CA9076E8"
+        },
+        {
+            "Id": "script_scripts_nova_tarea_py",
+            "Name": "nova_tarea.py",
+            "Type": "Script",
+            "RelativePath": "scripts/nova_tarea.py",
+            "TargetRelative": "antigravity/scripts/nova_tarea.py",
+            "SizeBytes": 25639,
+            "SHA256": "77BA91CACD80C44D572FD499BC248214BF40915040545A223ABE8B32F3902CDE"
         },
         {
             "Id": "script_scripts_nova_video_router_py",
@@ -221,6 +284,15 @@
             "SHA256": "D868F7EC1ACA27608F76C2E6923FA35D957F43E8066D61768A1E2E07C5E85C0E"
         },
         {
+            "Id": "file_nova_core_biome_json",
+            "Name": "biome.json",
+            "Type": "File",
+            "RelativePath": "nova_core/biome.json",
+            "TargetRelative": "nova_core/biome.json",
+            "SizeBytes": 1041,
+            "SHA256": "478CAD7AC8033C4A6D5B1345A671A737E5495F00E4EF0128C63C7C012540F398"
+        },
+        {
             "Id": "file_nova_core_conversor_py",
             "Name": "conversor.py",
             "Type": "File",
@@ -228,6 +300,15 @@
             "TargetRelative": "nova_core/conversor.py",
             "SizeBytes": 10146,
             "SHA256": "3EE337F4F5CE7D2A58937D9645F1917E3E818C13C4433D4B865C997C3A20DD5C"
+        },
+        {
+            "Id": "file_nova_core_herramientas_nova_py",
+            "Name": "herramientas_nova.py",
+            "Type": "File",
+            "RelativePath": "nova_core/herramientas_nova.py",
+            "TargetRelative": "nova_core/herramientas_nova.py",
+            "SizeBytes": 4123,
+            "SHA256": "8ECD8D2142D7DCA3E32851CFFCEB698215435D768E702492FE338BCF9C62A2A6"
         },
         {
             "Id": "file_nova_core_instalar_hooks_py",
@@ -276,6 +357,15 @@
             "SHA256": "98525EF0526A8B3245B7CED38A7442BB5D0F56026D810AC3F239BD65E6122698"
         },
         {
+            "Id": "file_nova_core_orquestador_py",
+            "Name": "orquestador.py",
+            "Type": "File",
+            "RelativePath": "nova_core/orquestador.py",
+            "TargetRelative": "nova_core/orquestador.py",
+            "SizeBytes": 34973,
+            "SHA256": "0D803D7AF50CAD7E12BB8046390908D3E7F6177DBA194FA9FB60A0EA2A22E4B7"
+        },
+        {
             "Id": "file_nova_core_redactor_py",
             "Name": "redactor.py",
             "Type": "File",
@@ -285,6 +375,60 @@
             "SHA256": "2616A51B51551F176509B26C50181B83F0798B358ABBA6ED63BBE7942567D688"
         },
         {
+            "Id": "file_nova_core_reglas_sg_fastapi_on_event_yml",
+            "Name": "fastapi-on-event.yml",
+            "Type": "File",
+            "RelativePath": "nova_core/reglas_sg/fastapi-on-event.yml",
+            "TargetRelative": "nova_core/reglas_sg/fastapi-on-event.yml",
+            "SizeBytes": 198,
+            "SHA256": "6BEBA68B278807B058BA9C2B02E332CA68B78A534D1F49B29899D627382BEF36"
+        },
+        {
+            "Id": "file_nova_core_reglas_sg_nextjs_sync_params_yml",
+            "Name": "nextjs-sync-params.yml",
+            "Type": "File",
+            "RelativePath": "nova_core/reglas_sg/nextjs-sync-params.yml",
+            "TargetRelative": "nova_core/reglas_sg/nextjs-sync-params.yml",
+            "SizeBytes": 716,
+            "SHA256": "170A8E404CEF39147690A84D9DD78428C90A065DC8ED5EC5A32710B997FA794F"
+        },
+        {
+            "Id": "file_nova_core_reglas_sg_pydantic_class_config_yml",
+            "Name": "pydantic-class-config.yml",
+            "Type": "File",
+            "RelativePath": "nova_core/reglas_sg/pydantic-class-config.yml",
+            "TargetRelative": "nova_core/reglas_sg/pydantic-class-config.yml",
+            "SizeBytes": 342,
+            "SHA256": "BED357D838329F59BB2BB1869DDC64A657F28CCD7563C5662009E58F62DD79F3"
+        },
+        {
+            "Id": "file_nova_core_reglas_sg_pydantic_dict_yml",
+            "Name": "pydantic-dict.yml",
+            "Type": "File",
+            "RelativePath": "nova_core/reglas_sg/pydantic-dict.yml",
+            "TargetRelative": "nova_core/reglas_sg/pydantic-dict.yml",
+            "SizeBytes": 352,
+            "SHA256": "F13A32ECDFBD76E45D448C3DC5373EFDBE0CB2CD1546C5C938A0DD0F15EC87C5"
+        },
+        {
+            "Id": "file_nova_core_reglas_sg_pydantic_parse_obj_yml",
+            "Name": "pydantic-parse-obj.yml",
+            "Type": "File",
+            "RelativePath": "nova_core/reglas_sg/pydantic-parse-obj.yml",
+            "TargetRelative": "nova_core/reglas_sg/pydantic-parse-obj.yml",
+            "SizeBytes": 375,
+            "SHA256": "25B98E3C59A99E527DEA704E357F17BDA0E66FF511F096A67A4A6560B61A8507"
+        },
+        {
+            "Id": "file_nova_core_reglas_sg_react19_deprecated_yml",
+            "Name": "react19-deprecated.yml",
+            "Type": "File",
+            "RelativePath": "nova_core/reglas_sg/react19-deprecated.yml",
+            "TargetRelative": "nova_core/reglas_sg/react19-deprecated.yml",
+            "SizeBytes": 890,
+            "SHA256": "8A380AF7AFF99BFC648D248E3EF6D08655B80C49202D56552A4F8F81DBBC4AF3"
+        },
+        {
             "Id": "file_nova_core_resumir_py",
             "Name": "resumir.py",
             "Type": "File",
@@ -292,6 +436,663 @@
             "TargetRelative": "nova_core/resumir.py",
             "SizeBytes": 5241,
             "SHA256": "560AEB7EF58F442B6674F2B97F28E69DD1EA32407CAB1512518617C99F4C32C2"
+        },
+        {
+            "Id": "file_nova_core_sgconfig_yml",
+            "Name": "sgconfig.yml",
+            "Type": "File",
+            "RelativePath": "nova_core/sgconfig.yml",
+            "TargetRelative": "nova_core/sgconfig.yml",
+            "SizeBytes": 26,
+            "SHA256": "30C9A99A0E6B5194B373F3B0184ADA22AFBB1E8016269039A3632E0BCFC9536B"
+        },
+        {
+            "Id": "file_nova_core_vigia_lint_py",
+            "Name": "vigia_lint.py",
+            "Type": "File",
+            "RelativePath": "nova_core/vigia_lint.py",
+            "TargetRelative": "nova_core/vigia_lint.py",
+            "SizeBytes": 3784,
+            "SHA256": "8A5E290370892901532C914E93E4821CAA74C0E7C31A98E9E7AA495A6EA8744A"
+        },
+        {
+            "Id": "file_herramientas_leeme_md",
+            "Name": "LEEME.md",
+            "Type": "File",
+            "RelativePath": "herramientas/LEEME.md",
+            "TargetRelative": "antigravity/herramientas/LEEME.md",
+            "SizeBytes": 4876,
+            "SHA256": "C40A6D571AE3D918D75310B2FC9D28A6B300CD91B16C5395DD67654908661C10"
+        },
+        {
+            "Id": "file_herramientas_nube_gmail_api_client_py",
+            "Name": "gmail_api_client.py",
+            "Type": "File",
+            "RelativePath": "herramientas/nube/gmail_api_client.py",
+            "TargetRelative": "antigravity/herramientas/nube/gmail_api_client.py",
+            "SizeBytes": 7378,
+            "SHA256": "7F3F762D71C75BD3557939A34A5A80B9CEB5FCA808756B990481C3A89E920D5F"
+        },
+        {
+            "Id": "file_herramientas_nube_groq_zero_token_client_py",
+            "Name": "groq_zero_token_client.py",
+            "Type": "File",
+            "RelativePath": "herramientas/nube/groq_zero_token_client.py",
+            "TargetRelative": "antigravity/herramientas/nube/groq_zero_token_client.py",
+            "SizeBytes": 2772,
+            "SHA256": "48271D96AF4AEE57B56533373202CBC59883E9CEEBB4450CADAFE229E1F051B1"
+        },
+        {
+            "Id": "file_herramientas_nube_nova_external_shield_py",
+            "Name": "nova_external_shield.py",
+            "Type": "File",
+            "RelativePath": "herramientas/nube/nova_external_shield.py",
+            "TargetRelative": "antigravity/herramientas/nube/nova_external_shield.py",
+            "SizeBytes": 5943,
+            "SHA256": "10C18F4BAC67FDDA2E7743F1D9DDD02F7A454F0E2242085DE82FC67FB6F63914"
+        },
+        {
+            "Id": "file_herramientas_nube_youtube_api_client_py",
+            "Name": "youtube_api_client.py",
+            "Type": "File",
+            "RelativePath": "herramientas/nube/youtube_api_client.py",
+            "TargetRelative": "antigravity/herramientas/nube/youtube_api_client.py",
+            "SizeBytes": 4219,
+            "SHA256": "B475BE99D887A1983C37B236181A2E32AA0F348C5B16E833EDEBC36D2099D3A7"
+        },
+        {
+            "Id": "file_herramientas_pruebas_phantom_test_ps1",
+            "Name": "phantom_test.ps1",
+            "Type": "File",
+            "RelativePath": "herramientas/pruebas/phantom_test.ps1",
+            "TargetRelative": "antigravity/herramientas/pruebas/phantom_test.ps1",
+            "SizeBytes": 1984,
+            "SHA256": "60C763D98B3442F92AEB1820B07559B657427A0978FF9925A9264344382450C3"
+        },
+        {
+            "Id": "file_herramientas_radar_web_py",
+            "Name": "radar_web.py",
+            "Type": "File",
+            "RelativePath": "herramientas/radar_web.py",
+            "TargetRelative": "antigravity/herramientas/radar_web.py",
+            "SizeBytes": 19542,
+            "SHA256": "1C3B8CD9CEC27A3EDFA55A0DEA0FC98DB3F12F961E8949D7B8E5C03189BC4AA0"
+        },
+        {
+            "Id": "file_herramientas_seguridad_git_clone_sentinel_ps1",
+            "Name": "git_clone_sentinel.ps1",
+            "Type": "File",
+            "RelativePath": "herramientas/seguridad/git_clone_sentinel.ps1",
+            "TargetRelative": "antigravity/herramientas/seguridad/git_clone_sentinel.ps1",
+            "SizeBytes": 1893,
+            "SHA256": "C7105EF3398D793E78F7C77B59272180674DCF5CB7B34724B682D47892EC0EC0"
+        },
+        {
+            "Id": "file_herramientas_seguridad_nova_repo_scanner_py",
+            "Name": "nova_repo_scanner.py",
+            "Type": "File",
+            "RelativePath": "herramientas/seguridad/nova_repo_scanner.py",
+            "TargetRelative": "antigravity/herramientas/seguridad/nova_repo_scanner.py",
+            "SizeBytes": 4769,
+            "SHA256": "357B1E6DA2FE92D5E77F5312F6B11C7CC991153CA844BC52E9E82F131F239CB0"
+        },
+        {
+            "Id": "file_herramientas_trello_trello_py",
+            "Name": "trello.py",
+            "Type": "File",
+            "RelativePath": "herramientas/trello/trello.py",
+            "TargetRelative": "antigravity/herramientas/trello/trello.py",
+            "SizeBytes": 8575,
+            "SHA256": "B55B1030B3F7B098EC8DAC92B9BD6DD18931B4330E36360CDE3B2AFBCB46746C"
+        },
+        {
+            "Id": "file_herramientas_video_auditar_hoja_vl_py",
+            "Name": "auditar_hoja_vl.py",
+            "Type": "File",
+            "RelativePath": "herramientas/video/auditar_hoja_vl.py",
+            "TargetRelative": "antigravity/herramientas/video/auditar_hoja_vl.py",
+            "SizeBytes": 3269,
+            "SHA256": "61E00ABD61CD92556AB9A7DA15B4F1B8C797BCF35C20E3E53254179A80545039"
+        },
+        {
+            "Id": "file_herramientas_video_canvas_25d_template_html",
+            "Name": "canvas_25d_template.html",
+            "Type": "File",
+            "RelativePath": "herramientas/video/canvas_25d_template.html",
+            "TargetRelative": "antigravity/herramientas/video/canvas_25d_template.html",
+            "SizeBytes": 63815,
+            "SHA256": "5163E5D7D919EDBC3F5AB47BBC8A0303E8B774B5B29329E3547A40D770E1770D"
+        },
+        {
+            "Id": "file_herramientas_video_capturar_fotogramas_py",
+            "Name": "capturar_fotogramas.py",
+            "Type": "File",
+            "RelativePath": "herramientas/video/capturar_fotogramas.py",
+            "TargetRelative": "antigravity/herramientas/video/capturar_fotogramas.py",
+            "SizeBytes": 892,
+            "SHA256": "7F2AC894ACD240B0C7A095AE7E354AFD93206CD1DEA05978AFDDE3CC80667278"
+        },
+        {
+            "Id": "file_herramientas_video_destilador_app_destilador_py",
+            "Name": "app_destilador.py",
+            "Type": "File",
+            "RelativePath": "herramientas/video/destilador/app_destilador.py",
+            "TargetRelative": "antigravity/herramientas/video/destilador/app_destilador.py",
+            "SizeBytes": 16542,
+            "SHA256": "7C41DA6449B054A2BC3941E5346B3610B70F433DDEA30AFF0AB3AFA44BE340F8"
+        },
+        {
+            "Id": "file_herramientas_video_destilador_iniciar_destilador_bat",
+            "Name": "iniciar_destilador.bat",
+            "Type": "File",
+            "RelativePath": "herramientas/video/destilador/iniciar_destilador.bat",
+            "TargetRelative": "antigravity/herramientas/video/destilador/iniciar_destilador.bat",
+            "SizeBytes": 59,
+            "SHA256": "98AD810B3EC0AB394754D18DA1FB6CA5F9634FEB22BAF6423BD59F64746EE22E"
+        },
+        {
+            "Id": "file_herramientas_video_generar_voz_py",
+            "Name": "generar_voz.py",
+            "Type": "File",
+            "RelativePath": "herramientas/video/generar_voz.py",
+            "TargetRelative": "antigravity/herramientas/video/generar_voz.py",
+            "SizeBytes": 3584,
+            "SHA256": "4A4B468CEC52171826D8230228BE2D52AFCA9F2FE91C35F04491908B8C1757F8"
+        },
+        {
+            "Id": "file_herramientas_video_nova_intro_template_py",
+            "Name": "nova_intro_template.py",
+            "Type": "File",
+            "RelativePath": "herramientas/video/nova_intro_template.py",
+            "TargetRelative": "antigravity/herramientas/video/nova_intro_template.py",
+            "SizeBytes": 17558,
+            "SHA256": "499E3416E30562D4E6F3C0B3D673C15730A41D93F7A1F672F2F7216019AA5CC0"
+        },
+        {
+            "Id": "file_herramientas_video_nova_video_router_py",
+            "Name": "nova_video_router.py",
+            "Type": "File",
+            "RelativePath": "herramientas/video/nova_video_router.py",
+            "TargetRelative": "antigravity/herramientas/video/nova_video_router.py",
+            "SizeBytes": 10851,
+            "SHA256": "1FA0778CF9257212AE01A2824CC7948E05859725191533D5A9D1389078CE74F5"
+        },
+        {
+            "Id": "file_herramientas_voz_aduana_js",
+            "Name": "aduana.js",
+            "Type": "File",
+            "RelativePath": "herramientas/voz/aduana.js",
+            "TargetRelative": "antigravity/herramientas/voz/aduana.js",
+            "SizeBytes": 2635,
+            "SHA256": "93301002C9BCDAC31D464264F390A2BAAF80A95358A522B468102E7D1D569003"
+        },
+        {
+            "Id": "file_herramientas_voz_mascota_js",
+            "Name": "mascota.js",
+            "Type": "File",
+            "RelativePath": "herramientas/voz/mascota.js",
+            "TargetRelative": "antigravity/herramientas/voz/mascota.js",
+            "SizeBytes": 9585,
+            "SHA256": "E6E17A9F810E91C77984A4444E79A5E10E53FC78CCEF707F038BB96A1DF33DC3"
+        },
+        {
+            "Id": "file_herramientas_voz_nova_voz_py",
+            "Name": "nova_voz.py",
+            "Type": "File",
+            "RelativePath": "herramientas/voz/nova_voz.py",
+            "TargetRelative": "antigravity/herramientas/voz/nova_voz.py",
+            "SizeBytes": 49070,
+            "SHA256": "D70D0EEE3CF2556C299C7B2D21D2C24E25046EA2E97F3705F321CB9AF4F0D3A4"
+        },
+        {
+            "Id": "file_clonador_herramientas__ruff_cache__gitignore",
+            "Name": ".gitignore",
+            "Type": "File",
+            "RelativePath": "clonador/herramientas/.ruff_cache/.gitignore",
+            "TargetRelative": "antigravity/clonador/herramientas/.ruff_cache/.gitignore",
+            "SizeBytes": 35,
+            "SHA256": "9E3A60F1E6EC4AE60215C11D54B171392745EC25E9DDED433D5BD921363AF316"
+        },
+        {
+            "Id": "file_clonador_herramientas__ruff_cache_0_17_3_1571557178768228795",
+            "Name": "1571557178768228795",
+            "Type": "File",
+            "RelativePath": "clonador/herramientas/.ruff_cache/0.17.3/1571557178768228795",
+            "TargetRelative": "antigravity/clonador/herramientas/.ruff_cache/0.17.3/1571557178768228795",
+            "SizeBytes": 236,
+            "SHA256": "697CEE385807F7FE71D2FB85AC8D53CF31E7D7551C3B114BDB605E6E331C742A"
+        },
+        {
+            "Id": "file_clonador_herramientas__ruff_cache_0_17_3_3530721947916892514",
+            "Name": "3530721947916892514",
+            "Type": "File",
+            "RelativePath": "clonador/herramientas/.ruff_cache/0.17.3/3530721947916892514",
+            "TargetRelative": "antigravity/clonador/herramientas/.ruff_cache/0.17.3/3530721947916892514",
+            "SizeBytes": 236,
+            "SHA256": "DDCEF58CFDD8186EBF5A53F42243F0F0DB6C32F1B41D18F79E1E68F49C3B8944"
+        },
+        {
+            "Id": "file_clonador_herramientas__ruff_cache_cachedir_tag",
+            "Name": "CACHEDIR.TAG",
+            "Type": "File",
+            "RelativePath": "clonador/herramientas/.ruff_cache/CACHEDIR.TAG",
+            "TargetRelative": "antigravity/clonador/herramientas/.ruff_cache/CACHEDIR.TAG",
+            "SizeBytes": 43,
+            "SHA256": "5953156D7E0C564A427251316EAF26F8870E6483AE2197F916B630E4F93E31AE"
+        },
+        {
+            "Id": "file_clonador_herramientas_exportar_jsx_py",
+            "Name": "exportar_jsx.py",
+            "Type": "File",
+            "RelativePath": "clonador/herramientas/exportar_jsx.py",
+            "TargetRelative": "antigravity/clonador/herramientas/exportar_jsx.py",
+            "SizeBytes": 12581,
+            "SHA256": "89D3A55C5B509BA1C92000FA6822873C269FD9EA6AC7DFC49CF077D07CB6B6ED"
+        },
+        {
+            "Id": "file_clonador_herramientas_exportar_react_py",
+            "Name": "exportar_react.py",
+            "Type": "File",
+            "RelativePath": "clonador/herramientas/exportar_react.py",
+            "TargetRelative": "antigravity/clonador/herramientas/exportar_react.py",
+            "SizeBytes": 16910,
+            "SHA256": "3BE124D0F14F39AC6A1C8DEA18BE1E4CBB5DBA2B6ED835F3717463C34DF1AB20"
+        },
+        {
+            "Id": "file_clonador_leeme_md",
+            "Name": "LEEME.md",
+            "Type": "File",
+            "RelativePath": "clonador/LEEME.md",
+            "TargetRelative": "antigravity/clonador/LEEME.md",
+            "SizeBytes": 1042,
+            "SHA256": "E1219504670B206E62D7A89CBD97F895E4D64922D51A2ADEF044D9D2FA87EFE1"
+        },
+        {
+            "Id": "file_clonador_motor__ruff_cache__gitignore",
+            "Name": ".gitignore",
+            "Type": "File",
+            "RelativePath": "clonador/motor/.ruff_cache/.gitignore",
+            "TargetRelative": "antigravity/clonador/motor/.ruff_cache/.gitignore",
+            "SizeBytes": 35,
+            "SHA256": "9E3A60F1E6EC4AE60215C11D54B171392745EC25E9DDED433D5BD921363AF316"
+        },
+        {
+            "Id": "file_clonador_motor__ruff_cache_0_17_3_2202151706685808475",
+            "Name": "2202151706685808475",
+            "Type": "File",
+            "RelativePath": "clonador/motor/.ruff_cache/0.17.3/2202151706685808475",
+            "TargetRelative": "antigravity/clonador/motor/.ruff_cache/0.17.3/2202151706685808475",
+            "SizeBytes": 204,
+            "SHA256": "3349BB503509CB79D5A29E3E0AE1434F105019191CA3CB142A4C79B11FDD1ADC"
+        },
+        {
+            "Id": "file_clonador_motor__ruff_cache_0_17_3_6927476379762334005",
+            "Name": "6927476379762334005",
+            "Type": "File",
+            "RelativePath": "clonador/motor/.ruff_cache/0.17.3/6927476379762334005",
+            "TargetRelative": "antigravity/clonador/motor/.ruff_cache/0.17.3/6927476379762334005",
+            "SizeBytes": 204,
+            "SHA256": "4E5C47100370D6A1357D382C033270AB40C53F1B8DE84635ADCA0214271C2304"
+        },
+        {
+            "Id": "file_clonador_motor__ruff_cache_cachedir_tag",
+            "Name": "CACHEDIR.TAG",
+            "Type": "File",
+            "RelativePath": "clonador/motor/.ruff_cache/CACHEDIR.TAG",
+            "TargetRelative": "antigravity/clonador/motor/.ruff_cache/CACHEDIR.TAG",
+            "SizeBytes": 43,
+            "SHA256": "5953156D7E0C564A427251316EAF26F8870E6483AE2197F916B630E4F93E31AE"
+        },
+        {
+            "Id": "file_clonador_motor_0_vigilante_bat",
+            "Name": "0_VIGILANTE.bat",
+            "Type": "File",
+            "RelativePath": "clonador/motor/0_VIGILANTE.bat",
+            "TargetRelative": "antigravity/clonador/motor/0_VIGILANTE.bat",
+            "SizeBytes": 571,
+            "SHA256": "C60F8516ACDA87B91387ED4DB219CDD9AB0D153B9B2D88AB9ACF45B806F77739"
+        },
+        {
+            "Id": "file_clonador_motor_1_analizar_bat",
+            "Name": "1_ANALIZAR.bat",
+            "Type": "File",
+            "RelativePath": "clonador/motor/1_ANALIZAR.bat",
+            "TargetRelative": "antigravity/clonador/motor/1_ANALIZAR.bat",
+            "SizeBytes": 1426,
+            "SHA256": "BF74979803FDBC8ED5F6FAFF6E5305E76D88C619A4453FD06792C94D5EB580FD"
+        },
+        {
+            "Id": "file_clonador_motor_2_crear_bat",
+            "Name": "2_CREAR.bat",
+            "Type": "File",
+            "RelativePath": "clonador/motor/2_CREAR.bat",
+            "TargetRelative": "antigravity/clonador/motor/2_CREAR.bat",
+            "SizeBytes": 381,
+            "SHA256": "27E9F582AAC9E4F050230EE6EDF693478476A4F75DB35CD2B4180B8D5BEDF26C"
+        },
+        {
+            "Id": "file_clonador_motor_3_verificar_bat",
+            "Name": "3_VERIFICAR.bat",
+            "Type": "File",
+            "RelativePath": "clonador/motor/3_VERIFICAR.bat",
+            "TargetRelative": "antigravity/clonador/motor/3_VERIFICAR.bat",
+            "SizeBytes": 1023,
+            "SHA256": "EAD5F8F93122689E3A9135F111F1856B2CFF0473B3426A3DF8005E1A06A2C840"
+        },
+        {
+            "Id": "file_clonador_motor_analizar_py",
+            "Name": "analizar.py",
+            "Type": "File",
+            "RelativePath": "clonador/motor/analizar.py",
+            "TargetRelative": "antigravity/clonador/motor/analizar.py",
+            "SizeBytes": 39562,
+            "SHA256": "2090D516AD7CE14922BC7E86092E9F43339BD7A33BA64A5DD14661BD4C9BC919"
+        },
+        {
+            "Id": "file_clonador_motor_auto_planos_py",
+            "Name": "auto_planos.py",
+            "Type": "File",
+            "RelativePath": "clonador/motor/auto_planos.py",
+            "TargetRelative": "antigravity/clonador/motor/auto_planos.py",
+            "SizeBytes": 18028,
+            "SHA256": "AD184C337658208828D93B2D3CED47AA0787FF4460755C20AC3D251546074261"
+        },
+        {
+            "Id": "file_clonador_motor_autopsia_collector_py",
+            "Name": "autopsia_collector.py",
+            "Type": "File",
+            "RelativePath": "clonador/motor/autopsia_collector.py",
+            "TargetRelative": "antigravity/clonador/motor/autopsia_collector.py",
+            "SizeBytes": 1187,
+            "SHA256": "73AB69DEDC5569CA1E56185508B30190013B3D7CA793147033C90A617E1AB53F"
+        },
+        {
+            "Id": "file_clonador_motor_capturar_py",
+            "Name": "capturar.py",
+            "Type": "File",
+            "RelativePath": "clonador/motor/capturar.py",
+            "TargetRelative": "antigravity/clonador/motor/capturar.py",
+            "SizeBytes": 61204,
+            "SHA256": "48F392DF4EEDF0D84C76658EF76E4CE9204E352B5BE6430CA279880BAB30B5CF"
+        },
+        {
+            "Id": "file_clonador_motor_clon_interacciones_js",
+            "Name": "clon-interacciones.js",
+            "Type": "File",
+            "RelativePath": "clonador/motor/clon-interacciones.js",
+            "TargetRelative": "antigravity/clonador/motor/clon-interacciones.js",
+            "SizeBytes": 14333,
+            "SHA256": "83D1DAEC33D683D29F060C93CB32CE2665FD8B5587FA290807FCEDA2F82407CA"
+        },
+        {
+            "Id": "file_clonador_motor_clonar_bat",
+            "Name": "CLONAR.bat",
+            "Type": "File",
+            "RelativePath": "clonador/motor/CLONAR.bat",
+            "TargetRelative": "antigravity/clonador/motor/CLONAR.bat",
+            "SizeBytes": 594,
+            "SHA256": "0E3464289031EAFE14CB124521C0BB1BA556884312693890F1624B44E09EA49A"
+        },
+        {
+            "Id": "file_clonador_motor_clonar_py",
+            "Name": "clonar.py",
+            "Type": "File",
+            "RelativePath": "clonador/motor/clonar.py",
+            "TargetRelative": "antigravity/clonador/motor/clonar.py",
+            "SizeBytes": 4440,
+            "SHA256": "1B7607ADA6B33C5A8A21D923549A0B7E629807298436D5F7B22CDEB58BC75BA2"
+        },
+        {
+            "Id": "file_clonador_motor_comparar_py",
+            "Name": "comparar.py",
+            "Type": "File",
+            "RelativePath": "clonador/motor/comparar.py",
+            "TargetRelative": "antigravity/clonador/motor/comparar.py",
+            "SizeBytes": 12825,
+            "SHA256": "5B4522A214BB8A5CB4CE334801223AFD482496ED73CEB0DCC0C7BE7FA0849324"
+        },
+        {
+            "Id": "file_clonador_motor_comprimir_para_nova_py",
+            "Name": "comprimir_para_nova.py",
+            "Type": "File",
+            "RelativePath": "clonador/motor/comprimir_para_nova.py",
+            "TargetRelative": "antigravity/clonador/motor/comprimir_para_nova.py",
+            "SizeBytes": 2550,
+            "SHA256": "D7897055089E76AABA7D0A5570EE972A76617E9243C945550DB0A30016E80D27"
+        },
+        {
+            "Id": "file_clonador_motor_construir_py",
+            "Name": "construir.py",
+            "Type": "File",
+            "RelativePath": "clonador/motor/construir.py",
+            "TargetRelative": "antigravity/clonador/motor/construir.py",
+            "SizeBytes": 24754,
+            "SHA256": "3FF6790B86CF7B6E2CCBEA04BEE1E6CD6842B29B9F23AB6BFF9BEAFF86C2B216"
+        },
+        {
+            "Id": "file_clonador_motor_convertir_py",
+            "Name": "convertir.py",
+            "Type": "File",
+            "RelativePath": "clonador/motor/convertir.py",
+            "TargetRelative": "antigravity/clonador/motor/convertir.py",
+            "SizeBytes": 10784,
+            "SHA256": "E1EED75C2C8952CA3653D6D5278DD61AEE4D8541F3B4C2EDCF083A0B0FD77921"
+        },
+        {
+            "Id": "file_clonador_motor_crear_py",
+            "Name": "crear.py",
+            "Type": "File",
+            "RelativePath": "clonador/motor/crear.py",
+            "TargetRelative": "antigravity/clonador/motor/crear.py",
+            "SizeBytes": 5469,
+            "SHA256": "93A562AFBB4DD7E3C6C61DC7C571BF7E8616F435C4D9EA46421DC5CEE678EEDA"
+        },
+        {
+            "Id": "file_clonador_motor_crear_cero_py",
+            "Name": "crear_cero.py",
+            "Type": "File",
+            "RelativePath": "clonador/motor/crear_cero.py",
+            "TargetRelative": "antigravity/clonador/motor/crear_cero.py",
+            "SizeBytes": 28895,
+            "SHA256": "593C6D078A74F7C2906EF758ED7EE71FBC7BCCE0CFA719F7354884BBCC71ED85"
+        },
+        {
+            "Id": "file_clonador_motor_diseccionar_py",
+            "Name": "diseccionar.py",
+            "Type": "File",
+            "RelativePath": "clonador/motor/diseccionar.py",
+            "TargetRelative": "antigravity/clonador/motor/diseccionar.py",
+            "SizeBytes": 44095,
+            "SHA256": "852190AF1F4F3E2E2B246DA1FD9A7E800D220BA306317C48E0B334644B0DBDB3"
+        },
+        {
+            "Id": "file_clonador_motor_errores_qwen_txt",
+            "Name": "ERRORES_QWEN.txt",
+            "Type": "File",
+            "RelativePath": "clonador/motor/ERRORES_QWEN.txt",
+            "TargetRelative": "antigravity/clonador/motor/ERRORES_QWEN.txt",
+            "SizeBytes": 9314,
+            "SHA256": "4F7D30C4251FF3C5247C59DE30AA50D434CB26076B7727F62C99F93514F55971"
+        },
+        {
+            "Id": "file_clonador_motor_explorador_dinamico_py",
+            "Name": "explorador_dinamico.py",
+            "Type": "File",
+            "RelativePath": "clonador/motor/explorador_dinamico.py",
+            "TargetRelative": "antigravity/clonador/motor/explorador_dinamico.py",
+            "SizeBytes": 73212,
+            "SHA256": "4FC58789E3F4F5E1772AA102C32968D5194A5EF1A50FCF01AC533F2CB195D45C"
+        },
+        {
+            "Id": "file_clonador_motor_extraer_py",
+            "Name": "extraer.py",
+            "Type": "File",
+            "RelativePath": "clonador/motor/extraer.py",
+            "TargetRelative": "antigravity/clonador/motor/extraer.py",
+            "SizeBytes": 62747,
+            "SHA256": "B3BA43C4FBBD61C203A289A0B0070BD9DABBD466674C554402DFD27CAC2412AD"
+        },
+        {
+            "Id": "file_clonador_motor_fuentes_google_cache_json",
+            "Name": "fuentes_google_cache.json",
+            "Type": "File",
+            "RelativePath": "clonador/motor/fuentes_google_cache.json",
+            "TargetRelative": "antigravity/clonador/motor/fuentes_google_cache.json",
+            "SizeBytes": 190,
+            "SHA256": "852A3B2D04EF6E6E80305C733FF53DE77EB3F9360A80CFC6C7F4469616124861"
+        },
+        {
+            "Id": "file_clonador_motor_guia_qwen_md",
+            "Name": "GUIA_QWEN.md",
+            "Type": "File",
+            "RelativePath": "clonador/motor/GUIA_QWEN.md",
+            "TargetRelative": "antigravity/clonador/motor/GUIA_QWEN.md",
+            "SizeBytes": 6494,
+            "SHA256": "5AE0D6F2075EF1250C9CB6A92155246FA96DCB958D4638EC9A4555538B4A2B29"
+        },
+        {
+            "Id": "file_clonador_motor_interacciones_py",
+            "Name": "interacciones.py",
+            "Type": "File",
+            "RelativePath": "clonador/motor/interacciones.py",
+            "TargetRelative": "antigravity/clonador/motor/interacciones.py",
+            "SizeBytes": 13508,
+            "SHA256": "40983FB0C8D7E4A763D3C309C6B00944CCE6CE71443946F7122F4E36CA0DF5D0"
+        },
+        {
+            "Id": "file_clonador_motor_leeme_txt",
+            "Name": "LEEME.txt",
+            "Type": "File",
+            "RelativePath": "clonador/motor/LEEME.txt",
+            "TargetRelative": "antigravity/clonador/motor/LEEME.txt",
+            "SizeBytes": 2437,
+            "SHA256": "FBDDA207E4A5247C80449F6C260C73FFF6D8FF4579702880ABCB38B5313A3536"
+        },
+        {
+            "Id": "file_clonador_motor_lote_py",
+            "Name": "lote.py",
+            "Type": "File",
+            "RelativePath": "clonador/motor/lote.py",
+            "TargetRelative": "antigravity/clonador/motor/lote.py",
+            "SizeBytes": 6663,
+            "SHA256": "591D42A6D30A9E4934B9750370FD858C705E9A23716EA4E8562F8CC0878F8D02"
+        },
+        {
+            "Id": "file_clonador_motor_lote_txt",
+            "Name": "lote.txt",
+            "Type": "File",
+            "RelativePath": "clonador/motor/lote.txt",
+            "TargetRelative": "antigravity/clonador/motor/lote.txt",
+            "SizeBytes": 820,
+            "SHA256": "78F0B4901FFF50455AE0F68425E1540387300C78C60B5AF17A77D39673086E96"
+        },
+        {
+            "Id": "file_clonador_motor_lote_repetir_txt",
+            "Name": "lote_repetir.txt",
+            "Type": "File",
+            "RelativePath": "clonador/motor/lote_repetir.txt",
+            "TargetRelative": "antigravity/clonador/motor/lote_repetir.txt",
+            "SizeBytes": 18,
+            "SHA256": "B1B7B304EBB9461A51D763A1B0A6C416F3868356DDD13DCF049FBF3A3770B567"
+        },
+        {
+            "Id": "file_clonador_motor_medios_py",
+            "Name": "medios.py",
+            "Type": "File",
+            "RelativePath": "clonador/motor/medios.py",
+            "TargetRelative": "antigravity/clonador/motor/medios.py",
+            "SizeBytes": 7936,
+            "SHA256": "7FDCF4D22C8E8648C373005293EE839023E6EBABE27E8D69B76A7437FA9699D4"
+        },
+        {
+            "Id": "file_clonador_motor_medios_libres_json",
+            "Name": "medios_libres.json",
+            "Type": "File",
+            "RelativePath": "clonador/motor/medios_libres.json",
+            "TargetRelative": "antigravity/clonador/motor/medios_libres.json",
+            "SizeBytes": 1063,
+            "SHA256": "8A60E8B14EAAF2B0E48FBE617A56FA6FCF81D990EB0805452109157D3A8F326F"
+        },
+        {
+            "Id": "file_clonador_motor_ordenes_py",
+            "Name": "ordenes.py",
+            "Type": "File",
+            "RelativePath": "clonador/motor/ordenes.py",
+            "TargetRelative": "antigravity/clonador/motor/ordenes.py",
+            "SizeBytes": 2464,
+            "SHA256": "BEB1FDB9EDE37DC0F2E6446142AFC9E2C7322761F9DE82CB4A32CD8C0CB8E1BD"
+        },
+        {
+            "Id": "file_clonador_motor_probar_guia_py",
+            "Name": "probar_guia.py",
+            "Type": "File",
+            "RelativePath": "clonador/motor/probar_guia.py",
+            "TargetRelative": "antigravity/clonador/motor/probar_guia.py",
+            "SizeBytes": 6805,
+            "SHA256": "B5FB1A96E925078E02DC5713E53E23A958851616832838CA4EB2F4B6938D8ACA"
+        },
+        {
+            "Id": "file_clonador_motor_probar_interacciones_py",
+            "Name": "probar_interacciones.py",
+            "Type": "File",
+            "RelativePath": "clonador/motor/probar_interacciones.py",
+            "TargetRelative": "antigravity/clonador/motor/probar_interacciones.py",
+            "SizeBytes": 8560,
+            "SHA256": "0DC2EF7FD687A9BD1E1A334D0E66874A07ED32DA985C126C6C2BDEC0B7642BEA"
+        },
+        {
+            "Id": "file_clonador_motor_pruebas_demo_variantes_html",
+            "Name": "demo_variantes.html",
+            "Type": "File",
+            "RelativePath": "clonador/motor/pruebas/demo_variantes.html",
+            "TargetRelative": "antigravity/clonador/motor/pruebas/demo_variantes.html",
+            "SizeBytes": 13812,
+            "SHA256": "45A83363BC9F46D9A1C01E5C21D1B07D298FD6D86E982F9BD9B1E0D5C13CE790"
+        },
+        {
+            "Id": "file_clonador_motor_puente_interactividad_py",
+            "Name": "puente_interactividad.py",
+            "Type": "File",
+            "RelativePath": "clonador/motor/puente_interactividad.py",
+            "TargetRelative": "antigravity/clonador/motor/puente_interactividad.py",
+            "SizeBytes": 7994,
+            "SHA256": "9775EAF252CCB56B5EF8EB8C3725C7B9298704FF4BF93D41BDC787463A73C244"
+        },
+        {
+            "Id": "file_clonador_motor_reintentar_txt",
+            "Name": "reintentar.txt",
+            "Type": "File",
+            "RelativePath": "clonador/motor/reintentar.txt",
+            "TargetRelative": "antigravity/clonador/motor/reintentar.txt",
+            "SizeBytes": 203,
+            "SHA256": "4E83FEF91DCF703434CD79CB759A0298C87F38E544D24B481FA6CF3FF2D2F039"
+        },
+        {
+            "Id": "file_clonador_motor_url_txt",
+            "Name": "url.txt",
+            "Type": "File",
+            "RelativePath": "clonador/motor/url.txt",
+            "TargetRelative": "antigravity/clonador/motor/url.txt",
+            "SizeBytes": 40,
+            "SHA256": "2F7F73451A79B703D9D744636E987B5121AAD315CDE37C77B9EA23EFA7C9A1C2"
+        },
+        {
+            "Id": "file_clonador_motor_verificar_py",
+            "Name": "verificar.py",
+            "Type": "File",
+            "RelativePath": "clonador/motor/verificar.py",
+            "TargetRelative": "antigravity/clonador/motor/verificar.py",
+            "SizeBytes": 17390,
+            "SHA256": "0EF6F30EB3288800EE45EACF54C22AEAC61E3B472EFB7090B385D42DB10389AD"
+        },
+        {
+            "Id": "file_clonador_motor_vigilante_py",
+            "Name": "vigilante.py",
+            "Type": "File",
+            "RelativePath": "clonador/motor/vigilante.py",
+            "TargetRelative": "antigravity/clonador/motor/vigilante.py",
+            "SizeBytes": 4127,
+            "SHA256": "B8E3B2214727A5CDC432811B3250358F3136B34852F92D95D4057BF357686104"
         },
         {
             "Id": "file_almacen_biblioteca_web__gitignore",
@@ -1238,9 +2039,19 @@
             "Type": "Skill",
             "RelativePath": "skills/ai-deploy-advisor",
             "TargetRelative": "config/skills/ai-deploy-advisor",
-            "SizeBytes": 2918,
-            "SHA256": "262EB0EBC1402622E59E487C25BF8A3B9EE04742F9B62CD1D890BC5FC0807A59",
-            "SkillSHA256": "262EB0EBC1402622E59E487C25BF8A3B9EE04742F9B62CD1D890BC5FC0807A59"
+            "SizeBytes": 2919,
+            "SHA256": "9626B4B9DA2B1B8C6FC87FB2713CD1866CA27BB5099CE3A24883E2988DC0710E",
+            "SkillSHA256": "9626B4B9DA2B1B8C6FC87FB2713CD1866CA27BB5099CE3A24883E2988DC0710E"
+        },
+        {
+            "Id": "skill_android_core",
+            "Name": "android-core",
+            "Type": "Skill",
+            "RelativePath": "skills/android-core",
+            "TargetRelative": "config/skills/android-core",
+            "SizeBytes": 3288,
+            "SHA256": "9580D688460749787DA8446EA7D4D7C61A47CB946D6FD1A01A5C3FB897C71CEE",
+            "SkillSHA256": "9580D688460749787DA8446EA7D4D7C61A47CB946D6FD1A01A5C3FB897C71CEE"
         },
         {
             "Id": "skill_api_design",
@@ -1291,6 +2102,16 @@
             "SizeBytes": 2331,
             "SHA256": "6D59DD32E4C376A2859F66AD485DEC5BD154B7DB6C702353B1409D1A8047AB8B",
             "SkillSHA256": "6D59DD32E4C376A2859F66AD485DEC5BD154B7DB6C702353B1409D1A8047AB8B"
+        },
+        {
+            "Id": "skill_blockchain_security_foundry",
+            "Name": "blockchain-security-foundry",
+            "Type": "Skill",
+            "RelativePath": "skills/blockchain-security-foundry",
+            "TargetRelative": "config/skills/blockchain-security-foundry",
+            "SizeBytes": 5171,
+            "SHA256": "37926648709A1DD288D09512352A02DB4D97DEBC51DAC7C03045EE5318730B10",
+            "SkillSHA256": "37926648709A1DD288D09512352A02DB4D97DEBC51DAC7C03045EE5318730B10"
         },
         {
             "Id": "file_skills_brand_design_examples_brand_manual_html",
@@ -1497,6 +2318,16 @@
             "SizeBytes": 1573,
             "SHA256": "7F90C829331B94903FFA3E12D7106F6C710C150825AE3BE2EFB991DE3096A7FE",
             "SkillSHA256": "7F90C829331B94903FFA3E12D7106F6C710C150825AE3BE2EFB991DE3096A7FE"
+        },
+        {
+            "Id": "skill_canvas_video_engine",
+            "Name": "canvas-video-engine",
+            "Type": "Skill",
+            "RelativePath": "skills/canvas-video-engine",
+            "TargetRelative": "config/skills/canvas-video-engine",
+            "SizeBytes": 9784,
+            "SHA256": "03FCCD10EE01D8BF87C5095CF1AA7B277B345FC4F7E28F1D01B55071CBF748D6",
+            "SkillSHA256": "03FCCD10EE01D8BF87C5095CF1AA7B277B345FC4F7E28F1D01B55071CBF748D6"
         },
         {
             "Id": "skill_cinematic_gsap_lenis_motion_system",
@@ -1842,6 +2673,26 @@
             "SkillSHA256": "C3BF2EA0FCFC4AAC0959A1A86EAB7A29223B2ED8327E4F6F590A139FA1CA3B9E"
         },
         {
+            "Id": "skill_fintech_web3_business",
+            "Name": "fintech-web3-business",
+            "Type": "Skill",
+            "RelativePath": "skills/fintech-web3-business",
+            "TargetRelative": "config/skills/fintech-web3-business",
+            "SizeBytes": 6578,
+            "SHA256": "5CFBA015C95EB079976EE1F42298D790C6CB58A7A986934BC426095187A5FA4F",
+            "SkillSHA256": "5CFBA015C95EB079976EE1F42298D790C6CB58A7A986934BC426095187A5FA4F"
+        },
+        {
+            "Id": "skill_flutter_dart_core",
+            "Name": "flutter-dart-core",
+            "Type": "Skill",
+            "RelativePath": "skills/flutter-dart-core",
+            "TargetRelative": "config/skills/flutter-dart-core",
+            "SizeBytes": 2392,
+            "SHA256": "3750D61EDD50C323B4CF9F7B992163B77051990CFE058099E0731B5051FDFF87",
+            "SkillSHA256": "3750D61EDD50C323B4CF9F7B992163B77051990CFE058099E0731B5051FDFF87"
+        },
+        {
             "Id": "skill_frontend_a11y",
             "Name": "frontend-a11y",
             "Type": "Skill",
@@ -1879,6 +2730,16 @@
             "SizeBytes": 15328,
             "SHA256": "41534FE2B071E6B45E24E8B50270E6F4E780703374FC13E151774255EECE34DE",
             "SkillSHA256": "41534FE2B071E6B45E24E8B50270E6F4E780703374FC13E151774255EECE34DE"
+        },
+        {
+            "Id": "skill_frontend_slides",
+            "Name": "frontend-slides",
+            "Type": "Skill",
+            "RelativePath": "skills/frontend-slides",
+            "TargetRelative": "config/skills/frontend-slides",
+            "SizeBytes": 1969,
+            "SHA256": "8C99768DE8FE4E749AB420E8EB5495D33DE7B330A4FB3AD0EEE22A710B562AF5",
+            "SkillSHA256": "8C99768DE8FE4E749AB420E8EB5495D33DE7B330A4FB3AD0EEE22A710B562AF5"
         },
         {
             "Id": "file_skills_gemini_brand_tokens_design_md_library_1password_md",
@@ -4803,9 +5664,9 @@
             "Type": "Skill",
             "RelativePath": "skills/gemini-brave-sentinel",
             "TargetRelative": "config/skills/gemini-brave-sentinel",
-            "SizeBytes": 2389,
-            "SHA256": "54AEE8946B86E6BC455AB63A679963446633598A5B05504F4BD6EADF8A505793",
-            "SkillSHA256": "54AEE8946B86E6BC455AB63A679963446633598A5B05504F4BD6EADF8A505793"
+            "SizeBytes": 2390,
+            "SHA256": "41CADABAFE3382111C9914CA96ABEA2425697B421268B85B91C666696FDEF82D",
+            "SkillSHA256": "41CADABAFE3382111C9914CA96ABEA2425697B421268B85B91C666696FDEF82D"
         },
         {
             "Id": "skill_gemini_chaos_qa",
@@ -4863,9 +5724,9 @@
             "Type": "Skill",
             "RelativePath": "skills/gemini-daily-briefing",
             "TargetRelative": "config/skills/gemini-daily-briefing",
-            "SizeBytes": 2694,
-            "SHA256": "98A34F8DF69C13D4C19A8F3653230F96A68166B2CD6057858AD4796BAC477CAB",
-            "SkillSHA256": "98A34F8DF69C13D4C19A8F3653230F96A68166B2CD6057858AD4796BAC477CAB"
+            "SizeBytes": 2696,
+            "SHA256": "4CA8F74D569F60C7A3ACB9AF41B8B20B997E6F032D355A0C6083A1A5327157B1",
+            "SkillSHA256": "4CA8F74D569F60C7A3ACB9AF41B8B20B997E6F032D355A0C6083A1A5327157B1"
         },
         {
             "Id": "skill_gemini_database_mastery",
@@ -5169,9 +6030,9 @@
             "Type": "Skill",
             "RelativePath": "skills/gemini-multiagent-router",
             "TargetRelative": "config/skills/gemini-multiagent-router",
-            "SizeBytes": 3798,
-            "SHA256": "EDAC76D0398E1819627DF9F6E7D58547761B4BA6C1EC523FB2FDF598A9E88DB8",
-            "SkillSHA256": "EDAC76D0398E1819627DF9F6E7D58547761B4BA6C1EC523FB2FDF598A9E88DB8"
+            "SizeBytes": 3799,
+            "SHA256": "40D64F1B4C5E97DB3631A8BBF03D8E32C9B128A985DE853055904AE9162E9540",
+            "SkillSHA256": "40D64F1B4C5E97DB3631A8BBF03D8E32C9B128A985DE853055904AE9162E9540"
         },
         {
             "Id": "skill_gemini_omniroute_manager",
@@ -5179,9 +6040,9 @@
             "Type": "Skill",
             "RelativePath": "skills/gemini-omniroute-manager",
             "TargetRelative": "config/skills/gemini-omniroute-manager",
-            "SizeBytes": 1521,
-            "SHA256": "9BAE69577A7731EDFBFCDE0ED0B2936DA471308CC92FBE5939FF7D9828340A79",
-            "SkillSHA256": "9BAE69577A7731EDFBFCDE0ED0B2936DA471308CC92FBE5939FF7D9828340A79"
+            "SizeBytes": 1523,
+            "SHA256": "20356CA43AC4812479C409C3364232E9F4BBA36DF776D5CD5902AD4F385B03B6",
+            "SkillSHA256": "20356CA43AC4812479C409C3364232E9F4BBA36DF776D5CD5902AD4F385B03B6"
         },
         {
             "Id": "skill_gemini_owasp_sentinel",
@@ -5537,8 +6398,8 @@
             "Type": "File",
             "RelativePath": "skills/gemini-ui-artisan/library/photos.json",
             "TargetRelative": "config/skills/gemini-ui-artisan/library/photos.json",
-            "SizeBytes": 160632,
-            "SHA256": "8FC3B76BCA90F44675BD99D99BB4CE95B0756C6C5D4141B7E917D11D90E61520"
+            "SizeBytes": 160634,
+            "SHA256": "4BC0C8D0A7EDE4BDF499A4E1E295CE5B0E95CF77798D58BF5B90CA1339B67071"
         },
         {
             "Id": "file_skills_gemini_ui_artisan_library_sections_json",
@@ -5762,7 +6623,7 @@
             "Type": "Skill",
             "RelativePath": "skills/gemini-ui-artisan",
             "TargetRelative": "config/skills/gemini-ui-artisan",
-            "SizeBytes": 2419018,
+            "SizeBytes": 2419020,
             "SHA256": "B2CF317EE1E653C4C96D3D2FBF2AFB65D74D6684544E19FECB3E9CBE6313D8D8",
             "SkillSHA256": "B2CF317EE1E653C4C96D3D2FBF2AFB65D74D6684544E19FECB3E9CBE6313D8D8"
         },
@@ -5914,6 +6775,16 @@
             "SizeBytes": 11974,
             "SHA256": "C021BBCE6519F6126673F89467A85D7066BF735B672FFED4AB2ABF01099AE833",
             "SkillSHA256": "C021BBCE6519F6126673F89467A85D7066BF735B672FFED4AB2ABF01099AE833"
+        },
+        {
+            "Id": "skill_guizang_ppt",
+            "Name": "guizang-ppt",
+            "Type": "Skill",
+            "RelativePath": "skills/guizang-ppt",
+            "TargetRelative": "config/skills/guizang-ppt",
+            "SizeBytes": 2426,
+            "SHA256": "A179782C62A783557B6526BADBDD37B90CB4CEF2C835C17A5373159E46123B54",
+            "SkillSHA256": "A179782C62A783557B6526BADBDD37B90CB4CEF2C835C17A5373159E46123B54"
         },
         {
             "Id": "skill_html_to_interaction_prompts",
@@ -6216,6 +7087,86 @@
             "SkillSHA256": "7A528B47B408162459E0E28AFAFC9F1BA49074A789CDAEC69D469F402A9D157A"
         },
         {
+            "Id": "skill_index_ai_multimedia",
+            "Name": "index-ai-multimedia",
+            "Type": "Skill",
+            "RelativePath": "skills/index-ai-multimedia",
+            "TargetRelative": "config/skills/index-ai-multimedia",
+            "SizeBytes": 4141,
+            "SHA256": "F4EF2D02E54B79391788FFCA873C93050FF2E3B4C235C8D8B1E18092672FAD62",
+            "SkillSHA256": "F4EF2D02E54B79391788FFCA873C93050FF2E3B4C235C8D8B1E18092672FAD62"
+        },
+        {
+            "Id": "skill_index_backend_db",
+            "Name": "index-backend-db",
+            "Type": "Skill",
+            "RelativePath": "skills/index-backend-db",
+            "TargetRelative": "config/skills/index-backend-db",
+            "SizeBytes": 3847,
+            "SHA256": "01C1516A39566FA80DB9F0EF239842215EF5074EA465D02CC4477BBD6D293BFD",
+            "SkillSHA256": "01C1516A39566FA80DB9F0EF239842215EF5074EA465D02CC4477BBD6D293BFD"
+        },
+        {
+            "Id": "skill_index_brand_growth",
+            "Name": "index-brand-growth",
+            "Type": "Skill",
+            "RelativePath": "skills/index-brand-growth",
+            "TargetRelative": "config/skills/index-brand-growth",
+            "SizeBytes": 3704,
+            "SHA256": "8F9C5DCA52442D9B537EA201DC59469BF63856145A212B6AEBE65C985617C8E6",
+            "SkillSHA256": "8F9C5DCA52442D9B537EA201DC59469BF63856145A212B6AEBE65C985617C8E6"
+        },
+        {
+            "Id": "skill_index_mobile_dev",
+            "Name": "index-mobile-dev",
+            "Type": "Skill",
+            "RelativePath": "skills/index-mobile-dev",
+            "TargetRelative": "config/skills/index-mobile-dev",
+            "SizeBytes": 4370,
+            "SHA256": "9B481EEC1A5C17E94FCE59AB44263FF37700FD82A90DD7B1E7F5199BD82BFC39",
+            "SkillSHA256": "9B481EEC1A5C17E94FCE59AB44263FF37700FD82A90DD7B1E7F5199BD82BFC39"
+        },
+        {
+            "Id": "skill_index_motion_3d",
+            "Name": "index-motion-3d",
+            "Type": "Skill",
+            "RelativePath": "skills/index-motion-3d",
+            "TargetRelative": "config/skills/index-motion-3d",
+            "SizeBytes": 3419,
+            "SHA256": "F027696FFE24F6754CAC1E7F0583F0ABD73179F3B5FFA619614538D5424B5CD9",
+            "SkillSHA256": "F027696FFE24F6754CAC1E7F0583F0ABD73179F3B5FFA619614538D5424B5CD9"
+        },
+        {
+            "Id": "skill_index_nova_core",
+            "Name": "index-nova-core",
+            "Type": "Skill",
+            "RelativePath": "skills/index-nova-core",
+            "TargetRelative": "config/skills/index-nova-core",
+            "SizeBytes": 3221,
+            "SHA256": "26159414FB0D3A1C8E98600969324D71D33D26D45C56341509C4E59F488A86BD",
+            "SkillSHA256": "26159414FB0D3A1C8E98600969324D71D33D26D45C56341509C4E59F488A86BD"
+        },
+        {
+            "Id": "skill_index_security_deploy",
+            "Name": "index-security-deploy",
+            "Type": "Skill",
+            "RelativePath": "skills/index-security-deploy",
+            "TargetRelative": "config/skills/index-security-deploy",
+            "SizeBytes": 4501,
+            "SHA256": "975C29E5FB1DEA5FA4B1A202523FB90471DF2394F25FFA0B49BC5D7076DAB9AF",
+            "SkillSHA256": "975C29E5FB1DEA5FA4B1A202523FB90471DF2394F25FFA0B49BC5D7076DAB9AF"
+        },
+        {
+            "Id": "skill_index_ui_frontend",
+            "Name": "index-ui-frontend",
+            "Type": "Skill",
+            "RelativePath": "skills/index-ui-frontend",
+            "TargetRelative": "config/skills/index-ui-frontend",
+            "SizeBytes": 8762,
+            "SHA256": "7C241BA5F5DF9DE1350E8DFF515C0CF2D5018E0186F022B19248D0A765C4941F",
+            "SkillSHA256": "7C241BA5F5DF9DE1350E8DFF515C0CF2D5018E0186F022B19248D0A765C4941F"
+        },
+        {
             "Id": "file_skills_instagram_common_references_algorithm_heuristics_md",
             "Name": "algorithm-heuristics.md",
             "Type": "File",
@@ -6289,6 +7240,16 @@
             "SkillSHA256": "2DB31D0BB299AC0053427DBB79CC7699CCCE2614C62BFBAF10B8B575955A0DEA"
         },
         {
+            "Id": "skill_ios_apple_core",
+            "Name": "ios-apple-core",
+            "Type": "Skill",
+            "RelativePath": "skills/ios-apple-core",
+            "TargetRelative": "config/skills/ios-apple-core",
+            "SizeBytes": 2592,
+            "SHA256": "B30251CB1D64FAC9D4A099BE73D72E433564A89528BC827E0BD9772501F1AC7A",
+            "SkillSHA256": "B30251CB1D64FAC9D4A099BE73D72E433564A89528BC827E0BD9772501F1AC7A"
+        },
+        {
             "Id": "file_skills_logo_brief_writer_references_ai_logo_prompts_md",
             "Name": "ai-logo-prompts.md",
             "Type": "File",
@@ -6306,6 +7267,26 @@
             "SizeBytes": 58974,
             "SHA256": "EB5C57588C6490A7263AC70CAE741ACAE71A5D663490B042D4F45F19090759CA",
             "SkillSHA256": "EB5C57588C6490A7263AC70CAE741ACAE71A5D663490B042D4F45F19090759CA"
+        },
+        {
+            "Id": "skill_mcp_server_ppt",
+            "Name": "mcp-server-ppt",
+            "Type": "Skill",
+            "RelativePath": "skills/mcp-server-ppt",
+            "TargetRelative": "config/skills/mcp-server-ppt",
+            "SizeBytes": 1715,
+            "SHA256": "929764B86F4BBD0AACC92AE0073DE8376524CA2B755F41A2635CCFE440447C7B",
+            "SkillSHA256": "929764B86F4BBD0AACC92AE0073DE8376524CA2B755F41A2635CCFE440447C7B"
+        },
+        {
+            "Id": "skill_mobile_security_masvs",
+            "Name": "mobile-security-masvs",
+            "Type": "Skill",
+            "RelativePath": "skills/mobile-security-masvs",
+            "TargetRelative": "config/skills/mobile-security-masvs",
+            "SizeBytes": 2974,
+            "SHA256": "D9A6423D8A18FAC5F73BDE298B7506824B6EF3ABCC38986AC695E387EB51D7E7",
+            "SkillSHA256": "D9A6423D8A18FAC5F73BDE298B7506824B6EF3ABCC38986AC695E387EB51D7E7"
         },
         {
             "Id": "skill_moodboard_builder",
@@ -6502,6 +7483,16 @@
             "SkillSHA256": "94A20F5C7F0DD95BE508ABC3E1BAD793CD03D3B6DE04AFE6EE1DA651F408D9DB"
         },
         {
+            "Id": "skill_ppt_master",
+            "Name": "ppt-master",
+            "Type": "Skill",
+            "RelativePath": "skills/ppt-master",
+            "TargetRelative": "config/skills/ppt-master",
+            "SizeBytes": 2941,
+            "SHA256": "50848B00419222DF21F6925409E53DAEB57082FEA4016A9F2F453B6E6A739BB1",
+            "SkillSHA256": "50848B00419222DF21F6925409E53DAEB57082FEA4016A9F2F453B6E6A739BB1"
+        },
+        {
             "Id": "skill_procedural_film",
             "Name": "procedural-film",
             "Type": "Skill",
@@ -6520,6 +7511,16 @@
             "SizeBytes": 7526,
             "SHA256": "397AF812D1834DC2F19CD053DC82D2362254721B937111884D5F3675E7A27951",
             "SkillSHA256": "397AF812D1834DC2F19CD053DC82D2362254721B937111884D5F3675E7A27951"
+        },
+        {
+            "Id": "skill_react_native_expo",
+            "Name": "react-native-expo",
+            "Type": "Skill",
+            "RelativePath": "skills/react-native-expo",
+            "TargetRelative": "config/skills/react-native-expo",
+            "SizeBytes": 2611,
+            "SHA256": "75E554755DDF8BF1D5BBE9F7EC3638555E2C424EEA739BF5576431EA1B95D4BA",
+            "SkillSHA256": "75E554755DDF8BF1D5BBE9F7EC3638555E2C424EEA739BF5576431EA1B95D4BA"
         },
         {
             "Id": "skill_react_patterns",

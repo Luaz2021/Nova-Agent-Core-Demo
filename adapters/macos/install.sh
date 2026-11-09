@@ -175,8 +175,11 @@ done
 cp -R "$REPO_ROOT/scripts/." "$GEMINI_DIR/scripts/"
 cp -R "$REPO_ROOT/nova_core/." "$GEMINI_HOME/nova_core/"
 cp -R "$REPO_ROOT/almacen/." "$GEMINI_DIR/almacen/"
+mkdir -p "$GEMINI_DIR/herramientas" "$GEMINI_DIR/clonador"
+cp -R "$REPO_ROOT/herramientas/." "$GEMINI_DIR/herramientas/"
+cp -R "$REPO_ROOT/clonador/." "$GEMINI_DIR/clonador/"
 cp "$REPO_ROOT/manifest_master.json" "$GEMINI_DIR/manifest_master.json"
-find "$GEMINI_DIR/scripts" "$GEMINI_HOME/nova_core" "$GEMINI_DIR/almacen" -name "__pycache__" -type d -prune -exec rm -rf {} + 2>/dev/null || true
+find "$GEMINI_DIR/scripts" "$GEMINI_HOME/nova_core" "$GEMINI_DIR/almacen" "$GEMINI_DIR/herramientas" "$GEMINI_DIR/clonador" -name "__pycache__" -type d -prune -exec rm -rf {} + 2>/dev/null || true
 
 # Plantillas de memoria (nunca se pisan las notas del usuario)
 TEMPLATES_DIR="$REPO_ROOT/memory_templates"

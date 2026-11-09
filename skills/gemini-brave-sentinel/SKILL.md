@@ -34,7 +34,7 @@ Invoke-RestMethod -Uri "http://127.0.0.1:5005/execute" -Method Post -Body $body 
 - Cuando el usuario pregunte: *"¿Que video tengo abierto en Brave?"* o *"Revisa la web que estoy viendo"*:
   1. Consultar `/snapshot` o `YOUTUBE_CONTROL` en el puente local.
   2. Extraer titulo, URL activa y estado de reproduccion de YouTube.
-  3. Resumir el contenido del video o el articulo que Alexander tiene en pantalla.
+  3. Resumir el contenido del video o el articulo que el usuario tiene en pantalla.
 
 ## 4. Asistente de Reuniones (Google Meet / Zoom Web)
 - Cuando el usuario diga: *"Tengo reunion en Meet, toma apuntes de todo lo hablado"*:

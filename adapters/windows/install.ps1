@@ -210,6 +210,10 @@ $repoCore = Join-Path $repoRoot "nova_core"
 if (Test-Path $repoCore) { Copy-Item -Path "$repoCore\*" -Destination $novaCore -Recurse -Force }
 $repoAlmacen = Join-Path $repoRoot "almacen"
 if (Test-Path $repoAlmacen) { Copy-Item -Path "$repoAlmacen\*" -Destination $novaAlmacen -Recurse -Force }
+foreach ($extra in @("herramientas", "clonador")) {
+    $src = Join-Path $repoRoot $extra
+    if (Test-Path $src) { New-Item -ItemType Directory -Path "$geminiDirntigravity\$extra" -Force | Out-Null; Copy-Item -Path "$src\*" -Destination "$geminiDirntigravity\$extra" -Recurse -Force }
+}
 Copy-Item (Join-Path $repoRoot "manifest_master.json") "$geminiDir\antigravity\manifest_master.json" -Force
 Get-ChildItem -Path $novaLocalScripts, $novaCore, $novaAlmacen -Recurse -Directory -Filter "__pycache__" | Remove-Item -Recurse -Force
 

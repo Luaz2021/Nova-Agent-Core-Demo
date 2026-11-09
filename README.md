@@ -5,11 +5,11 @@
 [![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20macOS%20%7C%20Linux-success.svg)](#-instalación-en-1-clic-auto-instalador-de-antigravity-incluido)
 [![Native Runtime](https://img.shields.io/badge/Native%20Runtime-Google%20Antigravity%202.0-orange.svg)](https://antigravity.google)
 [![Ecosystem](https://img.shields.io/badge/Ideology-100%25%20Google%20Ecosystem-4285F4.svg)](#-la-ideología-100-ecosistema-google)
-[![Skills](https://img.shields.io/badge/Skills-125%20Optimizadas%20Gemini-purple.svg)](#-catálogo-detallado-de-skills-por-especialidad)
+[![Skills](https://img.shields.io/badge/Skills-145%20Optimizadas%20Gemini-purple.svg)](#-catálogo-detallado-de-skills-por-especialidad)
 [![Integrity Shield](https://img.shields.io/badge/Integrity-SHA--256%20Signed%20Manifest-brightgreen.svg)](#-capa-de-integridad-criptográfica-y-anti-plagio)
 [![1-Shot Protocol](https://img.shields.io/badge/Protocol-1--Shot%20Consolidado-red.svg)](#️-arquitectura-del-sistema-la-pirámide-de-escalado-de-5-capas)
 
-**Nova Agent** no es un prompt leak ni una extensión visual de editor: es un **Agente Autónomo de Ingeniería de Software de Código Abierto**, dotado de cerebro agéntico, memoria persistente local, disciplina de trinchera y un árbol de 125 habilidades especializadas diseñado y acoplado nativamente para **Google Antigravity 2.0** y los modelos **Google Gemini**.
+**Nova Agent** no es un prompt leak ni una extensión visual de editor: es un **Agente Autónomo de Ingeniería de Software de Código Abierto**, dotado de cerebro agéntico, memoria persistente local, disciplina de trinchera y un árbol de 145 habilidades especializadas diseñado y acoplado nativamente para **Google Antigravity 2.0** y los modelos **Google Gemini**.
 
 Diseñado, entrenado y probado a fuego durante más de un mes de pruebas de estrés continuas por **Saúl Alexander Martínez Rivas** ([@Luaz2021](https://github.com/Luaz2021)), Nova Agent erradica los tres vicios crónicos de los asistentes de IA convencionales:
 1. **Cero servilismo ni relleno conversacional:** Respuestas directas de arquitecta senior, código limpio bajo filosofía **KISS estricto** (*Keep It Simple, Stupid*) con *early returns*.
@@ -24,7 +24,7 @@ Diseñado, entrenado y probado a fuego durante más de un mes de pruebas de estr
 Mientras la inmensa mayoría de la comunidad open source compite por hacer wrappers y extensiones para Claude Code o Cursor, **Nova Agent fue concebido desde el primer día para exprimir al máximo el poder del ecosistema de Google**:
 
 1. **Alineación con Google DeepMind:** Diseñado para correr de forma nativa en **Google Antigravity 2.0**, aprovechando su runtime por eventos, su sandbox seguro de herramientas y el CLI (`agy`).
-2. **Explotación de la Ventana de Contexto de Gemini:** Las 119 skills están optimizadas para la capacidad de absorción masiva de **Google Gemini** (1M a 2M tokens), permitiendo analizar repositorios completos de golpe sin alucinaciones.
+2. **Explotación de la Ventana de Contexto de Gemini:** Las 145 skills están optimizadas para la capacidad de absorción masiva de **Google Gemini** (1M a 2M tokens), permitiendo analizar repositorios completos de golpe sin alucinaciones.
 3. **Multimodalidad Nativa:** Inspección de capturas visuales de UI, análisis de vídeo técnico y procesamiento multimodal directo con Google Cloud.
 4. **Costo Óptimo 1-Shot:** Pensado para operar el 90% del tiempo sobre **Gemini 3.8 Flash** a máxima velocidad y mínimo coste, escalando a **Argon** solo cuando se requiere cirugía sistémica.
 
@@ -53,7 +53,11 @@ flowchart TD
     Guard -->|Bloqueado o pregunta| User
     Guard -->|Permitido| Dispatcher{¿Qué hay que hacer?}
 
-    Dispatcher -->|Web de un negocio| Biblio[🏪 Biblioteca de webs<br>montar.py · identidad por tipo de negocio]
+    Dispatcher -->|Web de un negocio| Biblio[🏪 Biblioteca de webs<br>nova_tarea.py --categoria auto]
+    Dispatcher -->|Web de referencia| Clon[🔍 Clonador<br>mide estructura · cambia textos y marcas]
+    Dispatcher -->|Otra web o app| Secciones[🧩 Qwen por secciones<br>nova_secciones.py + revisión InternVL]
+    Clon --> Capa0
+    Secciones --> Capa0
     Dispatcher -->|Documento PDF / Word| Redactor[📄 Redactor local<br>redactor.py · resumir.py]
     Dispatcher -->|Código grande / textos en lote| Obrero[🔧 Obrero local<br>nova_local_worker.py]
     Biblio --> Capa0
@@ -114,7 +118,10 @@ Esta versión acerca la Nova pública a la Nova completa del autor: **reglas que
 | **6. IA local de nueva generación (`scripts/nova_instalar_ia_local.py`)** | **Qwen 3.5** (9B o 4B) para código y textos + **InternVL 3.5** para visión, según tu equipo. Si falta Ollama, Nova lo instala (winget, Homebrew o el instalador oficial de Linux). Un único catálogo: `scripts/nova_modelos.json`. | Di *"Nova, instala la IA local"* y listo. |
 | **7. Actualizador por parches con firma SHA-256 (`scripts/actualizar_nova.py`)** | Compara **archivo por archivo**, verifica cada descarga, hace copia de seguridad antes de cambiar nada y **nunca toca** tus notas, tu perfil ni tus claves. Compatible con las instalaciones v2.x. | Parches seguros cada pocos meses con un *"Nova, busca actualizaciones"*. |
 | **8. Multiplataforma de verdad** | Avisos de escritorio, voz, batería, anti-suspensión y portapapeles nativos en Windows, macOS y Linux; el nombre del usuario se lee de su perfil. | La misma Nova en los tres sistemas. |
-| **9. Informe de aprendizaje con privacidad (`/enviar-informe`)** | Si quieres ayudar a mejorar Nova, prepara un informe con **solo** las lecciones, las entradas nuevas de tu servilleta y el **tipo** de errores. Nada de tu equipo, proyectos, rutas, correos ni claves. Tú lo revisas y decides si se envía. | Mejora colectiva sin robar información. |
+| **9. Pipeline de webs completo (`scripts/nova_tarea.py`)** | Un solo comando para la Capa 0: Qwen pica por secciones (`nova_secciones.py`), el linter (`nova_core/orquestador.py`) y Playwright + InternVL revisan escritorio y móvil (`nova_pipeline_local.py`), y Nova solo arregla lo que falla. Con una web de referencia usa el **clonador** (`clonador/`), que mide estructura y ritmo y cambia textos, marcas y fotos por los tuyos. | Webs revisadas antes de entregarlas, sin reescribirlas desde la nube. |
+| **10. Herramientas internas (`herramientas/`)** | Trello, Gmail, Groq (Whisper + Llama gratis), YouTube, escudo de datos para la nube gratis, escáner de repos de terceros, pruebas fantasma en rama temporal, radar de webs del sector, vídeo (narración, intro, hoja de fotogramas auditada por InternVL, destilador de reels) y voz manos libres. | Lo que Nova ya sabe hacer sin escribir scripts nuevos. |
+| **11. 20 skills nuevas (145 en total)** | Móvil nativo (Android, iOS, Flutter, React Native, seguridad MASVS), presentaciones (HTML, suizo/editorial, PPTX nativo, PowerPoint), Web3 (Foundry, tokenización y MiCA), vídeo Canvas 2.5D y los **8 índices de 1 salto** que hacen que Nova lea solo lo que necesita. | Más dominios con el mismo gasto de tokens. |
+| **12. Informe de aprendizaje con privacidad (`/enviar-informe`)** | Si quieres ayudar a mejorar Nova, prepara un informe con **solo** las lecciones, las entradas nuevas de tu servilleta y el **tipo** de errores. Nada de tu equipo, proyectos, rutas, correos ni claves. Tú lo revisas y decides si se envía. | Mejora colectiva sin robar información. |
 
 ---
 
@@ -143,11 +150,26 @@ Nova CLI Tools
 ├── nova_video_router.py  -> Enrutador híbrido de vídeo 3D (Capa 0 Ollama vs Capa 1 Cloud Fallback)
 ├── free_ai_router.py     -> Enruta consultas a Codestral o OpenRouter Free Tier (0€)
 ├── youtube_api_client.py -> Consultas a YouTube Data API v3 en <150ms a 0 tokens
+├── nova_tarea.py         -> Comando único de webs: biblioteca, referencia (clonador) o Qwen por secciones + revisión
 ├── nova_instalar_ia_local.py -> Instala Ollama + Qwen 3.5 + InternVL 3.5 según tu equipo
 ├── nova_claves.py        -> Asistente de claves gratis (se guardan solo en tu equipo)
 ├── nova_revisor.py       -> Informe semanal local: qué hizo Nova, cuánto gastó y dónde falló
 ├── actualizar_nova.py    -> Parches oficiales con firma SHA-256 y copia de seguridad
 └── enviar_feedback.py    -> Conexión directa y sanitizada con el creador vía GitHub Issues
+```
+
+### Herramientas internas (`~/.gemini/antigravity/herramientas/`, índice en `herramientas/LEEME.md`)
+```text
+herramientas/
+├── trello/trello.py            -> Tableros, listas y tarjetas (claves en tu secrets.env, nunca impresas)
+├── nube/                       -> Groq (Whisper + Llama gratis), Gmail, YouTube y escudo de datos para IA gratis en la nube
+├── seguridad/                  -> Escáner de repos de terceros al clonarlos (git_clone_sentinel + nova_repo_scanner)
+├── pruebas/phantom_test.ps1    -> Prueba código en una rama temporal y la descarta si falla
+├── radar_web.py                -> Mide 3-5 webs reales del sector (estructura y ritmo, sin copiar textos ni fotos)
+├── video/                      -> Narración, intro de 10 s, hoja de fotogramas auditada por InternVL, destilador de reels
+└── voz/nova_voz.py             -> Manos libres: di "Nova" y dicta (Windows; el modelo Vosk se descarga aparte)
+
+clonador/                       -> Motor que rehace una web de REFERENCIA en local (se cambian textos, marcas y fotos)
 ```
 
 ### Ejemplos de uso directo desde terminal:
@@ -179,7 +201,7 @@ python ~/.gemini/antigravity/scripts/nova_instalar_ia_local.py --estado
 ## ⚡ Instalación en 1 Clic (Auto-Instalador de Antigravity Incluido)
 
 > [!TIP]
-> **¿No tienes Google Antigravity instalado?** Al ejecutar el instalador en Windows, comprobará tu sistema y **te preguntará si deseas que descargue e instale Google Antigravity oficial automáticamente** antes de enlazar las 125 skills.
+> **¿No tienes Google Antigravity instalado?** Al ejecutar el instalador en Windows, comprobará tu sistema y **te preguntará si deseas que descargue e instale Google Antigravity oficial automáticamente** antes de enlazar las 145 skills.
 
 > [!NOTE]
 > **Requisitos:** Python 3.10 o superior y git (en Windows, si falta Python, el instalador te ofrece instalarlo con winget). La IA local es opcional y el instalador solo la ofrece si tu equipo tiene RAM y disco suficientes.
@@ -223,7 +245,7 @@ No hace falta reinstalar. En el chat de Antigravity escribe:
 
 ## 🧰 Catálogo Detallado de Skills por Especialidad
 
-Nova Agent incorpora **119 skills de ingeniería de software** optimizadas para Google Gemini. Cada módulo cuenta con su especificación formal en `SKILL.md`:
+Nova Agent incorpora **145 skills de ingeniería de software** optimizadas para Google Gemini. Cada módulo cuenta con su especificación formal en `SKILL.md`:
 
 ### 1. 🎯 Planificación, Estructuración & Dirección Agéntica
 *Módulos dedicados a la preventa técnica, descomposición de historias de usuario, mitigación de sesgos y bucles autónomos.*
@@ -310,6 +332,7 @@ Nova Agent incorpora **119 skills de ingeniería de software** optimizadas para 
 
 | Skill | Especificación Técnica | Cuándo se Activa |
 | :--- | :--- | :--- |
+| **`canvas-video-engine`** | **Vídeo programático sin npm.** Canvas 2.5D + WebCodecs, shaders y audio en Python con NumPy y FFmpeg, y control de calidad local con InternVL. | Vídeos verticales y explicativos generados en local. |
 | **`hyperframes-director`** | **Motor Dual de Vídeo Programático.** Motor A (3D Procedural en Three.js con avatares procedurales y lip-sync 30Hz) y Motor B (2D Editorial/B-Roll con GSAP). Enrutador híbrido Capa 0 Ollama a 0 tokens vs Capa 1 Cloud 1-Shot Fallback y Safe Zones 9:16. | Reels técnicos, podcasts 3D con avatares, demos de producto y explainers visuales de alta retención. |
 | **`video-script-storyteller`** | **Guiones de Alta Retención en 2 Columnas.** Estructura visual vs audio, ganchos de 3 segundos (*scroll stoppers*), ritmo de atención y llamadas a la acción sincronizadas. | Redacción y planificación de guiones para YouTube Shorts, Reels y TikTok. |
 | **`ffmpeg-toolkit`** | **Procesamiento Audiovisual CLI Multiplataforma.** Corte sin recodificar (`-c copy`), compresión optimizada para WhatsApp/Web, normalización EBU R128 (-14 LUFS) y masterizado CRF 18. | Ensamble de vídeo, optimización de peso y extracción de pistas de audio. |
@@ -350,6 +373,49 @@ Nova Agent incorpora **119 skills de ingeniería de software** optimizadas para 
 | **`gemini-concise-clean-code`** | **Código Ultra-Conciso (KISS & YAGNI).** Genera soluciones en el menor número de líneas legibles, con early returns y cero sobre-ingeniería. | Generación y refactorización de código en cualquier lenguaje. |
 | **`cursorrules-advisor`** | **Catálogo de +250 Reglas Especializadas.** Adapta reglas `.cursorrules` y `.mdc` para Expo, React Native, Supabase, Spring Boot y Next.js. | Creación y auditoría de reglas locales por proyecto. |
 | **`gemini-humanizer-prose`** | **Humanizador de Textos y Documentación.** Elimina giros artificiales de IA en READMEs, correos académicos, manuales y artículos técnicos. | Redacción de entregables, emails y documentación formal. |
+
+---
+
+### 11. 📱 Desarrollo Móvil Nativo & Multiplataforma
+*Apps de verdad para Android e iOS, con la seguridad móvil de serie.*
+
+| Skill | Especificación Técnica | Cuándo se Activa |
+| :--- | :--- | :--- |
+| **`android-core`** | **Android nativo.** Kotlin 2.0+, Jetpack Compose, Coroutines/Flow, KSP, flujo unidireccional, Material 3 y R8. | Apps Android nativas. |
+| **`ios-apple-core`** | **iOS nativo.** Swift 6, SwiftUI, `@Observable`, Swift Concurrency, SwiftData y SPM. | Apps iPhone, iPad y Mac. |
+| **`flutter-dart-core`** | **Flutter & Dart 2026.** Dart 3 (records, pattern matching), Impeller, Riverpod/BLoC y arquitectura limpia. | Apps multiplataforma con Flutter. |
+| **`react-native-expo`** | **React Native & Expo.** Expo Router, New Architecture (Fabric/TurboModules), NativeWind v4, Zustand, TanStack Query y Reanimated 3. | Apps multiplataforma con JavaScript/TypeScript. |
+| **`mobile-security-masvs`** | **Seguridad móvil OWASP MASVS v2.** Keystore/Keychain, SSL pinning, biometría, ofuscación y anti-tampering. | Cualquier app que maneje datos de usuarios. |
+
+### 12. 🎤 Presentaciones & Diapositivas
+*Decks que no parecen hechos por una IA.*
+
+| Skill | Especificación Técnica | Cuándo se Activa |
+| :--- | :--- | :--- |
+| **`frontend-slides`** | **Deck web en un solo HTML.** Escenario 16:9 rígido, tipografías con carácter y micro-interacciones, sin dependencias. | Presentaciones para proyectar o compartir por enlace. |
+| **`guizang-ppt`** | **Diseño editorial de diapositivas.** Estilo suizo y revista editorial: retícula estricta, líneas finas y contraste tipográfico. | Decks de marca, portfolio o investigación. |
+| **`ppt-master`** | **PPTX nativo.** Formas vectoriales, tablas editables, plantillas institucionales y control de colisiones. | Cuando hace falta un PowerPoint editable. |
+| **`mcp-server-ppt`** | **Control de PowerPoint en Windows (COM).** Crear, editar en vivo y exportar diapositivas a PNG/PDF. | Automatizar PowerPoint ya instalado. |
+
+### 13. ⛓️ Web3, Smart Contracts & Fintech
+| Skill | Especificación Técnica | Cuándo se Activa |
+| :--- | :--- | :--- |
+| **`blockchain-security-foundry`** | **Smart contracts con Foundry.** Forge, Anvil y Cast, pruebas de invariantes y auditoría con estándares Cyfrin. | Desarrollo y auditoría de contratos. |
+| **`fintech-web3-business`** | **Negocio Web3.** Tokenización de activos reales (RWA), tokenomics sostenibles y cumplimiento europeo MiCA. | Modelos de negocio y viabilidad de proyectos cripto. |
+
+### 14. 🧭 Índices de 1 Salto (el mapa que ahorra tokens)
+*Nova lee primero el índice del tema y solo después las skills que necesita: nunca carga las 145 de golpe.*
+
+| Índice | Qué cubre |
+| :--- | :--- |
+| **`index-ui-frontend`** | Webs y UI: anti-clichés, 6 arquetipos de negocio, flujo con la biblioteca local, motion y canvas. |
+| **`index-backend-db`** | Arquitectura limpia, FastAPI, Node, PostgreSQL/Supabase RLS, migraciones, Docker y redes. |
+| **`index-mobile-dev`** | Android, iOS, React Native, Flutter y seguridad MASVS. |
+| **`index-motion-3d`** | GSAP, ScrollTrigger, Lenis, micro-interacciones y Three.js. |
+| **`index-ai-multimedia`** | IA local, enrutado multi-agente, vídeo en código, FFmpeg, transcripción y scrapers 0-token. |
+| **`index-brand-growth`** | Marca, Instagram 2026, textos humanos y legal (RGPD). |
+| **`index-security-deploy`** | Auditoría web, OWASP/STRIDE, TDD, Chaos QA y despliegue a 0 €. |
+| **`index-nova-core`** | La propia Nova: memoria, servilleta, lecciones, modelos y cómo crear skills. |
 
 ---
 

@@ -1,0 +1,15 @@
+id: pydantic-dict-deprecated
+language: Python
+severity: warning
+message: "Pydantic v2: usa .model_dump() en lugar de .dict()"
+rule:
+  pattern: $OBJ.dict($$$ARGS)
+  inside:
+    kind: module
+    has:
+      any:
+        - pattern: from pydantic import $$$
+        - pattern: import pydantic
+      stopBy: end
+    stopBy: end
+fix: $OBJ.model_dump($$$ARGS)

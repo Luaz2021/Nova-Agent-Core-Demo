@@ -1,0 +1,6 @@
+id: fastapi-on-event-deprecated
+language: Python
+severity: error
+message: "FastAPI moderno: @app.on_event esta deprecado, usa lifespan async context manager"
+rule:
+  pattern: $APP.on_event($$$ARGS)

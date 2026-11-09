@@ -1,0 +1,25 @@
+id: nextjs15-sync-params-tsx
+language: Tsx
+severity: error
+message: "Next.js 15/16: params y searchParams son Promises; usa 'await params' o 'await searchParams' antes de acceder a sus propiedades"
+rule:
+  any:
+    - pattern: params.$PROP
+    - pattern: searchParams.$PROP
+  not:
+    any:
+      - pattern: params.then
+      - pattern: searchParams.then
+---
+id: nextjs15-sync-params-ts
+language: TypeScript
+severity: error
+message: "Next.js 15/16: params y searchParams son Promises; usa 'await params' o 'await searchParams' antes de acceder a sus propiedades"
+rule:
+  any:
+    - pattern: params.$PROP
+    - pattern: searchParams.$PROP
+  not:
+    any:
+      - pattern: params.then
+      - pattern: searchParams.then

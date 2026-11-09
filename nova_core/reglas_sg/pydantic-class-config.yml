@@ -1,0 +1,15 @@
+id: pydantic-class-config-deprecated
+language: Python
+severity: error
+message: "Pydantic v2: reemplaza 'class Config:' por 'model_config = ConfigDict(...)'"
+rule:
+  kind: class_definition
+  has:
+    field: name
+    regex: ^Config$
+  inside:
+    kind: class_definition
+    has:
+      field: superclasses
+      regex: BaseModel
+    stopBy: end

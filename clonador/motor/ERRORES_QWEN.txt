@@ -1,0 +1,214 @@
+ERRORES DE QWEN (qwen2.5-coder:7b) — solo los fallos observados en las pruebas
+Fecha: 1 de noviembre de 2026
+Pruebas: Vision Pro con Qwen solo (35 secciones), las 15 webs que llegaron a
+construirse en el lote, y Nara y Orbita creadas desde cero.
+Solo errores vistos de verdad. Sin soluciones ni prompts.
+
+==================================================================
+A) CUANDO TIENE QUE ADIVINAR EL DISENO (clonar a partir de medidas)
+==================================================================
+
+1. No entiende la composicion de capas.
+   Si un texto va ENCIMA de una imagen (hero con foto de fondo), lo apila:
+   pone la imagen arriba y el texto debajo, o el texto desaparece.
+   En Vision Pro solo 1 de 35 secciones uso posicion absoluta.
+
+2. No reconoce un carrusel.
+   Ve "muchas columnas" y hace una rejilla de 2-3 columnas con cajas
+   sueltas, textos repetidos o cortados, en vez de una fila horizontal
+   de tarjetas que se desliza.
+
+3. Cruza los tamanos de letra entre textos.
+   En secciones con 6 o mas textos de tamanos distintos, le pone a un
+   texto el tamano de otro (ej.: un subtitulo de 28px lo pone a 44px y
+   el titular de 48px lo deja en 28px). Pierde la correspondencia.
+
+4. Mezcla los tamanos de movil y de PC.
+   A veces pone el tamano de PC en movil o al reves, o no pone la
+   version de PC (se queda con un solo tamano para las dos pantallas).
+
+5. No respeta la altura de la seccion.
+   Secciones de 600px donde la original mide 977px, o al reves.
+   Ignora el alto y el espaciado vertical (paddings) que se le dan.
+
+6. Peso de la letra mal (el fallo mas repetido: 25 % de todos).
+   Pone 800 donde es 600, 400 donde es 500, etc.
+
+7. Color de texto aproximado (24 % de los fallos).
+   Usa un gris o negro parecido pero no el exacto.
+
+8. Textos que faltan o que cambia (24 % de los fallos).
+   Se salta textos, los corta o los "mejora": el boton "Buy" lo
+   escribio como "Buy Apple Vision Pro".
+
+9. Columnas mal en PC (5 %) y en movil (2 %).
+   Pone otro numero de columnas del que tiene la seccion.
+
+10. Mayusculas y fondo de seccion: fallos sueltos (1 vez cada uno).
+
+11. Las correcciones a veces empeoran.
+    Al pedirle que corrija un fallo concreto, reescribe la seccion
+    entera y rompe lo que estaba bien (S6 del Vision Pro: 60 % -> 51 %).
+    En 10 de 35 secciones la correccion no mejoro o empeoro.
+
+12. Con secciones enormes (mucho codigo) no puede.
+    Las secciones muy grandes (ej. 200 KB) no le caben y se quedan
+    sin corregir.
+
+==================================================================
+B) CUANDO SE LE DAN INSTRUCCIONES EXACTAS (crear desde cero)
+==================================================================
+(Aqui acierta el 97-99 % a la primera; estos son los pocos fallos)
+
+13. Se olvida de imagenes que se piden.
+    Nara: el hero salio sin la imagen grande del producto.
+    Orbita: la franja de logos salio sin los 6 logos (0 de 6) a la
+    primera.
+
+14. Mete imagenes que nadie pidio.
+    Nara: puso un cuadrito de imagen delante del logo de texto "nara".
+
+15. No coloca una etiqueta debajo de su numero si no se le exige.
+    Nara: en las cifras, la etiqueta no quedo debajo de su numero.
+
+16. Ignora la fuente de los titulares (font-titulo).
+    Orbita: el titulo de las preguntas frecuentes se quedo con la
+    fuente normal y NO lo corrigio en 3 intentos, aunque se le dijo
+    exactamente que fallaba. En la primera version tambien el titulo
+    de precios.
+
+17. Copia el mismo estilo en elementos que deberian ser distintos.
+    Orbita (precios): los 3 botones salieron rellenos de violeta,
+    cuando dos tenian que ir solo con borde. Y el plan destacado salio
+    sin su borde violeta, igual que los otros dos.
+
+18. Arrastra costumbres de Bootstrap.
+    Anade clases que no existen en Tailwind ("section", "container"
+    sin sentido) por inercia.
+
+19. Rellena con texto generico si falta el contenido.
+    Orbita: puso "Ventaja 1, Ventaja 2, Ventaja 3" en los planes.
+    (Ojo: aqui el fallo fue mio, no le di esos textos.)
+
+==================================================================
+C) WEB POR WEB (lote: las 15 webs que llegaron a construirse)
+==================================================================
+Ojo: en los clones la base la genera el script y Qwen tenia 1 intento
+para arreglar cada seccion roja. "Fallo de Qwen" = no logro arreglarlo
+o lo dejo peor. Las otras webs del lote no llegaron a Qwen (bloqueadas
+o 3D puro sin HTML).
+
+--- Totales (las 15 webs juntas, 248 fallos) ---
+peso de la letra 63 (25 %) · color de texto aproximado 60 (24 %)
+texto que falta o cambiado 60 (24 %) · tamano de letra 34 (14 %)
+columnas en PC 12 (5 %) · altura/espaciado 12 (5 %)
+columnas en movil 5 (2 %) · mayusculas 1 · fondo de seccion 1
+
+--- iPhone 16 Pro (2 de 5 aprobadas) ---
+- S1: deja 1 columna donde la original tiene 3.
+- S2: al corregir la destrozo: de 87 % a 43 %.
+- S5: textos a 14px en PC cuando son 17px (no pone la version de PC).
+
+--- Vision Pro (2 de 5 aprobadas) ---
+- S1: 1 columna donde hay 3.
+- S2 (barra de producto): mide 112px cuando es 52px; faltan "Book a
+  demo", "Overview", "Tech Specs", "visionOS".
+- S3 (hero): 2 columnas donde hay 1 (en PC y en movil); subtitulo a 26px
+  en movil cuando es 17px; faltan los 3 titulares grandes de 48px.
+
+--- AirPods Pro (1 de 5) ---
+- S1: 1 columna donde hay 3.
+- S2: faltan los enlaces "Overview", "Hearing Health", "Tech Specs",
+  "Compare".
+- S3 y S5: 7 textos a 12-14px en PC cuando son 17px.
+
+--- AirPods Max (0 de 5) ---
+- S1: 1 columna donde hay 3.
+- S2: la barra mide 27px cuando es 52px; faltan "Overview", "Tech Specs",
+  "Compare". La correccion no mejoro nada.
+- S4: la seccion directamente no aparece en su HTML.
+- S5: 0 %, y las correcciones no la mejoraron.
+
+--- Awwwards (0 de 5) ---
+- S1: falta "Watch all courses for just $12/month".
+- S2 (menu): 2 columnas donde hay 3; faltan "Explore", "Directory",
+  "Academy", "Jobs", "Market" y la etiqueta "New".
+- S3: 1 columna donde hay 2; faltan "Color" y "Reset filters"; un texto
+  de 14px lo pone a 28px; mide 170px cuando es 130px.
+- S4 (listado): 12 nombres a 18px cuando son 15px; 2 columnas en movil
+  cuando es 1; mide 7.822px cuando son 11.416px.
+- S5: la seccion le queda con 0px de alto.
+
+--- KPR (0 de 4) ---
+- S1: titulos a peso 700 cuando son 350; falta "SCBQ". Al corregir bajo
+  de 55 % a 0 %.
+- S2: 1 columna donde hay 2; falta el parrafo principal.
+- S3: 1 columna donde hay 2; faltan "PROJECT", "THE KEEP", "FACTIONS",
+  "THE WORLD".
+- S4: mide 2.723px cuando son 910px; 2 columnas donde hay 4 (y 3 en
+  movil donde es 1); el texto no va encima de la imagen; faltan "STORY"
+  y "(c) 2022".
+
+--- Opal (0 de 4) ---
+- S1: al corregir bajo de 25 % a 0 %.
+- S2: la seccion le queda con 0px de alto y faltan los 13 parrafos.
+- S3: mide 2.202px cuando son 122px.
+- S4 (pie): 6 enlaces a 14px cuando son 16px; mide 1.473px cuando son
+  1.020px. Al corregir bajo de 53 % a 0 %.
+
+--- Lando Norris (0 de 5, con el clon aun roto) ---
+- S1: fondo #282C20 cuando es #FCFCFC. Al corregir bajo de 50 % a 0 %.
+- S2: mide 726px cuando son 1.526px; mete el texto encima de la imagen
+  cuando va fuera; faltan "NEXT RACE", "MEXICO", "MCLAREN F1",
+  "SINCE 2019".
+- S3: mide 1.418px cuando son 913px.
+
+--- Lusion (0 de 5) ---
+- S1: 2 columnas en movil cuando es 1.
+- S2: mide 1.430px cuando son 654px; al corregir bajo de 37 % a 20 %.
+- S3: faltan los titulares gigantes "Bold Ideas," / "Brought to Life"
+  (128px) y las letras animadas de "PLAY"; 1 columna en movil donde
+  son 2.
+- S4: faltan "Featured Work" y el texto de presentacion; etiquetas a
+  12px en movil cuando son 9px.
+
+--- Immersive Garden (0 de 1) ---
+- S1: 2 columnas donde hay 1.
+
+--- Dark (Netflix) (0 de 1) ---
+- S1: "100%" sin mayusculas; la correccion no mejoro.
+
+--- Y7K (0 de 2) ---
+- S1 y S2: parecido 18-21 % y las correcciones no mejoraron nada.
+
+--- Cameron's World (0 de 5) ---
+- S1-S5: parecido 12-14 %, ninguna correccion mejoro; S2 al corregir
+  bajo de 12 % a 0 %; S3 1 columna donde hay 2.
+
+--- Resn y Bruno Simon ---
+- 0 secciones utiles: son 3D puro, Qwen no tenia nada que hacer.
+
+--- Patrones que se repiten en todas ---
+- La barra de enlaces de producto (Overview, Tech Specs, Compare...) se
+  la salta en TODAS las webs de Apple.
+- Casi siempre deja 1 columna donde hay 3 (la barra global de Apple).
+- Pone el tamano de movil tambien en PC (14px donde son 17px).
+- Altura de seccion muy lejos de la real (de 0px a 3 veces mas).
+- 7 veces la correccion dejo la seccion PEOR que antes (a veces a 0 %).
+
+==================================================================
+D) LO QUE NO FALLO (para comparar)
+==================================================================
+- Siempre devuelve el formato pedido: una sola seccion, HTML cerrado,
+  sin <html> ni scripts.
+- Usa medidas exactas (text-[48px], bg-[#F5F5F7]) en vez de redondear
+  a clases tipo text-xl o gray-500.
+- Respeta el responsive: nada se salio de la pantalla en movil en
+  Nara ni en Orbita.
+- Hizo bien lo dificil cuando se le explico: texto con degradado,
+  barra fija translucida, rejilla bento, tarjetas, preguntas
+  desplegables sin JavaScript.
+
+Resumen en una linea: Qwen falla cuando tiene que ADIVINAR la estructura
+o cuando un detalle no se le exige; si se le da la estructura y las
+clases exactas, acierta casi todo.

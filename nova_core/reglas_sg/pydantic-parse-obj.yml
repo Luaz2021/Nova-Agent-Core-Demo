@@ -1,0 +1,15 @@
+id: pydantic-parse-obj-deprecated
+language: Python
+severity: warning
+message: "Pydantic v2: usa .model_validate() en lugar de .parse_obj()"
+rule:
+  pattern: $CLS.parse_obj($$$ARGS)
+  inside:
+    kind: module
+    has:
+      any:
+        - pattern: from pydantic import $$$
+        - pattern: import pydantic
+      stopBy: end
+    stopBy: end
+fix: $CLS.model_validate($$$ARGS)

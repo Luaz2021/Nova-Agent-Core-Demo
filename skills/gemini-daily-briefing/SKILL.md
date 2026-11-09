@@ -6,7 +6,7 @@ trigger: model_decision
 
 # Nova Daily Briefing & Task Tracker
 
-Esta habilidad convierte a **Nova** en el asistente de control diario de Alexander, sincronizado entre PC y Laptop.
+Esta habilidad convierte a **Nova** en el asistente de control diario de el usuario, sincronizado entre PC y Laptop.
 
 ---
 
@@ -56,4 +56,4 @@ Al iniciar sesión, saludar o antes de planificar tareas, revisar si existe `G:\
 - Si contiene instrucciones grabadas por voz mientras el usuario estaba fuera o almorzando, procesarlas y vaciar el buzón o marcarlas como procesadas.
 
 4. **Verificación de Hitos y Fechas:**
-   - Si la fecha actual coincide con una alerta programada en `tasks.md` (ej. Primera semana de Diciembre: Proyecto Check-In Airbnb), avisar a Alexander de forma prioritaria en el briefing matutino.
+   - Si la fecha actual coincide con una alerta programada en `tasks.md` (ej. Primera semana de Diciembre: Proyecto Check-In Airbnb), avisar a el usuario de forma prioritaria en el briefing matutino.

@@ -1,0 +1,53 @@
+{
+	"$schema": "https://biomejs.dev/schemas/latest/schema.json",
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"recommended": true,
+			"style": {
+				"useConst": "error",
+				"useTemplate": "error",
+				"useExponentiationOperator": "error",
+				"useNumberNamespace": "error",
+				"noParameterAssign": "warn",
+				"useForOf": "error",
+				"useShorthandAssign": "error",
+				"noUselessElse": "error"
+			},
+			"suspicious": {
+				"noVar": "error"
+			},
+			"complexity": {
+				"useOptionalChain": "error",
+				"useArrowFunction": "error",
+				"noForEach": "error",
+				"useFlatMap": "error",
+				"noArguments": "error"
+			},
+			"correctness": {
+				"noUndeclaredVariables": "error"
+			}
+		}
+	},
+	"overrides": [
+		{
+			"includes": [
+				"**/app/**"
+			],
+			"linter": {
+				"rules": {
+					"style": {
+						"noRestrictedImports": {
+							"level": "error",
+							"options": {
+								"paths": {
+									"next/router": "Next.js App Router: usa 'next/navigation' en lugar de 'next/router'."
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	]
+}

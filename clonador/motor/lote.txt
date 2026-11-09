@@ -1,0 +1,25 @@
+# Lote rápido: una URL por línea (las líneas con # se ignoran)
+# Producto y scrollytelling extremo (vídeos + canvas + 3D)
+https://www.apple.com/airpods-pro/
+https://www.apple.com/airpods-max/
+https://www.apple.com/apple-vision-pro/
+https://www.apple.com/iphone-16-pro/
+https://opalcamera.com/opal-tadpole
+# WebGL puro, shaders y motores 3D a pantalla completa
+https://lusion.co
+https://everswap.lusion.co
+https://landonorris.com
+https://messenger.abeto.co
+https://igloo.inc
+https://kprverse.com
+https://activetheory.net
+https://resn.co.nz
+https://immersive-g.com
+https://bruno-simon.com
+https://dark.netflix.io
+https://y7k.com
+# Caos de iframes, vídeos y movimiento retro
+https://www.lingscars.com
+https://www.cameronsworld.net
+https://www.theworldsworstwebsiteever.com
+https://www.awwwards.com/websites/animation/

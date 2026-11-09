@@ -1,0 +1,33 @@
+PRUEBA FINAL - clonar una web para ESTUDIO (uso local, no publicar copias de marcas ajenas)
+
+>>> LO NORMAL: CLONAR.bat (o: python clonar.py https://web.com) <<<
+    Hace TODO seguido, sin Qwen y en local: analizar -> crear -> verificar, y al final un resumen con la nota,
+    las secciones por debajo del 90 % (para Claude) y las rutas de: index.html (clon), index_final.html (medios
+    libres), revision.html (careo), react/datos_web.ts (datos REALES para React) e interacciones_prueba.md.
+    Varias webs: lote.py (lote.txt), con el mismo flujo sin Qwen. Desde el vigilante: "clonar https://...".
+
+Los pasos sueltos (para repetir solo uno):
+
+  1_ANALIZAR.bat    Pega la URL (o Enter para la de url.txt). Mide la web, fotos PC/tablet/móvil (carga
+                    móvil de verdad), hover, vídeo del scroll y Qwen con ojos describe cada sección.
+                    -> pruebas_Qwen\<web>\ : informe_pc.md, informe_movil.md, diferencias_pc_movil.md,
+                       fichas_secciones.md, capturas\, referencia\
+
+  2_CREAR.bat       La base del clon SIN IA: copia la estructura y estilos reales, la pasa a Tailwind
+                    y marca imágenes/vídeos. -> construccion\index.html
+
+  3_VERIFICAR.bat   Cada sección contra la original: parecido visual + lista de comprobación automática
+                    + estructura (carrusel, texto sobre imagen) + Qwen con ojos. Aprobada con 90% y 90%.
+                    Si no, Qwen la repara (3 intentos). Puedes verificar solo las primeras N secciones.
+                    -> construccion\revision.html, pendientes_claude.md, analisis_fallos_qwen.md,
+                       index_final.html (con fotos y vídeos de libre uso)
+                    Luego dile a Claude "ya verifiqué": arregla con CÓDIGO lo que quede en rojo
+                    y lo apunta en construccion\correcciones.md (antes -> después).
+
+  0_VIGILANTE.bat   Déjalo abierto y Claude puede lanzar los pasos 1-3 él solo (por ejemplo, mientras
+                    cocinas). Solo acepta esas órdenes. Para pararlo, cierra la ventana.
+
+Extra: construir.py (Qwen escribe la web desde las fichas, sin clon fiel) sigue disponible para pruebas.
+medios_libres.json: de dónde salen las fotos/vídeos libres. GUIA_QWEN.md: el punto dulce de Qwen.
+pruebas_Qwen\donde_falla_qwen.md: estadística de fallos de Qwen en todas las webs.
+Necesita: Python, Ollama con qwen2.5-coder:7b (y qwen2.5vl:7b para los ojos).

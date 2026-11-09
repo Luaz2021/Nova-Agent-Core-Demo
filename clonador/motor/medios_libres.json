@@ -1,0 +1,16 @@
+{
+  "_nota": "Medios de libre uso para vestir el clon. Puedes cambiar o añadir enlaces. {seed} {w} {h} se rellenan solos.",
+  "foto": "https://picsum.photos/seed/{seed}/{w}/{h}",
+  "logo": "https://placehold.co/{w}x{h}/EEEEEE/999999?text=LOGO",
+  "avatar": "https://api.dicebear.com/9.x/notionists/svg?seed={seed}",
+  "icono": "https://placehold.co/{w}x{h}/EEEEEE/999999?text=%E2%97%8F",
+  "videos": [
+    "https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/720/Big_Buck_Bunny_720_10s_1MB.mp4",
+    "https://test-videos.co.uk/vids/sintel/mp4/h264/720/Sintel_720_10s_1MB.mp4",
+    "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4",
+    "https://archive.org/download/ElephantsDream/ed_1024_512kb.mp4"
+  ],
+  "youtube": "https://www.youtube-nocookie.com/embed/aqz-KE-bpKQ",
+  "mapa": "https://www.openstreetmap.org/export/embed.html?bbox=-3.7100%2C40.4100%2C-3.6900%2C40.4250&layer=mapnik",
+  "creditos": "Fotos: Lorem Picsum (Unsplash) · Vídeos: Blender Foundation (CC BY) y MDN (CC0) · Mapa: © OpenStreetMap · Avatares: DiceBear"
+}

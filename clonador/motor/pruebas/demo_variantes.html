@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Demo variantes - prueba del explorador dinámico</title>
+<style>
+  body { margin: 0; font-family: system-ui, sans-serif; background: #f5f5f7; color: #1d1d1f; }
+  section { padding: 60px 8%; }
+  .hero { background: #111; color: #fff; text-align: center; padding: 120px 8%; }
+  .filtros { display: flex; gap: 12px; margin: 24px 0; }
+  .filtros [role="tab"] { padding: 10px 22px; border-radius: 999px; border: 1px solid #ccc; background: #fff; cursor: pointer; }
+  .filtros [aria-selected="true"] { background: #1d1d1f; color: #fff; }
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .card { background: #fff; border-radius: 24px; padding: 24px; }
+  .card img { width: 100%; height: 260px; display: block; border-radius: 16px; }
+  .swatches { display: flex; gap: 10px; margin-top: 16px; list-style: none; padding: 0; }
+  .sw { width: 24px; height: 24px; border-radius: 50%; border: 2px solid transparent; padding: 0; cursor: pointer; }
+  .sw[aria-pressed="true"] { border-color: #0071e3; }
+  .sw:disabled { opacity: .3; cursor: not-allowed; }
+  .radio-sw input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+  .radio-sw label { display: block; width: 24px; height: 24px; border-radius: 50%; cursor: pointer; }
+  .apilada img + img { display: none; }
+  .dots { display: flex; gap: 8px; justify-content: center; margin-top: 20px; }
+  .dots button { width: 10px; height: 10px; border-radius: 50%; border: 0; background: #888; }
+  .info { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  .info .card { position: relative; min-height: 160px; }
+  .mas { position: absolute; right: 20px; bottom: 20px; width: 36px; height: 36px; border-radius: 50%; border: 0; background: #1d1d1f; color: #fff; font-size: 22px; cursor: pointer; }
+  .capa { position: fixed; inset: 0; background: rgba(0,0,0,.5); display: none; align-items: center; justify-content: center; z-index: 100; }
+  .capa.abierta { display: flex; }
+  .capa [role="dialog"] { background: #fff; border-radius: 28px; padding: 48px; width: 640px; position: relative; }
+  .cerrar { position: absolute; top: 16px; right: 16px; }
+  footer { background: #e8e8ed; padding: 40px 8%; }
+  .cta { display: inline-block; padding: 12px 24px; border-radius: 999px; background: #0071e3; color: #fff; text-decoration: none; transition: background-color .3s ease, transform .3s ease; }
+  .cta:hover { background: #0077ed; transform: scale(1.05); }
+  .card { transition: box-shadow .25s ease; }
+  .card:hover { box-shadow: 0 12px 32px rgba(0,0,0,.18); }
+  .filtros [role="tab"]:hover { border-color: #1d1d1f; }
+  .capa [role="dialog"] { animation: entrar .3s ease-out; }
+  @keyframes entrar { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: none; } }
+</style>
+</head>
+<body>
+<header style="background:#fff;padding:16px 8%;font-weight:600">Tienda Demo</header>
+
+<section class="hero">
+  <h1>Demo de variantes</h1>
+  <p>Página de prueba para el explorador dinámico: pestañas, bolitas de color, modales y desplegables.</p>
+  <div class="dots"><button aria-label="Ir a diapositiva 1"></button><button aria-label="Ir a diapositiva 2"></button><button aria-label="Ir a diapositiva 3"></button></div>
+</section>
+
+<section class="productos">
+  <h2>Conoce la colección.</h2>
+  <div class="filtros" role="tablist" aria-label="Filtrar productos">
+    <button role="tab" aria-selected="true" data-cat="todo">Todo</button>
+    <button role="tab" aria-selected="false" data-cat="calzado">Calzado</button>
+    <button role="tab" aria-selected="false" data-cat="accesorios">Accesorios</button>
+  </div>
+  <div class="grid">
+    <!-- A: <button> con fondo de color que cambia el src de la foto -->
+    <article class="card" data-cat="calzado">
+      <img id="foto-a" alt="Zapatilla Nube" src="">
+      <h3>Zapatilla Nube</h3>
+      <p>Desde 129 €</p>
+      <div class="swatches" data-foto="foto-a">
+        <button class="sw" aria-label="Rojo coral" aria-pressed="true" data-color="#ff6b5b" style="background:#ff6b5b"></button>
+        <button class="sw" aria-label="Azul marino" aria-pressed="false" data-color="#1f3a68" style="background:#1f3a68"></button>
+        <button class="sw" aria-label="Verde salvia" aria-pressed="false" data-color="#9cb59a" style="background:#9cb59a"></button>
+      </div>
+    </article>
+    <!-- B: radios ocultos + label, fotos apiladas que se muestran/ocultan -->
+    <article class="card" data-cat="accesorios">
+      <div class="apilada" id="pila-b">
+        <img alt="Mochila Ruta negra" data-v="negro">
+        <img alt="Mochila Ruta arena" data-v="arena">
+      </div>
+      <h3>Mochila Ruta</h3>
+      <p>Desde 89 €</p>
+      <ul class="swatches radio-sw">
+        <li><input type="radio" name="mochila" id="m-negro" value="negro" checked aria-label="Negro carbón"><label for="m-negro" style="background:#222222"></label></li>
+        <li><input type="radio" name="mochila" id="m-arena" value="arena" aria-label="Arena"><label for="m-arena" style="background:#d8c3a5"></label></li>
+      </ul>
+    </article>
+    <!-- C: una bolita deshabilitada (agotado) -->
+    <article class="card" data-cat="accesorios">
+      <img id="foto-c" alt="Gorra Sol" src="">
+      <h3>Gorra Sol</h3>
+      <p>Desde 25 €</p>
+      <div class="swatches" data-foto="foto-c">
+        <button class="sw" aria-label="Amarillo limón" aria-pressed="true" data-color="#f5d547" style="background:#f5d547"></button>
+        <button class="sw" aria-label="Blanco roto" aria-pressed="false" data-color="#efeae0" style="background:#efeae0"></button>
+        <button class="sw" aria-label="Rosa (agotado)" aria-pressed="false" data-color="#f2a7c3" style="background:#f2a7c3" disabled></button>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section>
+  <h2>Por qué comprar aquí.</h2>
+  <div class="info">
+    <div class="card"><h3>Envío gratis</h3><p>En todos los pedidos.</p>
+      <button class="mas" aria-label="Más información sobre el envío" aria-haspopup="dialog" data-modal="modal-envio">+</button></div>
+    <div class="card"><h3>Preguntas frecuentes</h3>
+      <button aria-expanded="false" aria-controls="faq-1">¿Puedo devolverlo?</button>
+      <div id="faq-1" hidden><p>Sí, tienes 30 días para devolver cualquier producto sin coste.</p></div></div>
+  </div>
+</section>
+
+<section class="medios" style="position:relative;overflow:hidden;color:#fff;min-height:420px">
+  <video autoplay muted loop playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
+    <source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" type="video/mp4">
+  </video>
+  <div style="position:relative"><h2>Vídeo de fondo</h2><p>Un vídeo que ocupa toda la sección, con texto encima.</p>
+    <a class="cta" href="#comprar">Comprar ahora</a></div>
+</section>
+
+<section>
+  <h2>Gráficos.</h2>
+  <div style="display:flex;gap:24px">
+    <canvas id="c2d" width="480" height="270" style="border-radius:16px;background:#fff"></canvas>
+    <canvas id="cgl" width="480" height="270" style="border-radius:16px"></canvas>
+    <iframe title="Ficha incrustada" width="480" height="270" style="border:0;border-radius:16px;background:#fff"
+            srcdoc="<html><head><style>body{font-family:sans-serif;padding:20px;background:#eef}</style></head><body><h3>Ficha técnica</h3><p>Contenido dentro de un iframe.</p></body></html>"></iframe>
+  </div>
+</section>
+
+<section class="config">
+  <h2>Configura tu mochila.</h2>
+  <div class="paso"><h3>Tamaño. Elige uno.</h3>
+    <label class="opcion"><input type="radio" name="talla" value="20"> 20 litros</label>
+    <label class="opcion"><input type="radio" name="talla" value="30"> 30 litros</label>
+  </div>
+  <div class="paso"><h3>Color. Elige tu favorito.</h3>
+    <img id="foto-cfg" alt="Mochila configurada" style="width:320px;height:200px;display:block;border-radius:16px">
+    <div class="swatches cfg">
+      <button class="sw" aria-label="Oliva" data-color="#6b7a3a" style="background:#6b7a3a" disabled></button>
+      <button class="sw" aria-label="Granate" data-color="#7a2335" style="background:#7a2335" disabled></button>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Detalles.</h2>
+  <div role="tablist" class="filtros" aria-label="Detalles">
+    <button role="tab" aria-selected="true" aria-controls="p-spec" id="tab-spec">Especificaciones</button>
+    <button role="tab" aria-selected="false" aria-controls="p-ext" id="tab-ext">Extras</button>
+  </div>
+  <div role="tabpanel" id="p-spec"><p>Tejido reciclado, 30 litros, bolsillo para portátil de 16".</p></div>
+  <div role="tabpanel" id="p-ext" hidden>
+    <div class="card" style="position:relative;min-height:140px"><h3>Llavero reflectante</h3>
+      <div class="swatches" data-foto="foto-llavero">
+        <button class="sw" aria-label="Naranja flúor" aria-pressed="true" data-color="#ff7a00" style="background:#ff7a00"></button>
+        <button class="sw" aria-label="Lima" aria-pressed="false" data-color="#b6e000" style="background:#b6e000"></button>
+      </div>
+      <img id="foto-llavero" alt="Llavero" style="width:200px;height:120px">
+      <button class="mas" aria-label="Más información sobre el llavero" aria-haspopup="dialog" data-modal="modal-llavero">+</button>
+    </div>
+  </div>
+</section>
+
+<footer>© Tienda Demo — página de prueba</footer>
+
+<div class="capa" id="modal-llavero">
+  <div role="dialog" aria-modal="true" aria-labelledby="t-llavero">
+    <button class="cerrar" aria-label="Cerrar">✕</button>
+    <h2 id="t-llavero">Llavero reflectante.</h2>
+    <p>Visible a 150 metros con luz de faros.</p>
+  </div>
+</div>
+
+<div class="capa" id="modal-envio">
+  <div role="dialog" aria-modal="true" aria-labelledby="t-envio">
+    <button class="cerrar" aria-label="Cerrar">✕</button>
+    <h2 id="t-envio">Envío gratis y rápido.</h2>
+    <p>Recibe tu pedido en 24–48 h sin coste en toda la península.</p>
+    <a href="#envios">Ver condiciones</a>
+  </div>
+</div>
+
+<script>
+  const foto = (color, texto) => 'data:image/svg+xml,' + encodeURIComponent(
+    `<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400"><rect width="600" height="400" fill="${color}"/><text x="30" y="370" font-size="28" fill="#fff">${texto}</text></svg>`);
+  // A y C: el clic cambia el src
+  for (const grupo of document.querySelectorAll('.swatches[data-foto]')) {
+    const img = document.getElementById(grupo.dataset.foto);
+    const poner = (b) => { grupo.querySelectorAll('.sw').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+      img.src = foto(b.dataset.color, b.getAttribute('aria-label')); };
+    grupo.querySelectorAll('.sw').forEach(b => b.addEventListener('click', () => poner(b)));
+    poner(grupo.querySelector('[aria-pressed="true"]'));
+  }
+  // B: fotos apiladas, se enseña la del radio marcado
+  const pila = document.getElementById('pila-b');
+  pila.querySelector('[data-v="negro"]').src = foto('#222222', 'negro');
+  pila.querySelector('[data-v="arena"]').src = foto('#d8c3a5', 'arena');
+  const mostrar = () => { const v = document.querySelector('input[name="mochila"]:checked').value;
+    pila.querySelectorAll('img').forEach(i => i.style.display = i.dataset.v === v ? 'block' : 'none'); };
+  document.querySelectorAll('input[name="mochila"]').forEach(r => r.addEventListener('change', mostrar)); mostrar();
+  // filtros (por categoría) y pestañas con panel (aria-controls)
+  for (const lista of document.querySelectorAll('[role="tablist"]')) {
+    const tabs = lista.querySelectorAll('[role="tab"]');
+    tabs.forEach(t => t.addEventListener('click', () => {
+      tabs.forEach(x => { x.setAttribute('aria-selected', String(x === t)); const p = x.getAttribute('aria-controls'); if (p) document.getElementById(p).hidden = x !== t; });
+      if (t.dataset.cat) document.querySelectorAll('.grid .card').forEach(c => c.hidden = !(t.dataset.cat === 'todo' || c.dataset.cat === t.dataset.cat));
+    }));
+  }
+  // configurador: los colores se activan al elegir tamaño
+  const cfg = document.querySelector('.swatches.cfg'), fotoCfg = document.getElementById('foto-cfg');
+  fotoCfg.src = foto('#cccccc', 'elige tamaño');
+  document.querySelectorAll('input[name="talla"]').forEach(r => r.addEventListener('change', () => cfg.querySelectorAll('.sw').forEach(b => b.disabled = false)));
+  cfg.querySelectorAll('.sw').forEach(b => b.addEventListener('click', () => { fotoCfg.src = foto(b.dataset.color, b.getAttribute('aria-label')); }));
+  // canvas 2D animado y canvas WebGL
+  const c2 = document.getElementById('c2d').getContext('2d'); let fase = 0;
+  setInterval(() => { fase += 0.2; c2.clearRect(0, 0, 480, 270); c2.fillStyle = '#0071e3';
+    c2.beginPath(); c2.arc(240 + Math.cos(fase) * 120, 135, 40, 0, Math.PI * 2); c2.fill(); }, 50);
+  const gl = document.getElementById('cgl').getContext('webgl');
+  if (gl) { gl.clearColor(0.55, 0.2, 0.75, 1); gl.clear(gl.COLOR_BUFFER_BIT); }
+  // modal
+  document.querySelectorAll('[data-modal]').forEach(b => b.addEventListener('click', () => document.getElementById(b.dataset.modal).classList.add('abierta')));
+  document.querySelectorAll('.cerrar').forEach(b => b.addEventListener('click', () => b.closest('.capa').classList.remove('abierta')));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') document.querySelectorAll('.capa.abierta').forEach(c => c.classList.remove('abierta')); });
+  // desplegable
+  document.querySelectorAll('[aria-expanded][aria-controls]').forEach(b => b.addEventListener('click', () => {
+    const abierto = b.getAttribute('aria-expanded') === 'true'; b.setAttribute('aria-expanded', String(!abierto));
+    document.getElementById(b.getAttribute('aria-controls')).hidden = abierto; }));
+</script>
+</body>
+</html>
