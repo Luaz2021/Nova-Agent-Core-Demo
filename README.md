@@ -7,7 +7,7 @@
 [![Ecosystem](https://img.shields.io/badge/Ideology-100%25%20Google%20Ecosystem-4285F4.svg)](#-la-ideología-100-ecosistema-google)
 [![Skills](https://img.shields.io/badge/Skills-125%20Optimizadas%20Gemini-purple.svg)](#-catálogo-detallado-de-skills-por-especialidad)
 [![Integrity Shield](https://img.shields.io/badge/Integrity-SHA--256%20Signed%20Manifest-brightgreen.svg)](#-capa-de-integridad-criptográfica-y-anti-plagio)
-[![1-Shot Protocol](https://img.shields.io/badge/Protocol-1--Shot%20Consolidado-red.svg)](#-la-pirámide-de-escalado-de-4-capas)
+[![1-Shot Protocol](https://img.shields.io/badge/Protocol-1--Shot%20Consolidado-red.svg)](#️-arquitectura-del-sistema-la-pirámide-de-escalado-de-5-capas)
 
 **Nova Agent** no es un prompt leak ni una extensión visual de editor: es un **Agente Autónomo de Ingeniería de Software de Código Abierto**, dotado de cerebro agéntico, memoria persistente local, disciplina de trinchera y un árbol de 125 habilidades especializadas diseñado y acoplado nativamente para **Google Antigravity 2.0** y los modelos **Google Gemini**.
 
@@ -41,33 +41,46 @@ Para entender la arquitectura de Nova Agent, es crítico separar el **runtime ag
 
 ---
 
-## 🏗️ Arquitectura del Sistema (La Pirámide de 4 Capas)
+## 🏗️ Arquitectura del Sistema (La Pirámide de Escalado de 5 Capas)
 
-Nova Agent opera mediante una jerarquía inteligente de modelos orientada a costo óptimo y cero desperdicio de tokens:
+Nova v3.0 trabaja con una regla de oro: **lo pesado se hace en tu equipo a 0 tokens y la nube solo dirige y repara**. Todo el flujo pasa por las **reglas automáticas (hooks)**, que vigila el sistema y no el modelo.
 
 ```mermaid
 flowchart TD
-    User([👨‍💻 Desarrollador en Google Antigravity 2.0]) -->|Instrucción / Prompt| Nova[🌌 Nova Agent Core Engine]
-    
-    Nova --> Dispatcher{Enrutador de Tarea}
-    
-    Dispatcher -->|Volumen Masivo / Logs / Offline| Capa0[💻 Capa 0: Hardware Propio<br>Ollama + Qwen 3.5 + InternVL 3.5<br>0 Tokens API · 0,00 €]
-    Dispatcher -->|Consultas Rápidas / Sintaxis / Whisper| Capa1[☁️ Capa 1: Escuadrón Cloud Free<br>Codestral + OpenRouter + Groq<br>0 Tokens Antigravity · 0,00 €]
-    Dispatcher -->|Pair Programming / Edición / Testing| Capa2[⚡ Capa 2: Gemini 3.8 Flash<br>Modo 1-Shot Consolidado AAA<br>Costo Óptimo 1.0x]
-    Dispatcher -->|Refactor Sistémico / Auditoría Forense| Capa3[🏛️ Capa 3 & 4: Argon / Claude Sonnet<br>Tribunal Supremo de Arquitectura<br>Uso Quirúrgico 4.0x]
-    
-    Capa0 --> LocalVault[(🧠 Memoria Persistente Local<br>SHA-256 Manifest + Bridge Napkin)]
-    Capa1 --> LocalVault
-    Capa2 --> LocalVault
-    Capa3 --> LocalVault
+    User([👨‍💻 Tú, en Google Antigravity 2.0]) -->|Mensaje| Pre[🛡️ Hook de turno<br>autorizaciones · lección pendiente · aviso de búfer]
+    Pre --> Flash[⚡ Capa 1: Gemini Flash<br>Arquitecto de contratos y cirujano de guardia]
+    Flash -->|Cada herramienta| Guard{🛡️ Hook guardián<br>carpetas protegidas · claves · rama principal<br>webs +150 líneas · freno de gasto}
+    Guard -->|Bloqueado o pregunta| User
+    Guard -->|Permitido| Dispatcher{¿Qué hay que hacer?}
+
+    Dispatcher -->|Web de un negocio| Biblio[🏪 Biblioteca de webs<br>montar.py · identidad por tipo de negocio]
+    Dispatcher -->|Documento PDF / Word| Redactor[📄 Redactor local<br>redactor.py · resumir.py]
+    Dispatcher -->|Código grande / textos en lote| Obrero[🔧 Obrero local<br>nova_local_worker.py]
+    Biblio --> Capa0
+    Redactor --> Capa0
+    Obrero --> Capa0[💻 Capa 0: Ollama en tu equipo<br>Qwen 3.5 pica · InternVL 3.5 mira<br>0 tokens de nube]
+
+    Dispatcher -->|Hasta 150 líneas, arreglos, lo delicado| Flash
+    Dispatcher -->|Web de referencia o 'escríbelo tú'| Flash
+    Capa0 -->|Falla 3 veces| Freno[⛔ Freno en seco<br>te avisa y pide permiso<br>nunca sigue en la nube a escondidas]
+    Flash -->|Análisis en frío| Pro[🧠 Capa 2: Gemini Pro<br>subagente bajo demanda]
+    Pro -->|Arquitectura sistémica| Argon[🏛️ Capa 3: Gemini Argon<br>artillería pesada 4.0x]
+    Argon -->|3 fallos combinados| Claude[⚖️ Capa 4: Claude<br>tribunal supremo · servilleta de rescate]
+
+    Flash --> Stop[🛡️ Hook de cierre<br>código pegado en el chat · lección apuntada]
+    Stop --> Memoria[(🧠 Memoria local<br>tareas · servilleta · lecciones · puente de ventana)]
 ```
 
-| Capa | Motor / Proveedor | Rol Principal | Costo de Tokens |
+| Capa | Motor | Rol principal | Coste |
 | :--- | :--- | :--- | :--- |
-| **Capa 0** | **Ollama Local (Qwen 3.5 9B/4B + InternVL 3.5 visión)** | Webs de negocio desde la biblioteca, documentos PDF/Word, tareas masivas (`>1.500` tokens repetitivos), resúmenes locales y desarrollo sin conexión. | **0 tokens de API (0,00 €)** |
-| **Capa 1** | **OpenRouter Free + Codestral (Mistral) + Groq** | Consultas rápidas de sintaxis, transcripción Whisper de clases/audio y razonamiento ligero sin gastar cuota de Antigravity. | **0 tokens de Antigravity (0,00 €)** |
-| **Capa 2** | **Gemini 3.8 Flash** | Copiloto principal en el chat de Antigravity 2.0. Ejecución `1-Shot` consolidada, edición de archivos y testing TDD. | **Factor 1.0x (Máxima velocidad)** |
-| **Capa 3** | **Gemini 4 Argon / Claude Sonnet** | Cirugía mayor: rediseños sistémicos de arquitectura, incompatibilidades profundas o auditorías de seguridad militar. | **Factor 4.0x (Solo bajo demanda)** |
+| **🛡️ Hooks** | **`nova_core/nova_hook.py` + `nova_hook_turno.py`** | Vigilan cada mensaje y cada herramienta: bloquean o preguntan ante lo peligroso, frenan el gasto cada 300k tokens reales y obligan a apuntar lo aprendido. | **0 tokens (corren en local)** |
+| **Capa 0** | **Ollama: Qwen 3.5 (9B/4B) + InternVL 3.5 (visión)** | El que pica: webs de negocio desde la biblioteca, documentos, código grande y autocontenido, textos en lote y todo lo privado. Si falla 3 veces, **freno en seco**: te avisa y no sigue en la nube sin tu permiso. | **0 tokens de nube (0,00 €)** |
+| **Capa 1** | **Gemini Flash** | El que dirige: entiende el pedido, prepara el contrato para la Capa 0, escribe hasta 150 líneas (arreglos, integraciones, lo delicado) y repara lo que salga mal. | **Factor 1.0x** |
+| **Capa 2** | **Gemini Pro (subagente)** | Análisis en frío y asíncrono cuando Flash necesita una segunda opinión. | **Bajo demanda** |
+| **Capa 3** | **Gemini Argon** | Rediseños de arquitectura, incompatibilidades profundas y auditorías forenses. | **Factor 4.0x, solo bajo demanda** |
+| **Capa 4** | **Claude (Sonnet / Opus)** | Tribunal supremo tras 3 fallos combinados: deja una servilleta de rescate en `memory/ultimo_contexto_puente.md`. | **Uso quirúrgico** |
+
+> **Escuadrón Cloud Free (opcional):** con tus claves gratuitas, `free_ai_router.py` manda consultas rápidas a Codestral, OpenRouter o Groq (Whisper) sin gastar cuota de Antigravity.
 
 ---
 
