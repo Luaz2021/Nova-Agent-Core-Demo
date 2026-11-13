@@ -1,7 +1,10 @@
 // NOVA · mascota 2D dentro de Antigravity (la inyecta nova_voz.py por CDP; vive y muere con la ventana de Antigravity).
 // Estados: espera · mirando · escuchando · pensando · hablando · error · pausa.  API: window.__novaMascota.set(estado, texto)
 (() => {
-  if (window.__novaMascota) return 'ya';
+  // 11/11 (Claude): con VERSION, una mascota nueva sustituye a la vieja sin reiniciar Antigravity
+  const VERSION = 2;
+  if (window.__novaMascota && (window.__novaMascota.version || 1) >= VERSION) return 'ya';
+  if (window.__novaMascota) { try { window.__novaMascota.quitar(); } catch (e) { document.getElementById('nova-mascota')?.remove(); delete window.__novaMascota; } }
   const host = document.createElement('div');
   host.id = 'nova-mascota';
   host.style.cssText = 'position:fixed;left:40px;bottom:60px;width:150px;height:204px;z-index:2147483000;pointer-events:none;';
@@ -94,7 +97,7 @@
   const caja = sh.getElementById('caja'), bocadillo = sh.getElementById('bocadillo');
   const luz = sh.getElementById('luz'), halo = sh.getElementById('luz-halo'), pecho = sh.getElementById('pecho');
   const LUZ = { espera: '#38bdf8', mirando: '#22d3ee', escuchando: '#4ade80', pensando: '#fbbf24', enviando: '#fbbf24',
-                hablando: '#60a5fa', error: '#f87171', pausa: '#64748b' };
+                hablando: '#60a5fa', error: '#f87171', pausa: '#64748b', leyendo: '#c084fc' };
   const ONDAS = '<span class="ico"><span class="onda"></span><span class="onda"></span><span class="onda"></span><span class="onda"></span></span>';
   const PUNTOS = '<span class="ico"><span class="punto"></span><span class="punto"></span><span class="punto"></span></span>';
   const BOCADILLO = {
@@ -104,7 +107,9 @@
     enviando: PUNTOS + '<span style="color:#fcd34d">Pensando</span>',
     hablando: '<span style="color:#93c5fd">♪ Respondiendo</span>',
     error: '<span style="color:#fca5a5">No te entendí</span>',
-    pausa: '<span style="color:#94a3b8">En pausa</span>' };
+    pausa: '<span style="color:#94a3b8">En pausa</span>',
+    // 11/11 (Claude): la aduana leyendo un adjunto en local. Antes salia "¡Te oigo!" y parecia que el micro escuchaba.
+    leyendo: PUNTOS + '<span style="color:#d8b4fe">Leyendo archivo</span>' };
   let temporizador = null;
   function set(estado, texto) {
     caja.className = 'caja ' + estado + (BOCADILLO[estado] ? ' ver' : '');
@@ -126,7 +131,7 @@
     host.style.bottom = Math.max(0, innerHeight - r.top + 4) + 'px';
   }
   colocar(); const int = setInterval(colocar, 1500); addEventListener('resize', colocar);
-  window.__novaMascota = { set, quitar: () => { clearInterval(int); host.remove(); delete window.__novaMascota; } };
+  window.__novaMascota = { version: VERSION, set, quitar: () => { clearInterval(int); host.remove(); delete window.__novaMascota; } };
   set('espera');
   return 'creada';
 })();

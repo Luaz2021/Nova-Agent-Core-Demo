@@ -104,7 +104,29 @@ async def async_speak_neural(text, output_path):
     comm = edge_tts.Communicate(text, VOICE_NAME, rate="+4%")
     await comm.save(output_path)
 
+# 11/11 (Claude, Luaz: "rompe el bucle"): la respuesta se lee en un HILO aparte mientras el micro sigue esperando "Nova".
+# Si Nova decia "Nova" en su respuesta, se despertaba a si misma. Mientras habla (y 1 s despues) el micro no cuenta.
+_HABLA = {"activas": 0, "hasta": 0.0}
+_HABLA_LOCK = threading.Lock()
+
+
+def nova_hablando() -> bool:
+    return _HABLA["activas"] > 0 or time.time() < _HABLA["hasta"]
+
+
 def speak_neural(text, cache_key=None, wait=True):
+    with _HABLA_LOCK:
+        _HABLA["activas"] += 1
+    try:
+        _speak_neural(text, cache_key, wait)
+    finally:
+        with _HABLA_LOCK:
+            _HABLA["activas"] -= 1
+            # sin esperar (wait=False) no sabemos cuando acaba: margen de 4 s
+            _HABLA["hasta"] = max(_HABLA["hasta"], time.time() + (1.0 if wait else 4.0))
+
+
+def _speak_neural(text, cache_key=None, wait=True):
     """Habla usando el caché instantáneo (<15ms) o sintetiza al vuelo."""
     if cache_key and cache_key in CACHED_PHRASES:
         fpath = CACHED_PHRASES[cache_key]["file"]
@@ -490,7 +512,7 @@ def esperar_fin_modo_voz():
 
 
 # ------------------------------------------------------------------------------
-# MUSICA EN LOCAL (09/11, Claude, a pedido de el autor): YouTube en Brave via el puente (YOUTUBE_CONTROL de la extension).
+# MUSICA EN LOCAL (09/11, Claude, a pedido de Luaz): YouTube en Brave via el puente (YOUTUBE_CONTROL de la extension).
 # 0 tokens: no pasa por Nova. Si la orden no es de musica, sigue el camino normal (chat de Antigravity).
 # ------------------------------------------------------------------------------
 _M = r"(canci[oó]n|m[uú]sica|tema|rola|video|v[ií]deo|youtube)"
@@ -543,7 +565,7 @@ _MUSICA = {"volumen_tocado": False}
 
 
 def bajar_musica():
-    """Estilo Alexa (09/11, el autor: "que baje la musica, no pausar"): al oir "Nova" baja YouTube al 25 % para oir
+    """Estilo Alexa (09/11, Luaz: "que baje la musica, no pausar"): al oir "Nova" baja YouTube al 25 % para oir
     la orden. Devuelve el volumen anterior (o None si no suena nada)."""
     _MUSICA["volumen_tocado"] = False
     try:
@@ -630,7 +652,7 @@ def ejecutar(orden):
 # ==============================================================================
 # 4b. ICONO EN LA BANDEJA DE WINDOWS (estado sin ventanas: el widget flotante daba errores)
 # ==============================================================================
-COLORES = {"espera": (148, 163, 184), "escuchando": (34, 197, 94), "enviando": (245, 158, 11),
+COLORES = {"espera": (148, 163, 184), "escuchando": (34, 197, 94), "enviando": (245, 158, 11), "leyendo": (192, 132, 252),
            "pensando": (245, 158, 11), "hablando": (59, 130, 246), "error": (239, 68, 68), "pausa": (71, 85, 105)}
 _BANDEJA = {"icono": None, "pausa": False}
 
@@ -726,13 +748,27 @@ def _js_antigravity(expr, timeout=4):
         ws.close()
 
 
+def _version_mascota() -> int:
+    """11/11: la VERSION que trae mascota.js (si la de la ventana es mas vieja, se sustituye sola)."""
+    try:
+        with open(MASCOTA_JS, encoding="utf-8") as f:
+            m = re.search(r"const VERSION = (\d+);", f.read())
+        return int(m.group(1)) if m else 1
+    except OSError:
+        return 1
+
+
+def _mascota_al_dia() -> bool:
+    return bool(_js_antigravity(f"!!(window.__novaMascota && (window.__novaMascota.version || 1) >= {_version_mascota()})"))
+
+
 def mascota(estado):
-    """Cambia la cara de la mascota (si no esta, la crea). Nunca bloquea ni rompe la voz."""
+    """Cambia la cara de la mascota (si no esta o es vieja, la crea). Nunca bloquea ni rompe la voz."""
     _MASCOTA["estado"] = estado
 
     def _hacer():
         try:
-            if not _js_antigravity("!!window.__novaMascota"):
+            if not _mascota_al_dia():
                 with open(MASCOTA_JS, encoding="utf-8") as f:
                     _js_antigravity(f.read(), timeout=6)
             _js_antigravity(f"window.__novaMascota && window.__novaMascota.set({json.dumps(estado)})")
@@ -746,14 +782,14 @@ def vigilar_mascota():
     while True:
         time.sleep(4)
         try:
-            if get_antigravity_ws_url() and not _js_antigravity("!!window.__novaMascota"):
+            if get_antigravity_ws_url() and not _mascota_al_dia():
                 mascota(_MASCOTA["estado"])
         except Exception:
             pass
 
 
 # ==============================================================================
-# 4d. ADUANA DE ADJUNTOS (aduana.js por CDP, 09/11 Claude): lo que el autor pega/arrastra/adjunta en Antigravity no sube
+# 4d. ADUANA DE ADJUNTOS (aduana.js por CDP, 09/11 Claude): lo que Luaz pega/arrastra/adjunta en Antigravity no sube
 #     a la nube: se guarda en temporal\, el puente lo lee EN LOCAL y en el chat queda "[adjunto local: <archivo>]".
 #     El hook de turno (nova_core\nova_hook_turno.py) le pasa a Nova el texto ya leido. Shift = pasar como siempre.
 # ==============================================================================
@@ -823,9 +859,30 @@ def _procesar_adjunto(ruta):
     estado_bandeja("pausa" if _BANDEJA["pausa"] else "espera", "di 'Nova'")
 
 
+def recibir_clave(d):
+    """12/11 (Claude): GUARDIAN DE CLAVES. Una clave de API pegada en el chat va al cofre (vault\\google_cloud.env) y a
+    las variables de Windows; a la nube solo llega su NOMBRE. El valor nunca se escribe en el log."""
+    try:
+        import importlib.util
+        spec = importlib.util.spec_from_file_location(
+            "guardian_claves", os.path.join(os.path.dirname(os.path.abspath(__file__)), "guardian_claves.py"))
+        guardian = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(guardian)
+        clave = str(d.get("clave") or "")
+        nombre = d.get("nombre") or guardian.nombre_para(clave, d.get("contexto", ""))
+        nombre, ya = guardian.guardar(clave, nombre)
+        log_event(f"Guardian de claves: {nombre} {'ya estaba en el cofre' if ya else 'guardada en el cofre'} "
+                  f"(termina en ...{clave[-3:]}), sin pasar por la nube")
+    except Exception as e:
+        log_event(f"Guardian de claves: no se pudo guardar ({e.__class__.__name__})")
+
+
 def recibir_adjunto(payload):
     try:
         d = json.loads(payload)
+        if d.get("clave"):
+            recibir_clave(d)
+            return
         datos = base64.b64decode(d.get("b64") or "")
         if not datos:
             log_event(f"Aduana: '{d.get('nombre')}' llego vacio")
@@ -841,7 +898,7 @@ def recibir_adjunto(payload):
         with open(ruta, "wb") as f:
             f.write(datos)
         log_event(f"Aduana ({d.get('via')}): '{d.get('nombre')}' -> {nombre} ({len(datos) // 1024} KB), sin subir a la nube")
-        estado_bandeja("mirando", "leyendo adjunto en local")
+        estado_bandeja("leyendo", "leyendo adjunto en local")  # 11/11: antes "mirando" = "¡Te oigo!" (parecia el micro)
         escribir_en_chat(f"[adjunto local: {nombre}] ")
         _procesar_adjunto(ruta)
     except Exception as e:
@@ -913,7 +970,7 @@ def log_event(text):
 # ==============================================================================
 # 5. MOTOR DE VOZ (sin ventana)
 # ==============================================================================
-# 09/11 noche (Claude, a pedido de el autor): "Nova" se detecta EN LOCAL con Vosk (como Alexa: nada sale a Google hasta
+# 09/11 noche (Claude, a pedido de Luaz): "Nova" se detecta EN LOCAL con Vosk (como Alexa: nada sale a Google hasta
 # oir la palabra). Gramatica cerrada con SENUELOS para que "novela", "nueva", "novia", "nueve"... no la activen
 # (probado 9/9). Si Vosk o su modelo faltan o fallan, la voz vuelve sola al modo de antes (Google).
 MODELO_VOSK = os.path.join(os.path.dirname(os.path.abspath(__file__)), "modelos", "vosk-model-small-es-0.42")
@@ -928,6 +985,21 @@ GRAMATICA_VOSK = json.dumps(["nova", "novela", "nueva", "nuevo", "novia", "noven
 def es_nova_suelta(r: dict) -> bool:
     pal = [w for w in r.get("result", []) if w.get("word") != "[unk]"]
     return len(pal) == 1 and pal[0]["word"] == "nova" and pal[0].get("conf", 0) >= 0.7 and len(r.get("result", [])) <= 2
+
+
+# 11/11 (Claude, Luaz: "se activa solo con musica y yo ni hable"): la gramatica cerrada OBLIGA a Vosk a elegir una de
+# sus 28 palabras para cualquier sonido, y un trozo de cancion o un golpe puede caer en "nova" con confianza alta.
+# 2o PASO: el mismo trozo de audio se escucha SIN gramatica (vocabulario libre). Una voz diciendo "Nova" ahi sale como
+# "no va" / "nova" (probado con 5 voces; acento peruano a veces "nota"); musica o ruido dan otra cosa.
+# Solo "Nova" A SECAS (Luaz 11/11): "oye nova", "hey nova"... no valen.
+RE_NOVA_LIBRE = re.compile(r"^(nova|no va|nota|noba)$")
+
+
+def confirma_nova(modelo, audio: bytes) -> bool:
+    rec = _vosk.KaldiRecognizer(modelo, 16000)
+    rec.AcceptWaveform(audio)
+    texto = json.loads(rec.FinalResult()).get("text", "").strip().lower()
+    return bool(RE_NOVA_LIBRE.match(texto))
 try:
     import vosk as _vosk
     VOSK_OK = os.path.isdir(MODELO_VOSK)
@@ -937,6 +1009,7 @@ except ImportError:
 
 class NovaVoz:
     piso = 120.0  # suelo del umbral de energia (se recalcula al calibrar)
+    descartes = 0  # 11/11: falsos "Nova" que el 2o paso tiro (solo se cuenta, nunca se apunta lo oido)
 
     def bucle_vosk(self, recognizer, mic):
         _vosk.SetLogLevel(-1)
@@ -951,6 +1024,7 @@ class NovaVoz:
             rec.SetWords(True)
             q = queue.Queue()
             oido = False
+            trozo = bytearray()  # audio de la frase en curso (para el 2o paso)
             try:
                 with sd.RawInputStream(samplerate=16000, blocksize=4000, dtype="int16", channels=1,
                                        callback=lambda d, f, t, s: q.put(bytes(d))):
@@ -959,8 +1033,23 @@ class NovaVoz:
                             datos = q.get(timeout=3)
                         except queue.Empty:
                             raise OSError("el micro no manda audio")
+                        if nova_hablando():  # 11/11: su propia voz no cuenta (nada de bucles)
+                            if trozo:
+                                rec = _vosk.KaldiRecognizer(modelo, 16000, GRAMATICA_VOSK)
+                                rec.SetWords(True)
+                                trozo = bytearray()
+                            continue
+                        trozo += datos
+                        if len(trozo) > 16000 * 2 * 15:  # nunca mas de 15 s guardados
+                            del trozo[:len(trozo) - 16000 * 2 * 15]
                         if rec.AcceptWaveform(datos):  # solo frases TERMINADAS (nada de adivinanzas a medias)
-                            oido = es_nova_suelta(json.loads(rec.Result()))
+                            if es_nova_suelta(json.loads(rec.Result())):
+                                oido = confirma_nova(modelo, bytes(trozo))
+                                if not oido:
+                                    self.descartes += 1
+                                    if self.descartes in (1, 5) or self.descartes % 20 == 0:
+                                        log_event(f"Falso 'Nova' descartado (musica/ruido): {self.descartes} hoy")
+                            trozo = bytearray()
                         if oido:
                             break
                 fallos = 0

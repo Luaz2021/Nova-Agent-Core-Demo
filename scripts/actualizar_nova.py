@@ -142,6 +142,24 @@ def respaldo_memoria(carpeta: Path) -> None:
                         ignore=shutil.ignore_patterns("chat_logs", "registros"))
 
 
+
+
+def reparar_arranque_windows() -> None:
+    if os.name != 'nt':
+        return
+    bad = GEMINI.parent / '.gemini ntigravity'
+    if bad.is_dir():
+        for sub in ('herramientas', 'clonador'):
+            if (bad / sub).is_dir():
+                shutil.copytree(bad / sub, ANTIGRAVITY / sub, dirs_exist_ok=True)
+        shutil.rmtree(bad, ignore_errors=True)
+    vbs = ANTIGRAVITY / 'scripts' / 'start_session_guard.vbs'
+    startup = Path(os.environ.get('APPDATA', '')) / 'Microsoft/Windows/Start Menu/Programs/Startup/Nova_SessionGuard.vbs'
+    if vbs.is_file() and startup.parent.is_dir():
+        shutil.copy2(vbs, startup)
+        subprocess.Popen(['wscript.exe', str(vbs)], close_fds=True)
+
+
 def registrar_hooks() -> None:
     script = GEMINI / "nova_core" / "instalar_hooks.py"
     if script.exists():
@@ -199,6 +217,7 @@ def apply_update(forzar: bool = False) -> int:
         LOCAL_MANIFEST.write_text(json.dumps(remoto, indent=2, ensure_ascii=False), encoding="utf-8")
     if hooks_tocados:
         registrar_hooks()
+    reparar_arranque_windows()
 
     print(f"[OK] Parche v{ver_r} aplicado: {escritos} archivos actualizados.")
     if nuevas_skills:

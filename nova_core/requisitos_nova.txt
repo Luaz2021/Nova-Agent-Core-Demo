@@ -1,0 +1,30 @@
+# Librerias del Python PROPIO de Nova (11/11/2026, Claude). Viaja por Drive (nova_core).
+# El Doctor (antigravity\scripts\nova_doctor.ps1) crea en cada equipo .gemini\nova_env con uv y Python 3.14
+# gestionado por uv: da igual el Python que Luaz instale o actualice en Windows, el de Nova no cambia.
+# Si cambias esta lista, el Doctor lo nota (huella) y reinstala solo en cada equipo.
+# Versiones = las que funcionan en la laptop el 11/11 (sacadas de los imports reales de nova_core, scripts,
+# herramientas y biblioteca_web).
+
+# Voz, mascota y bandeja
+sounddevice==0.5.6
+numpy==2.5.4
+SpeechRecognition==3.17.0
+websocket-client==1.9.2
+edge-tts==7.3.1
+vosk==0.3.45
+pillow==13.0.0
+pystray==0.19.5
+
+# Aduana de adjuntos / destilador / redactor
+pymupdf==2.1
+python-docx==1.2.0
+openpyxl==3.1.5
+python-pptx==1.0.2
+
+# Navegador, MCP, video y vigilantes
+playwright==1.64.1
+aiohttp==3.14.5
+psutil==7.2.2
+imageio-ffmpeg==0.7.0
+watchdog==7.1.0
+ruff==0.17.3

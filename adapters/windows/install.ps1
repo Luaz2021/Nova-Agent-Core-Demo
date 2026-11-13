@@ -246,6 +246,16 @@ if (Test-Path $ayudaFile) {
 # Reglas automaticas (hooks): el sistema vigila las leyes, no el modelo
 & $novaPython "$novaCore\instalar_hooks.py"
 
+# Guardian de sesion en Inicio de Windows + Doctor + arranque inmediato
+$startupDir = [Environment]::GetFolderPath("Startup")
+if (Test-Path "$novaLocalScripts\start_session_guard.vbs") {
+    Copy-Item "$novaLocalScripts\start_session_guard.vbs" (Join-Path $startupDir "Nova_SessionGuard.vbs") -Force
+    Start-Process -FilePath "wscript.exe" -ArgumentList "`"$novaLocalScripts\start_session_guard.vbs`""
+}
+if (Test-Path "$novaLocalScripts\nova_doctor.ps1") {
+    & powershell.exe -NoProfile -ExecutionPolicy Bypass -File "$novaLocalScripts\nova_doctor.ps1" -SinServicios -SinAviso
+}
+
 # IA local (opcional): instala Ollama si falta y descarga los 2 modelos del perfil
 if ($quiereIA) {
     & $novaPython "$novaLocalScripts\nova_instalar_ia_local.py" --perfil $hwTier
