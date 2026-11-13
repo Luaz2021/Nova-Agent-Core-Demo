@@ -29,7 +29,7 @@
       "RelativePath": "scripts/actualizar_nova.py",
       "TargetRelative": "antigravity/scripts/actualizar_nova.py",
       "SizeBytes": 10071,
-      "SHA256": "96AAB51A7B828CF3789FE023F58B76280220ABF70F164697FBDCCD56A4454F91"
+      "SHA256": "1B85B86A1D7196B14247FCC6A9C516712146120CB0755B5894EBC5E6362497DD"
     },
     {
       "Id": "script_scripts_enviar_feedback_py",
@@ -645,42 +645,6 @@
       "SHA256": "08A9516C7A40C9EA89E18E459CECAF5BE531449B8A0A5ACF166D3E08E97B28BC"
     },
     {
-      "Id": "file_clonador_herramientas__ruff_cache__gitignore",
-      "Name": ".gitignore",
-      "Type": "File",
-      "RelativePath": "clonador/herramientas/.ruff_cache/.gitignore",
-      "TargetRelative": "antigravity/clonador/herramientas/.ruff_cache/.gitignore",
-      "SizeBytes": 35,
-      "SHA256": "9E3A60F1E6EC4AE60215C11D54B171392745EC25E9DDED433D5BD921363AF316"
-    },
-    {
-      "Id": "file_clonador_herramientas__ruff_cache_0_17_3_1571557178768228795",
-      "Name": "1571557178768228795",
-      "Type": "File",
-      "RelativePath": "clonador/herramientas/.ruff_cache/0.17.3/1571557178768228795",
-      "TargetRelative": "antigravity/clonador/herramientas/.ruff_cache/0.17.3/1571557178768228795",
-      "SizeBytes": 236,
-      "SHA256": "697CEE385807F7FE71D2FB85AC8D53CF31E7D7551C3B114BDB605E6E331C742A"
-    },
-    {
-      "Id": "file_clonador_herramientas__ruff_cache_0_17_3_3530721947916892514",
-      "Name": "3530721947916892514",
-      "Type": "File",
-      "RelativePath": "clonador/herramientas/.ruff_cache/0.17.3/3530721947916892514",
-      "TargetRelative": "antigravity/clonador/herramientas/.ruff_cache/0.17.3/3530721947916892514",
-      "SizeBytes": 236,
-      "SHA256": "DDCEF58CFDD8186EBF5A53F42243F0F0DB6C32F1B41D18F79E1E68F49C3B8944"
-    },
-    {
-      "Id": "file_clonador_herramientas__ruff_cache_cachedir_tag",
-      "Name": "CACHEDIR.TAG",
-      "Type": "File",
-      "RelativePath": "clonador/herramientas/.ruff_cache/CACHEDIR.TAG",
-      "TargetRelative": "antigravity/clonador/herramientas/.ruff_cache/CACHEDIR.TAG",
-      "SizeBytes": 43,
-      "SHA256": "5953156D7E0C564A427251316EAF26F8870E6483AE2197F916B630E4F93E31AE"
-    },
-    {
       "Id": "file_clonador_herramientas_exportar_jsx_py",
       "Name": "exportar_jsx.py",
       "Type": "File",
@@ -706,42 +670,6 @@
       "TargetRelative": "antigravity/clonador/LEEME.md",
       "SizeBytes": 1042,
       "SHA256": "E1219504670B206E62D7A89CBD97F895E4D64922D51A2ADEF044D9D2FA87EFE1"
-    },
-    {
-      "Id": "file_clonador_motor__ruff_cache__gitignore",
-      "Name": ".gitignore",
-      "Type": "File",
-      "RelativePath": "clonador/motor/.ruff_cache/.gitignore",
-      "TargetRelative": "antigravity/clonador/motor/.ruff_cache/.gitignore",
-      "SizeBytes": 35,
-      "SHA256": "9E3A60F1E6EC4AE60215C11D54B171392745EC25E9DDED433D5BD921363AF316"
-    },
-    {
-      "Id": "file_clonador_motor__ruff_cache_0_17_3_2202151706685808475",
-      "Name": "2202151706685808475",
-      "Type": "File",
-      "RelativePath": "clonador/motor/.ruff_cache/0.17.3/2202151706685808475",
-      "TargetRelative": "antigravity/clonador/motor/.ruff_cache/0.17.3/2202151706685808475",
-      "SizeBytes": 204,
-      "SHA256": "3349BB503509CB79D5A29E3E0AE1434F105019191CA3CB142A4C79B11FDD1ADC"
-    },
-    {
-      "Id": "file_clonador_motor__ruff_cache_0_17_3_6927476379762334005",
-      "Name": "6927476379762334005",
-      "Type": "File",
-      "RelativePath": "clonador/motor/.ruff_cache/0.17.3/6927476379762334005",
-      "TargetRelative": "antigravity/clonador/motor/.ruff_cache/0.17.3/6927476379762334005",
-      "SizeBytes": 204,
-      "SHA256": "4E5C47100370D6A1357D382C033270AB40C53F1B8DE84635ADCA0214271C2304"
-    },
-    {
-      "Id": "file_clonador_motor__ruff_cache_cachedir_tag",
-      "Name": "CACHEDIR.TAG",
-      "Type": "File",
-      "RelativePath": "clonador/motor/.ruff_cache/CACHEDIR.TAG",
-      "TargetRelative": "antigravity/clonador/motor/.ruff_cache/CACHEDIR.TAG",
-      "SizeBytes": 43,
-      "SHA256": "5953156D7E0C564A427251316EAF26F8870E6483AE2197F916B630E4F93E31AE"
     },
     {
       "Id": "file_clonador_motor_0_vigilante_bat",

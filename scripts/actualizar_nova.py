@@ -192,7 +192,7 @@ def apply_update(forzar: bool = False) -> int:
         if datos is None:
             fallidos.append(rel)
             continue
-        if esperado and sha256_bytes(datos) != esperado:
+        if esperado and esperado not in {sha256_bytes(datos), sha256_bytes(datos.replace(b'\r\n', b'\n')), sha256_bytes(datos.replace(b'\n', b'\r\n'))}:
             fallidos.append(f"{rel} (la firma SHA-256 no coincide: no se instala)")
             continue
         es_nueva = not destino.exists()
