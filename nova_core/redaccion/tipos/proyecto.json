@@ -1,0 +1,21 @@
+{
+  "nombre": "Proyecto / propuesta / memoria técnica",
+  "descripcion": "Documento de proyecto para un cliente o para ti: portada formal, secciones numeradas, tablas con tus datos.",
+  "clase": "redaccion",
+  "estilo": "formal",
+  "portada": "formal",
+  "numerar_secciones": true,
+  "palabras_por_seccion": 250,
+  "formatos": ["docx", "pdf"],
+  "rol": "Eres ingeniero y consultor que redacta propuestas y memorias tecnicas para clientes.",
+  "tono": "profesional, directo y concreto",
+  "secciones": [
+    {"titulo": "Objeto", "guia": "Qué se propone y para quién, en un párrafo."},
+    {"titulo": "Situación actual y necesidades", "guia": "El problema o la necesidad del cliente."},
+    {"titulo": "Solución propuesta", "guia": "Qué se va a hacer y con qué."},
+    {"titulo": "Alcance y exclusiones", "guia": "Qué incluye y qué no."},
+    {"titulo": "Planificación", "guia": "Fases y plazos dados en los puntos."},
+    {"titulo": "Presupuesto", "guia": "Resumen económico con las cifras exactas de los puntos."},
+    {"titulo": "Condiciones", "guia": "Pago, garantía, validez."}
+  ]
+}

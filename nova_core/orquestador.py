@@ -37,6 +37,7 @@ import subprocess
 import sys
 import tempfile
 import time
+import xml.etree.ElementTree as ET
 from pathlib import Path
 
 LIMITE_CAMBIO = 0.35  # fraccion maxima de lineas que puede tocar una edicion
@@ -494,46 +495,115 @@ def _revisar_php(ruta: Path) -> tuple[list[str], list[dict]]:
     return pasos, avisos
 
 
+def _java_source_root(ruta: Path) -> Path:
+    for carpeta in ruta.parents:
+        src_mvn = carpeta / "src" / "main" / "java"
+        if src_mvn.is_dir() and ruta.is_relative_to(src_mvn):
+            return src_mvn
+        src_std = carpeta / "src"
+        if (
+            src_std.is_dir()
+            and ruta.is_relative_to(src_std)
+            and not (src_std / "main").exists()
+        ):
+            return src_std
+    return ruta.parent
+
+
+def _resolver_props_xml(texto: str, props: dict[str, str]) -> str:
+    return re.sub(
+        r"\$\{([^}]+)\}", lambda m: props.get(m.group(1), m.group(0)), texto.strip()
+    )
+
+
+def _java_classpath(ruta: Path) -> tuple[list[str], bool]:
+    pom = next((c / "pom.xml" for c in ruta.parents if (c / "pom.xml").is_file()), None)
+    if not pom:
+        return [], False
+    try:
+        root = ET.fromstring(pom.read_text(encoding="utf-8"))
+    except ET.ParseError:
+        return [], False
+    props = {
+        el.tag.split("}")[-1]: (el.text or "").strip()
+        for el in root.findall("./{*}properties/*")
+    }
+    m2 = Path.home() / ".m2" / "repository"
+    jars: list[str] = []
+    usa_lombok = False
+    for dep in root.findall(".//{*}dependency"):
+        g = _resolver_props_xml(dep.findtext("{*}groupId") or "", props)
+        a = _resolver_props_xml(dep.findtext("{*}artifactId") or "", props)
+        v = _resolver_props_xml(dep.findtext("{*}version") or "", props)
+        if not (g and a and v):
+            continue
+        jar = m2 / Path(*g.split(".")) / a / v / f"{a}-{v}.jar"
+        if jar.is_file():
+            jars.append(str(jar))
+            usa_lombok = usa_lombok or a == "lombok"
+        if a == "slf4j-nop":
+            api = m2 / "org" / "slf4j" / "slf4j-api" / v / f"slf4j-api-{v}.jar"
+            if api.is_file():
+                jars.append(str(api))
+    return jars, usa_lombok
+
+
+def _parsear_javac_avisos(salida: str, src_root: Path, ruta: Path) -> list[dict]:
+    re_javac = re.compile(
+        r"^(.*?):(\d+):\s*(error|warning):\s*(?:\[([^\]]+)\]\s*)?(.*)$"
+    )
+    objetivo = ruta.resolve()
+    avisos: list[dict] = []
+    for line in salida.splitlines():
+        m = re_javac.match(line.strip())
+        if not m or (src_root / m.group(1).strip()).resolve() != objetivo:
+            continue
+        avisos.append(
+            {
+                "linea": int(m.group(2)),
+                "codigo": m.group(4) or "javac21",
+                "mensaje": m.group(5).strip(),
+                "severidad": "error" if m.group(3) == "error" else "aviso",
+            }
+        )
+    return avisos
+
+
 def _revisar_java(ruta: Path) -> tuple[list[str], list[dict]]:
     javac = shutil.which("javac")
     if not javac:
         return ["javac no disponible en PATH"], []
-    cwd, nombre = ruta.parent, ruta.name
+    src_root = _java_source_root(ruta)
+    jars, usa_lombok = _java_classpath(ruta)
+    fuentes = (
+        [str(p.relative_to(src_root)) for p in sorted(src_root.rglob("*.java"))]
+        if usa_lombok and src_root != ruta.parent
+        else [
+            str(ruta.relative_to(src_root))
+            if ruta.is_relative_to(src_root)
+            else ruta.name
+        ]
+    )
+    cmd = [
+        javac,
+        "--release",
+        "21",
+        "-Xlint:all",
+        "-proc:full" if usa_lombok else "-proc:none",
+        "-encoding",
+        "UTF-8",
+        "-sourcepath",
+        str(src_root),
+    ]
+    if jars:
+        cmd.extend(["-cp", os.pathsep.join(jars)])
     # los .class van a una carpeta temporal para no ensuciar el proyecto
     with tempfile.TemporaryDirectory(prefix="nova_javac_") as clases:
-        r = _ejecutar(
-            [
-                javac,
-                "--release",
-                "21",
-                "-Xlint:all",
-                "-proc:none",
-                "-encoding",
-                "UTF-8",
-                "-sourcepath",
-                str(cwd),
-                "-d",
-                clases,
-                nombre,
-            ],
-            cwd,
-        )
-    avisos = []
-    re_javac = re.compile(
-        r"^.*?:(\d+):\s*(error|warning):\s*(?:\[([^\]]+)\]\s*)?(.*)$"
-    )
-    for line in (r.stderr + "\n" + r.stdout).splitlines():
-        m = re_javac.match(line.strip())
-        if m:
-            avisos.append(
-                {
-                    "linea": int(m.group(1)),
-                    "codigo": m.group(3) or "javac21",
-                    "mensaje": m.group(4).strip(),
-                    "severidad": "error" if m.group(2) == "error" else "aviso",
-                }
-            )
-    return ["javac 21 -Xlint:all: ok" if not avisos else "javac 21: con avisos"], avisos
+        r = _ejecutar([*cmd, "-d", clases, *fuentes], src_root)
+    avisos = _parsear_javac_avisos(f"{r.stderr}\n{r.stdout}", src_root, ruta)
+    return [
+        "javac 21 -Xlint:all: ok" if not avisos else "javac 21: con avisos"
+    ], avisos
 
 
 def _revisar_csharp(ruta: Path) -> tuple[list[str], list[dict]]:

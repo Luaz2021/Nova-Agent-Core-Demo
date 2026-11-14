@@ -1,0 +1,76 @@
+#!/bin/sh
+# ==============================================================================
+# NOVA PRE-COMMIT GUARDIAN (Big Tech Anti-Leak Shield)
+# Bloqueo fisico en 0.2s: Entropia de Shannon, .env y SQL DELETE sin WHERE
+# ==============================================================================
+
+echo "[NOVA GUARD] Verificando staging de Git antes del commit..."
+
+# 1. Comprobar archivos .env en staging
+STAGED_ENV=$(git diff --cached --name-only | grep -E "(\.env|\.env\.local|\.pem)$" || true)
+if [ -n "$STAGED_ENV" ]; then
+    echo "========================================================================"
+    echo " [COMMIT ABORTADO] Se intento comitear archivos de entorno sensibles:"
+    echo "$STAGED_ENV"
+    echo " Por favor retira estos archivos del staging con: git reset HEAD <archivo>"
+    echo "========================================================================"
+    exit 1
+fi
+
+# 2. Comprobar consultas SQL suicidas: DELETE FROM sin WHERE
+DANGEROUS_SQL=$(git diff --cached -S"DELETE FROM" | grep -iE "DELETE[[:space:]]+FROM[[:space:]]+[a-zA-Z0-9_]+[[:space:]]*;" || true)
+if [ -n "$DANGEROUS_SQL" ]; then
+    echo "========================================================================"
+    echo " [COMMIT ABORTADO] Detectada consulta destructiva 'DELETE FROM' sin WHERE:"
+    echo "$DANGEROUS_SQL"
+    echo "========================================================================"
+    exit 1
+fi
+
+# 3. Escaner de Secretos por Entropia de Shannon (Python)
+if [ -n "$NOVA_PYTHON" ] && [ -x "$NOVA_PYTHON" ]; then
+    PYTHON_EXE="$NOVA_PYTHON"
+elif [ -x "$HOME/.gemini/nova_env/Scripts/python.exe" ]; then
+    PYTHON_EXE="$HOME/.gemini/nova_env/Scripts/python.exe"
+else
+    PYTHON_EXE=$(which python 2>/dev/null || which python3 2>/dev/null || echo "python")
+fi
+"$PYTHON_EXE" "$HOME/.gemini/antigravity/scripts/security/entropy_secret_scanner.py" --staged
+SCAN_STATUS=$?
+
+if [ $SCAN_STATUS -ne 0 ]; then
+    echo "========================================================================"
+    echo " [COMMIT BLOQUEADO] El escaner de secretos de Nova rechazo el commit."
+    echo "========================================================================"
+    exit 1
+fi
+
+# 4. Aduana de Linters y Anti-Fosiles (orquestador.py revisar-staged con autofix + git add)
+"$PYTHON_EXE" "$HOME/.gemini/nova_core/orquestador.py" revisar-staged
+LINT_STATUS=$?
+
+if [ $LINT_STATUS -ne 0 ]; then
+    echo "========================================================================"
+    echo " [COMMIT BLOQUEADO] orquestador.py detecto avisos o codigo legacy."
+    echo " Corrige los avisos mostrados arriba antes de hacer commit."
+    echo "========================================================================"
+    exit 1
+fi
+
+# 5. Si este hook corre como global (core.hooksPath), encadenar el hook local del repo si existe
+GIT_DIR=$(git rev-parse --git-dir 2>/dev/null)
+if [ -n "$GIT_DIR" ] && [ -f "$GIT_DIR/hooks/pre-commit" ]; then
+    SELF_REAL=$(cd "$(dirname "$0")" 2>/dev/null && pwd)/$(basename "$0")
+    LOCAL_REAL=$(cd "$(dirname "$GIT_DIR/hooks/pre-commit")" 2>/dev/null && pwd)/pre-commit
+    if [ "$SELF_REAL" != "$LOCAL_REAL" ]; then
+        echo "[NOVA GUARD] Ejecutando hook local del repositorio ($GIT_DIR/hooks/pre-commit)..."
+        sh "$GIT_DIR/hooks/pre-commit" "$@"
+        LOCAL_STATUS=$?
+        if [ $LOCAL_STATUS -ne 0 ]; then
+            exit $LOCAL_STATUS
+        fi
+    fi
+fi
+
+echo "[NOVA GUARD] Aprobado: Staging limpio y seguro."
+exit 0

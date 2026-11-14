@@ -16,8 +16,9 @@ def get_api_key():
     if key:
         return key
 
-    # 2. Claves locales de Nova (nova_claves.py)
-    for vault_path in [os.path.join(os.path.expanduser("~"), ".gemini", "config", "secrets.env")]:
+    # 2. Buscar en vault de Drive
+    for letter in "GDEFGHIJKLMNOPQRSTUVWXYZC":
+        vault_path = os.path.join(f"{letter}:\\", r"Mi unidad\Antigravity\vault\google_cloud.env")
         if os.path.exists(vault_path):
             try:
                 with open(vault_path, "r", encoding="utf-8") as f:
@@ -31,7 +32,7 @@ def get_api_key():
 def search_videos(query, max_results=5):
     api_key = get_api_key()
     if not api_key:
-        print(json.dumps({"error": "No se encontro YOUTUBE_API_KEY (ejecuta nova_claves.py)"}))
+        print(json.dumps({"error": "No se encontro YOUTUBE_API_KEY en el vault"}))
         return
 
     params = {

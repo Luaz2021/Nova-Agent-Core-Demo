@@ -1,4 +1,4 @@
 {
-  "_nota": "registro = solo apunta en memory/registros/telemetria_hooks.jsonl (no bloquea). bloqueo = aplica las reglas de nova_hook.py. Lo cambia el usuario a mano, nunca Nova.",
+  "_nota": "registro = solo apunta en memory/registros/telemetria_hooks.jsonl (no bloquea). bloqueo = aplica las reglas de nova_hook.py. Lo cambia Claude o Alexander, nunca Nova.",
   "modo": "bloqueo"
 }

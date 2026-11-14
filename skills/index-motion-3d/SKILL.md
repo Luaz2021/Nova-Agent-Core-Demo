@@ -23,7 +23,7 @@ description: "Indice Macro Motion & 3D: Animaciones GSAP (Core, Timeline, Scroll
 - Hoja de contacto con un fotograma por acto revisada antes de entregar: sin clipping ni geometria tapando textos o subtitulos.
 - Solo se animan `transform` y `opacity`; `dispose()` y limpieza de `requestAnimationFrame` al desmontar.
 
-## 2. Mapa de Salto a las Skills (`<NOVA_HOME>/antigravity/` + la ruta `skills/...` de cada entrada)
+## 2. Mapa de Salto al Almacen (`<NOVA_HOME>\antigravity\almacen\` + la ruta `skills\...` de cada entrada; copia local, nunca leer de G:)
 Abrir en paralelo con `read_file` al planificar o auditar motion/3D (y validar el resultado final con capturas en `blaifa/InternVL3_5:8b` + `edit_file <= 35%`):
 - **Suite Oficial GSAP:** `skills\gsap-core\SKILL.md` | `skills\gsap-timeline\SKILL.md` | `skills\gsap-scrolltrigger\SKILL.md` | `skills\gsap-react\SKILL.md` | `skills\gsap-plugins\SKILL.md` | `skills\gsap-utils\SKILL.md` | `skills\gsap-performance\SKILL.md` | `skills\gsap-frameworks\SKILL.md`
 - **Sistemas Cinematicos & Lenis:** `skills\cinematic-gsap-lenis-motion-system\SKILL.md` | `skills\site-motion-excellence-director\SKILL.md` | `skills\motion-design\SKILL.md` | `skills\web-motion-auditor\SKILL.md`

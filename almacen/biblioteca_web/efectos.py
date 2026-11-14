@@ -13,7 +13,7 @@ Dos tipos:
        zoom       -> una foto empieza muy cerca y se aleja hasta verse entera, con un titular encima
        horizontal -> galeria que se mueve de lado mientras bajas
        apiladas   -> tarjetas que se quedan arriba y la siguiente se apila encima
-       video      -> un video que avanza con el scroll (solo con un video REAL que de el usuario o de medios)
+       video      -> un video que avanza con el scroll (solo con un video REAL que de Alexander o de medios)
   C) FONDO VIVO de la portada (canvas 2D propio, 0 KB de librerias): "malla" (degradado que respira) o "particulas".
 
 Reglas fijas: 1 efecto "espectacular" por pagina (fondo vivo, pasos, zoom, horizontal o video) + 2-3 sutiles.

@@ -15,9 +15,11 @@ import datetime
 import argparse
 
 def _resolve_log_path():
+    # Sync v4: memoria siempre en local; nova_sync_v4.ps1 la respalda en Drive.
     local_mem = os.path.expanduser(os.path.join("~", ".gemini", "antigravity", "memory"))
     os.makedirs(local_mem, exist_ok=True)
-    return os.path.join(local_mem, "token_cost_log.jsonl")
+    os.makedirs(os.path.join(local_mem, "registros"), exist_ok=True)
+    return os.path.join(local_mem, "registros", "token_cost_log.jsonl")
 
 LOG_PATH = _resolve_log_path()
 BRAIN_DIR = os.path.expanduser(os.path.join("~", ".gemini", "antigravity", "brain"))

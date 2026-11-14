@@ -48,13 +48,13 @@ description of the Reel's first 3 seconds).
    slide text, or for a Reel the first 3 seconds (on-screen text + opening line).
    (If they later wire an Apify Instagram actor, read it automatically.)
 3. **Detect the surface.** Single image, carousel, or Reel.
-4. **Classify against the 10 formulas** using features:
+4. **Classify against the 13 formulas** using features:
    - Caption: an odd-precision result (IG1)? a contrarian claim (IG2)? a
      relatable moment (IG3)? a first-person confession (IG4)?
    - Carousel: a numbered teaching list (IG5)? a before/after (IG6)? a
      myth/truth structure (IG7)? a named framework (IG8)?
    - Reel: a pattern interrupt in the first seconds (IG9)? a "how I" teardown
-     (IG10)?
+     (IG10)? an AI personification (IG11 - "OpenAI employee that never sleeps")? a head-to-head status destruction (IG12 - "X cannot beat Y" / "Wrong question")? or an impossible scale simulation (IG13 - "Planet for 50 agents") with frame-0 ManyChat anchor?
 5. **Score confidence.** If two formulas fit, return the top 2 with fit scores.
 6. **Extract structure.** Label each part by its role. For a carousel, map slide
    1 (the loop), the front-loaded value, and the payoff slide.

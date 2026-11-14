@@ -119,7 +119,7 @@ ul[role="list"], ol[role="list"] { list-style: none; padding: 0; }
 .pag--editorial .seccion .t-head { font-size: clamp(2.2rem, 1rem + 4vw, 4.4rem); }
 .pag--bento .seccion { padding-block: calc(var(--section) * .8); }
 
-/* estilos de TIENDA DE CAFE (esqueletos galeria y tostador, solo cafeteria,
+/* 09/11 (Claude, a pedido de Luaz): estilos de TIENDA DE CAFE (esqueletos galeria y tostador, solo cafeteria,
    panaderia, tienda y bar). Principios de las buenas webs de tostadores: el color lo ponen las fotos, titulos pequenos
    en MAYUSCULAS espaciadas, esquinas rectas, rejilla de productos con foto, logo centrado. */
 .pag--galeria { --radius: 0px; }

@@ -9,7 +9,7 @@ Genera videos verticales de alta retencion (Instagram Reels, TikTok, YouTube Sho
 1. **Motor A (3D Procedural Studio):** WebGL en Three.js con camara vertical calibrada (9:16), dos personajes 3D procedurales (Dev Humano y Robot Nova) con lip-sync neuronal a 30 Hz y pizarra inteligente con texturas dinamicas.
 2. **Motor B (Editorial / B-Roll / Montaje Mixto):** Escenarios de ritmo rapido con fotos reales (producto, gastronomia, lifestyle), fondos generados por IA web y animaciones fluidas a pelo en DOM con GSAP timelines.
 
-Ambos motores operan bajo el **Enrutador Hibrido de IA (`scripts/nova_video_router.py`)**, que detecta automaticamente si el equipo tiene hardware para IA local (Ollama) para operar a **0 tokens de API cloud (-84% de coste)** o si debe activar el **Fallback transparente a Gemini Cloud 1-Shot** para usuarios en laptops basicas sin GPU.
+Ambos motores operan bajo el **Enrutador Hibrido de IA (`herramientas/video/nova_video_router.py`)**, que detecta automaticamente si el equipo tiene hardware para IA local (Ollama) para operar a **0 tokens de API cloud (-84% de coste)** o si debe activar el **Fallback transparente a Gemini Cloud 1-Shot** para usuarios en laptops basicas sin GPU.
 
 ---
 
@@ -54,15 +54,23 @@ Ambos motores operan bajo el **Enrutador Hibrido de IA (`scripts/nova_video_rout
 6. **Masterizado Final FFmpeg a CRF 18 con Normalizacion EBU R128:**
    - Compresion en espacio de color `bt709`, formato de pixel `yuv420p` y audio masterizado a `-14 LUFS` (estandar de TikTok e Instagram).
 
+7. **Bimodalidad de Cadencia (CPM) y Micro-Estimulos Obligatorios:**
+   - **Modo Alta Dopamina (CPM 40 a 80):** En ganchos de 0-3s y reels de alto alcance, insertar un micro-estimulo visual cada `0.8s a 1.2s` (`zoom_punch`, escala spring en textos, entrada de iconos o cambio de tiro).
+   - **Modo Editorial / Demo Tecnica (CPM 4 a 15):** En demostraciones de codigo, arquitectura o dashboards B2B, los planos se sostienen entre `4s y 8s` pero obligatoriamente acompañados de `slow_dolly_in` continuo. Prohibido dejar una captura estatica congelada sin movimiento de camara.
+
+8. **Motor C: Simulacion 2D Pixel Art / RPG Canvas (Alternativa Ligera al 3D):**
+   - Para conceptos abstractos de IA (agentes interactuando, memoria persistente, mundos virtuales, orquestacion de microservicios), priorizar Canvas 2D en codigo puro estilo RPG/16-bit apoyado en `procedural-film` y GSAP.
+   - Ventajas probadas: cero problemas de recorte de camara en 9:16 (`viewBox` vectorial cerrado), carga sub-50ms, 60 FPS estables y retencion visual un 40% superior a los tipicos diagramas de cajas o talking heads.
+
 ---
 
 ## 3. Enrutador Hibrido: Capa 0 (Ollama Local) vs Capa 1 (Cloud Fallback)
 
-El script `scripts/nova_video_router.py` resuelve de forma automatica el dilema de hardware:
+El script `herramientas/video/nova_video_router.py` resuelve de forma automatica el dilema de hardware:
 
 ```mermaid
 flowchart TD
-    Prompt[Brief de Escena / Guion] --> Router{scripts/nova_video_router.py}
+    Prompt[Brief de Escena / Guion] --> Router{herramientas/video/nova_video_router.py}
     
     Router --> Check[Ping http://127.0.0.1:11434/api/tags]
     
@@ -79,16 +87,16 @@ flowchart TD
 
 ```bash
 # 1. Comprobar si el equipo tiene IA local disponible o requiere fallback:
-python scripts/nova_video_router.py --check
+python herramientas/video/nova_video_router.py --check
 
 # 2. Generar escena en modo automatico (Usa Ollama si existe; si no, fallback a Cloud):
-python scripts/nova_video_router.py --prompt "Mito vs Realidad de Nova Core" --out escena1.json
+python herramientas/video/nova_video_router.py --prompt "Mito vs Realidad de Nova Core" --out escena1.json
 
 # 3. Forzar modo local exclusivamente:
-python scripts/nova_video_router.py --prompt "Arquitectura Limpia" --mode local
+python herramientas/video/nova_video_router.py --prompt "Arquitectura Limpia" --mode local
 
 # 4. Forzar modo Cloud 1-Shot:
-python scripts/nova_video_router.py --prompt "Arquitectura Limpia" --mode cloud
+python herramientas/video/nova_video_router.py --prompt "Arquitectura Limpia" --mode cloud
 ```
 
 ---
@@ -126,7 +134,7 @@ Los archivos base probados y calibrados se encuentran en:
 
 ## 6. Checklist de QA Pre-Render
 
-1. [ ] ¿Se ejecuto `python scripts/nova_video_router.py --check` para verificar el motor de ejecucion?
+1. [ ] ¿Se ejecuto `python herramientas/video/nova_video_router.py --check` para verificar el motor de ejecucion?
 2. [ ] ¿Las escenas cumplen con la validacion de `fast_check.py` antes de renderizar?
 3. [ ] ¿La locucion neural fue generada primero y los timestamps alimentan la timeline de subtitulos?
 4. [ ] ¿Los personajes y la pizarra 3D estan contenidos entre Y=240px y Y=1520px?

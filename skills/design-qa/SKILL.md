@@ -5,21 +5,14 @@ description: "Gates de control de calidad de diseno: lint de tokens, axe a11y, c
 
 # Skill: Design QA
 
-> **Step 0: is the kit here?** This skill reads files from the kit. Check once:
-> `ls ${CLAUDE_SKILL_DIR}/../../../tokens >/dev/null 2>&1 && echo KIT_OK || echo KIT_MISSING`
-> On `KIT_MISSING` only the skill folders were installed, which is what
-> `npx skills add` does. Say so plainly, point the user at
-> `npx ux-ui-agent-skills init` or the plugin install, and stop. Do not guess the
-> contents of a file you could not open.
-
-Stand up the automated + manual gates that stop quality from regressing.
+Stand up the automated + visual gates that stop quality from regressing in Nova 2026.
 
 ## Steps
-1. Read `${CLAUDE_SKILL_DIR}/../../../workflows/design-qa.md` (the QA pyramid: token/lint gates → automated a11y → visual regression → manual a11y).
-2. Wire the **fast gates** first (every commit/PR): `python3 ${CLAUDE_SKILL_DIR}/../../../scripts/validate_tokens.py`, `python3 ${CLAUDE_SKILL_DIR}/../../../scripts/validate_contrast.py` (batch WCAG over the token pairs), and `python3 ${CLAUDE_SKILL_DIR}/../../../scripts/lint_hardcodes.py <src>` (no raw hex/px/timing in component code). The repo's `.github/workflows/ci.yml` runs these.
-3. Add **automated a11y** (axe-core / Pa11y) over each component's states (error/loading/disabled/expanded/selected), zero serious/critical to merge. Run the **real-render contrast gate** `node ${CLAUDE_SKILL_DIR}/../../../scripts/gate.mjs measure_render.mjs <file.html>` (and `--dark`). It opens the page in headless Chromium, disables transitions, and measures the true computed-style + alpha-composited contrast of every text element (catches what static token checks miss).
-4. Add **visual regression** snapshots across variants × sizes × states × light/dark + key breakpoints + RTL; freeze animations + deterministic data.
-5. Sign off the **manual a11y** checklist per release (keyboard, screen reader, 400% reflow, 200% text-spacing, reduced-motion, forced-colors; `${CLAUDE_SKILL_DIR}/../../../accessibility/*`).
+1. Follow the QA pyramid: token/lint gates → automated a11y → Playwright 2-viewport captures + `blaifa/InternVL3_5:8b` visual audit → surgical `edit_file <= 35%`.
+2. Run the **fast gates** first: `python <NOVA_HOME>\nova_core\orquestador.py revisar <dir>`, `node <NOVA_HOME>\antigravity\almacen\skills\gemini-ui-artisan\scripts\lint.mjs <src>`, and `nova_tarea.py --verificar --carpeta <dir>` (measures real WCAG contrast in the rendered page; `nova_color_oracle.py` is retired since 09/11: it called a cloud model).
+3. Run the **real-render browser gate**: `node <NOVA_HOME>\antigravity\almacen\skills\gemini-ui-artisan\scripts\inspect.mjs <file.html>` at 1440px, 768px, and 390px. Zero `FAIL` allowed.
+4. Run **Playwright dual captures** (Desktop 1280px + Mobile 375px and per-section snapshots) and audit with `blaifa/InternVL3_5:8b` (`nova_puente_capturas.py`). Note exact failing lines and patch only those lines (`edit_file <= 35%`).
+5. Verify keyboard navigation, visible focus, 8 interactive states, and `prefers-reduced-motion` fallback.
 
 ## Verification (definition of done)
 - An unreviewed PR cannot introduce an unresolved token alias, a contrast failure, a raw hex/px, or an axe violation: a gate blocks each.

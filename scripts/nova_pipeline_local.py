@@ -177,7 +177,7 @@ def volcar_freno_pendiente(
     ]
     if ruta_capturas and ruta_capturas.exists():
         contenido.append(f"Capturas de auditoria conservadas en: {ruta_capturas}")
-    contenido.append("ACCION REQUERIDA: Notificar a el usuario en 1 llamada. Cirugia manual edit_file <= 35% previa autorizacion.")
+    contenido.append("ACCION REQUERIDA: Notificar a Alexander en 1 llamada. Cirugia manual edit_file <= 35% previa autorizacion.")
     contenido.append("=" * 70 + "\n")
 
     if CARPETA_TAREA:
@@ -490,7 +490,7 @@ def problemas_dom(dom: dict, vista: str) -> list[str]:
     # Mezcla de mayusculas y minusculas ("[Mapa Vectorial Estilizado]") = relleno inventado: fallo.
     pendientes = {x for x in encontrados if RE_PENDIENTE.fullmatch(x)}
     for p in sorted(pendientes):
-        AVISOS.add(f"dato pendiente de el usuario: {p}")
+        AVISOS.add(f"dato pendiente de Alexander: {p}")
     rellenos = sorted(encontrados - pendientes)
     if rellenos:
         out.append(f"{vista}: texto de relleno visible en la pagina (quitalo o pon el contenido real): {', '.join(rellenos[:5])}.")
@@ -498,7 +498,7 @@ def problemas_dom(dom: dict, vista: str) -> list[str]:
 
 
 # Relleno que se ve en la pagina: "[Mapa Vectorial Estilizado]" (08/11), lorem ipsum, placeholder, {{variable}}...
-# "[PENDIENTE]" esta permitido: es lo que se pide para datos que el usuario no dio.
+# "[PENDIENTE]" esta permitido: es lo que se pide para datos que Alexander no dio.
 RE_RELLENO = re.compile(r"\[[^\]\n]{2,60}\]|lorem ipsum|placeholder|\{\{[^}]*\}\}|\bTODO\b|\bXXX\b", re.I)
 RE_PENDIENTE = re.compile(r"\[[A-ZÁÉÍÓÚÜÑ0-9 €/.,&-]{2,60}\]")
 RE_PRECIO = re.compile(r"\d{1,4}(?:[.,]\d{2})?\s?(?:€|eur\b)|(?:€|\$)\s?\d{1,4}(?:[.,]\d{2})?", re.I)
@@ -688,7 +688,7 @@ def ejecutar_contexto_2(
             except Exception as e:
                 print(f"[CONTEXTO 2] Error al re-invocar Qwen: {e}")
 
-    # Si se agotaron los intentos, conservar capturas para diagnostico de el usuario (ya estan en la carpeta de la tarea)
+    # Si se agotaron los intentos, conservar capturas para diagnostico de Alexander (ya estan en la carpeta de la tarea)
     if not CARPETA_TAREA:
         carpeta_fallos = Path.home() / "Pictures" / "capturas_nova" / "fallos_audit_visual"
         carpeta_fallos.mkdir(parents=True, exist_ok=True)

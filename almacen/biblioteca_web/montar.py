@@ -5,7 +5,7 @@ MONTAR · biblioteca web de Nova: datos reales + receta + direccion de arte -> i
                      [--out index.html] [--semilla N]
 
 - La MAQUETACION viene de los bloques (bloques.py): calidad fija, accesibles y responsive.
-- Los DATOS vienen de datos.json (los da el usuario o el cliente). Lo que falta sale como [PENDIENTE]; las secciones
+- Los DATOS vienen de datos.json (los da Alexander o el cliente). Lo que falta sale como [PENDIENTE]; las secciones
   opcionales sin datos (resenas, eventos, faq) no se pintan. Nada se inventa.
 - La DIRECCION (draw.mjs) se convierte en variables: paleta por roles, tipografias, escala, motivo grafico.
 - Devuelve avisos: contraste insuficiente de la paleta, datos pendientes.
@@ -279,7 +279,7 @@ def elegir_esqueleto(pedido: str, direccion: dict, preferencia: str, semilla: in
     anterior = [m.get("esqueleto") for m in mem if m.get("categoria") == categoria][-1:]
     libres = [k for k in posibles
               if (k not in anterior if (tipo and tipo in (esq[k].get("tipos") or [])) else k not in recientes)] or posibles
-    # si hay estilos hechos para este tipo de negocio (webs de referencia), solo se elige entre ellos
+    # si hay estilos hechos para este tipo de negocio (referencias de Luaz), solo se elige entre ellos
     propios = [k for k in libres if tipo and tipo in (esq[k].get("tipos") or [])]
     libres = propios or libres
     d = direccion.get("direction") or {}

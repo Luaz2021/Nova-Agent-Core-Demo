@@ -43,7 +43,7 @@ Para entender la arquitectura de Nova Agent, es crítico separar el **runtime ag
 
 ## 🏗️ Arquitectura del Sistema (La Pirámide de Escalado de 5 Capas)
 
-Nova v3.0 trabaja con una regla de oro: **lo pesado se hace en tu equipo a 0 tokens y la nube solo dirige y repara**. Todo el flujo pasa por las **reglas automáticas (hooks)**, que vigila el sistema y no el modelo.
+Nova v3.1 trabaja con una regla de oro: **lo pesado se hace en tu equipo a 0 tokens y la nube solo dirige y repara**. Todo el flujo pasa por las **reglas automáticas (hooks)**, que vigila el sistema y no el modelo.
 
 ```mermaid
 flowchart TD
@@ -53,12 +53,12 @@ flowchart TD
     Guard -->|Bloqueado o pregunta| User
     Guard -->|Permitido| Dispatcher{¿Qué hay que hacer?}
 
-    Dispatcher -->|Web de un negocio| Biblio[🏪 Biblioteca de webs<br>nova_tarea.py --categoria auto]
+    Dispatcher -->|Web de un negocio| Biblio[🏪 Biblioteca de webs<br>nova_tarea.py --categoria auto + identidad.py]
     Dispatcher -->|Web de referencia| Clon[🔍 Clonador<br>mide estructura · cambia textos y marcas]
     Dispatcher -->|Otra web o app| Secciones[🧩 Qwen por secciones<br>nova_secciones.py + revisión InternVL]
     Clon --> Capa0
     Secciones --> Capa0
-    Dispatcher -->|Documento PDF / Word| Redactor[📄 Redactor local<br>redactor.py · resumir.py]
+    Dispatcher -->|Documento PDF / Word / Excel| Redactor[📄 Motor de Redacción Formal<br>redactar.py · resumir.py · conversor.py]
     Dispatcher -->|Código grande / textos en lote| Obrero[🔧 Obrero local<br>nova_local_worker.py]
     Biblio --> Capa0
     Redactor --> Capa0
@@ -77,8 +77,8 @@ flowchart TD
 
 | Capa | Motor | Rol principal | Coste |
 | :--- | :--- | :--- | :--- |
-| **🛡️ Hooks** | **`nova_core/nova_hook.py` + `nova_hook_turno.py`** | Vigilan cada mensaje y cada herramienta: bloquean o preguntan ante lo peligroso, frenan el gasto cada 300k tokens reales y obligan a apuntar lo aprendido. | **0 tokens (corren en local)** |
-| **Capa 0** | **Ollama: Qwen 3.5 (9B/4B) + InternVL 3.5 (visión)** | El que pica: webs de negocio desde la biblioteca, documentos, código grande y autocontenido, textos en lote y todo lo privado. Si falla 3 veces, **freno en seco**: te avisa y no sigue en la nube sin tu permiso. | **0 tokens de nube (0,00 €)** |
+| **🛡️ Hooks** | **`nova_core/nova_hook.py` + `nova_hook_turno.py`** | Vigilan cada mensaje y cada herramienta: bloquean o preguntan ante lo peligroso en `.gemini`, habilitan flujos Git/GitHub con permiso, frenan el gasto cada 300k tokens reales y obligan a apuntar lo aprendido. | **0 tokens (corren en local)** |
+| **Capa 0** | **Ollama: Qwen 3.5 (9B/4B) + InternVL 3.5 (visión)** | El que pica: webs de negocio desde la biblioteca, documentos formales, código grande y autocontenido, textos en lote y todo lo privado. Si falla 3 veces, **freno en seco**: te avisa y no sigue en la nube sin tu permiso. | **0 tokens de nube (0,00 €)** |
 | **Capa 1** | **Gemini Flash** | El que dirige: entiende el pedido, prepara el contrato para la Capa 0, escribe hasta 150 líneas (arreglos, integraciones, lo delicado) y repara lo que salga mal. | **Factor 1.0x** |
 | **Capa 2** | **Gemini Pro (subagente)** | Análisis en frío y asíncrono cuando Flash necesita una segunda opinión. | **Bajo demanda** |
 | **Capa 3** | **Gemini Argon** | Rediseños de arquitectura, incompatibilidades profundas y auditorías forenses. | **Factor 4.0x, solo bajo demanda** |
@@ -91,10 +91,10 @@ flowchart TD
 ## 📑 Índice de Contenidos
 1. [La Ideología: 100% Ecosistema Google](#-la-ideología-100-ecosistema-google)
 2. [Google Antigravity 2.0 vs. Antigravity IDE](#-distinción-fundamental-google-antigravity-20-vs-antigravity-ide)
-3. [Novedades de Ingeniería v3.0](#-novedades-de-ingeniería-v30)
+3. [Novedades de Ingeniería v3.1](#-novedades-de-ingeniería-v31)
 4. [Novedades de Ingeniería v2.3](#-novedades-de-ingeniería-v23)
 5. [Instalación en 1 Clic (Windows, macOS y Linux)](#-instalación-en-1-clic-auto-instalador-de-antigravity-incluido)
-6. [¿Ya tienes Nova? Actualiza a v3.0 sin perder nada](#-ya-tienes-nova-actualiza-a-v30-sin-perder-nada)
+6. [¿Ya tienes Nova? Actualiza a v3.1 sin perder nada](#-ya-tienes-nova-actualiza-a-v31-sin-perder-nada)
 7. [Router Multi-Modelo y Herramientas a 0 Tokens](#-router-multi-modelo-y-herramientas-a-0-tokens)
 8. [Catálogo Detallado de Skills por Especialidad](#-catálogo-detallado-de-skills-por-especialidad)
 9. [Atribuciones y Agradecimientos Open Source](#-atribuciones-y-agradecimientos-open-source-cero-cajas-negras)
@@ -104,24 +104,24 @@ flowchart TD
 
 ---
 
-## 🔥 Novedades de Ingeniería v3.0
+## 🔥 Novedades de Ingeniería v3.1
 
-Esta versión acerca la Nova pública a la Nova completa del autor: **reglas que vigila el sistema (no el modelo)**, **webs y documentos hechos en local a 0 tokens**, la **IA local de nueva generación** y un **actualizador por parches** que nunca toca lo tuyo. Funciona igual en **Windows, macOS y Linux**.
+Esta versión sincroniza la Nova pública al 100% con el núcleo maestro en la nube: **18 Leyes Sagradas de Operación**, **reglas que vigila el sistema (hooks con entorno virtual aislado `nova_env`)**, **motor formal de documentos (`redactar.py`)**, **identidad visual automática en la biblioteca de webs (`identidad.py`)**, **constructores por secciones (`nova_secciones.py`)** y un **actualizador por parches SHA-256** que protege tus datos. Funciona de forma nativa en **Windows, macOS y Linux**.
 
 | Mejora de Arquitectura | Qué problema resuelve | Impacto Técnico Real |
 | :--- | :--- | :--- |
-| **1. Reglas automáticas con hooks (`nova_core/nova_hook.py`, `nova_hook_turno.py`)** | Las leyes de `GEMINI.md` son texto y el modelo a veces se las salta. Ahora Antigravity consulta a Nova **antes de cada herramienta**: bloquea escribir en carpetas protegidas o `.env`, pregunta ante comandos destructivos o ediciones en la rama principal, impide leer claves o archivos gigantes y frena webs de +150 líneas escritas desde la nube. | Las reglas se cumplen siempre. Un hook roto nunca bloquea a Nova (falla en abierto y lo apunta). |
+| **1. Reglas automáticas con hooks (`nova_core/nova_hook.py`, `nova_hook_turno.py`)** | Las leyes de `GEMINI.md` son texto y el modelo a veces se las salta. Ahora Antigravity consulta a Nova **antes de cada herramienta**: protege las carpetas internas de `~/.gemini`, desbloquea operaciones de Git y GitHub (`gh`) bajo autorización expresa, impide leer claves o archivos gigantes y frena webs de +150 líneas escritas desde la nube. | Las 18 leyes se cumplen siempre sin falsos positivos en repositorios externos. |
 | **2. Freno de gasto con tokens reales** | Una sesión larga podía quemar millones de tokens sin avisar. El freno cuenta los tokens **reales** (la caché de Gemini al 10 %) y pregunta cada 300k; también avisa a los 100k de contexto para compactar y guarda copia del chat. | Control del gasto sin sorpresas. |
 | **3. Auto-aprendizaje vigilado** | Cuando corriges a Nova o fallan varios comandos seguidos, el hook le pide **una lección** en `memory/inbox_lecciones.md`; si no la apunta, insiste una vez y luego la guarda para revisar. | Nova no repite el mismo error. |
-| **4. Biblioteca de webs local (`almacen/biblioteca_web/`)** | Webs de negocio **minimalistas y con identidad propia** según el tipo de negocio: 15 categorías, 36 estilos inspirados en principios de webs reales (nunca marcas), fotos con licencia libre, efectos de scroll y 3D (Three.js) que se apagan en el móvil y con "reducir movimiento". | Una web completa en local **sin gastar tokens de nube**. Con una web de referencia, la nube puede escribirla. |
-| **5. Redactor de documentos (`nova_core/redactor.py`)** | PDF y Word con portada (u opción `sin_portada`), tablas con negrita y anchos de columna correctos, usando la IA local. Más `resumir.py` y `conversor.py` para leer documentos largos sin subirlos enteros. | Documentos profesionales a 0 tokens. |
+| **4. Biblioteca de webs local con Identidad Automática (`almacen/biblioteca_web/identidad.py`)** | Webs de negocio **minimalistas y con identidad propia** elegida automáticamente según el tipo de negocio: 15 categorías, 36 estilos inspirados en principios de diseño reales, paleta cromática automática, fotos con licencia libre, efectos de scroll y 3D (Three.js) adaptativos. | Una web completa en local **sin gastar tokens de nube**. Con una web de referencia, la nube o el clonador trabajan bajo medida. |
+| **5. Motor de Redacción Formal (`nova_core/redactar.py` + `nova_core/redaccion/`)** | Sustituye y amplía al redactor clásico con soporte tipado para `presupuesto`, `solicitud_presupuesto`, `proyecto`, `academico` (APA 7), `tesis`, `informe`, `doc_software` y `actividad` (con validación contra enunciado), exportación a PDF, Word, Excel nativo y Gamma, y bloqueo de cifras inventadas. Incluye `resumir.py` y `conversor.py`. | Documentos técnicos, académicos y comerciales verificados a 0 tokens. |
 | **6. IA local de nueva generación (`scripts/nova_instalar_ia_local.py`)** | **Qwen 3.5** (9B o 4B) para código y textos + **InternVL 3.5** para visión, según tu equipo. Si falta Ollama, Nova lo instala (winget, Homebrew o el instalador oficial de Linux). Un único catálogo: `scripts/nova_modelos.json`. | Di *"Nova, instala la IA local"* y listo. |
-| **7. Actualizador por parches con firma SHA-256 (`scripts/actualizar_nova.py`)** | Compara **archivo por archivo**, verifica cada descarga, hace copia de seguridad antes de cambiar nada y **nunca toca** tus notas, tu perfil ni tus claves. Compatible con las instalaciones v2.x. | Parches seguros cada pocos meses con un *"Nova, busca actualizaciones"*. |
-| **8. Multiplataforma de verdad** | Avisos de escritorio, voz, batería, anti-suspensión y portapapeles nativos en Windows, macOS y Linux; el nombre del usuario se lee de su perfil. | La misma Nova en los tres sistemas. |
-| **9. Pipeline de webs completo (`scripts/nova_tarea.py`)** | Un solo comando para la Capa 0: Qwen pica por secciones (`nova_secciones.py`), el linter (`nova_core/orquestador.py`) y Playwright + InternVL revisan escritorio y móvil (`nova_pipeline_local.py`), y Nova solo arregla lo que falla. Con una web de referencia usa el **clonador** (`clonador/`), que mide estructura y ritmo y cambia textos, marcas y fotos por los tuyos. | Webs revisadas antes de entregarlas, sin reescribirlas desde la nube. |
-| **10. Herramientas internas (`herramientas/`)** | Trello, Gmail, Groq (Whisper + Llama gratis), YouTube, escudo de datos para la nube gratis, escáner de repos de terceros, pruebas fantasma en rama temporal, radar de webs del sector, vídeo (narración, intro, hoja de fotogramas auditada por InternVL, destilador de reels) y voz manos libres. | Lo que Nova ya sabe hacer sin escribir scripts nuevos. |
-| **11. 20 skills nuevas (145 en total)** | Móvil nativo (Android, iOS, Flutter, React Native, seguridad MASVS), presentaciones (HTML, suizo/editorial, PPTX nativo, PowerPoint), Web3 (Foundry, tokenización y MiCA), vídeo Canvas 2.5D y los **8 índices de 1 salto** que hacen que Nova lea solo lo que necesita. | Más dominios con el mismo gasto de tokens. |
-| **12. Informe de aprendizaje con privacidad (`/enviar-informe`)** | Si quieres ayudar a mejorar Nova, prepara un informe con **solo** las lecciones, las entradas nuevas de tu servilleta y el **tipo** de errores. Nada de tu equipo, proyectos, rutas, correos ni claves. Tú lo revisas y decides si se envía. | Mejora colectiva sin robar información. |
+| **7. Actualizador por parches con firma SHA-256 (`scripts/actualizar_nova.py`)** | Compara **archivo por archivo** contra `manifest_master.json` (1.492 componentes firmados con normalización LF multi-OS), verifica cada descarga, hace copia de seguridad antes de cambiar nada y **nunca toca** tus notas, tu perfil ni tus claves. | Parches seguros con un *"Nova, busca actualizaciones"*. |
+| **8. Multiplataforma con entorno aislado (`~/.gemini/nova_env`)** | Instaladores unificados en Windows (`install.ps1`), macOS y Linux (`install.sh`) que aprovisionan automáticamente el entorno virtual `~/.gemini/nova_env` (`Scripts/python.exe` en Windows, `bin/python` en Unix), avisos nativos, voz, batería y autodiagnóstico con `nova_doctor`. | La misma Nova y el mismo aislamiento de dependencias en los tres sistemas. |
+| **9. Pipeline de webs completo (`scripts/nova_tarea.py` + `nova_secciones.py`)** | Comando único para la Capa 0: Qwen construye webs multipágina o de varias secciones con contexto de 8k (`nova_secciones.py`), el linter (`nova_core/orquestador.py`) y Playwright + InternVL revisan escritorio y móvil (`nova_pipeline_local.py`), y Nova solo aplica micro-cirugía en lo que falla. | Webs auditadas visualmente (Contexto 1 + Contexto 2) antes de entregarlas. |
+| **10. Herramientas internas (`herramientas/`)** | Trello, Gmail, Groq (Whisper + Llama gratis), YouTube, escudo de datos para la nube gratis, escáner de repos de terceros, pruebas fantasma en rama temporal, radar de webs del sector, vídeo (narración, intro, hoja de fotogramas auditada por InternVL, destilador de reels) y guardián de claves. | Lo que Nova ya sabe hacer sin escribir scripts nuevos. |
+| **11. Catálogo completo de 145+ skills y 8 Índices Macro** | Móvil nativo (Android, iOS, Flutter, React Native, seguridad MASVS), presentaciones (HTML, suizo/editorial, PPTX nativo, PowerPoint), Web3 (Foundry, tokenización y MiCA), vídeo Canvas 2.5D y los **8 índices de 1 salto** (`index-*`) que hacen que Nova lea solo lo que necesita. | Más dominios con el mismo gasto de tokens. |
+| **12. Informe de aprendizaje con privacidad (`/enviar-informe`)** | Si quieres ayudar a mejorar Nova, prepara un informe con **solo** las lecciones, las entradas nuevas de tu servilleta y el **tipo** de errores. Nada de tu equipo, proyectos, rutas, correos ni claves. Tú lo revisas y decides si se envía. | Mejora colectiva sin exponer datos privados. |
 
 ---
 
@@ -143,14 +143,16 @@ Esta versión introduce el **Motor de Vídeo Programático Dual**, el **Enrutado
 
 ## 🛠️ Router Multi-Modelo y Herramientas a 0 Tokens
 
-Nova Agent incluye una suite de utilidades CLI nativas en `scripts/` y `scripts/scrapers/` que operan bajo el **Principio API/CLI First (Ley 17)**:
+Nova Agent incluye una suite de utilidades CLI nativas en `nova_core/`, `scripts/` y `scripts/scrapers/` que operan bajo el **Principio API/CLI First (Ley 17)**:
 
 ```text
 Nova CLI Tools
+├── redactar.py           -> Motor formal de documentos (PDF, Word, Excel, APA 7, presupuestos, informes y actividades)
+├── nova_tarea.py         -> Comando único de webs: biblioteca, referencia (clonador) o Qwen por secciones + revisión
+├── nova_secciones.py     -> Constructor de webs multipágina o por secciones con contexto de 8k para Qwen
 ├── nova_video_router.py  -> Enrutador híbrido de vídeo 3D (Capa 0 Ollama vs Capa 1 Cloud Fallback)
 ├── free_ai_router.py     -> Enruta consultas a Codestral o OpenRouter Free Tier (0€)
 ├── youtube_api_client.py -> Consultas a YouTube Data API v3 en <150ms a 0 tokens
-├── nova_tarea.py         -> Comando único de webs: biblioteca, referencia (clonador) o Qwen por secciones + revisión
 ├── nova_instalar_ia_local.py -> Instala Ollama + Qwen 3.5 + InternVL 3.5 según tu equipo
 ├── nova_claves.py        -> Asistente de claves gratis (se guardan solo en tu equipo)
 ├── nova_revisor.py       -> Informe semanal local: qué hizo Nova, cuánto gastó y dónde falló
@@ -167,7 +169,7 @@ herramientas/
 ├── pruebas/phantom_test.ps1    -> Prueba código en una rama temporal y la descarta si falla
 ├── radar_web.py                -> Mide 3-5 webs reales del sector (estructura y ritmo, sin copiar textos ni fotos)
 ├── video/                      -> Narración, intro de 10 s, hoja de fotogramas auditada por InternVL, destilador de reels
-└── voz/nova_voz.py             -> Manos libres: di "Nova" y dicta (Windows; el modelo Vosk se descarga aparte)
+└── voz/                        -> Manos libres (nova_voz.py) y guardián local de claves (guardian_claves.py)
 
 clonador/                       -> Motor que rehace una web de REFERENCIA en local (se cambian textos, marcas y fotos)
 ```
@@ -191,6 +193,9 @@ python scripts/scrapers/youtube_api_client.py search "Arquitectura Limpia Hexago
 
 # Montar una web de negocio desde la biblioteca local (0 tokens de nube)
 python ~/.gemini/antigravity/almacen/biblioteca_web/montar.py --datos mi_web/datos.json --categoria auto --out mi_web/index.html
+
+# Listar tipos de documentos formales soportados por el motor de redacción
+python ~/.gemini/nova_core/redactar.py tipos
 
 # Ver qué IA local te toca y qué tienes instalado
 python ~/.gemini/antigravity/scripts/nova_instalar_ia_local.py --estado
@@ -225,11 +230,11 @@ curl -fsSL https://raw.githubusercontent.com/Luaz2021/Nova-Agent-Core-Demo/main/
 curl -fsSL https://raw.githubusercontent.com/Luaz2021/Nova-Agent-Core-Demo/main/instalar_nova.sh | bash
 ```
 
-El instalador es interactivo: te pregunta tu nombre y tu perfil, analiza tu equipo, te ofrece la IA local, registra las reglas automáticas (hooks) y, si quieres, te deja configurar tus claves gratuitas (como un inicio de sesión, sin mostrarlas en pantalla y solo en tu equipo).
+El instalador es interactivo: te pregunta tu nombre y tu perfil, analiza tu equipo, crea el entorno virtual aislado `~/.gemini/nova_env`, te ofrece la IA local, registra las reglas automáticas (hooks) y, si quieres, te deja configurar tus claves gratuitas (como un inicio de sesión, sin mostrarlas en pantalla y solo en tu equipo).
 
 ---
 
-## 🔄 ¿Ya tienes Nova? Actualiza a v3.0 sin perder nada
+## 🔄 ¿Ya tienes Nova? Actualiza a v3.1 sin perder nada
 
 No hace falta reinstalar. En el chat de Antigravity escribe:
 

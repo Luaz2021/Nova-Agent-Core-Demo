@@ -1,6 +1,6 @@
 ---
 name: motion-design
-description: "Principios de motion design (LottieFiles y 12 principios de Disney adaptados a UI): tiempos, curvas y coreografia."
+description: "Principios de motion design (Disney, Emil Kowalski y Apple HIG): tiempos, curvas, fisica de resortes, micro-interacciones y React Native Reanimated."
 license: MIT
 metadata:
 ---
@@ -264,6 +264,18 @@ Select ONE archetype per project. Apply consistently.
 2. Use directional easing (ease-out entrance, ease-in exit)
 3. Apply Disney principles (especially anticipation, follow-through)
 4. Maintain consistent personality across scene
+
+### Micro-Interacciones de Producto y Apple HIG (Canon Emil Kowalski)
+1. **Prohibido transition: all:** Especifica siempre propiedades explicitas. `transition: all` desencadena recalculos de layout descontrolados y saltos visuales.
+2. **Propiedades GPU estrictas:** Anima exclusivamente `transform` y `opacity`. Prohibido transicionar `width`, `height`, `top`, `left`, `margin` o `padding` en caliente.
+3. **Entradas fisicas sin singularidades (No scale(0)):** Los objetos no surgen de un punto cero. En modales, menus y toasts, transiciona desde `scale(0.95)` o `scale(0.97)` hacia `scale(1)` junto con opacidad y curva desacelerada (`ease-out`).
+4. **Interrumpibilidad 1:1:** Toda animacion o gesto en curso debe poder cancelarse o revertirse en pleno vuelo sin tirones ni estados bloqueados.
+5. **Traspaso de inercia (Velocity Handoff):** En componentes arrastrables (sheets modales, pull-to-refresh), conserva la velocidad angular o lineal del dedo al soltar el control para alimentar el rebote del resorte.
+6. **React Native y Expo fuera del hilo JS:**
+   - Emplea `react-native-reanimated` (`useSharedValue`, `useAnimatedStyle`, `withSpring`).
+   - Cero calculos matematicos de frames en el hilo principal de JavaScript.
+   - Agrega respuesta haptica con `expo-haptics` en eventos de impacto (seleccion, conmutador, exito, borrado).
+7. **Auditoria en tabla Antes/Despues:** Al refactorizar o auditar movimiento, reporta siempre: elemento, easing previo, curva ajustada, duracion y beneficio en FPS.
 
 > Full checklist: [reference/quality-checklist.md](reference/quality-checklist.md)
 

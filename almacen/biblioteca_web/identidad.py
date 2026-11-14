@@ -1,5 +1,5 @@
 """
-IDENTIDAD · fotos y colores segun DE QUE VA el negocio
+IDENTIDAD · fotos y colores segun DE QUE VA el negocio (09/11/2026, Claude, a pedido de Luaz)
 
 Antes: fotos al azar de colecciones genericas (un cafe con frutos del bosque, Chicago y una maquina de escribir) y una
 paleta sorteada entre 56 por "sector" (verde oliva de una web de safari para un cafe).

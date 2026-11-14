@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 # ==============================================================================
-# INSTALADOR INTERACTIVO DE NOVA AGENT v3.0 - LINUX Y MACOS (SH)
+# INSTALADOR INTERACTIVO DE NOVA AGENT v3.1 - LINUX Y MACOS (SH)
 # Zero-Tokens | Escaner de Hardware | IA local opcional (Ollama) | Reglas automaticas (hooks)
 # Creado por Saul Alexander Martinez Rivas (@Luaz2021)
 # (adapters/linux/install.sh y adapters/macos/install.sh son el mismo script)
@@ -38,7 +38,7 @@ fi
 
 clear 2>/dev/null || true
 echo "=========================================================="
-echo "   BIENVENIDO AL INSTALADOR OFICIAL DE NOVA AGENT v3.0    "
+echo "   BIENVENIDO AL INSTALADOR OFICIAL DE NOVA AGENT v3.1    "
 echo "   Arquitecta de Software & Copiloto Tecnico Senior ($SO) "
 echo "=========================================================="
 echo ""
@@ -195,6 +195,27 @@ cp "$REPO_ROOT/GEMINI.md" "$CONFIG_DIR/GEMINI.md"
 rm -f "$GEMINI_HOME/GEMINI.md"
 if [ -f "$REPO_ROOT/AYUDA.md" ]; then cp "$REPO_ROOT/AYUDA.md" "$CONFIG_DIR/AYUDA.md"; fi
 
+
+# Entorno Python propio (~/.gemini/nova_env) para paridad con Windows
+if [ ! -x "$GEMINI_HOME/nova_env/bin/python" ]; then
+    "$PY" -m venv "$GEMINI_HOME/nova_env" 2>/dev/null && touch "$GEMINI_HOME/nova_env/.huella_nova" || true
+fi
+if [ -x "$GEMINI_HOME/nova_env/bin/python" ]; then PY="$GEMINI_HOME/nova_env/bin/python"; fi
+
+
+# Entorno Python propio (~/.gemini/nova_env) para paridad con Windows
+if [ ! -x "$GEMINI_HOME/nova_env/bin/python" ]; then
+    "$PY" -m venv "$GEMINI_HOME/nova_env" 2>/dev/null && touch "$GEMINI_HOME/nova_env/.huella_nova" || true
+fi
+if [ -x "$GEMINI_HOME/nova_env/bin/python" ]; then PY="$GEMINI_HOME/nova_env/bin/python"; fi
+
+
+# Entorno Python propio (~/.gemini/nova_env) para paridad con Windows
+if [ ! -x "$GEMINI_HOME/nova_env/bin/python" ]; then
+    "$PY" -m venv "$GEMINI_HOME/nova_env" 2>/dev/null && touch "$GEMINI_HOME/nova_env/.huella_nova" || true
+fi
+if [ -x "$GEMINI_HOME/nova_env/bin/python" ]; then PY="$GEMINI_HOME/nova_env/bin/python"; fi
+
 # Reglas automaticas (hooks): el sistema vigila las leyes, no el modelo
 "$PY" "$GEMINI_HOME/nova_core/instalar_hooks.py" || echo "[AVISO] No se pudieron registrar los hooks (Nova funciona igual)."
 
@@ -234,7 +255,7 @@ fi
 
 echo ""
 echo "=========================================================================="
-echo "   NOVA AGENT v3.0 - INSTALACION COMPLETADA ($nombre)"
+echo "   NOVA AGENT v3.1 - INSTALACION COMPLETADA ($nombre)"
 echo "   Arquitectura creada por Saul Alexander Martinez Rivas (@Luaz2021)"
 echo "=========================================================================="
 echo "ATAJOS RAPIDOS EN EL CHAT:"

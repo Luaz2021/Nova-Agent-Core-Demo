@@ -8,7 +8,7 @@ Reglas (skill ux-writing + no inventar):
 - Limites de largo por hueco (los bloques estan disenados para esos largos).
 - PROHIBIDO meter datos: ni precios, ni cifras, ni direcciones, ni telefonos, ni premios, ni anos de historia.
   Si Qwen mete un numero o un dato que no esta en datos.json, ese texto se descarta y queda [PENDIENTE].
-- Lo generado se marca en "_generado" para que el usuario sepa que textos revisar.
+- Lo generado se marca en "_generado" para que Alexander sepa que textos revisar.
 """
 
 from __future__ import annotations

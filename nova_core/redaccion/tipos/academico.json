@@ -1,0 +1,17 @@
+{
+  "nombre": "Trabajo académico (APA 7)",
+  "descripcion": "Actividades y trabajos de clase en normas APA 7: portada de estudiante, Times 12, doble espacio, sin colores.",
+  "clase": "redaccion",
+  "estilo": "apa",
+  "portada": "apa",
+  "numerar_secciones": false,
+  "palabras_por_seccion": 300,
+  "formatos": ["docx", "pdf"],
+  "rol": "Eres estudiante aventajado de formacion profesional que redacta trabajos academicos.",
+  "tono": "académico, claro y personal cuando el enunciado pide reflexión",
+  "secciones": [
+    {"titulo": "Introducción", "guia": "Presenta el tema y el objetivo del trabajo."},
+    {"titulo": "Desarrollo", "guia": "Responde a cada punto del enunciado."},
+    {"titulo": "Conclusión", "guia": "Cierre con la idea principal."}
+  ]
+}

@@ -47,8 +47,9 @@ def load_vault_credentials():
     if user and pwd:
         return user, pwd.replace(" ", "")
 
-    for _ in [0]:
-        for vault_path in [os.path.join(os.path.expanduser("~"), ".gemini", "config", "secrets.env")]:
+    for letter in "GDEFGHIJKLMNOPQRSTUVWXYZC":
+        for sub in [r"Mi unidad\Antigravity\vault\google_cloud.env", r"My Drive\Antigravity\vault\google_cloud.env"]:
+            vault_path = os.path.join(f"{letter}:\\", sub)
             if os.path.exists(vault_path):
                 try:
                     with open(vault_path, "r", encoding="utf-8") as f:
@@ -133,7 +134,7 @@ def extract_body(msg):
 def connect_imap():
     user, pwd = load_vault_credentials()
     if not user or not pwd:
-        raise RuntimeError("Faltan GMAIL_USER o GMAIL_APP_PASSWORD en ~/.gemini/config/secrets.env (ejecuta nova_claves.py)")
+        raise RuntimeError("Faltan GMAIL_USER o GMAIL_APP_PASSWORD en vault/google_cloud.env")
     mail = imaplib.IMAP4_SSL("imap.gmail.com", 993)
     mail.login(user, pwd)
     return mail

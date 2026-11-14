@@ -195,7 +195,7 @@ playwright-cli video-stop
 playwright-cli video-show-actions --duration=600 --position=top-right --highlight-style="outline: 2px solid #333"
 playwright-cli video-hide-actions
 
-# launch the dashboard for UI review / design feedback â€” user annotates the page, you receive the annotated screenshot, snapshot, and notes
+# launch the dashboard for UI review / design feedback — user annotates the page, you receive the annotated screenshot, snapshot, and notes
 playwright-cli show --annotate
 
 # generate a Playwright locator for an element from its ref or selector
@@ -228,7 +228,7 @@ get the same list and schemas without taking a snapshot:
 ```
 
 Prefer these tools over driving the UI when one matches the task: the page implements them, so a
-single call replaces a sequence of clicks and fills â€” and it cannot be blocked by a cookie banner or
+single call replaces a sequence of clicks and fills — and it cannot be blocked by a cookie banner or
 a newsletter modal.
 Run `webmcp-call <name> --params '{...}'` to call the tool.
 
@@ -346,7 +346,7 @@ playwright-cli snapshot e34
 # include each element's bounding box as [box=x,y,width,height]
 playwright-cli snapshot --boxes
 
-# search a large snapshot instead of capturing it all â€” returns matching nodes
+# search a large snapshot instead of capturing it all — returns matching nodes
 # with 3 lines of context around each match (like grep -C)
 playwright-cli find "Add to cart"
 playwright-cli find --regex "\\$[0-9]+\\.[0-9]{2}"

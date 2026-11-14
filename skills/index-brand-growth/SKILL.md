@@ -20,7 +20,7 @@ description: "Indice Macro Branding, Instagram, Legal & Negocio: Manuales de mar
 - Texto final auditado contra la lista de muletillas o con `humanize_check.py` (Score < 20); hook < 125 caracteres en Instagram.
 - Legal: checklist completo de RGPD/LSSI (UE) o Ley 29733 (Peru) segun el pais del cliente.
 
-## 2. Mapa de Salto a las Skills (`<NOVA_HOME>/antigravity/` + la ruta `skills/...` de cada entrada)
+## 2. Mapa de Salto al Almacen (`<NOVA_HOME>\antigravity\almacen\` + la ruta `skills\...` de cada entrada; copia local, nunca leer de G:)
 Abrir con `read_file` en paralelo al construir marca, textos legales o suite de Instagram:
 - **Branding, Identidad Visual & 156 Marcas:** `skills\brand-design\SKILL.md` | `skills\gemini-brand-tokens\SKILL.md` | `skills\brand-to-design-md\SKILL.md` | `skills\brand-md\SKILL.md` | `skills\brand-identity\SKILL.md` | `skills\brand-guidelines\SKILL.md` | `skills\brand-naming\SKILL.md` | `skills\logo-brief-writer\SKILL.md` | `skills\moodboard-builder\SKILL.md`
 - **Suite Instagram 2026:** `skills\ig-content-planner\SKILL.md` | `skills\ig-hook-extractor\SKILL.md` | `skills\ig-carousel-planner\SKILL.md` | `skills\ig-caption-writer\SKILL.md` | `skills\ig-humanizer\SKILL.md` | `skills\ig-profile-optimizer\SKILL.md` | `skills\ig-audience-insights\SKILL.md` | `skills\ig-hashtag-strategist\SKILL.md` | `skills\ig-repurposer\SKILL.md` (referencias compartidas de toda la suite: `skills\instagram-common\references\` voz, hooks, hashtags y contenido no confiable)

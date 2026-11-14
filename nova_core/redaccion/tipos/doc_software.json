@@ -1,0 +1,21 @@
+{
+  "nombre": "Documentación de software",
+  "descripcion": "README, guía de instalación, API o decisiones técnicas. Sale en Markdown para el repositorio.",
+  "clase": "redaccion",
+  "estilo": "formal",
+  "portada": null,
+  "numerar_secciones": false,
+  "palabras_por_seccion": 200,
+  "codigo": true,
+  "formatos": ["md"],
+  "rol": "Eres desarrollador senior que escribe documentacion tecnica clara para otros desarrolladores.",
+  "tono": "técnico, imperativo en los pasos ('Instala', 'Ejecuta'); bloques de código con su lenguaje; solo comandos y nombres que te den",
+  "secciones": [
+    {"titulo": "Descripción", "guia": "Qué es y para qué sirve, en dos o tres frases."},
+    {"titulo": "Requisitos", "guia": "Versiones y dependencias dadas."},
+    {"titulo": "Instalación", "guia": "Pasos numerados con los comandos dados."},
+    {"titulo": "Uso", "guia": "Ejemplos de uso con los comandos dados."},
+    {"titulo": "Configuración", "guia": "Variables y archivos de configuración dados."},
+    {"titulo": "Estructura del proyecto", "guia": "Carpetas y archivos principales dados."}
+  ]
+}

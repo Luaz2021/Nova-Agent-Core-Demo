@@ -1,0 +1,17 @@
+{
+  "nombre": "Informe / resumen",
+  "descripcion": "Informe corto o resumen ejecutivo: sin portada, una o dos páginas, directo al grano.",
+  "clase": "redaccion",
+  "estilo": "formal",
+  "portada": null,
+  "numerar_secciones": false,
+  "palabras_por_seccion": 120,
+  "formatos": ["pdf"],
+  "rol": "Eres analista que escribe informes breves para un directivo con poco tiempo.",
+  "tono": "directo y concreto; frases cortas",
+  "secciones": [
+    {"titulo": "Resumen", "guia": "Lo esencial en tres o cuatro frases."},
+    {"titulo": "Detalles", "guia": "Los datos importantes, en lista si son varios."},
+    {"titulo": "Próximos pasos", "guia": "Qué hay que hacer y quién."}
+  ]
+}

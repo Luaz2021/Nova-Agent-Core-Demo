@@ -13,52 +13,14 @@ You are now running in a forked context. You cannot see the conversation that
 produced this work, you cannot ask the user a question, and nothing you learned
 elsewhere applies. Everything you need is below or on disk.
 
-**Step 0: is the kit here?**
-
-```bash
-ls ${CLAUDE_SKILL_DIR}/../../../tokens >/dev/null 2>&1 && echo KIT_OK || echo KIT_MISSING
-```
-
-On `KIT_MISSING` only the skill folders were installed, which is what `npx
-skills add` does. Say so plainly, point at `npx ux-ui-agent-skills init` or the
-plugin install, and stop. Do not guess the contents of a file you could not open.
-
-**Step 1: take the critic's instructions, in full.**
-
-```bash
-cat ${CLAUDE_SKILL_DIR}/../../../.claude/agents/design-critic.md
-```
-
-That file is your brief: the stance, the three rules you never break, and the
-verdict format. Read it and follow it literally. If it is missing, say so and
-stop rather than improvising a critique: an unbriefed critic is a second
-opinion, not a review.
-
-**Step 2: resolve the target.**
-
-Target: `$ARGUMENTS`, a file or a directory.
-
-You cannot ask. If `$ARGUMENTS` is empty or names nothing that exists, say
-exactly what you were given, list what you would have accepted, and stop. A
-critique of a guessed target is worse than no critique, because it reads like a
-verdict on the real work.
-
-**Step 3: refuse to critique blind.**
+**Step 1: refuse to critique blind.**
 
 A critique written from source alone is worthless. Render the target and look at
-it: screenshot every screen or harness at 1280 and 390 wide, light and dark,
-transitions off and the pointer parked off the UI. Then click every control and
-write down what actually changed. A control that changes nothing is a finding.
+it: take Playwright screenshots at desktop (1280/1440px) and mobile (375/390px) plus each section built by `qwen3.5:9b`, run `node <NOVA_HOME>\antigravity\almacen\skills\gemini-ui-artisan\scripts\inspect.mjs <file>`, and pass the captures through `blaifa/InternVL3_5:8b`. Then click every control and write down what actually changed. A control that changes nothing is a finding.
 
-**Step 4: gather the numbers you will cite.**
+**Step 2: gather the numbers you will cite.**
 
-```bash
-KIT=${CLAUDE_SKILL_DIR}/../../..
-DS_REQUIRE_BROWSER=1 node $KIT/scripts/taste_audit.mjs      <file> && DS_REQUIRE_BROWSER=1 node $KIT/scripts/taste_audit.mjs <file> --dark
-DS_REQUIRE_BROWSER=1 node $KIT/scripts/slop_tells.mjs       <file> && DS_REQUIRE_BROWSER=1 node $KIT/scripts/slop_tells.mjs  <file> --dark
-node $KIT/scripts/gate.mjs verify_overflow.mjs  <file|dir>
-node $KIT/scripts/gate.mjs verify_responsive.mjs <file|dir> --scale=1.25
-```
+Run `lint.mjs` and `inspect.mjs` from `skills\gemini-ui-artisan\scripts\` and report what they actually printed.
 
 Report what they actually printed. These are heuristics: they name what you saw,
 they do not decide whether it is good. A clean run is not a defence: the kit's

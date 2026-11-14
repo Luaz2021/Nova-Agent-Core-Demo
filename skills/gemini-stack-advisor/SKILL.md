@@ -6,23 +6,23 @@ trigger: model_decision
 
 # Project Stack Advisor & Automations Recommender
 
-Esta habilidad analiza en profundidad la base de cÃ³digo de cualquier proyecto activo y recomienda integraciones, servidores MCP, reglas de desarrollo y herramientas complementarias a la medida del stack detectado.
+Esta habilidad analiza en profundidad la base de código de cualquier proyecto activo y recomienda integraciones, servidores MCP, reglas de desarrollo y herramientas complementarias a la medida del stack detectado.
 
 ---
 
-## 1. CuÃ¡ndo Ejecutar Esta Habilidad
+## 1. Cuándo Ejecutar Esta Habilidad
 
-El agente activarÃ¡ esta habilidad cuando:
-- El usuario abra un nuevo proyecto o pregunte: *"Â¿QuÃ© me recomiendas para este proyecto?", "Â¿QuÃ© integraciones o MCP deberÃ­a usar?", "Â¿CÃ³mo configuro este repositorio para Antigravity?"*.
-- El usuario pregunte si su arquitectura o librerÃ­as actuales son las mÃ¡s recomendadas o si conviene complementarlas con otras soluciones.
+El agente activará esta habilidad cuando:
+- El usuario abra un nuevo proyecto o pregunte: *"¿Qué me recomiendas para este proyecto?", "¿Qué integraciones o MCP debería usar?", "¿Cómo configuro este repositorio para Antigravity?"*.
+- El usuario pregunte si su arquitectura o librerías actuales son las más recomendadas o si conviene complementarlas con otras soluciones.
 
 ---
 
-## 2. Fase de AnÃ¡lisis del Proyecto (Read-Only)
+## 2. Fase de Análisis del Proyecto (Read-Only)
 
 El agente inspecciona de forma no invasiva:
 
-1. **Gestores de paquetes y archivos de configuraciÃ³n:**
+1. **Gestores de paquetes y archivos de configuración:**
    - `package.json`, `pnpm-lock.yaml`, `bun.lockb` (Node / JS / TS)
    - `pyproject.toml`, `requirements.txt`, `Pipfile` (Python)
    - `pom.xml`, `build.gradle` (Java / Kotlin)
@@ -30,8 +30,8 @@ El agente inspecciona de forma no invasiva:
    - `go.mod` (Go)
    - `docker-compose.yml`, `Dockerfile` (Contenedores y servicios)
 2. **Estructura del proyecto:**
-   - Carpetas de cÃ³digo fuente (`src/`, `app/`, `pages/`, `components/`, `lib/`).
-   - ConfiguraciÃ³n de testing (`tests/`, `__tests__/`, `playwright.config.ts`, `vitest.config.ts`, `pytest.ini`).
+   - Carpetas de código fuente (`src/`, `app/`, `pages/`, `components/`, `lib/`).
+   - Configuración de testing (`tests/`, `__tests__/`, `playwright.config.ts`, `vitest.config.ts`, `pytest.ini`).
 3. **Configuraciones existentes de IA:**
    - Presencia de `GEMINI.md`, `AGENTS.md` o `.agents/`.
 
@@ -39,27 +39,27 @@ El agente inspecciona de forma no invasiva:
 
 ## 3. Matriz de Recomendaciones Inteligentes
 
-BasÃ¡ndose en las tecnologÃ­as detectadas, el agente selecciona las mejores recomendaciones organizadas en 4 categorÃ­as:
+Basándose en las tecnologías detectadas, el agente selecciona las mejores recomendaciones organizadas en 4 categorías:
 
 ### A. Servidores MCP Recomendados
-| SeÃ±al en el CÃ³digo | Servidor MCP Sugerido | PropÃ³sito |
+| Señal en el Código | Servidor MCP Sugerido | Propósito |
 | :--- | :--- | :--- |
-| React, Vue, Svelte, Next.js | **Playwright MCP** / Browser | Pruebas de interfaz, navegaciÃ³n y validaciÃ³n visual. |
-| PostgreSQL, MySQL, SQLite | **Database MCP** | InspecciÃ³n de esquemas, consultas directas y optimizaciÃ³n SQL. |
-| Supabase | **Supabase MCP** | GestiÃ³n de migraciones, autenticaciÃ³n y storage. |
-| GitHub Actions / `.git` | **GitHub MCP** | GestiÃ³n de issues, pull requests y estados de CI/CD. |
-| APIs complejas / Stripe / AWS | **Context / Docs MCP** | Consulta de documentaciÃ³n en tiempo real sin alucinaciones. |
+| React, Vue, Svelte, Next.js | **Playwright MCP** / Browser | Pruebas de interfaz, navegación y validación visual. |
+| PostgreSQL, MySQL, SQLite | **Database MCP** | Inspección de esquemas, consultas directas y optimización SQL. |
+| Supabase | **Supabase MCP** | Gestión de migraciones, autenticación y storage. |
+| GitHub Actions / `.git` | **GitHub MCP** | Gestión de issues, pull requests y estados de CI/CD. |
+| APIs complejas / Stripe / AWS | **Context / Docs MCP** | Consulta de documentación en tiempo real sin alucinaciones. |
 
 ### B. Reglas de Workspace (`GEMINI.md` / `AGENTS.md`)
-- GeneraciÃ³n de un archivo de reglas a la medida del framework (ej. principios de Server Actions en Next.js, inyecciÃ³n de dependencias en Spring Boot, tipado estricto en TypeScript o buenas prÃ¡cticas en FastAPI).
+- Generación de un archivo de reglas a la medida del framework (ej. principios de Server Actions en Next.js, inyección de dependencias en Spring Boot, tipado estricto en TypeScript o buenas prácticas en FastAPI).
 
 ### C. Automatizaciones y Hooks Sugeridos
-- Formateo y linting automÃ¡tico en guardado (`Prettier`, `Biome`, `Black`, `Ruff`, `ESLint`).
-- ProtecciÃ³n de variables de entorno (bloqueo de commits si `.env` no estÃ¡ en `.gitignore`).
+- Formateo y linting automático en guardado (`Prettier`, `Biome`, `Black`, `Ruff`, `ESLint`).
+- Protección de variables de entorno (bloqueo de commits si `.env` no está en `.gitignore`).
 
 ### D. Skills Complementarias de Antigravity
-- Si maneja cÃ³digo backend modular $\rightarrow$ Recomendar la skill `clean-architecture`.
-- Si maneja autenticaciÃ³n o pagos $\rightarrow$ Recomendar la skill `security-audit`.
+- Si maneja código backend modular $\rightarrow$ Recomendar la skill `clean-architecture`.
+- Si maneja autenticación o pagos $\rightarrow$ Recomendar la skill `security-audit`.
 - Si maneja interfaces complejas $\rightarrow$ Recomendar la skill `ui-design-system`.
 
 ---
@@ -69,20 +69,20 @@ BasÃ¡ndose en las tecnologÃ­as detectadas, el agente selecciona las mejores 
 El reporte debe ser claro, estructurado y listo para actuar:
 
 ```markdown
-### ðŸ” DiagnÃ³stico del Proyecto: [Nombre del Proyecto]
+### 🔍 Diagnóstico del Proyecto: [Nombre del Proyecto]
 - **Stack Detectado:** [Ej. Next.js 15, TypeScript, TailwindCSS, Supabase, Vitest]
 
-#### ðŸš€ Recomendaciones Clave:
+#### 🚀 Recomendaciones Clave:
 1. **Servidores MCP Sugeridos:**
-   - *[Nombre MCP]*: Motivo por el cual beneficiarÃ¡ a este proyecto.
+   - *[Nombre MCP]*: Motivo por el cual beneficiará a este proyecto.
 2. **Reglas de Desarrollo (`GEMINI.md`):**
-   - Directrices especÃ­ficas para este stack que evitarÃ¡n errores comunes.
+   - Directrices específicas para este stack que evitarán errores comunes.
 3. **Skills & Automatizaciones:**
    - Skills recomendadas para este caso de uso.
 4. **Mejoras del Stack (Opcional):**
-   - LibrerÃ­as modernas o alternativas que mejorarÃ­an el rendimiento o la DX del proyecto.
+   - Librerías modernas o alternativas que mejorarían el rendimiento o la DX del proyecto.
 
-> *Â¿Quieres que activemos o configuremos alguna de estas integraciones ahora mismo?*
+> *¿Quieres que activemos o configuremos alguna de estas integraciones ahora mismo?*
 ```
 
 ---

@@ -1,0 +1,24 @@
+{
+  "nombre": "Presupuesto",
+  "descripcion": "Presupuesto o cotización que emites tú a un cliente. Sin IA: datos del guion y cuentas calculadas por el código.",
+  "clase": "datos",
+  "formatos": ["pdf", "docx", "xlsx"],
+  "obligatorio": ["emisor.nombre", "emisor.documento", "cliente.nombre", "numero", "fecha", "asunto", "partidas"],
+  "ejemplo": {
+    "tipo": "presupuesto",
+    "numero": "P-2026-001",
+    "fecha": "10/11/2026",
+    "validez_dias": 15,
+    "moneda": "S/",
+    "emisor": {"nombre": "Tu empresa", "documento": "RUC 20...", "direccion": "...", "contacto": "teléfono / correo"},
+    "cliente": {"nombre": "Cliente", "documento": "DNI/RUC", "direccion": "...", "contacto": "..."},
+    "asunto": "Qué se presupuesta",
+    "alcance": "Opcional: una o dos frases escritas por ti.",
+    "partidas": [{"descripcion": "Artículo o servicio", "detalle": "opcional", "cantidad": 1, "precio": 100.0}],
+    "descuento": {"porcentaje": 0},
+    "impuesto": {"nombre": "IGV", "porcentaje": 18, "nota": "Opcional: exoneración, base legal..."},
+    "condiciones": ["Forma de pago: ...", "Plazo de entrega: ..."],
+    "notas": ["..."],
+    "total_esperado": null
+  }
+}

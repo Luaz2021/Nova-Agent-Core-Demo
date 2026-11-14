@@ -1,0 +1,47 @@
+REGLAS KISS - HAIKU (regla general de Nova-Core)
+================================================
+Para Haiku, que es quien repara. Qwen no las usa: Qwen solo pica codigo.
+
+Idea: lo que una maquina puede comprobar no se le explica al modelo.
+El prompt lleva solo lo que el linter no puede hacer; lo "fosil" lo caza el linter.
+
+
+1. LO QUE VA EN EL PROMPT (~70 tokens, ya esta en herramientas_nova.REGLA_KISS)
+-------------------------------------------------------------------------------
+KISS = el cambio minimo que resuelve la tarea, con sintaxis moderna del lenguaje.
+Nunca reescribas archivos: usa editar_archivo con fragmentos exactos.
+Versiones: Python 3.14, JS ES2025 (Node 24), TS 5.9, React 19, Java 21, C# 14, PHP 8.5, Dart 3.13.
+Si el linter avisa de sintaxis antigua, corrigelo; no inventes APIs que no existan en esas versiones.
+
+Por que asi:
+- Versiones concretas en vez de "usa sintaxis moderna": sabe a que apuntar y no adivina.
+- "No inventes APIs": inventarse metodos que no existen es peor que lo fosil.
+- Sin listas de ejemplos ("usa X en vez de Y"): ocupan contexto y las hace cumplir el linter.
+
+
+2. LO QUE HACE CUMPLIR EL SISTEMA (0 tokens)
+--------------------------------------------
+- Cambio minimo, no reescribir ......... editar_archivo + freno del 35 %
+- Python antiguo (TypeVar, TypeAlias,
+  List, Optional, % ...) ............... ruff UP + FURB, objetivo py314
+- JS/TS antiguo (var, arguments,
+  forEach, Math.pow, + en strings,
+  && encadenado ...) ................... biome.json
+- Formato .............................. ruff format / biome
+- No entrar en bucle ................... ControlVueltas (3 vueltas)
+
+Lo que se puede arreglar solo se arregla sin preguntar; lo demas le llega a Haiku
+como "linea N: [regla] mensaje".
+
+
+3. REGLAS DE TRABAJO (opcionales, una linea mas si quieres)
+-----------------------------------------------------------
+- No anadas dependencias nuevas sin pedir permiso.
+- No cambies nombres publicos (funciones, props, rutas) salvo que la tarea lo pida.
+- Si no sabes si algo existe en la version objetivo, dilo en vez de escribirlo.
+
+
+PENDIENTE
+---------
+Java, C#, PHP y Dart aun no tienen linter conectado: ahi solo cuenta la linea de versiones.
+Siguiente paso: conectar dart analyze, php -l / PHPStan y dotnet format al orquestador.

@@ -1,0 +1,30 @@
+{
+  "nombre": "Actividad evaluable guiada por el enunciado",
+  "descripcion": "Actividad de clase que responde punto por punto a un enunciado (docx/pdf). Estilo moderno azul marino, con DAFO y cartel. No exporta si falta algún requisito.",
+  "clase": "redaccion",
+  "estilo": "moderno",
+  "portada": "cabecera",
+  "numerar_secciones": true,
+  "enunciado": true,
+  "palabras_por_seccion": 300,
+  "formatos": ["docx", "pdf"],
+  "rol": "Eres un estudiante de FP que redacta su propia actividad: claro, concreto, en primera persona cuando habla de su trabajo.",
+  "tono": "natural y profesional, frases cortas, sin jerga de marketing",
+  "ejemplo": {
+    "tipo": "actividad",
+    "titulo": "Actividad evaluable: idea de negocio",
+    "subtitulo": "NOVA: copiloto técnico con IA local y en la nube",
+    "modulo": "Itinerario Personal para la Empleabilidad II",
+    "autor": "Alexander Martínez",
+    "fecha": "12 de noviembre de 2026",
+    "enunciado": "G:/.../enunciado.docx",
+    "contexto": "Datos verdaderos del proyecto (lo que Alexander ha dicho o lo que se ha comprobado).",
+    "datos": ["8 millones de tokens en una sesión sin frenos (07/11/2026)", "137 habilidades", "15 sectores"],
+    "secciones": [
+      {"titulo": "La necesidad", "cubre": ["R3", "R4", "R5"], "literal": "Texto propio con **negritas**, listas y tablas Markdown."},
+      {"titulo": "Documento visual", "cubre": ["R17"], "literal": ":::cartel\n# Titular del cartel\nFrase que lo vende en una línea.\n- Pilar 1 | explicación corta\n- Pilar 2 | explicación corta\n- Pilar 3 | explicación corta\n> Llamada a la acción o contacto\n:::"},
+      {"titulo": "Análisis DAFO", "cubre": ["R19"], "literal": ":::dafo\nD: debilidad\nA: amenaza\nF: fortaleza\nO: oportunidad\n:::"}
+    ]
+  },
+  "secciones": []
+}

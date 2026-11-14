@@ -1,0 +1,22 @@
+# Anti-fosil para Dart/Flutter (Nova-Core). Se usa solo si el proyecto no tiene el suyo.
+linter:
+  rules:
+    - unnecessary_new
+    - unnecessary_const
+    - unnecessary_this
+    - unnecessary_late
+    - unnecessary_lambdas
+    - prefer_collection_literals
+    - prefer_spread_collections
+    - prefer_if_elements_to_conditional_expressions
+    - prefer_for_elements_to_map_fromIterable
+    - prefer_if_null_operators
+    - prefer_null_aware_operators
+    - prefer_interpolation_to_compose_strings
+    - prefer_final_locals
+    - use_super_parameters
+    - use_enums
+    - use_if_null_to_convert_nulls_to_bools
+    - use_null_aware_elements
+    - use_string_buffers
+    - avoid_init_to_null

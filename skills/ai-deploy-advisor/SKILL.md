@@ -41,7 +41,7 @@ Según la plataforma elegida, generar de inmediato:
 - Archivo específico del proveedor (`render.yaml`, `vercel.json` o `fly.toml`).
 - Workflow de CI/CD para GitHub Actions (`.github/workflows/deploy.yml`) que corra linter y tests antes de disparar el despliegue.
 
-### Paso 4: Hoja de Ruta de 3 Pasos para el usuario
+### Paso 4: Hoja de Ruta de 3 Pasos para Alexander
 Nova entrega una guía de 3 pasos directos:
 1. Qué comando ejecutar localmente para validar que el build compila (`npm run build`, `mvn clean package` o `docker build`).
 2. Qué variables de entorno cargar en el panel web del proveedor.

@@ -1,0 +1,11 @@
+[tool.ruff]
+target-version = "py314"
+
+[tool.ruff.lint]
+select = ["E", "F", "UP", "FURB", "SIM", "RET", "TID251"]
+ignore = ["E501"]
+
+[tool.ruff.lint.flake8-tidy-imports.banned-api]
+"google.generativeai" = { msg = "Usa google-genai: from google import genai" }
+"pydantic.validator" = { msg = "Pydantic v2: usa field_validator" }
+"pydantic.root_validator" = { msg = "Pydantic v2: usa model_validator" }

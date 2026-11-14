@@ -1,70 +1,42 @@
 ---
 name: design-doctrine
-description: "Los 5 dogmas de diseno UI: protocolo de verificacion, cero emojis, tokens por intencion, 8 estados interactivos y foco unico."
+description: "Dogmas de diseno UI: protocolo de verificacion, cirugia visual Impeccable (polish/critique), cero emojis, tokens por intencion, 8 estados y foco unico."
 ---
 
 # Skill: Design Doctrine
 
-> **Step 0: is the kit here?** This skill reads files from the kit. Check once:
-> `ls ${CLAUDE_SKILL_DIR}/../../../tokens >/dev/null 2>&1 && echo KIT_OK || echo KIT_MISSING`
-> On `KIT_MISSING` only the skill folders were installed, which is what
-> `npx skills add` does. Say so plainly, point the user at
-> `npx ux-ui-agent-skills init` or the plugin install, and stop. Do not guess the
-> contents of a file you could not open.
+> **Entorno Nova 2026:** Esta skill es 100% autonoma en local. Los gates se ejecutan con `<NOVA_HOME>\antigravity\almacen\skills\gemini-ui-artisan\scripts\inspect.mjs`, `nova_core\orquestador.py` y las 2 capturas de Playwright auditadas por `blaifa/InternVL3_5:8b`.
 
-A plugin's root `CLAUDE.md` is not loaded as project context, so the always-on
-brief travels here instead. Read this before the first line of any design work,
-then load the rule file for the territory you are actually in.
+Read this before the first line of any design work, then apply the rules below.
 
 ## Verification protocol - run gates, never claim
 
 1. **Never state a number you did not measure.** Any contrast ratio, "WCAG pass",
-   or "100%" must come from running a gate and reporting its real output. If you
+   or "100%" must come from running a gate (`nova_tarea.py --verificar` or `inspect.mjs`) and reporting its real output. If you
    have not run it, say "not verified yet."
-2. **Verify every state, not just resting.** `node ${CLAUDE_SKILL_DIR}/../../../scripts/gate.mjs verify_states.mjs <file> [--dark]`
-   measures default, hover and focus - a button that passes at rest can fail on hover.
-3. **One command before reporting done:** `node ${CLAUDE_SKILL_DIR}/../../../scripts/accuracy_report.mjs`.
-   Report the real `N/N` line. It is all-or-nothing.
-4. **Build with the gates, not after them.** Fix and re-run until green; never
-   announce success between failures.
-5. **Render and LOOK.** Gates pass while a UI is still visibly broken. Screenshot
-   the harness in both themes, click every control, and confirm the state changed.
-6. **Responsive is gated too:** `node ${CLAUDE_SKILL_DIR}/../../../scripts/gate.mjs verify_responsive.mjs <file|dir>`:
-   no horizontal overflow from 280 to 951px, iPhone Duo included, and a hinge kept clear
-   by any page that answers the fold.
-7. **Honest scope.** The gates prove objective correctness. They never prove taste.
-   For that, run `/critique`, look at the work yourself, and start from the taste
-   preflight below rather than from default components.
-8. **SKIPPED is not a pass.** With no browser installed a render gate prints
-   `SKIPPED` and exits 0, reporting nothing. Run single render gates behind
-   `DS_REQUIRE_BROWSER=1` so that becomes `REQUIRED, FAILING`, and fix it with
-   `npx playwright install chrome` rather than by removing the flag.
+2. **Verify every state, not just resting.** Inspect default, hover, focus, active, disabled, loading, error and selected.
+3. **One command before reporting done:** Run `node <NOVA_HOME>\antigravity\almacen\skills\gemini-ui-artisan\scripts\inspect.mjs <file>` and `nova_core\orquestador.py`.
+4. **Build with the gates, not after them.** Fix with surgical `edit_file <= 35%` and re-run until green; never announce success between failures.
+5. **Render and LOOK.** Gates pass while a UI is still visibly broken. Take the 2 Playwright screenshots (desktop 1280px and mobile 375px) + per-section captures, inspect with `blaifa/InternVL3_5:8b`, click every control, and confirm the state changed.
+6. **Responsive is gated too:** No horizontal overflow from 320px to 1440px.
+7. **Honest scope.** The gates prove objective correctness. They never prove taste. Start from the taste preflight below rather than from default components.
 
 ## Mobile is the base
 
 Base styles ARE the phone layout. Wider screens are layered on with `min-width`.
 `max-width` is not banned - it is right for a genuine narrow refinement, or for a
 range between two breakpoints - but a desktop-first stylesheet, where the base
-assumes a wide screen and mobile is patched in afterwards, is a bug.
-
-Measured by `${CLAUDE_SKILL_DIR}/../../../scripts/verify_mobile_first.mjs`, which
-removes every `@media` and `@container` rule and renders what is left at 320px. A
-mobile-first page passes because its base already is the phone layout. A
-desktop-first page cannot fit.
+assumes a wide screen and mobile is patched in afterwards, is a bug. A mobile-first page passes at 320px/375px without horizontal overflow.
 
 ## Two house rules on what never ships
 
 **Never ship a native `<select>`.** It draws its own chevron, pressed against the
 control's edge with no breathing room, and `appearance: none` plus a custom
-chevron fights the platform instead of matching the system. Use the Listbox or
-Combobox pattern in
-`${CLAUDE_SKILL_DIR}/../../../components/forms-advanced.md`: a button trigger
+chevron fights the platform instead of matching the system. Use a custom Listbox or
+Combobox pattern (`frontend-a11y`): a button trigger
 that announces the current value, the chevron placed with inner padding from
 tokens, and full keyboard parity (typeahead, arrows, Home/End, Escape,
-`aria-expanded` that really toggles something visible). Losing native select
-means accessibility stops being free, so the replacement has to pass every state,
-keyboard and axe gate before it counts. Measured by
-`${CLAUDE_SKILL_DIR}/../../../scripts/lint_native_select.py`.
+`aria-expanded` that really toggles something visible).
 
 **Never a colored border on one side only** of a card, alert, toast or callout -
 `border-left`, `border-right`, `border-top`, `border-bottom`, or the logical
@@ -72,9 +44,7 @@ keyboard and axe gate before it counts. Measured by
 generated-UI cliche in every direction, not only on the left: it is decoration
 standing in for hierarchy the layout never established. Use a full hairline
 border on all sides, or surface and elevation separation, and carry status with a
-real icon plus text, never colour alone. Measured on the render by the one-sided
-accent-border tell in
-`${CLAUDE_SKILL_DIR}/../../../scripts/slop_tells.mjs`.
+real icon plus text, never colour alone.
 
 ## Taste preflight - before any markup
 
@@ -107,24 +77,17 @@ Break each of these deliberately; they are defects, not starting points.
 - Em-dashes in UI copy, marketing filler ("elevate", "seamless", "unlock"),
   hollow triads, fake labels ("SECTION 01", lorem ipsum).
 
-Depth, and the full Variance Mandate:
-`${CLAUDE_SKILL_DIR}/../../../taste/design-taste.md`. For a whole page or app,
-use `design-screen`, which runs this preflight as step 1 of the pipeline.
-
 > ABSOLUTE: zero emoji in any output - UI, code, JSON, copy, comments, commit
 > messages. Not as an icon, a bullet, a status dot, or "polish". Emoji are the
-> number-one tell of machine-generated work. Use a lucide icon (inline SVG,
-> `currentColor`) or plain words. No em dash or en dash either: a colon, a comma or
-> parentheses. Enforced by `${CLAUDE_SKILL_DIR}/../../../scripts/check_no_emoji.py`.
+> number-one tell of machine-generated work. Use an inline SVG icon (`currentColor`) or plain words. No em dash or en dash either: a colon, a comma or parentheses.
 
 ## The five non-negotiables
 
 1. **Token by intent.** Pick the token whose meaning matches the action.
    Destructive actions (Delete, Remove, Revoke) wear `action.destructive` in every
    place they appear - the trigger and the confirm dialog both. A blue Delete is a
-   bug. Measured by `${CLAUDE_SKILL_DIR}/../../../scripts/lint_intent.mjs`.
-2. **One theme, one source of truth.** Every page renders from the same
-   `${CLAUDE_SKILL_DIR}/../../../tokens/*.json` through one CSS-variable layer imported once at the app root.
+   bug.
+2. **One theme, one source of truth.** Every page renders from the same semantic CSS custom properties (`tokens.css` or `@theme`) imported once at the root.
    No per-page palette, no hardcoded hex, px, or timing.
 3. **Every interactive element ships eight states:** default, hover, focus,
    active, disabled, loading (if async), error (if input), and selected (if
@@ -135,25 +98,32 @@ use `design-screen`, which runs this preflight as step 1 of the pipeline.
 5. **Output completeness.** A partial output is a broken output. Deliver full
    files, never placeholders. Asked for N components, deliver all N.
 
+## Impeccable Surgical Polish Protocol (Anti-Scope Creep)
+
+Inspirado en el canon Impeccable (pbakaus/impeccable):
+
+1. **Ley de preservacion estructural:** Al recibir una instruccion de pulido (polish, refine, ajusta el detalle), queda estrictamente prohibido redisenar componentes o layouts fuera del elemento objetivo. El pulido es cirugia milimetrica, no una reescritura.
+2. **Clasificacion de desviacion previa al codigo:** Antes de modificar un archivo, identifica el tipo exacto de desajuste visual:
+   - **Token faltante:** El valor esta cableado en duro y debe mapearse a un token existente del sistema.
+   - **Implementacion aislada:** Un componente resuelve un patron de forma unica en lugar de reutilizar la pieza base del kit.
+   - **Choque conceptual:** El componente contradice la intencion de diseno o jerarquia global.
+   - **Defecto local:** Desajuste puntual de espaciado, contraste o estado que se resuelve en la linea exacta.
+3. **Correccion al nivel mas estrecho:** Corrige siempre en la capa mas especifica posible sin alterar la arquitectura global ni inflar archivos adyacentes.
+
 ## Decision framework
 
 User needs, then accessibility, then consistency, then aesthetics, then developer
 experience. Never sacrifice a higher tier for a lower one. Beautiful but
 inaccessible is broken; consistent but confusing is the wrong pattern.
 
-## Where the depth lives
+## Where the depth lives in Nova (`<NOVA_HOME>\antigravity\almacen\skills\`)
 
-| Read it when | File |
+| Read it when | Skill File |
 |---|---|
-| Tokens, palettes, theming, dark mode, any colour decision | `${CLAUDE_SKILL_DIR}/../../../.claude/rules/tokens-and-color.md` |
-| Type scale, line length, the 4px spacing rhythm | `${CLAUDE_SKILL_DIR}/../../../.claude/rules/typography-and-spacing.md` |
-| Building any screen or component, composition, empty states | `${CLAUDE_SKILL_DIR}/../../../.claude/rules/components.md` |
-| Auditing, or finishing any interactive element | `${CLAUDE_SKILL_DIR}/../../../.claude/rules/accessibility.md` |
-| Generating code for React, Next.js, SwiftUI, or any adapter | `${CLAUDE_SKILL_DIR}/../../../.claude/rules/frameworks.md` |
-| Design review, prototyping, research, handoff | `${CLAUDE_SKILL_DIR}/../../../.claude/rules/review-and-research.md` |
-| Aesthetic direction, motion, voice and tone, governance, QA | `${CLAUDE_SKILL_DIR}/../../../.claude/rules/brand-and-operations.md` |
-
-Then pick the runnable skill for the job: `design-tokens`, `design-component`,
-`design-code`, `design-review`, `a11y-audit`, `apply-aesthetic`, `brandkit`,
-`image-to-code`, `redesign`, and the rest. Interrogate the brief first with
-`/grill-me`; prove the result with `/gate`; judge it with `/critique`.
+| Tokens, palettes, theming, dark mode, any colour decision | `skills\color-palette-builder\SKILL.md` |
+| Type scale, line length, modular rhythm | `skills\typography-system\SKILL.md` |
+| Visual hierarchy, focal point, squint test | `skills\visual-hierarchy\SKILL.md` |
+| Auditing or finishing any interactive element | `skills\frontend-a11y\SKILL.md` |
+| Art direction, 247 studied sites, `draw.mjs` & `inspect.mjs` | `skills\gemini-ui-artisan\SKILL.md` |
+| Awwwards choreography, GSAP, Lenis, Three.js | `skills\build-awwwards-quality-sites\SKILL.md` & `skills\cinematic-gsap-lenis-motion-system\SKILL.md` |
+| Copywriting, buttons, error/empty states | `skills\ux-writing\SKILL.md` |

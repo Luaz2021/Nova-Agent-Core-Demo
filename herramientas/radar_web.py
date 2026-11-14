@@ -249,7 +249,7 @@ def resumir(filas: list[dict], etiqueta: str) -> tuple[dict, str]:
 def main() -> int:
     ap = argparse.ArgumentParser(description="Radar de webs de referencia (local, 0 tokens)")
     ap.add_argument("--sector", default="", help="Sector de draw.mjs: health, restaurant, hospitality, real-estate, saas, agency...")
-    ap.add_argument("--urls", default="", help="URLs separadas por comas (p. ej. las que de el usuario)")
+    ap.add_argument("--urls", default="", help="URLs separadas por comas (p. ej. las que de Alexander)")
     ap.add_argument("--lista", default="", help="Archivo con una URL por linea")
     ap.add_argument("--max", type=int, default=4)
     ap.add_argument("--sin-vision", action="store_true")

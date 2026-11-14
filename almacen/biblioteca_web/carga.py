@@ -1,5 +1,5 @@
 """
-CARGA · lee los DATOS de la biblioteca desde sus carpetas (idea del autor: "categorias y una
+CARGA · lee los DATOS de la biblioteca desde sus carpetas (09/11/2026, Claude, idea de Luaz: "categorias y una
 biblioteca general; el .py solo es el motor"). Ver LEEME.md.
 
   general/paletas.json              paletas propias de Nova

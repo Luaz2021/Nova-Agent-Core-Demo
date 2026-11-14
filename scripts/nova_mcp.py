@@ -1,9 +1,9 @@
 r"""
-NOVA · INTERRUPTOR DE MCP (09/11/2026, Claude, a pedido de el autor)
+NOVA · INTERRUPTOR DE MCP (09/11/2026, Claude, a pedido de Luaz)
 =================================================================
 Los MCP cuestan tokens en CADA mensaje aunque no se usen (sus herramientas viajan siempre):
   playwright ~5.100 · postgres ~5.000 · sequential-thinking ~600 (este queda apagado siempre).
-Por eso van APAGADOS y se encienden solo cuando el autor pide algo que los necesita:
+Por eso van APAGADOS y se encienden solo cuando Luaz pide algo que los necesita:
   - nova_core\nova_hook_turno.py (PreInvocation) detecta el pedido y llama a "activar".
   - session_guard.ps1 llama a "apagar" al cerrarse Antigravity (vuelven a estar apagados la proxima vez).
 
@@ -14,6 +14,7 @@ Uso:
   python nova_mcp.py activar postgres
   python nova_mcp.py apagar [postgres]
 
+Navegar en el Brave de Luaz (con sus sesiones) NO es Playwright: eso es el puente de Brave (127.0.0.1:5005).
 """
 from __future__ import annotations
 
@@ -26,7 +27,7 @@ from pathlib import Path
 
 CONFIG = Path.home() / ".gemini" / "config" / "mcp_config.json"
 # 09/11 tarde: Antigravity 2.29 carga las herramientas MCP bajo demanda (antigravity\mcp\<server>\*.json + call_mcp_tool):
-# encendido ~19,1k vs apagado ~19,0k de contexto. Playwright queda FIJO encendido (decision de el autor; sin espera de 8 s).
+# encendido ~19,1k vs apagado ~19,0k de contexto. Playwright queda FIJO encendido (decision de Luaz; sin espera de 8 s).
 # Solo postgres sigue con interruptor (no tiene conexion configurada).
 INTERRUPTORES = ("postgres",)  # los que se pueden encender/apagar; el resto no se toca
 REGISTRO = Path.home() / ".gemini" / "antigravity" / "memory" / "registros" / "nova_mcp.log"

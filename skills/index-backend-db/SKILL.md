@@ -24,7 +24,7 @@ description: "Indice Macro Backend, Base de Datos & Redes: Arquitectura Limpia, 
 - Middleware de autenticacion verificado en cada ruta nueva o modificada.
 - Migraciones en modo expand-contract y con vuelta atras descrita.
 
-## 2. Mapa de Salto a las Skills (`<NOVA_HOME>/antigravity/` + la ruta `skills/...` de cada entrada)
+## 2. Mapa de Salto al Almacen (`<NOVA_HOME>\antigravity\almacen\` + la ruta `skills\...` de cada entrada; copia local, nunca leer de G:)
 Abrir con `read_file` en paralelo al crear arquitectura, endpoints, tablas o redes:
 - **Arquitectura, APIs & Frameworks:** `skills\gemini-clean-architecture\SKILL.md` | `skills\gemini-system-architect\SKILL.md` | `skills\api-design\SKILL.md` | `skills\backend-patterns\SKILL.md` | `skills\fastapi-patterns\SKILL.md` | `skills\cursorrules-advisor\SKILL.md`
 - **Bases de Datos & Supabase:** `skills\gemini-database-mastery\SKILL.md` | `skills\database-migrations\SKILL.md` | `skills\gemini-supabase-security\SKILL.md`

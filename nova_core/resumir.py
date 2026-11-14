@@ -1,7 +1,7 @@
 """
 Destilador y Resumidor Local de Documentos para el Chat de Nova (Sin API de Anthropic).
 
-Recibe el archivo o los archivos que el usuario pasa por el chat:
+Recibe el archivo o los archivos que Alexander pasa por el chat:
 - Si el documento es corto (<= 1 trozo), entrega directamente el texto limpio (0 llamadas).
 - Si el documento es largo y se pide --ollama, lo resume en local con Ollama (0 tokens de nube).
 - Si no se pide --ollama, extrae los encabezados, tablas y primeros fragmentos clave a 0 tokens
@@ -27,15 +27,15 @@ OLLAMA_URL = "http://127.0.0.1:11434/api/chat"
 
 
 def _modelo_nova(clave: str, defecto: str) -> str:
-    """Modelo local de este equipo (perfil_usuario.json -> scripts/nova_modelos.json -> defecto)."""
+    """Modelo Qwen desde ~/.gemini/antigravity/scripts/nova_modelos.json (unico sitio para cambiar de version)."""
     try:
-        from ollama_comun import modelo_nova
-        return modelo_nova(clave)
+        ruta = Path.home() / ".gemini" / "antigravity" / "scripts" / "nova_modelos.json"
+        return json.loads(ruta.read_text(encoding="utf-8"))[clave]
     except Exception:
         return defecto
 
 
-MODELO_LOCAL = _modelo_nova("coder", "qwen3.5:9b")
+MODELO_LOCAL = _modelo_nova("coder", "qwen3.5:9b")  # 09/11: el viejo qwen2.5-coder-nova2026:v4 ya no existe
 PROMPT_TROZO = "Resume este fragmento en maximo 3 lineas, solo hechos y datos clave, sin introducciones:\n\n{texto}"
 PROMPT_FINAL = (
     "Estos son resumenes parciales del documento '{archivo}'. "

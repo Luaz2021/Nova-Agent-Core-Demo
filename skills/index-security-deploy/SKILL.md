@@ -26,7 +26,7 @@ description: "Indice Macro Ciberseguridad, QA & Despliegue: Auditoria Tanque Web
 - `grep` del patron vulnerable en todo el repo = 0 restantes.
 - Despliegue: `/healthz` responde y el cron (si lo hay) va protegido con `CRON_SECRET`.
 
-## 2. Mapa de Salto a las Skills (`<NOVA_HOME>/antigravity/` + la ruta `skills/...` de cada entrada)
+## 2. Mapa de Salto al Almacen (`<NOVA_HOME>\antigravity\almacen\` + la ruta `skills\...` de cada entrada; copia local, nunca leer de G:)
 Abrir con `read_file` en paralelo al ejecutar auditorias, QA o despliegues:
 - **Ciberseguridad & Pentesting Etico:** `skills\gemini-security-bastion\SKILL.md` | `skills\gemini-owasp-sentinel\SKILL.md` | `skills\gemini-stride-security\SKILL.md` | `skills\gemini-military-cybersec\SKILL.md` | `skills\agent-security-hardening\SKILL.md` | `skills\gemini-reverse-engineering\SKILL.md` | `skills\gemini-git-guardian\SKILL.md`
 - **Testing, QA & Depuracion:** `skills\gemini-tdd-enforcer\SKILL.md` | `skills\gemini-chaos-qa\SKILL.md` | `skills\gemini-systematic-debugger\SKILL.md` | `skills\gemini-playwright-tester\SKILL.md` | `skills\gemini-safe-refactor\SKILL.md` | `skills\dependency-time-traveler\SKILL.md`

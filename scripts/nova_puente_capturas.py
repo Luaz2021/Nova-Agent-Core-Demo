@@ -1,7 +1,7 @@
 """
 Puente de ADJUNTOS de Nova (Capa 0 - 0 tokens de nube). v2 (08/11, Claude).
 
-Lo que el usuario pega en el chat de Antigravity (imagenes, PDFs, Word, Excel...) llega a brain/<conv>/.user_uploaded/.
+Lo que Alexander pega en el chat de Antigravity (imagenes, PDFs, Word, Excel...) llega a brain/<conv>/.user_uploaded/.
 Este puente (lo lanza session_guard al arrancar, en bucle):
   1. lo MUEVE a antigravity/temporal/<AAAA-MM>/  (carpeta TEMPORAL de Nova, sincronizada con Drive con "sube los cambios")
   2. IMAGEN    -> InternVL (local) la describe        -> <archivo>.vista.md al lado
@@ -133,7 +133,7 @@ def procesar(ruta: Path) -> bool:
             texto, completo = destilar_documento(ruta)
             tipo, sufijo, extra = "documento", ".resumen.md", f"\n\nTexto completo (por trozos): `{completo}`"
         else:
-            texto, tipo, sufijo, extra = "(tipo no soportado: abrelo solo si el usuario lo pide)", "otro", ".nota.md", ""
+            texto, tipo, sufijo, extra = "(tipo no soportado: abrelo solo si Alexander lo pide)", "otro", ".nota.md", ""
     except Exception as e:
         _log(f"pendiente {ruta.name}: {type(e).__name__}: {e}")
         return False
@@ -144,7 +144,7 @@ def procesar(ruta: Path) -> bool:
     nuevo = not INDICE.exists()
     with INDICE.open("a", encoding="utf-8") as f:
         if nuevo:
-            f.write("# Adjuntos de el usuario (lo mas nuevo abajo)\n\nNova: lee el .md de cada adjunto, no el archivo original.\n\n"
+            f.write("# Adjuntos de Alexander (lo mas nuevo abajo)\n\nNova: lee el .md de cada adjunto, no el archivo original.\n\n"
                     "| Fecha | Archivo | Tipo | Resumen | Lectura |\n|---|---|---|---|---|\n")
         f.write(f"| {datetime.now():%Y-%m-%d %H:%M} | {ruta.name} | {tipo} | {corto.replace('|', '/')} | `{md}` |\n")
     _log(f"{tipo} procesado: {ruta.name} -> {md.name}")

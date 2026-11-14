@@ -1,7 +1,7 @@
 """
 Puente directo del Orquestador Nova-Core para el Chat de Antigravity (Sin API externa).
 
-Recibe el archivo o los archivos que el usuario pasa por el chat, ejecuta las
+Recibe el archivo o los archivos que Alexander pasa por el chat, ejecuta las
 herramientas locales (leer_fragmento, editar_archivo, crear_archivo, revisar, deshacer)
 y controla el limite de 3 vueltas por archivo en local (0 tokens).
 

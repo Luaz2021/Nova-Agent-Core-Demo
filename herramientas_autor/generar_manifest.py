@@ -25,7 +25,9 @@ RAIZ = Path(__file__).resolve().parent.parent
 EXCLUIR_PARTES = {"__pycache__", ".git", "medios_cache", "node_modules", ".DS_Store"}
 EXCLUIR_NOMBRES = {"perfil_usuario.json", "memoria_disenos.json"}
 EXCLUIR_EXT = {".pyc"}
-PRESERVAR = {"nova_core/nova_hooks_config.json"}  # el usuario puede cambiarlo (modo registro/bloqueo)
+PRESERVAR = {
+    "nova_core/nova_hooks_config.json"
+}  # el usuario puede cambiarlo (modo registro/bloqueo)
 
 
 def sha_github(p: Path) -> tuple[str, int]:
@@ -38,16 +40,30 @@ def sha_github(p: Path) -> tuple[str, int]:
 def archivos(carpeta: Path):
     for p in sorted(carpeta.rglob("*")):
         rel = p.relative_to(RAIZ)
-        if not p.is_file() or set(rel.parts) & EXCLUIR_PARTES or p.name in EXCLUIR_NOMBRES or p.suffix in EXCLUIR_EXT:
+        if (
+            not p.is_file()
+            or set(rel.parts) & EXCLUIR_PARTES
+            or p.name in EXCLUIR_NOMBRES
+            or p.suffix in EXCLUIR_EXT
+        ):
             continue
         yield p, rel.as_posix()
 
 
-def componente(tipo: str, nombre: str, rel: str, destino: str, p: Path, **extra) -> dict:
+def componente(
+    tipo: str, nombre: str, rel: str, destino: str, p: Path, **extra
+) -> dict:
     sha, tam = sha_github(p)
     ident = f"{tipo.lower()}_" + "".join(c if c.isalnum() else "_" for c in rel.lower())
-    c = {"Id": ident, "Name": nombre, "Type": tipo, "RelativePath": rel, "TargetRelative": destino, "SizeBytes": tam,
-         "SHA256": sha}
+    c = {
+        "Id": ident,
+        "Name": nombre,
+        "Type": tipo,
+        "RelativePath": rel,
+        "TargetRelative": destino,
+        "SizeBytes": tam,
+        "SHA256": sha,
+    }
     c.update(extra)
     if rel in PRESERVAR:
         c["Preserve"] = True
@@ -55,14 +71,22 @@ def componente(tipo: str, nombre: str, rel: str, destino: str, p: Path, **extra)
 
 
 def generar(version: str) -> dict:
-    comps = [componente("Rule", "GEMINI.md", "GEMINI.md", "config/GEMINI.md", RAIZ / "GEMINI.md"),
-             componente("Config", "AYUDA.md", "AYUDA.md", "config/AYUDA.md", RAIZ / "AYUDA.md")]
+    comps = [
+        componente(
+            "Rule", "GEMINI.md", "GEMINI.md", "config/GEMINI.md", RAIZ / "GEMINI.md"
+        ),
+        componente(
+            "Config", "AYUDA.md", "AYUDA.md", "config/AYUDA.md", RAIZ / "AYUDA.md"
+        ),
+    ]
     for p, rel in archivos(RAIZ / "scripts"):
-        sub = rel[len("scripts/"):]
+        sub = rel[len("scripts/") :]
         tipo = "Script" if "/" not in sub else "File"
         comps.append(componente(tipo, p.name, rel, f"antigravity/scripts/{sub}", p))
     for p, rel in archivos(RAIZ / "memory_templates"):
-        comps.append(componente("Template", p.name, rel, f"antigravity/memory/{p.name}", p))
+        comps.append(
+            componente("Template", p.name, rel, f"antigravity/memory/{p.name}", p)
+        )
     for p, rel in archivos(RAIZ / "nova_core"):
         comps.append(componente("File", p.name, rel, rel, p))
     for carpeta in ("herramientas", "clonador"):
@@ -73,17 +97,35 @@ def generar(version: str) -> dict:
     for carpeta in sorted(d for d in (RAIZ / "skills").iterdir() if d.is_dir()):
         skill_md = carpeta / "SKILL.md"
         for p, rel in archivos(carpeta):
-            sub = rel[len(f"skills/{carpeta.name}/"):]
+            sub = rel[len(f"skills/{carpeta.name}/") :]
             if p == skill_md:
                 sha, _ = sha_github(p)
                 total = sum(sha_github(x)[1] for x, _ in archivos(carpeta))
-                comps.append({"Id": f"skill_{carpeta.name.replace('-', '_')}", "Name": carpeta.name, "Type": "Skill",
-                              "RelativePath": f"skills/{carpeta.name}", "TargetRelative": f"config/skills/{carpeta.name}",
-                              "SizeBytes": total, "SHA256": sha, "SkillSHA256": sha})
+                comps.append(
+                    {
+                        "Id": f"skill_{carpeta.name.replace('-', '_')}",
+                        "Name": carpeta.name,
+                        "Type": "Skill",
+                        "RelativePath": f"skills/{carpeta.name}",
+                        "TargetRelative": f"config/skills/{carpeta.name}",
+                        "SizeBytes": total,
+                        "SHA256": sha,
+                        "SkillSHA256": sha,
+                    }
+                )
             else:
-                comps.append(componente("File", p.name, rel, f"config/skills/{carpeta.name}/{sub}", p))
-    return {"Version": version, "Engine": "NovaManifestGuardian v3", "GeneratedAt": time.strftime("%Y-%m-%d %H:%M:%S"),
-            "TotalComponents": len(comps), "Components": comps}
+                comps.append(
+                    componente(
+                        "File", p.name, rel, f"config/skills/{carpeta.name}/{sub}", p
+                    )
+                )
+    return {
+        "Version": version,
+        "Engine": "NovaManifestGuardian v3",
+        "GeneratedAt": time.strftime("%Y-%m-%d %H:%M:%S"),
+        "TotalComponents": len(comps),
+        "Components": comps,
+    }
 
 
 def main() -> None:
@@ -91,12 +133,17 @@ def main() -> None:
     ap.add_argument("--version", required=True, help="p. ej. 3.0, 3.1...")
     args = ap.parse_args()
     m = generar(args.version)
-    (RAIZ / "manifest_master.json").write_text(json.dumps(m, indent=4, ensure_ascii=False) + "\n", encoding="utf-8",
-                                               newline="\n")
+    (RAIZ / "manifest_master.json").write_text(
+        json.dumps(m, indent=4, ensure_ascii=False) + "\n",
+        encoding="utf-8",
+        newline="\n",
+    )
     tipos: dict = {}
     for c in m["Components"]:
         tipos[c["Type"]] = tipos.get(c["Type"], 0) + 1
-    print(f"manifest_master.json v{args.version}: {m['TotalComponents']} componentes {tipos}")
+    print(
+        f"manifest_master.json v{args.version}: {m['TotalComponents']} componentes {tipos}"
+    )
 
 
 if __name__ == "__main__":

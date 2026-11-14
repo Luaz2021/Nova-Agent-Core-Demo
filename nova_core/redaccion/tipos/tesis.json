@@ -1,0 +1,20 @@
+{
+  "nombre": "Ensayo / tesis / TFG",
+  "descripcion": "Textos largos que redacta Nova y tú corriges sección a sección (bloqueas las buenas). APA 7.",
+  "clase": "redaccion",
+  "estilo": "apa",
+  "portada": "apa",
+  "numerar_secciones": true,
+  "palabras_por_seccion": 600,
+  "formatos": ["docx", "pdf"],
+  "rol": "Eres investigador academico que redacta ensayos y trabajos de fin de grado con rigor.",
+  "tono": "académico, argumentado y preciso; cita solo las fuentes que te den",
+  "secciones": [
+    {"titulo": "Introducción", "guia": "Contexto, problema, objetivos y estructura del trabajo."},
+    {"titulo": "Marco teórico", "guia": "Conceptos y autores dados en los puntos."},
+    {"titulo": "Metodología", "guia": "Cómo se ha hecho el trabajo."},
+    {"titulo": "Desarrollo y resultados", "guia": "Análisis principal."},
+    {"titulo": "Discusión", "guia": "Interpretación, límites."},
+    {"titulo": "Conclusiones", "guia": "Respuesta a los objetivos y líneas futuras."}
+  ]
+}

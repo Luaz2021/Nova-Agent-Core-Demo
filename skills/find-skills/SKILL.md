@@ -22,5 +22,5 @@ Cuando el usuario pida:
 - Extraer las directrices esenciales en formato estandarizado `SKILL.md`.
 
 ### Paso 3: Almacenamiento en Google Drive
-- Guardar la nueva habilidad en `G:\Mi unidad\Antigravity\skills\<nombre-de-la-skill>\SKILL.md`.
+- Guardar la nueva habilidad en `<NOVA_HOME>\antigravity\almacen\skills\<nombre-de-la-skill>\SKILL.md`.
 - Conectar la habilidad al `gemini-multiagent-router` para activación por contexto.

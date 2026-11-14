@@ -61,7 +61,7 @@ dashboard behind it), build each with its own run and one shared palette and typ
 
 ## The run
 
-Do these in order. Steps 1â€“5 take a few minutes and decide whether the page is any good.
+Do these in order. Steps 1–5 take a few minutes and decide whether the page is any good.
 
 ### 1. Read the brief and the project
 
@@ -90,7 +90,7 @@ is also your picture search: each place, material and printed thing on it is a q
 ### 2. Write the argument
 
 Before any design, list the page as claims with their proof, one line per section, the way
-`references/copy.md` Â§1 shows. The claims decide which sections exist and in what order. Delete any
+`references/copy.md` §1 shows. The claims decide which sections exist and in what order. Delete any
 section that has no claim. This is how you avoid the stock sequence of hero, logos, three features,
 testimonial, pricing, call to action.
 
@@ -191,10 +191,10 @@ to anyone is a screensaver.
 
 Write the whole page as a copy deck (plain text) before markup, following `references/copy.md`:
 
-- **Every headline fits in two lines or fewer at every width.** Do the arithmetic in copy.md Â§2 before
+- **Every headline fits in two lines or fewer at every width.** Do the arithmetic in copy.md §2 before
   committing to a sentence: about 32 characters is safe everywhere at a confident size. The studied
   gallery heroes have a median of 5 words and 32 characters.
-- One supporting sentence, directly under the headline (32â€“48px below it) and shown with it, never
+- One supporting sentence, directly under the headline (32–48px below it) and shown with it, never
   docked at the foot of the first screen or held back by an animation. When the headline is a name or
   a figure of speech, this sentence says plainly what the thing is. One primary action, named for what
   it does, as a real button on the first screen.
@@ -280,7 +280,7 @@ not finished. Order of work:
    the width the page has set up: when its text sits in the left half, the right half holds its
    picture, its second column, its list or its figure, never nothing. Asymmetry lives inside the grid,
    never in the frame: a void is placed only when something closes it on the far side. No stretch of
-   the page taller than about half a screen holds nothing at all; sections are 120â€“240px apart on
+   the page taller than about half a screen holds nothing at all; sections are 120–240px apart on
    desktop. Every section the visitor came for opens with a heading that names it, and the first
    screen carries the page's title in an `h1`. These are what readers name first when a page looks
    wrong ("no clear title", "random empty space", "everything is pushed to one side"), and the
@@ -299,7 +299,7 @@ node <skill>/scripts/inspect.mjs <url or path/to/index.html>
 node <skill>/scripts/scenes.mjs <url or path/to/index.html>     # when the page has scroll scenes
 ```
 
-`scenes.mjs` photographs every scroll scene at 0, 10 â€¦ 100% of its hold, on desktop and on a phone,
+`scenes.mjs` photographs every scroll scene at 0, 10 … 100% of its hold, on desktop and on a phone,
 and the reduced-motion page; with scenes on the sheet, `inspect.mjs` also films the whole scroll
 (`desktop-film-NN.jpg`). A scene that never started or rests on desktop is a `FAIL`.
 
@@ -330,7 +330,7 @@ under sixteen). Any scroll scenes are already built (step 6); around them the la
 
 1. **The signature move** named on the sheet: one, done well (a dealt scene can be it).
 2. **An entrance for the parts of every section:** the heading, then the text, then the picture,
-   staggered by 60â€“90ms, rising 16â€“32px with opacity, triggered once as the section enters. Not one
+   staggered by 60–90ms, rising 16–32px with opacity, triggered once as the section enters. Not one
    fade for the whole block, and never content that stays hidden if the script fails.
 3. **Feedback on every control:** press, hover and focus on buttons, links, cards and the live thing.
 4. **One moving picture:** a found clip as a muted loop, a slow scale or drift on a photograph, or a
@@ -352,7 +352,7 @@ Do not report until all of these are true; each one was skipped in a test run th
   (desktop, phone, reduced motion).
 - A stranger reading the first screen for five seconds can say what this is and what to do.
 - Every section has a heading; the margins match on both sides; no stretch of the page is empty.
-- The critique of your last round is written down in the shape of `references/critique.md` Â§4.
+- The critique of your last round is written down in the shape of `references/critique.md` §4.
 
 Tell the user, briefly: the direction dealt (name and seed) and any redraws with reasons; the idea
 sentence and the live thing; the final scores from your last critique round and what still falls short;
@@ -367,12 +367,12 @@ These hold on every build, whatever the direction. `inspect.mjs` measures them.
 
 | Rule | Instead |
 | --- | --- |
-| **Headlines: two lines or fewer, at every width.** Every `h1`â€“`h6`, and the main line of the first screen whatever its tag. | Cut words. Then widen the measure. Size last. |
+| **Headlines: two lines or fewer, at every width.** Every `h1`–`h6`, and the main line of the first screen whatever its tag. | Cut words. Then widen the measure. Size last. |
 | **A clear title on the first screen**, in the page's one `h1`, and a heading on every section. | Say what this is: the name with what it does, the product with what it is for, the event with its date and place. |
 | **Equal outer margins; no section huddled on one side** with the other half of the screen empty. | Close every void with something on its far side: the section's picture, a second column, a list, a figure. |
 | **No blank stretches** taller than about half a screen. | The normal section gap. A deliberate rest is a placed picture or a field of colour, once per page. |
 | **Statements are paragraphs.** An intro sentence or a quotation set large is marked up as `<p>` or `<blockquote>`, stays at statement size (36px or less on desktop, 24px on a phone) and runs to about 25 words, three lines. | Larger than that it is a headline and the two-line rule applies. In blind tests jurors read a 42px sentence over four lines as a four-line headline. |
-| **No eyebrows.** No small label above a heading, no pill badge above the headline, no "New Â·" chip. | Put the information in the heading or the first sentence, or drop it. |
+| **No eyebrows.** No small label above a heading, no pill badge above the headline, no "New ·" chip. | Put the information in the heading or the first sentence, or drop it. |
 | **No monospace** outside real code blocks. | The text face. Tabular figures where numbers align. |
 | **No index numbering.** No 01 / 02 / 03, no (001), no "Step 2". | Order shown by position, size, or the words. A real `<ol>` if order matters. |
 | **No thin rules.** No hairline dividers, no 1px outlined boxes, no grid lines, crosshairs or crop marks. | Space. A step in background tone. A change of scale. A filled shape. |
@@ -389,7 +389,7 @@ These hold on every build, whatever the direction. `inspect.mjs` measures them.
 Three places keep their own conventions and are left alone by the inspector: real code in
 `<pre>`/`<code>` (monospace is correct there), real tables and form fields (they may have lines), and
 a real interface fragment whose root carries the attribute `data-ui` (the product's own borders and
-menus; see `references/imagery.md` Â§7).
+menus; see `references/imagery.md` §7).
 
 Why these, honestly. Some are what the study measured: among the 247 sites, those the panel scored
 7.5 or higher used icon feature cards 1% of the time against 28% for sites under 6.5, pill badges 14%
@@ -411,18 +411,18 @@ Short form. Numbers are from the study unless marked as house style.
 - Two or three sizes do the visible work: one very large, one small, nothing in between. Median
   headline-to-body ratio on the studied sites is 4.3; the best go far beyond (largest type: median
   8.4vw on the top sites against 5.0vw on the weak ones).
-- Display type: tracking -0.02 to -0.05em, leading 0.85â€“1.05. Text: 16â€“20px, leading 1.45â€“1.6,
-  45â€“75 characters per line.
+- Display type: tracking -0.02 to -0.05em, leading 0.85–1.05. Text: 16–20px, leading 1.45–1.6,
+  45–75 characters per line.
 - Five sizes on a page is the ceiling. One family is normal (a third of the studied sites); two is the
   limit.
 - Left-aligned by default. Centre at most one moment.
 
 **Space**
-- One grid, one pair of tight margins (16â€“32px), used everywhere; large things run to the edges. Text
+- One grid, one pair of tight margins (16–32px), used everywhere; large things run to the edges. Text
   blocks share two or three left edges on the whole page.
 - Asymmetry inside the grid, never in the frame: the two outer margins are equal, and an off-centre
   heading is answered by something at the far side of the grid.
-- The gap between sections is clearly larger than any gap inside one: 120â€“240px on desktop (the study's median is about 240).
+- The gap between sections is clearly larger than any gap inside one: 120–240px on desktop (the study's median is about 240).
 - Each section has a different composition from its neighbours; none is a card grid.
 
 **Colour**
@@ -445,7 +445,7 @@ Short form. Numbers are from the study unless marked as house style.
 
 **Components**
 - Buttons: flat, one fill colour, either square-cornered or fully round, decided once (top sites: 52%
-  square, 23% pill; the 9â€“16px "soft" radius is the weak-site default). Most strong heroes have no
+  square, 23% pill; the 9–16px "soft" radius is the weak-site default). Most strong heroes have no
   button at all, or one.
 - Navigation: wordmark, three to five plain links, one action. No bar chrome.
 - The footer is a designed close, not a sitemap: on most strong sites the name returns at full width.
@@ -511,10 +511,10 @@ open collections could not be searched.
 | `references/research.md` | The study: method, numbers, what the best and worst sites do. Cite it, do not guess. |
 | `scripts/draw.mjs` | Deals and reprints the direction; `--photos`, `--site <id>` for more references; `--app` deals an app style instead. |
 | `scripts/assets.mjs` | Step 6: searches open collections for real pictures of the subject's world; `--get` downloads with the credit, `--credits` prints them. |
-| `scripts/lint.mjs` Â· `scripts/inspect.mjs` | The gate. |
+| `scripts/lint.mjs` · `scripts/inspect.mjs` | The gate. |
 | `scripts/scenes.mjs` | The gate for scroll scenes: each scene at 0-100% of its hold, desktop, phone, reduced motion. |
-| `assets/base.css` Â· `assets/base.js` | An optional neutral foundation to build on. |
+| `assets/base.css` · `assets/base.js` | An optional neutral foundation to build on. |
 | `assets/scenes/` | The scroll scenes: the shared stage (`stage.js`, `stage.css`) and, for each scene in the library, its `.js`, `.css` and a working demo page in `demo/`. |
-| `assets/app.css` Â· `assets/charts.js` | For app screens: a neutral shell, panels, tables and controls, and small SVG charts drawn to the app rules. |
+| `assets/app.css` · `assets/charts.js` | For app screens: a neutral shell, panels, tables and controls, and small SVG charts drawn to the app rules. |
 | `library/` | The data the draw reads: directions, heroes, sections, type systems, palettes, photographs, studied sites, motions, scroll scenes (`scenes.json`), and the app styles, shells and screen patterns (`app.json`). Do not read it whole; use the script. |
 

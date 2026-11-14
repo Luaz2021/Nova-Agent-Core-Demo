@@ -8,21 +8,26 @@ description: "Indice Macro Mobile: Android nativo (Kotlin/Compose), iOS (Swift/S
 ## 1. Reglas Operativas & Gatillo de Salto Obligatorio
 - **Salto Obligatorio al Almacen:** Al crear o modificar una app movil, abrir obligatoriamente el `SKILL.md` de la plataforma activa en el apartado 2 (`android-core`, `ios-apple-core`, `react-native-expo` o `flutter-dart-core`) + `mobile-security-masvs\SKILL.md` antes de armar el contrato para `qwen3.5:9b`. Reparar siempre por lineas (`edit_file <= 35%`), nunca reemplazando el archivo entero.
 - **Arquitectura Limpia & Flujo Unidireccional (UDF):** En cualquier plataforma movil, el estado fluye hacia abajo (State) y los eventos fluyen hacia arriba (Events). Separar estrictamente `UI/Presentation` -> `Domain (UseCases/State)` -> `Data (Repository/DataSource)`. Prohibido incrustar logica de persistencia o llamadas HTTP dentro de componentes visuales.
+- **Android Nativo (Kotlin 2.0+ & Jetpack Compose):**
   - Gestion reactiva de estado con `StateFlow` y recoleccion en Compose mediante `collectAsStateWithLifecycle()`.
   - Inyeccion de dependencias con Hilt o Koin moderno.
   - Optimizacion Gradle obligatoria: `KSP` activo (prohibido `kapt`), convention plugins y configuration cache habilitada.
   - Diseno Material 3 estricto, manejo adaptativo para tablets/plegables y optimizacion R8/ProGuard en release.
+- **Apple / iOS Nativo (Swift 6 & SwiftUI):**
   - Concurrencia moderna estricta: `async/await`, `actor`, aislamiento con `@MainActor` en capas de UI (prohibido `DispatchQueue.main.async` legacy).
   - Estado moderno con el framework `Observation` (`@Observable`), reemplazando `ObservableObject` y `@Published`.
   - Arquitectura MVVM desacoplada o The Composable Architecture (TCA) para flujos complejos.
   - Persistencia local con SwiftData o CoreData utilizando contextos secundarios asincronos.
+- **React Native & Expo (Ecosistema 2026):**
   - Enrutamiento basado en archivos con Expo Router y soporte de Deep Linking universal.
   - New Architecture activada: motor Hermes, TurboModules nativos y renderer Fabric.
   - Estado servidor con TanStack Query v5 y estado global liviano con Zustand.
   - Estilos mediante NativeWind v4 (Tailwind nativo) y animaciones fluidas a 60/120 fps en el hilo UI con `react-native-reanimated` v3.
+- **Flutter (Dart 3.x & Flutter 3.2x+):**
   - Motor grafico Impeller habilitado por defecto (eliminacion de shader compilation jank).
   - Manejo de estado declarativo con Riverpod (usando generacion de codigo `@riverpod`) o BLoC para sistemas empresariales.
   - Null-safety estricto, pattern matching y records de Dart 3.
+- **Seguridad Movil Tanque (OWASP MASVS & Zero-Trust):**
   - **Cero secretos en el cliente:** Prohibido almacenar API keys privadas, llaves maestras o service role keys en codigo fuente, `strings.xml`, `Info.plist` o variables de entorno cliente.
   - **Almacenamiento seguro:** Android `EncryptedSharedPreferences` / `AndroidKeyStore`, iOS `Keychain Services`, React Native `expo-secure-store`, Flutter `flutter_secure_storage`.
   - **Comunicaciones cifradas:** HTTPS estricto con Network Security Config (Android), App Transport Security (iOS) y SSL Pinning para APIs sensibles.
@@ -36,7 +41,7 @@ description: "Indice Macro Mobile: Android nativo (Kotlin/Compose), iOS (Swift/S
 ## Definicion de hecho
 - Build o analisis en verde (`gradlew assembleDebug`, `npx expo-doctor` / arranque, `flutter analyze`) y probado en emulador o dispositivo.
 
-## 2. Mapa de Salto a las Skills (`<NOVA_HOME>/antigravity/` + la ruta `skills/...` de cada entrada)
+## 2. Mapa de Salto al Almacen (`<NOVA_HOME>\antigravity\almacen\` + la ruta `skills\...` de cada entrada; copia local, nunca leer de G:)
 Abrir con `read_file` en paralelo al iniciar o auditar desarrollo movil:
 - **Android Nativo & Compose:** `skills\android-core\SKILL.md`
 - **Apple & iOS Nativo:** `skills\ios-apple-core\SKILL.md`

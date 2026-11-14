@@ -29,8 +29,12 @@ def ruta_para_comando(p: str) -> str:
         if " " in p:
             try:
                 import ctypes
+
                 buf = ctypes.create_unicode_buffer(1024)
-                if ctypes.windll.kernel32.GetShortPathNameW(p, buf, 1024) and " " not in buf.value:
+                if (
+                    ctypes.windll.kernel32.GetShortPathNameW(p, buf, 1024)
+                    and " " not in buf.value
+                ):
                     return buf.value
             except Exception:
                 pass
@@ -46,15 +50,26 @@ def entradas_nova() -> dict:
     return {
         "nova-guardia-herramientas": {
             "enabled": True,
-            "PreToolUse": [{"matcher": "*", "hooks": [{"type": "command", "command": f"{py} {hook}", "timeout": 10}]}],
+            "PreToolUse": [
+                {
+                    "matcher": "*",
+                    "hooks": [
+                        {"type": "command", "command": f"{py} {hook}", "timeout": 10}
+                    ],
+                }
+            ],
         },
         "nova-recordatorio-codigo": {
             "enabled": True,
-            "PreInvocation": [{"type": "command", "command": f"{py} {turno} pre", "timeout": 60}],
+            "PreInvocation": [
+                {"type": "command", "command": f"{py} {turno} pre", "timeout": 60}
+            ],
         },
         "nova-correccion-codigo-chat": {
             "enabled": True,
-            "Stop": [{"type": "command", "command": f"{py} {turno} stop", "timeout": 10}],
+            "Stop": [
+                {"type": "command", "command": f"{py} {turno} stop", "timeout": 10}
+            ],
         },
     }
 
@@ -74,7 +89,9 @@ def escribir(datos: dict) -> None:
     HOOKS.parent.mkdir(parents=True, exist_ok=True)
     if HOOKS.exists():
         shutil.copy2(HOOKS, HOOKS.with_name("hooks.json.bak"))
-    HOOKS.write_text(json.dumps(datos, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    HOOKS.write_text(
+        json.dumps(datos, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
+    )
 
 
 def main() -> int:
@@ -90,7 +107,9 @@ def main() -> int:
         return 0
     datos.update(entradas_nova())
     escribir(datos)
-    print(f"[HOOKS] Reglas automaticas de Nova registradas en {HOOKS} (se activan al reabrir Antigravity).")
+    print(
+        f"[HOOKS] Reglas automaticas de Nova registradas en {HOOKS} (se activan al reabrir Antigravity)."
+    )
     return 0
 
 

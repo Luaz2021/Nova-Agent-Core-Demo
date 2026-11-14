@@ -1,7 +1,7 @@
 """
 Nova Destilador - Extractor y Analizador Autonomo de Videos (Reels & TikTok)
 =============================================================================
-Parte de Nova Agent (@Luaz2021)
+Creado para Alexander Martinez (@Luaz2021)
 Opera 100% en local a 0 tokens de nube: yt-dlp + FFmpeg + Ollama (coder de nova_modelos.json, hoy qwen3.5:9b)
 """
 
@@ -117,11 +117,11 @@ def process_video_url(url, folder_path, folder_name, log_cb):
             actual_video = cand
             break
 
-    # Si fallo la descarga sin cookies, reintentar usando cookies del navegador
+    # Si fallo la descarga sin cookies, reintentar usando cookies de Brave
     if not actual_video:
-        log_cb(f"[{folder_name}] Reintentando con cookies del navegador...")
-        dl_cmd_nav = dl_cmd + ["--cookies-from-browser", "chrome"]
-        code, stdout, stderr = run_cmd(dl_cmd_nav)
+        log_cb(f"[{folder_name}] Reintentando con cookies de Brave...")
+        dl_cmd_brave = dl_cmd + ["--cookies-from-browser", "brave"]
+        code, stdout, stderr = run_cmd(dl_cmd_brave)
         for ext in [".mp4", ".mkv", ".webm"]:
             cand = os.path.join(TEMP_DIR, f"{folder_name}{ext}")
             if os.path.exists(cand):

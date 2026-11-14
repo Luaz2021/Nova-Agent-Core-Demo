@@ -1,7 +1,7 @@
 """
 Conversor y Destilador de documentos a texto limpio para Nova (Entrada por Chat, 0 tokens).
 
-Recibe el archivo o los archivos que el usuario pasa por el chat (PDF, Word, Excel,
+Recibe el archivo o los archivos que Alexander pasa por el chat (PDF, Word, Excel,
 PowerPoint, HTML, CSV, TXT, MD), extrae el texto EN LOCAL sin usar APIs ni gastar
 tokens en vision, limpia cabeceras/pies repetidos y entrega el contenido listo para leer.
 

@@ -24,7 +24,7 @@ import urllib.request
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))  # ollama_comun vive al lado
-DOCUMENTOS_GENERADOS = Path.home() / ".gemini" / "antigravity" / "documentos_generados"
+DOCUMENTOS_GENERADOS = Path.home() / ".gemini" / "antigravity" / "documentos_generados"  # sincronizada con Drive
 
 from ollama_comun import ensure_ollama_service
 
@@ -107,22 +107,15 @@ TEMAS = {
 }
 
 
-def _modelo_nova(clave: str = "coder", defecto: str = "qwen3.5:9b") -> str:
-    """Modelo local de este equipo (perfil_usuario.json -> scripts/nova_modelos.json -> defecto)."""
+def _modelo_nova(
+    clave: str = "coder", defecto: str = "qwen3.5:9b"  # 09/11: el viejo qwen2.5-coder-nova2026:v4 ya no existe
+) -> str:
+    """Obtiene el nombre oficial del modelo Qwen local configurado."""
     try:
-        from ollama_comun import modelo_nova
-        return modelo_nova(clave)
+        ruta = Path.home() / ".gemini" / "antigravity" / "scripts" / "nova_modelos.json"
+        return json.loads(ruta.read_text(encoding="utf-8"))[clave]
     except Exception:
         return defecto
-
-
-def _autor_por_defecto() -> str:
-    """Nombre del usuario (memory/perfil_usuario.json); vacio si no hay perfil."""
-    try:
-        ruta = Path.home() / ".gemini" / "antigravity" / "memory" / "perfil_usuario.json"
-        return str(json.loads(ruta.read_text(encoding="utf-8-sig")).get("nombre", "")).strip()
-    except Exception:
-        return ""
 
 
 def consultar_ollama(
@@ -145,7 +138,7 @@ def consultar_ollama(
 def redactar_documento(escaleta: dict, modelo: str | None = None) -> list[dict]:
     """Genera cada seccion del documento llamando a Ollama por bloques."""
     titulo_doc = escaleta.get("titulo", "Documento Tecnico")
-    autor = escaleta.get("autor") or _autor_por_defecto()
+    autor = escaleta.get("autor", "Alexander Martinez")
     asignatura = escaleta.get("asignatura", "")
     tono = escaleta.get("tono", "academico, riguroso y formal")
     sistema = (
@@ -342,7 +335,7 @@ def _crear_portada_apa(doc, escaleta: dict, config: dict):
     from docx.shared import Pt
 
     titulo = escaleta.get("titulo", "Título del Trabajo Académico")
-    autor = escaleta.get("autor") or _autor_por_defecto()
+    autor = escaleta.get("autor", "Alexander Martínez")
     institucion = escaleta.get("institucion", "Universidad / Centro de Estudios")
     asignatura = escaleta.get("asignatura", "Módulo de Especialización")
     profesor = escaleta.get("profesor", "Profesor / Docente")
@@ -406,7 +399,7 @@ def _crear_portada_ejecutiva(doc, escaleta: dict, config: dict):
     subtitulo = escaleta.get(
         "subtitulo", escaleta.get("asignatura", "Documento Estratégico y Técnico")
     )
-    autor = escaleta.get("autor") or _autor_por_defecto()
+    autor = escaleta.get("autor", "Alexander Martínez")
     fecha = escaleta.get("fecha", "2026")
 
     for _ in range(2):
@@ -716,7 +709,7 @@ def main() -> None:
         help="Archivo de salida .docx, .pdf o .md. Si es solo un nombre, se guarda en antigravity\\documentos_generados",
     )
     parser.add_argument(
-        "--modelo", "-m", help="Nombre del modelo en Ollama (por defecto el de este equipo, ver scripts/nova_modelos.json)"
+        "--modelo", "-m", help="Nombre del modelo en Ollama (por defecto el 'coder' de scripts\\nova_modelos.json)"
     )
     parser.add_argument(
         "--tema",
@@ -739,6 +732,8 @@ def main() -> None:
     )
     parser.add_argument("--fecha", help="Fecha para la portada")
     args = parser.parse_args()
+    sys.stderr.write("[aviso] redactor.py es el redactor ANTIGUO. Usa nova_core\\redactar.py (por tipos, formal): "
+                     "redactar.py tipos\n")
 
     ruta_salida = Path(args.salida)
     if not ruta_salida.is_absolute() and ruta_salida.parent == Path("."):
@@ -795,22 +790,15 @@ def main() -> None:
 
 def docx_a_pdf(docx: Path, pdf: Path) -> str:
     """Word (mejor calidad, respeta el tema) -> LibreOffice -> navegador (desde el .md). Devuelve el motor usado o ''."""
-    if sys.platform == "win32":  # Word solo existe en Windows (COM)
-        d, p = str(docx).replace("'", "''"), str(pdf).replace("'", "''")
-        ps = (f"$w = New-Object -ComObject Word.Application; $w.Visible = $false; "
-              f"$d = $w.Documents.Open('{d}'); $d.ExportAsFixedFormat('{p}', 17); $d.Close($false); $w.Quit()")
-        try:
-            subprocess.run(["powershell", "-NoProfile", "-Command", ps], capture_output=True, timeout=180,
-                           creationflags=0x08000000)
-            if pdf.exists():
-                return "Word"
-        except Exception:
-            pass
-    candidatos = (Path("C:/Program Files/LibreOffice/program/soffice.exe"),
-                  Path("/Applications/LibreOffice.app/Contents/MacOS/soffice"), Path("/usr/bin/soffice"),
-                  Path("/usr/bin/libreoffice"), Path("/snap/bin/libreoffice"))
-    soffice = (shutil.which("soffice") or shutil.which("libreoffice")
-               or next((str(x) for x in candidatos if x.exists()), None))
+    ps = (f"$w = New-Object -ComObject Word.Application; $w.Visible = $false; "
+          f"$d = $w.Documents.Open('{docx}'); $d.ExportAsFixedFormat('{pdf}', 17); $d.Close($false); $w.Quit()")
+    try:
+        subprocess.run(["powershell", "-NoProfile", "-Command", ps], capture_output=True, timeout=180)
+        if pdf.exists():
+            return "Word"
+    except Exception:
+        pass
+    soffice = shutil.which("soffice") or next((str(x) for x in (Path("C:/Program Files/LibreOffice/program/soffice.exe"),) if x.exists()), None)
     if soffice:
         subprocess.run([soffice, "--headless", "--convert-to", "pdf", "--outdir", str(pdf.parent), str(docx)], capture_output=True, timeout=180)
         if pdf.exists():

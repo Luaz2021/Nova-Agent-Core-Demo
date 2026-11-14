@@ -316,7 +316,7 @@ def main() -> int:
     except Exception as e:
         print(f"[SECCIONES] identidad no disponible ({type(e).__name__}): paleta de la direccion")
     if not args.solo_montar and not ensure_ollama_service():
-        print("[SECCIONES] FRENO: Ollama no responde. Avisa a el usuario (no lo hagas desde la nube).")
+        print("[SECCIONES] FRENO: Ollama no responde. Avisa a Alexander (no lo hagas desde la nube).")
         return 1
     try:
         modelo = json.loads((NOVA / "antigravity" / "scripts" / "nova_modelos.json").read_text(encoding="utf-8"))["coder"]

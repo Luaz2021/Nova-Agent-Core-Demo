@@ -56,4 +56,4 @@ Un 3D a medida (configuradores, escenas propias) no sale de aquí: se hace con C
 ```
 python montar.py --datos <carpeta>/datos.json --categoria auto --out index.html
 ```
-(Nova lo lanza sola, en local y a 0 tokens de nube.)
+(Nova lo hace sola con `nova_tarea.py --categoria auto --datos <carpeta>\datos.json`).

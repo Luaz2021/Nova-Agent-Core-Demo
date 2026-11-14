@@ -39,15 +39,9 @@ def credenciales() -> tuple[str, str]:
     clave, token = os.environ.get("TRELLO_API_KEY", ""), os.environ.get("TRELLO_TOKEN", "")
     if clave and token:
         return clave, token
-    for linea in (Path.home() / ".gemini" / "config" / "secrets.env").read_text(encoding="utf-8").splitlines() \
-            if (Path.home() / ".gemini" / "config" / "secrets.env").exists() else []:
-        k, _, v = linea.partition("=")
-        if k.strip() in ("TRELLO_API_KEY", "TRELLO_TOKEN") and v.strip():
-            os.environ.setdefault(k.strip(), v.strip())
-    clave, token = os.environ.get("TRELLO_API_KEY", ""), os.environ.get("TRELLO_TOKEN", "")
-    if clave and token:
-        return clave, token
-    candidatos = [Path.home() / ".gemini" / "antigravity" / "vault" / "secrets.json"]
+    candidatos = [Path(f"{l}:/") / sub / "Antigravity" / "vault" / "secrets.json"
+                  for l in "GDEFHIJ" for sub in ("Mi unidad", "My Drive")]
+    candidatos.append(Path.home() / ".gemini" / "antigravity" / "vault" / "secrets.json")
     for ruta in candidatos:
         try:
             if ruta.exists():

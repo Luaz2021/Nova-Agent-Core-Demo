@@ -6,53 +6,56 @@ trigger: model_decision
 
 # Security Bastion & Self-Pentesting Auditor (White-Hat Guardian)
 
-> **ÃMBITO ESTRICTO:** Esta habilidad opera **Ãºnica y exclusivamente sobre el cÃ³digo, repositorios y configuraciones locales del propio usuario** para blindar su software antes del despliegue en producciÃ³n.
+> **ÁMBITO ESTRICTO:** Esta habilidad opera **única y exclusivamente sobre el código, repositorios y configuraciones locales del propio usuario** para blindar su software antes del despliegue en producción.
 
-Su propÃ³sito es darte paz mental un fin de semana y evitar que "Pepito 123" exponga una API key en producciÃ³n, deje un puerto abierto sin autenticaciÃ³n o permita que un usuario normal acceda a datos de administraciÃ³n.
+Su propósito es darte paz mental un fin de semana y evitar que "Pepito 123" exponga una API key en producción, deje un puerto abierto sin autenticación o permita que un usuario normal acceda a datos de administración.
 
 ---
 
-## 1. CuÃ¡ndo se Activa
+## 1. Cuándo se Activa
 
-El agente activarÃ¡ este modo cuando el usuario diga:
+El agente activará este modo cuando el usuario diga:
 - *"Audita la seguridad de este proyecto antes de subirlo"*
-- *"Haz un pentest a mi cÃ³digo para ver por dÃ³nde me pueden entrar"*
+- *"Haz un pentest a mi código para ver por dónde me pueden entrar"*
 - *"Revisa si hay API keys, tokens o secretos expuestos"*
 - *"Comprueba puertos abiertos, CORS o endpoints desprotegidos"*
-- *"Revisa si mis variables de entorno estÃ¡n seguras"*
+- *"Revisa si mis variables de entorno están seguras"*
 
 ---
 
 ## 2. Los 5 Controles del Bastionado Preventivo
 
-### Control 1: Escaneo de Secretos y API Keys (Fugas Fatales)
-- **BÃºsqueda profunda de patrones de credenciales:**
-  - Tokens de Stripe (`sk_live_...`), OpenAI (`sk-...`), AWS (`AKIA...`), GitHub Personal Access Tokens, llaves privadas RSA (`-----BEGIN RSA PRIVATE KEY-----`) o URLs de conexiÃ³n a BD con contraseÃ±a embebida (`postgres://user:pass@host...`).
-- **VerificaciÃ³n de `.gitignore`:**
-  - Certificar que `.env`, `.env.local`, `*.pem`, `id_rsa` y archivos de credenciales estÃ©n estrictamente excluidos del control de versiones.
+### Control 1: Escaneo de Secretos y Entropía de Shannon (Fugas Fatales)
+- **Análisis Matemático de Entropía (H >= 4.2 bits):**
+  - Ejecutar `python "<NOVA_HOME>\antigravity\scripts\security\entropy_secret_scanner.py" --path .`
+  - Caza cualquier secreto o contraseña de alta aleatoriedad independientemente de su nombre o prefijo.
+- **Búsqueda profunda de patrones de credenciales conocidas:**
+  - Tokens de Stripe (`sk_live_...`), OpenAI (`sk-...`), AWS (`AKIA...`), GitHub Personal Access Tokens, llaves privadas RSA (`-----BEGIN RSA PRIVATE KEY-----`) o URLs de conexión a BD con contraseña embebida (`postgres://user:pass@host...`).
+- **Verificación de `.gitignore`:**
+  - Certificar que `.env`, `.env.local`, `*.pem`, `id_rsa` y archivos de credenciales estén estrictamente excluidos del control de versiones.
 - **Frontend Leak Check:**
-  - Verificar que ninguna variable secreta se estÃ© importando en componentes cliente o empaquetando en el bundle de JavaScript pÃºblico (ej. Next.js `NEXT_PUBLIC_` usado indebidamente en llaves secretas).
+  - Verificar que ninguna variable secreta se esté importando en componentes cliente o empaquetando en el bundle de JavaScript público (ej. Next.js `NEXT_PUBLIC_` usado indebidamente en llaves secretas).
 
 ---
 
-### Control 2: AuditorÃ­a de Puertos, Servicios y CORS
+### Control 2: Auditoría de Puertos, Servicios y CORS
 - **CORS Inseguro (Wildcard fatal):**
   - Prohibido `Access-Control-Allow-Origin: *` cuando se manejan credenciales (`credentials: true`) o datos autenticados.
 - **Puertos de Base de Datos y Docker:**
-  - Verificar que puertos sensibles (PostgreSQL `5432`, Redis `6379`, MongoDB `27017`, Elasticsearch `9200`) **no estÃ©n bindeados a `0.0.0.0`** en Docker Compose, sino a `127.0.0.1` o protegidos dentro de la red interna de Docker.
+  - Verificar que puertos sensibles (PostgreSQL `5432`, Redis `6379`, MongoDB `27017`, Elasticsearch `9200`) **no estén bindeados a `0.0.0.0`** en Docker Compose, sino a `127.0.0.1` o protegidos dentro de la red interna de Docker.
 
 ---
 
-### Control 3: Bypass de AutenticaciÃ³n y AutorizaciÃ³n (BOLA / IDOR)
+### Control 3: Bypass de Autenticación y Autorización (BOLA / IDOR)
 - **Broken Object Level Authorization (IDOR):**
-  - Buscar endpoints como `GET /api/invoices/:id` o `PUT /api/users/:id` y verificar que el cÃ³digo compruebe explÃ­citamente:
+  - Buscar endpoints como `GET /api/invoices/:id` o `PUT /api/users/:id` y verificar que el código compruebe explícitamente:
     `if (invoice.userId !== currentUser.id && !currentUser.isAdmin) throw ForbiddenException();`
   - Impedir que un atacante cambie el ID en la URL y descargue las facturas de otros clientes.
 
 ---
 
-### Control 4: Endpoints PÃºblicos "Olvidados"
-- Escaneo de rutas de depuraciÃ³n o testing que quedaron activas por descuido (ej. `/api/test-login`, `/debug/users`, `/swagger` expuesto en producciÃ³n sin autenticaciÃ³n).
+### Control 4: Endpoints Públicos "Olvidados"
+- Escaneo de rutas de depuración o testing que quedaron activas por descuido (ej. `/api/test-login`, `/debug/users`, `/swagger` expuesto en producción sin autenticación).
 
 ---
 
@@ -61,25 +64,31 @@ El agente activarÃ¡ este modo cuando el usuario diga:
   - `Content-Security-Policy` (CSP contra XSS).
   - `X-Content-Type-Options: nosniff`.
   - `Strict-Transport-Security` (HSTS).
-- **Cookies de SesiÃ³n:**
+- **Cookies de Sesión:**
   - `HttpOnly: true` (inaccesible desde JS / XSS).
   - `Secure: true` (solo viaja por HTTPS).
-  - `SameSite: 'Strict'` o `'Lax'` (protecciÃ³n contra CSRF).
+  - `SameSite: 'Strict'` o `'Lax'` (protección contra CSRF).
+
+---
+
+### Control 6: Auditoría SCA de Dependencias a 0 Tokens
+- Ejecutar `python "<NOVA_HOME>\antigravity\scripts\qa\audit_dependencies.py" --path .`
+- Inspecciona vulnerabilidades y CVEs conocidos en `package.json` o `requirements.txt` con herramientas nativas del ecosistema antes de autorizar cualquier despliegue.
 
 ---
 
 ## 3. Formato del Reporte de Bastionado
 
 ```markdown
-### ðŸ›¡ï¸ Reporte de Bastionado Preventivo: [Proyecto]
+### 🛡️ Reporte de Bastionado Preventivo: [Proyecto]
 
-| Nivel de Riesgo | Vector de Fuga | Archivo / LÃ­nea | AcciÃ³n Inmediata de Blindaje |
+| Nivel de Riesgo | Vector de Fuga | Archivo / Línea | Acción Inmediata de Blindaje |
 | :--- | :--- | :--- | :--- |
-| ðŸš¨ **CRÃTICO** | API Key o Secreto en cÃ³digo | `.env` commiteado o variable hardcodeada | Revocar key, aÃ±adir a .gitignore y rotar credencial. |
-| âš ï¸ **ALTO** | IDOR / Falta de validaciÃ³n de dueÃ±o | `orders.controller.ts:32` | AÃ±adir filtro `userId === session.userId`. |
-| âš ï¸ **ALTO** | Puerto BD expuesto en 0.0.0.0 | `docker-compose.yml:14` | Cambiar `5432:5432` por `127.0.0.1:5432:5432`. |
-| â„¹ï¸ **MEDIO** | CORS permisivo (`*`) | `server.ts:25` | Limitar a orÃ­genes del frontend de producciÃ³n. |
+| 🚨 **CRÍTICO** | API Key o Secreto en código | `.env` commiteado o variable hardcodeada | Revocar key, añadir a .gitignore y rotar credencial. |
+| ⚠️ **ALTO** | IDOR / Falta de validación de dueño | `orders.controller.ts:32` | Añadir filtro `userId === session.userId`. |
+| ⚠️ **ALTO** | Puerto BD expuesto en 0.0.0.0 | `docker-compose.yml:14` | Cambiar `5432:5432` por `127.0.0.1:5432:5432`. |
+| ℹ️ **MEDIO** | CORS permisivo (`*`) | `server.ts:25` | Limitar a orígenes del frontend de producción. |
 
-> *Â¿Quieres que apliquemos los parches de blindaje a estos puntos ahora mismo?*
+> *¿Quieres que apliquemos los parches de blindaje a estos puntos ahora mismo?*
 ```
 

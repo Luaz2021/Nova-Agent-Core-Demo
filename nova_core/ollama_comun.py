@@ -16,43 +16,6 @@ import time
 import urllib.request
 
 OLLAMA_BASE_URL = "http://127.0.0.1:11434/"
-_ANTIGRAVITY = os.path.join(os.path.expanduser("~"), ".gemini", "antigravity")
-_DEFECTOS = {"coder": "qwen3.5:9b", "vl": "blaifa/InternVL3_5:8b"}
-
-
-def modelo_nova(clave: str = "coder") -> str:
-    """Modelo local de Nova para 'coder' o 'vl'. Orden: el elegido para ESTE equipo (memory/perfil_usuario.json,
-    ia_local.modelo / ia_local.modelo_vl) -> catalogo scripts/nova_modelos.json -> defecto."""
-    import json
-
-    def _leer(ruta: str) -> dict:
-        try:
-            with open(ruta, encoding="utf-8-sig") as f:
-                d = json.load(f)
-            return d if isinstance(d, dict) else {}
-        except (OSError, ValueError):
-            return {}
-
-    ia = _leer(os.path.join(_ANTIGRAVITY, "memory", "perfil_usuario.json")).get("ia_local") or {}
-    elegido = ia.get("modelo_vl" if clave == "vl" else "modelo") if isinstance(ia, dict) else ""
-    if elegido and elegido != "ninguno":
-        return str(elegido)
-    catalogo = _leer(os.path.join(_ANTIGRAVITY, "scripts", "nova_modelos.json"))
-    return str(catalogo.get(clave) or _DEFECTOS.get(clave, _DEFECTOS["coder"]))
-
-
-def ruta_ollama() -> str | None:
-    """Ejecutable de Ollama aunque no este en el PATH (instalaciones tipicas de Windows y macOS)."""
-    cmd = shutil.which("ollama")
-    if cmd:
-        return cmd
-    candidatos = [
-        os.path.expandvars(r"%LOCALAPPDATA%\Programs\Ollama\ollama.exe"),
-        "/Applications/Ollama.app/Contents/Resources/ollama",
-        "/usr/local/bin/ollama",
-        "/opt/homebrew/bin/ollama",
-    ]
-    return next((c for c in candidatos if os.path.exists(c)), None)
 
 
 def ensure_ollama_service(url: str = OLLAMA_BASE_URL) -> bool:
@@ -64,7 +27,12 @@ def ensure_ollama_service(url: str = OLLAMA_BASE_URL) -> bool:
     except OSError:
         pass
 
-    ollama_cmd = ruta_ollama()
+    ollama_cmd = shutil.which("ollama")
+    if not ollama_cmd and sys.platform == "win32":
+        cand = os.path.expandvars(r"%LOCALAPPDATA%\Programs\Ollama\ollama.exe")
+        if os.path.exists(cand):
+            ollama_cmd = cand
+
     if not ollama_cmd:
         return False
 

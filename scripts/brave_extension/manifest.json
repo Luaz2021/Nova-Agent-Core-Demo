@@ -1,0 +1,23 @@
+{
+  "manifest_version": 3,
+  "name": "Nova Agent para Brave",
+  "version": "4.0.0",
+  "description": "Puente local entre Nova y Brave con ratón y teclado reales (como Alexander): pestañas, clics, escribir, subir archivos, iframes, YouTube y WhatsApp. Pagos bloqueados salvo permiso de un solo uso que da Alexander.",
+  "minimum_chrome_version": "120",
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; connect-src 'self' ws://127.0.0.1:5005;"
+  },
+  "permissions": ["tabs", "scripting", "storage", "alarms", "debugger"],
+  "host_permissions": ["<all_urls>"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*/*", "http://*/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle",
+      "all_frames": false
+    }
+  ]
+}

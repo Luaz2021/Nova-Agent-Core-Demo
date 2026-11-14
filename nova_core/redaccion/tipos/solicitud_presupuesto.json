@@ -1,0 +1,21 @@
+{
+  "nombre": "Solicitud de presupuesto",
+  "descripcion": "Carta formal para pedir presupuesto a un proveedor (y el mismo texto para correo). Sin IA.",
+  "clase": "datos",
+  "formatos": ["pdf", "docx", "txt"],
+  "obligatorio": ["emisor.nombre", "proveedor.nombre", "necesidades"],
+  "ejemplo": {
+    "tipo": "solicitud_presupuesto",
+    "fecha": "10 de noviembre de 2026",
+    "lugar": "Iquitos",
+    "emisor": {"nombre": "Tu empresa o tu nombre", "documento": "...", "direccion": "...", "contacto": "correo / teléfono",
+               "firmante": "Nombre de quien firma", "cargo": "opcional"},
+    "proveedor": {"nombre": "Proveedor S.A.C.", "direccion": "...", "contacto": "..."},
+    "asunto": "Solicitud de presupuesto: ...",
+    "mensaje": "Opcional: sustituye al párrafo de introducción estándar.",
+    "necesidades": [{"descripcion": "Inversor híbrido 6 kW", "cantidad": 1, "especificaciones": "48 V, onda pura"}],
+    "lugar_entrega": "...",
+    "plazo_respuesta": "20 de noviembre de 2026",
+    "pedir_ademas": ["Opcional: otras cosas que quieres que incluyan en la oferta"]
+  }
+}

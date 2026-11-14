@@ -1,25 +1,15 @@
 {
-  "_nota": "Unico sitio con los modelos locales de Nova (Capa 0, Ollama). Si cambia la version, se cambia SOLO aqui y llega a todos con 'Nova, busca actualizaciones'. El modelo elegido para cada equipo se guarda en memory/perfil_usuario.json (ia_local).",
-  "coder": "qwen3.5:9b",
-  "vl": "blaifa/InternVL3_5:8b",
-  "perfiles": {
-    "OPTIMO_GPU": {
-      "coder": "qwen3.5:9b",
-      "vl": "blaifa/InternVL3_5:8b",
-      "descarga_gb": 12.3,
-      "ram_minima_gb": 16
-    },
-    "GAMA_MEDIA": {
-      "coder": "qwen3.5:4b",
-      "vl": "blaifa/InternVL3_5:4b",
-      "descarga_gb": 6.5,
-      "ram_minima_gb": 12
-    }
-  },
-  "modelos_obsoletos": [
-    "qwen2.5-coder:7b",
-    "qwen2.5-coder:3b",
-    "qwen2.5-coder:1.5b",
-    "qwen2.5-coder:7b-instruct-q4_K_M"
-  ]
+	"_nota": "Unico sitio con los nombres de los modelos Qwen de Nova. Al entrenar una version nueva (v5...) cambiar solo aqui y decir 'Nova, sube los cambios'.",
+	"coder": "qwen3.5:9b",
+	"vl": "blaifa/InternVL3_5:8b",
+	"instalador": "IA_LocalMejorada\\modelos_completos\\desplegar_modelos_v1.ps1",
+	"modelos_obsoletos": [
+		"qwen2.5-coder-nova2026:v4",
+		"qwen2.5-vl-nova2026:v1",
+		"qwen2.5-coder:7b",
+		"qwen2.5-coder:3b",
+		"qwen2.5-coder-nova2026:v1",
+		"qwen2.5-coder-nova2026:v2",
+		"qwen2.5-coder-nova2026:v3"
+	]
 }

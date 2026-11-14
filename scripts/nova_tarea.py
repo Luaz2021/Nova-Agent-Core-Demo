@@ -1,7 +1,7 @@
 """
 NOVA TAREA - un solo comando para la Capa 0 (Qwen pica, linter y InternVL revisan, 0 tokens de nube)
 
-    python nova_tarea.py "lo que pide el usuario" --carpeta <ruta> [--archivo index.html]
+    python nova_tarea.py "lo que pide Alexander" --carpeta <ruta> [--archivo index.html]
            [--secciones hero,cafes,horario,pie] [--direccion "dirección de arte de Nova"]
            [--dominio ui-frontend] [--solo-contrato] [--intentos 3]
 
@@ -188,7 +188,7 @@ def construir_contrato(args) -> tuple[dict, list[str]]:
     instrucciones = "\n\n".join(
         p
         for p in (
-            f"PEDIDO DE USUARIO:\n{args.pedido}",
+            f"PEDIDO DE ALEXANDER:\n{args.pedido}",
             f"DIRECCION DE ARTE SORTEADA (MANDA: adoptala tal cual, no la mezcles con el diseno que harias "
             f"por defecto; lo desconocido es la idea):\n{direccion_sorteada}" if direccion_sorteada else "",
             (f"NOTAS DE NOVA (solo si no chocan con la direccion sorteada):\n{args.direccion}" if direccion_sorteada
@@ -234,7 +234,7 @@ def modo_biblioteca(args, carpeta: Path) -> int:
     ruta_datos = Path(args.datos).resolve() if args.datos else carpeta / "datos.json"
     if not ruta_datos.exists():
         print(f"[NOVA TAREA] Falta {ruta_datos}. Copia {BIBLIOTECA / 'plantilla_datos.json'} y rellenala "
-              "con los datos REALES que de el usuario (lo que no sepas, dejalo vacio: saldra [PENDIENTE]).")
+              "con los datos REALES que de Alexander (lo que no sepas, dejalo vacio: saldra [PENDIENTE]).")
         return 2
     datos = json.loads(ruta_datos.read_text(encoding="utf-8"))
     recetas = montar.cargar_recetas()
@@ -274,8 +274,8 @@ def modo_biblioteca(args, carpeta: Path) -> int:
     ruta = carpeta / "contrato_diseno.json"
     ruta.write_text(json.dumps(contrato, ensure_ascii=False, indent=2), encoding="utf-8")
     r = subprocess.run([sys.executable, "-u", str(PIPELINE), "--contrato", str(ruta), "--intentos", str(args.intentos)], cwd=carpeta)
-    print("[NOVA TAREA] " + ("OK: lee reporte_final_ok.json de la carpeta de la tarea y ENSENA a el usuario los textos de Qwen y los datos [PENDIENTE]."
-                             if r.returncode == 0 else "FRENO: lee nova_pendiente.txt y avisa a el usuario. NO lo arregles desde la nube sin su permiso."))
+    print("[NOVA TAREA] " + ("OK: lee reporte_final_ok.json de la carpeta de la tarea y ENSENA a Alexander los textos de Qwen y los datos [PENDIENTE]."
+                             if r.returncode == 0 else "FRENO: lee nova_pendiente.txt y avisa a Alexander. NO lo arregles desde la nube sin su permiso."))
     return r.returncode
 
 
@@ -300,22 +300,20 @@ def modo_verificar(args, carpeta: Path) -> int:
     ruta = carpeta / "contrato_verificar.json"
     ruta.write_text(json.dumps(contrato, ensure_ascii=False, indent=2), encoding="utf-8")
     r = subprocess.run([sys.executable, "-u", str(PIPELINE), "--contrato", str(ruta), "--intentos", "1"], cwd=carpeta)
-    print("[NOVA TAREA] " + ("VERIFICADA: ensena a el usuario las capturas y que arreglaste." if r.returncode == 0 else
+    print("[NOVA TAREA] " + ("VERIFICADA: ensena a Alexander las capturas y que arreglaste." if r.returncode == 0 else
                              "SIGUE CON FALLOS: lee nova_pendiente.txt, arregla con edit_file (<= 30 lineas por cambio) y vuelve a "
-                             "lanzar --verificar. Maximo 3 rondas; despues, avisa a el usuario con las capturas."))
+                             "lanzar --verificar. Maximo 3 rondas; despues, avisa a Alexander con las capturas."))
     return r.returncode
 
 
-CLONADOR = next((p for p in (Path.home() / ".gemini" / "antigravity" / "clonador" / "motor" / "clonar.py",
-                             Path.home() / "clones_web" / "motor" / "clonar.py") if p.exists()),
-                Path.home() / ".gemini" / "antigravity" / "clonador" / "motor" / "clonar.py")
+CLONADOR = Path.home() / "clones_web" / "motor" / "clonar.py"
 
 
 def modo_referencia(args, carpeta: Path) -> int:
-    """el usuario da una web de REFERENCIA: el clonador de Claude (clones_web, carpeta protegida: solo se EJECUTA) la mide
+    """Alexander da una web de REFERENCIA: el clonador de Claude (clones_web, carpeta protegida: solo se EJECUTA) la mide
     y la rehace en local, sin Qwen. Lo util se copia a <carpeta>/nova_referencia/<web>/ para trabajar SOLO ahi."""
     if not CLONADOR.exists():
-        print(f"[NOVA TAREA] No encuentro el clonador en {CLONADOR}. Avisa a el usuario.")
+        print(f"[NOVA TAREA] No encuentro el clonador en {CLONADOR}. Avisa a Alexander.")
         return 2
     cmd = [sys.executable, "-u", str(CLONADOR), args.referencia]
     if args.paginas > 1:
@@ -332,7 +330,7 @@ def modo_referencia(args, carpeta: Path) -> int:
     texto = "".join(salida)
     m = re.findall(r"Listo en \d+ s -> (.+)", texto)
     if p.returncode != 0 or not m:
-        print("[NOVA TAREA] FRENO: el clonador no pudo con esa web (bloqueo de robots, pagina vacia...). Avisa a el usuario "
+        print("[NOVA TAREA] FRENO: el clonador no pudo con esa web (bloqueo de robots, pagina vacia...). Avisa a Alexander "
               "con el ultimo aviso de arriba. NO intentes clonarla a mano desde la nube.")
         return 1
     origen = Path(m[-1].strip())
@@ -361,11 +359,11 @@ def modo_referencia(args, carpeta: Path) -> int:
                      "careo": str(destino / "construccion" / "revision.html"),
                      "react": str(destino / "react")},
         "uso": ("REFERENCIA de estructura y ritmo. Los textos, marcas, logos y fotos de la original NO se publican: se cambian "
-                "por los datos reales de el usuario. Las secciones flojas (<90 %) las arregla Claude, no la nube."),
+                "por los datos reales de Alexander. Las secciones flojas (<90 %) las arregla Claude, no la nube."),
     }
     (destino / "resumen_referencia.json").write_text(json.dumps(resumen, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"[NOVA TAREA] OK referencia: {destino}\\resumen_referencia.json · parecido {resumen['parecido_medio']} % · "
-          f"flojas: {resumen['secciones_flojas'] or 'ninguna'}. Ensena a el usuario el careo (revision.html) antes de seguir.")
+          f"flojas: {resumen['secciones_flojas'] or 'ninguna'}. Ensena a Alexander el careo (revision.html) antes de seguir.")
     return 0
 
 
@@ -373,9 +371,9 @@ def main() -> int:
     ap = argparse.ArgumentParser(description="Nova Tarea: pedido -> contrato con skills -> pipeline local")
     ap.add_argument("--verificar", action="store_true",
                     help="Solo revisar (DOM + InternVL, PC y movil) el --archivo ya hecho, sin regenerarlo. Tras cada arreglo de Nova")
-    ap.add_argument("--referencia", default="", help="URL de una web de referencia que dio el usuario: la clona el motor de Claude")
+    ap.add_argument("--referencia", default="", help="URL de una web de referencia que dio Alexander: la clona el motor de Claude")
     ap.add_argument("--paginas", type=int, default=1, help="Con --referencia: paginas del menu a clonar (1 = solo la home)")
-    ap.add_argument("pedido", nargs="?", default="", help="Lo que pide el usuario, con sus datos")
+    ap.add_argument("pedido", nargs="?", default="", help="Lo que pide Alexander, con sus datos")
     ap.add_argument("--categoria", default="", help="Web con la biblioteca: auto (la deduce) o hosteleria, deporte, salud, belleza, alojamiento, comercio, profesionales, educacion, oficios, eventos, ocio, inmobiliaria, motor, digital, asociaciones. Usa --datos (o datos.json de la carpeta)")
     ap.add_argument("--datos", default="", help="datos.json con los datos REALES del negocio (modo categoria)")
     ap.add_argument("--esqueleto", default="", help="Forzar estructura: editorial, inmersivo, bento, minimal, catalogo (por defecto: memoria anti-repeticion + direccion + radar)")
@@ -420,7 +418,7 @@ def main() -> int:
     print(
         "[NOVA TAREA] "
         + ("OK: lee reporte_final_ok.json de la carpeta de la tarea." if r.returncode == 0
-           else "FRENO: lee nova_pendiente.txt de la carpeta de la tarea y avisa a el usuario. NO lo arregles desde la nube sin su permiso.")
+           else "FRENO: lee nova_pendiente.txt de la carpeta de la tarea y avisa a Alexander. NO lo arregles desde la nube sin su permiso.")
     )
     return r.returncode
 

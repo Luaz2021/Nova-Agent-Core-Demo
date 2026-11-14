@@ -40,8 +40,9 @@ function git-clone-guard {
             }
             if (Test-Path $scanner) {
                 # 09/11: en el sandbox de Antigravity el atajo python.exe no funciona -> ruta completa
-                $pyNova = Join-Path $env:LOCALAPPDATA "Python\pythoncore-3.14-64\python.exe"
-                if (-not (Test-Path $pyNova)) { $pyNova = "python.exe" }
+                # 11/11: el Python de ESTE equipo (laptop 3.14, PC 3.13/3.11)
+                . (Join-Path $env:USERPROFILE ".gemini\antigravity\scripts\nova_python.ps1")
+                $pyNova = Get-NovaPython
                 & $pyNova "$scanner" "$targetDir"
             }
         }

@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    Helper de Pruebas Fantasma para Nova y el usuario.
+    Helper de Pruebas Fantasma para Nova y Alexander.
     Permite aislar codigo, crear una rama efimera en Git o un sandbox temporal,
     ejecutar la prueba y, si falla, descartar sin dejar rastro en la rama activa.
 #>

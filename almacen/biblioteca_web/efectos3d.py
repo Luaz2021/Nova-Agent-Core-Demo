@@ -1,8 +1,8 @@
 """
-EFECTOS 3D · nivel 3D de la biblioteca de Nova. Hermano de efectos.py.
+EFECTOS 3D · nivel 3D de la biblioteca de Nova (09/11/2026, Claude, a pedido de Luaz). Hermano de efectos.py.
 Ni Nova ni Qwen escriben 3D: estos fragmentos son fijos y probados; montar.py los pone segun el estilo.
 
-Regla de diseño: "2 en 3D por web" con condiciones:
+Regla de Luaz: "2 en 3D por web" con condiciones:
   - PROTAGONISTA (WebGL, Three.js por CDN, en la portada):
       liquido      -> degradado liquido con shader (colores de la paleta)
       formas       -> formas 3D flotando con luz suave, siguen un poco al raton

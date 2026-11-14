@@ -1,5 +1,5 @@
 {
-  "_instrucciones": "Rellena SOLO con datos reales que te de el usuario o el cliente. Lo que no sepas, dejalo vacio (\"\" o []): saldra [PENDIENTE] o la seccion no se pinta. eslogan y descripciones vacios los escribe Qwen (sin inventar datos). dias_semana: 0=domingo ... 6=sabado. reservas.tipo: url | telefono | whatsapp. fotos: las del cliente; si no tiene, deja [] y la biblioteca pone fotos DEL TEMA (biblioteca o internet libre). estilo: solo si el cliente pide colores (\"#hex\", el 1o = botones/acentos, el 2o = texto) o un tono (\"oscuro y elegante\", \"claro y luminoso\"); si no, vacio. Borra esta clave si quieres.",
+  "_instrucciones": "Rellena SOLO con datos reales que te de Alexander o el cliente. Lo que no sepas, dejalo vacio (\"\" o []): saldra [PENDIENTE] o la seccion no se pinta. eslogan y descripciones vacios los escribe Qwen (sin inventar datos). dias_semana: 0=domingo ... 6=sabado. reservas.tipo: url | telefono | whatsapp. fotos: las del cliente; si no tiene, deja [] y la biblioteca pone fotos DEL TEMA (biblioteca o internet libre). estilo: solo si el cliente pide colores (\"#hex\", el 1o = botones/acentos, el 2o = texto) o un tono (\"oscuro y elegante\", \"claro y luminoso\"); si no, vacio. Borra esta clave si quieres.",
   "negocio": {
     "nombre": "",
     "tipo": "cafeteria | restaurante | bar | panaderia ...",

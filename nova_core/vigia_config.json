@@ -1,0 +1,28 @@
+{
+	"_comentario": "Carpetas vigiladas y directorios excluidos en tiempo real por vigia_lint.py (solo revision, sin autofix).",
+	"carpetas": [
+		"C:\\Users\\Alexander Martinez\\.gemini\\nova_core",
+		"C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\scripts",
+		"C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\scratch",
+		"C:\\Users\\Alexander Martinez\\.gemini\\antigravity\\brain",
+		"C:\\Users\\Alexander Martinez\\Desktop"
+	],
+	"excluir_directorios": [
+		"node_modules",
+		".venv",
+		"venv",
+		".git",
+		"dist",
+		"build",
+		".next",
+		"__pycache__",
+		".dart_tool",
+		".nova_respaldo",
+		"vendor",
+		".ruff_cache",
+		".system_generated",
+		"salida_docs",
+		"clones_web",
+		"motor_clones"
+	]
+}

@@ -1,5 +1,5 @@
 r"""
-NOVA · REVISOR SEMANAL
+NOVA · REVISOR SEMANAL (09/11/2026, Claude, a pedido de Luaz)
 =============================================================
 Que hizo Nova, cuanto gasto y donde fallo. Lo lee TODO en local (0 tokens).
 
@@ -28,9 +28,10 @@ TELEMETRIA = REG / "telemetria_hooks.jsonl"
 SALIDA = A / "documentos_generados" / "informes_nova"
 
 HERRAMIENTAS_LOCALES = {
-    "redactor": r"redactor\.py", "resumir": r"resumir\.py|conversor\.py", "biblioteca webs": r"montar\.py",
-    "obrero local (Qwen)": r"nova_local_worker\.py", "ia local": r"nova_instalar_ia_local\.py",
-    "video local": r"nova_video_router\.py", "actualizador": r"actualizar_nova\.py",
+    "redactor": r"redact(?:or|ar)\.py", "resumir": r"resumir\.py|conversor\.py", "nova_tarea (webs)": r"nova_tarea\.py",
+    "nova_secciones (Qwen)": r"nova_secciones\.py", "verificador webs": r"nova_pipeline_local\.py",
+    "sync": r"nova_sync_pedir\.py|sync_antigravity\.ps1", "trello": r"trello\.py", "radar web": r"radar_web\.py",
+    "puente Brave": r"127\.0\.0\.1:5005", "diagnostico": r"nova_diagnostico_sandbox\.py",
 }
 RE_PY_ATAJO = re.compile(r"(?i)(^|[;&|(]|\bcmd(\.exe)?\s+/[ck]\s+\"?)\s*(python3?|py)(\.exe)?(?=\s|$)")
 RE_DOC_SCRATCH = re.compile(r"(?i)[\\/]scratch[\\/][^\"'|;&<>\n]*\.(pdf|docx|xlsx|pptx)\b")
@@ -195,7 +196,7 @@ def informe(dias: int) -> Path:
     usos_locales = sum(loc.values())
     hoy = datetime.now()
     L = [f"# Informe semanal de Nova · {(hoy - timedelta(days=dias)):%d/%m} – {hoy:%d/%m/%Y}", "",
-         "_Generado en local por `scripts/nova_revisor.py` (0 tokens). Si quieres ayudar a mejorar Nova, envialo con /enviar-informe._", "",
+         "_Generado en local por `scripts\\nova_revisor.py` (0 tokens). Pasaselo a Claude para revisarlo._", "",
          "## 1. Resumen", "",
          f"| Conversaciones | Mensajes tuyos | Llamadas al modelo | Tokens nuevos | Tokens de cache | Tokens de salida | **Tokens REALES** |",
          f"|---|---|---|---|---|---|---|",
@@ -264,7 +265,15 @@ def informe(dias: int) -> Path:
     L.append("")
 
     L += ["## 6. Estado de los servicios", ""]
-    for nombre, f, patron in [("Centinela anti-suspension", A / "sentinel.log", r"Error|ALERTA")]:
+    try:
+        s = json.loads((A / "memory" / "sync_status.json").read_text(encoding="utf-8-sig"))
+        L.append(f"- **Sync con Drive:** {s.get('Estado')} ({s.get('Modo')}, {s.get('Timestamp')}) · pendientes subir "
+                 f"{s.get('PendientesSubir', 0)} · bloqueados {len(s.get('Bloqueados') or [])} · errores {len(s.get('Errores') or [])}")
+    except (OSError, ValueError):
+        L.append("- **Sync con Drive:** sin datos")
+    for nombre, f, patron in [("Puente de adjuntos", REG / "puente_capturas.log", r"ERROR|pendiente"),
+                              ("Nova Voz", REG / "nova_voice.log", r"^\[[\d:]+\] (Error|Excepci|No encuentro|Aduana: error)"),
+                              ("Interruptor MCP", REG / "nova_mcp.log", r"error")]:
         try:
             lineas = [x for x in f.read_text(encoding="utf-8", errors="replace").splitlines()[-2000:] if re.search(patron, x, re.I)]
             L.append(f"- **{nombre}:** {len(lineas)} avisos/errores recientes" + (f" (ultimo: `{lineas[-1][:110]}`)" if lineas else " ✅"))

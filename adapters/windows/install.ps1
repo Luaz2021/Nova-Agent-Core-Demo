@@ -1,5 +1,5 @@
 # ==============================================================================
-# INSTALADOR INTERACTIVO DE NOVA AGENT v3.0 - WINDOWS (POWERSHELL)
+# INSTALADOR INTERACTIVO DE NOVA AGENT v3.1 - WINDOWS (POWERSHELL)
 # Zero-Tokens | Escaner de Hardware | IA local opcional (Ollama) | Reglas automaticas (hooks)
 # Creado por Saul Alexander Martinez Rivas (@Luaz2021)
 # ==============================================================================
@@ -42,7 +42,7 @@ if (-not $novaPython) {
 
 Clear-Host
 Write-Host "==========================================================" -ForegroundColor Cyan
-Write-Host "   BIENVENIDO AL INSTALADOR OFICIAL DE NOVA AGENT v3.0    " -ForegroundColor Cyan
+Write-Host "   BIENVENIDO AL INSTALADOR OFICIAL DE NOVA AGENT v3.1    " -ForegroundColor Cyan
 Write-Host "   Arquitecta de Software & Copiloto Tecnico Senior       " -ForegroundColor Gray
 Write-Host "==========================================================" -ForegroundColor Cyan
 Write-Host ""
@@ -297,7 +297,7 @@ try { Set-Clipboard -Value $promptCorto } catch {}
 
 Write-Host ""
 Write-Host "==========================================================================" -ForegroundColor Green
-Write-Host "   NOVA AGENT v3.0 - INSTALACION COMPLETADA ($nombre)" -ForegroundColor Green
+Write-Host "   NOVA AGENT v3.1 - INSTALACION COMPLETADA ($nombre)" -ForegroundColor Green
 Write-Host "   Arquitectura creada por Saul Alexander Martinez Rivas (@Luaz2021)" -ForegroundColor Cyan
 Write-Host "==========================================================================" -ForegroundColor Green
 Write-Host "ATAJOS RAPIDOS EN EL CHAT (Coste 0 tokens de redaccion):" -ForegroundColor Yellow
