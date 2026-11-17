@@ -279,10 +279,13 @@ class VozAyla:
 
     @staticmethod
     def servidor_cargando() -> bool:
-        """17/11: ¿ya hay un servidor de Ayla arrancando? (cargar el modelo tarda ~2 min; dos a la vez se pisan la GPU)"""
+        """17/11: ¿ya hay un servidor de Ayla arrancando? (cargar el modelo tarda ~2 min; dos a la vez se pisan la GPU)
+        Solo cuentan procesos de Python: la propia consulta de PowerShell lleva el texto en su linea de comandos y se
+        contaba a si misma -> parecia que el servidor ya cargaba y NUNCA se arrancaba (visto en otro equipo)."""
         try:
             r = subprocess.run(["powershell.exe", "-NoProfile", "-Command",
-                                "@(Get-CimInstance Win32_Process | Where-Object { $_.CommandLine -like '*clonador.py*servidor*' }).Count"],
+                                "@(Get-CimInstance Win32_Process | Where-Object { $_.Name -match '^pythonw?(\\.exe)?$' -and "
+                                "$_.CommandLine -like '*clonador.py*servidor*' }).Count"],
                                capture_output=True, text=True, timeout=10, creationflags=0x08000000)
             return int((r.stdout or "0").strip() or 0) > 0
         except Exception:
