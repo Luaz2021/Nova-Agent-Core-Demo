@@ -302,6 +302,29 @@ def revisar_voz() -> None:
         nota("voz", "OK", "pack de voz listo: Nova habla con Ayla y el guardian con Marina")
 
 
+def revisar_voz_live() -> None:
+    """v3.2: Nova Voz Live (Windows): conversacion en tiempo real con Gemini Live + monito flotante."""
+    if not WIN or not (AG / "herramientas" / "voz" / "nova_voz_live.py").exists():
+        return
+    clave = any(os.environ.get(n) for n in ("GEMINI_API_KEY", "GOOGLE_API_KEY"))
+    if not clave:
+        try:
+            import winreg
+            with winreg.OpenKey(winreg.HKEY_CURRENT_USER, "Environment") as k:
+                for n in ("GEMINI_API_KEY", "GOOGLE_API_KEY"):
+                    try:
+                        clave = clave or bool(winreg.QueryValueEx(k, n)[0])
+                    except OSError:
+                        pass
+        except OSError:
+            pass
+    if clave:
+        nota("voz_live", "OK", "Nova Voz Live activa: di 'Nova' y habla (monito flotante fuera de Antigravity)")
+    else:
+        nota("voz_live", "OK", "voz clasica con monito flotante; para conversar en tiempo real anade GEMINI_API_KEY "
+             "a las variables de Windows (gratis en https://aistudio.google.com/apikey) y reabre Antigravity")
+
+
 def revisar_ollama() -> None:
     try:
         import urllib.request
@@ -335,6 +358,7 @@ def main() -> int:
     revisar_navegador()
     revisar_sync()
     revisar_voz()
+    revisar_voz_live()
     revisar_ollama()
     fallos = [r for r in res if r["estado"] == "FALLA"]
     resumen = ("Nova Doctor: todo OK" if not fallos else
