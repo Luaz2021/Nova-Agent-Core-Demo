@@ -290,6 +290,30 @@ if ((Test-Path $vozScript) -and $vramMb -ge 6000 -and $freeDiskGB -ge 12) {
     Write-Host "[VOZ] Nova usara la voz de Windows (la voz propia necesita GPU NVIDIA con 6 GB y 12 GB libres)." -ForegroundColor Gray
 }
 
+# Nova Voz Live (v3.2): conversar con Nova en voz alta. Necesita una clave GRATIS de Gemini (Google AI Studio).
+Write-Host ""
+$claveGem = [Environment]::GetEnvironmentVariable("GEMINI_API_KEY", "User")
+if ($claveGem) {
+    Write-Host "[VOZ LIVE] Clave de Gemini ya configurada: di 'Nova' en voz alta y habla con ella." -ForegroundColor Green
+} else {
+    Write-Host "[VOZ LIVE] Puedes HABLAR con Nova: dices 'Nova', le cuentas lo que quieres y ella se lo pasa a Antigravity." -ForegroundColor Cyan
+    Write-Host "      Necesita una clave gratuita de Gemini: https://aistudio.google.com/apikey (boton 'Create API key')." -ForegroundColor Gray
+    Write-Host "      Se guarda solo en este equipo (variables de Windows). Mientras conversas, el audio va a Google." -ForegroundColor Gray
+    $askLive = Read-Host "Quieres activarla ahora? (s/n) [s]"
+    if (-not $askLive -or $askLive.ToLower() -eq "s") {
+        $seg = Read-Host "Pega tu clave de Gemini (no se vera al escribir; Enter = saltar)" -AsSecureString
+        $plano = [Runtime.InteropServices.Marshal]::PtrToStringBSTR([Runtime.InteropServices.Marshal]::SecureStringToBSTR($seg))
+        if ($plano -and $plano.Trim().Length -ge 20) {
+            [Environment]::SetEnvironmentVariable("GEMINI_API_KEY", $plano.Trim(), "User")
+            $env:GEMINI_API_KEY = $plano.Trim()
+            Write-Host "[OK] Clave guardada. Al abrir Antigravity aparece el monito: di 'Nova' y habla." -ForegroundColor Green
+        } else {
+            Write-Host "[VOZ LIVE] Sin clave: Nova usara la voz clasica. Activala cuando quieras con: $novaPython `"$novaLocalScripts\nova_claves.py`"" -ForegroundColor Yellow
+        }
+        $plano = $null
+    }
+}
+
 # Claves opcionales (tipo 'iniciar sesion'): se guardan solo en este equipo
 Write-Host ""
 $askKeys = Read-Host "Quieres configurar ahora tus claves gratuitas opcionales (OpenRouter, Groq...)? (s/n) [n]"

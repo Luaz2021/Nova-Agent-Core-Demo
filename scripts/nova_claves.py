@@ -21,6 +21,7 @@ from pathlib import Path
 
 SECRETS = Path.home() / ".gemini" / "config" / "secrets.env"
 CLAVES = [
+    ("GEMINI_API_KEY", "Hablar con Nova en voz alta (Nova Voz Live, Windows)", "https://aistudio.google.com/apikey"),
     ("OPENROUTER_API_KEY", "Router multi-modelo gratis (DeepSeek, Llama, Qwen)", "https://openrouter.ai/keys"),
     ("GROQ_API_KEY", "Transcripcion de audio rapida (Whisper)", "https://console.groq.com/keys"),
     ("MISTRAL_API_KEY", "Revisiones de codigo (Codestral, capa gratis)", "https://console.mistral.ai/api-keys/"),
@@ -47,6 +48,15 @@ def guardar(datos: dict) -> None:
     SECRETS.write_text("\n".join(lineas) + "\n", encoding="utf-8")
     if os.name != "nt":
         os.chmod(SECRETS, 0o600)
+    elif datos.get("GEMINI_API_KEY"):  # v3.2: Nova Voz Live y el guardian la buscan en las variables de Windows
+        import subprocess
+        try:  # la clave va por una variable del proceso, nunca en la linea de comandos
+            subprocess.run(["powershell.exe", "-NoProfile", "-Command",
+                            "[Environment]::SetEnvironmentVariable('GEMINI_API_KEY', $env:NOVA_CLAVE_TMP, 'User')"],
+                           env={**os.environ, "NOVA_CLAVE_TMP": datos["GEMINI_API_KEY"]}, capture_output=True,
+                           timeout=30, creationflags=0x08000000)
+        except Exception:  # noqa: BLE001
+            pass
 
 
 def main() -> int:

@@ -318,11 +318,19 @@ def revisar_voz_live() -> None:
                         pass
         except OSError:
             pass
+    if not clave:
+        try:
+            sec = (GEMINI / "config" / "secrets.env").read_text(encoding="utf-8-sig")
+            clave = any(l.split("=", 1)[0].strip() in ("GEMINI_API_KEY", "GOOGLE_API_KEY") and l.split("=", 1)[1].strip()
+                        for l in sec.splitlines() if "=" in l)
+        except OSError:
+            pass
     if clave:
         nota("voz_live", "OK", "Nova Voz Live activa: di 'Nova' y habla (monito flotante fuera de Antigravity)")
     else:
-        nota("voz_live", "OK", "voz clasica con monito flotante; para conversar en tiempo real anade GEMINI_API_KEY "
-             "a las variables de Windows (gratis en https://aistudio.google.com/apikey) y reabre Antigravity")
+        nota("voz_live", "OK", "voz clasica con monito flotante; para conversar en tiempo real pon tu clave gratis de Gemini "
+             "(https://aistudio.google.com/apikey) con: python \"%s\" y reabre Antigravity"
+             % (AG / "scripts" / "nova_claves.py"))
 
 
 def revisar_ollama() -> None:
