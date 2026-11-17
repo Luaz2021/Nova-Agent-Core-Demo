@@ -115,6 +115,7 @@ CONF_NOVA = 0.55  # confianza minima de Vosk para "nova" (antes 0.70; la 2a comp
 # confianza que a secas, y la 2a comprobacion (sin gramatica) tambien la oye al principio.
 CONF_NOVA_FRASE = 0.65
 CONF_NOVA_ALTA = 0.75  # con esta confianza basta que la 2a comprobacion oiga algo que empiece por "n" (no.., nu.., na..)
+CONF_NOVA_SEGURA = 0.90  # tan segura que la 2a comprobacion no decide (visto: 1.00 tumbado porque la 2a oyo "una")
 RE_NOVA_INICIO = re.compile(r"^(nova|no va|no vamos|no gana|nogana|noba|no ba|nueva|nová|no vá|noga)\b")
 
 
@@ -127,6 +128,8 @@ def es_nova(resultado: list, libre: str) -> bool:
     libre = (libre or "").strip().lower()
     if len(pal) == 1 and len(resultado) <= 2 and conf >= CONF_NOVA and RE_NOVA_LIBRE.match(libre):
         return True  # "Nova" a secas
+    if conf >= CONF_NOVA_SEGURA:
+        return True  # el 1er paso (con gramatica) esta segurisimo y "nova" es la 1a palabra: el acento no la tumba
     if conf >= CONF_NOVA_ALTA and libre[:1] == "n":
         return True  # "Nova" clara para el 1er paso aunque el acento la cambie en el 2o (visto: 0.77 sin despertar)
     return conf >= CONF_NOVA_FRASE and bool(RE_NOVA_INICIO.match(libre))  # "Nova, ..." de un tiron
