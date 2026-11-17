@@ -195,21 +195,27 @@ def esperar_respuesta(antes: int, limite_s: float = 20 * 60, estable_s: float = 
 # PERMISOS (17/11): cuando Nova se queda "Waiting for user input" con opciones tipo "Yes, allow this time / No"
 # ------------------------------------------------------------------------------------------------------------------
 MARCA_ESPERA = "Waiting for user input"
-OPCION_SI = "Yes, allow this time"   # SOLO esta vez: Nova Voz nunca elige "always allow"
-OPCION_NO = "No"
-BOTON_ENVIAR_PERMISO = "Submit"
+# v3.2: el texto de los botones cambia segun la version/idioma de Antigravity. SI = permitir SOLO esta vez (nunca
+# "always"/"siempre"); NO = denegar. Si no encuentra el boton, devuelve las opciones que habia (para el log).
+RE_SI = r"^(yes|allow|s[ií]|permitir|aceptar)\b(?!.*\b(always|siempre|todas?|all)\b)"
+RE_NO = r"^(no|deny|denegar|rechazar|cancel(ar)?)\b"
+BOTON_ENVIAR = r"^(submit|enviar|confirm(ar)?|ok|continue|continuar)\b"
 
-_JS_PERMISO = """(() => {
+_JS_OPCIONES = """
   const vis = e => { const r = e.getBoundingClientRect(); return r.width > 0 && r.height > 0; };
-  const si = [...document.querySelectorAll('label,button,[role=radio],[role=option]')]
-               .filter(e => vis(e) && (e.innerText || '').trim().replace(/^\\d+\\s*/, '') === %s);  // "1 Yes, allow this time" -> sin el numero
+  const txt = e => (e.innerText || '').trim().replace(/^\\d+\\s*/, '').replace(/\\s+/g, ' ');
+  const ops = [...document.querySelectorAll('label,button,[role=radio],[role=option],[role=button]')]
+                .filter(e => vis(e) && txt(e).length > 0 && txt(e).length < 60);
+"""
+
+_JS_PERMISO = """(() => {%s
+  const si = ops.filter(e => new RegExp(%s, 'i').test(txt(e)));
   const t = document.body.innerText;
   const i = t.lastIndexOf(%s);
-  if (i < 0 || !si.length) return JSON.stringify({pendiente: i >= 0 && t.length - i < 4000, clicable: false,
-                                                  texto: i >= 0 ? t.slice(i, i + 1200) : ''});
-  const j = t.indexOf(%s, i);
-  return JSON.stringify({pendiente: true, clicable: true, texto: t.slice(i + %d, j > i ? j : i + 1200)});
-})()""" % (json.dumps(OPCION_SI), json.dumps(MARCA_ESPERA), json.dumps(OPCION_SI), len(MARCA_ESPERA))
+  if (i < 0) return JSON.stringify({pendiente: false});
+  const resto = t.slice(i + %d, i + 1200);
+  return JSON.stringify({pendiente: t.length - i < 4000, clicable: si.length > 0, texto: resto});
+})()""" % (_JS_OPCIONES, json.dumps(RE_SI), json.dumps(MARCA_ESPERA), len(MARCA_ESPERA))
 
 
 def permiso_pendiente() -> dict | None:
@@ -228,28 +234,28 @@ def permiso_pendiente() -> dict | None:
 
 
 def responder_permiso(si: bool) -> tuple[bool, str]:
-    """Elige 'Yes, allow this time' (si) o 'No' y pulsa Submit, como haria el usuario con el raton."""
-    opcion = OPCION_SI if si else OPCION_NO
-    js_opcion = """(() => {
-      const vis = e => { const r = e.getBoundingClientRect(); return r.width > 0 && r.height > 0; };
-      const el = [...document.querySelectorAll('label,button,[role=radio],[role=option]')]
-                   .filter(e => vis(e) && (e.innerText || '').trim().replace(/^\\d+\\s*/, '') === %s);  // "1 Yes, allow this time" -> sin el numero
-      if (!el.length) return false; el[el.length - 1].click(); return true;
-    })()""" % json.dumps(opcion)
-    js_enviar = """(() => {
-      const b = [...document.querySelectorAll('button')].find(b => (b.innerText || '').trim().startsWith(%s) && !b.disabled);
-      if (!b) return false; b.click(); return true;
-    })()""" % json.dumps(BOTON_ENVIAR_PERMISO)
+    """Elige permitir SOLO esta vez (si) o denegar (no) y confirma, como haria el usuario con el raton."""
+    js_opcion = """(() => {%s
+      const el = ops.filter(e => new RegExp(%s, 'i').test(txt(e)));
+      if (!el.length) return JSON.stringify({ok: false, opciones: ops.map(txt).slice(-12)});
+      el[el.length - 1].click(); return JSON.stringify({ok: true, elegido: txt(el[el.length - 1])});
+    })()""" % (_JS_OPCIONES, json.dumps(RE_SI if si else RE_NO))
+    js_enviar = """(() => {%s
+      const b = ops.filter(e => e.tagName === 'BUTTON' && !e.disabled && new RegExp(%s, 'i').test(txt(e)));
+      if (!b.length) return false; b[b.length - 1].click(); return true;
+    })()""" % (_JS_OPCIONES, json.dumps(BOTON_ENVIAR))
     try:
         with Cdp() as c:
-            if not c.js(js_opcion):
-                return False, f"no encuentro la opcion '{opcion}'"
+            r = json.loads(c.js(js_opcion) or "{}")
+            if not r.get("ok"):
+                return False, f"no encuentro la opcion; habia: {r.get('opciones')}"
             time.sleep(0.5)
-            if not c.js(js_enviar):
-                return False, "no encuentro el boton Submit"
+            enviado = c.js(js_enviar)  # en algunas versiones basta con elegir la opcion
             time.sleep(1.5)
             sigue = MARCA_ESPERA in (c.js("document.body.innerText.slice(-2500)") or "")
-        return (not sigue), ("respondido" if not sigue else "pulsado, pero Antigravity sigue esperando")
+        if not sigue:
+            return True, f"respondido ('{r.get('elegido')}'{'' if enviado else ', sin boton de enviar'})"
+        return False, f"pulsado '{r.get('elegido')}', pero Antigravity sigue esperando"
     except Exception as e:
         return False, f"{type(e).__name__}: {e}"
 

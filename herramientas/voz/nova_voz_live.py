@@ -24,6 +24,7 @@ el micro va siempre abierto y la puedes interrumpir hablando.
     python nova_voz_live.py --voz gemini    (voz de Google "Kore" aunque este Ayla)
     python nova_voz_live.py --auriculares
     python nova_voz_live.py --texto "hola"  (prueba sin micro: manda un texto y escucha la respuesta)
+    python nova_voz_live.py --prueba        (PRUEBA DE PUNTA A PUNTA: clave, micro, "Nova", Ayla, Gemini)
 
 OJO: no lo arranques a la vez que nova_voz.py (los dos se pelearian por el micro y por la palabra "Nova").
 Requisitos: el Python de Nova (google-genai, vosk, sounddevice, numpy, websocket-client, edge-tts; los pone el
@@ -72,7 +73,7 @@ INACTIVO_S = 20          # segundos sin hablar nadie -> se cierra la sesion (vue
 SILENCIO_MS = 700        # silencio que Gemini espera para dar tu frase por terminada
 COLA_ALTAVOZ_S = 0.6     # tras hablar Nova, el micro sigue cerrado este rato (eco de la sala)
 AYLA_INACTIVO_S = 900    # el servidor de Ayla suelta la GPU tras 15 min sin hablar (la comparte con Qwen)
-AYLA_ESPERA_S = 180      # si Ayla esta cargando (~2 min), la frase espera esto antes de rendirse
+AYLA_ESPERA_S = 45       # avisos fuera de conversacion: si Ayla no esta en 45 s, habla la voz de reserva
 VOZ_RESERVA = True       # si Ayla falla o no esta, los avisos los dice la voz de Edge (no se queda muda)
 # Permisos que exigen decir "confirmo" (no basta un "si"): borrar, publicar, tocar el sistema, ejecutar desde internet
 RE_PELIGRO = re.compile(r"(?i)(\brm\b|\bdel\b|rmdir|remove-item|\bformat\b|git\s+push|--force|\bdrop\b|\bdelete\b|"
@@ -91,6 +92,8 @@ PID_LIVE = os.path.join(CACHE_DIR, "nova_voz_live.pid")
 VOZ_CLON_URL = "http://127.0.0.1:5010"
 CLONADOR = os.path.join(BASE, "herramientas", "voz_clon", "clonador.py")
 PYW_CLON = os.path.expanduser(r"~\nova_voz_clon\env_fq\Scripts\pythonw.exe")
+PY_CLON = os.path.expanduser(r"~\nova_voz_clon\env_fq\Scripts\python.exe")
+LOG_SERVIDOR = os.path.expanduser(r"~\nova_voz_clon\servidor.log")  # lo que dice el servidor de Ayla
 VOZ_EDGE = "es-PE-CamilaNeural"
 MODELO_VOSK = os.path.join(AQUI, "modelos", "vosk-model-small-es-0.42")
 WIDGET = os.path.join(AQUI, "widget", "nova_widget.py")   # el monito flotante
@@ -308,9 +311,14 @@ class VozAyla:
                     pass
             elif not self.servidor_cargando():
                 try:
-                    subprocess.Popen([PYW_CLON, CLONADOR, "servidor", "--inactivo", str(AYLA_INACTIVO_S)],
-                                     creationflags=0x08000000 | 0x00000008, stdout=subprocess.DEVNULL,
-                                     stderr=subprocess.DEVNULL, close_fds=True)
+                    # v3.2: python.exe con consola OCULTA (como cuando se lanza a mano, que carga bien) y la
+                    # salida al log: antes se tiraba a DEVNULL y si fallaba no quedaba rastro.
+                    exe = PY_CLON if os.path.exists(PY_CLON) else PYW_CLON
+                    with open(LOG_SERVIDOR, "a", encoding="utf-8") as salida:
+                        salida.write(f"\n[{time.strftime('%Y-%m-%d %H:%M:%S')}] Nova Voz Live arranca el servidor\n")
+                        subprocess.Popen([exe, "-u", CLONADOR, "servidor", "--inactivo", str(AYLA_INACTIVO_S)],
+                                         creationflags=0x08000000, stdin=subprocess.DEVNULL, stdout=salida,
+                                         stderr=subprocess.STDOUT, close_fds=True)
                     log("Cargando la voz de Ayla (tarda ~2 min la primera vez)")
                 except Exception:
                     return False
@@ -581,6 +589,9 @@ class NovaLive:
         if not p:
             return {"error": "Ya no hay ningun permiso pendiente (quiza lo respondio el usuario en la pantalla)."}
         si = decision == "si"
+        if not self.ultimo_dicho.strip():  # v3.2: Gemini lo llamo una vez ANTES de preguntar (visto en un equipo real)
+            log("Permiso: Gemini quiso responder sin que el usuario hablara -> bloqueado")
+            return {"error": "El usuario todavia no ha contestado. Preguntale primero y espera a que responda."}
         dicho = unicodedata.normalize("NFKD", self.ultimo_dicho.lower()).encode("ascii", "ignore").decode()
         if si and p.get("peligroso") and "confirmo" not in dicho:
             return {"error": "Es PELIGROSO y el usuario no ha dicho 'confirmo'. Explicale el riesgo y pidele que diga 'confirmo'."}
@@ -682,6 +693,12 @@ class NovaLive:
             pass
         if self.loop and self.mic is not None:
             self.loop.call_soon_threadsafe(self.mic.put_nowait, bytes(datos))
+
+    def _casi(self, motivo: str):
+        """Oyo algo parecido a 'Nova' y no lo dio por bueno (para afinar). Nunca apunta lo que se dice."""
+        if time.time() - getattr(self, "_casi_t", 0) > 10:
+            self._casi_t = time.time()
+            log(f"Casi 'Nova': {motivo}")
 
     # ------------------------------------------------------------------ tareas de Nova-obrera
     def enviar_orden(self, orden: str, resumen: str) -> dict:
@@ -812,6 +829,10 @@ class NovaLive:
                             libre.AcceptWaveform(bytes(trozo))
                             if RE_NOVA_LIBRE.match(json.loads(libre.FinalResult()).get("text", "").strip().lower()):
                                 break
+                            self._casi("paso 1 OK, la 2a comprobacion no lo vio claro")
+                        elif any(w.get("word") == "nova" for w in pal):
+                            conf = max(w.get("conf", 0) for w in pal if w.get("word") == "nova")
+                            self._casi(f"confianza {conf:.2f} (minimo 0.70), {len(pal)} palabra(s)")
                         trozo = bytearray()
                 if aviso:
                     log("Nova Voz abre conversacion por un aviso (permiso)")
@@ -843,7 +864,7 @@ class NovaLive:
                              "la herramienta hora_actual (nunca la calcules ni la conviertas)."
                              f"\nEstado de Nova-obrera ahora mismo: {json.dumps(self.estado(), ensure_ascii=False)}")
         if self.usar_ayla and not self.ayla_lista:
-            log("Ayla aun cargando: las respuestas esperan a su voz (suena un clip de Ayla mientras)")
+            log("Ayla aun cargando: mientras tanto contesta la voz de Gemini")
             self.ayla.calentar()
         config = {
             "response_modalities": ["AUDIO"],
@@ -862,7 +883,9 @@ class NovaLive:
 
         def ayla_turno() -> bool:
             if estado["ayla"] is None:
-                estado["ayla"] = bool(self.usar_ayla)
+                estado["ayla"] = bool(self.usar_ayla and (self.ayla_lista or VozAyla.lista(0.5)))
+                if self.usar_ayla and not estado["ayla"]:
+                    log("Ayla aun no esta lista: este turno habla la voz de Gemini")
             return estado["ayla"]
         t_conexion = time.time()
         async with self.cliente.aio.live.connect(model=MODELO, config=config) as s:
@@ -1012,6 +1035,103 @@ class NovaLive:
             threading.Thread(target=self.ayla.decir_ya, args=(aviso,), daemon=True).start()
         log("Conversacion cerrada. Di 'Nova' para volver.")
 
+# ==================================================================================================================
+# PRUEBA DE PUNTA A PUNTA (v3.2): python nova_voz_live.py --prueba
+# Dice paso a paso que funciona y que no: clave, otras voces, micro, palabra "Nova", servidor de Ayla, voz, Gemini.
+# ==================================================================================================================
+def prueba(args) -> int:
+    fallos = []
+
+    def paso(n, ok, texto, ayuda=""):
+        print(f"[{'OK' if ok is True else 'AVISO' if ok is None else 'FALLA'}] {n}. {texto}", flush=True)
+        if ok is False:
+            fallos.append(n)
+            if ayuda:
+                print(f"         -> {ayuda}", flush=True)
+
+    print("\n=== NOVA VOZ LIVE: PRUEBA DE PUNTA A PUNTA ===\n", flush=True)
+    clave = clave_api()
+    paso(1, bool(clave), "clave de Gemini" + (" encontrada" if clave else " NO encontrada"),
+         "python nova_clave_gemini.py (en antigravity\\scripts)")
+    try:
+        r = subprocess.run(["powershell.exe", "-NoProfile", "-Command",
+                            "Get-CimInstance Win32_Process | ? { $_.Name -match '^pythonw?(\\.exe)?$' } | "
+                            "% { $_.CommandLine }"], capture_output=True, text=True, timeout=20, creationflags=0x08000000)
+        lineas = r.stdout.splitlines()
+    except Exception:  # noqa: BLE001
+        lineas = []
+    clasica = [x for x in lineas if "nova_voz.py" in x and "--solo-aduana" not in x]
+    live = [x for x in lineas if "nova_voz_live.py" in x and "--prueba" not in x]
+    paso(2, not clasica, "voces en marcha: Nova Voz Live x%d, voz clasica escuchando 'Nova' x%d" % (len(live), len(clasica)),
+         "la voz clasica tambien escucha 'Nova' y se pelean: cierra Antigravity, reinicia el guardian "
+         "(start_session_guard.vbs) y vuelve a abrirlo")
+    try:
+        nombre_mic = sd.query_devices(kind="input")["name"]
+    except Exception as e:  # noqa: BLE001
+        nombre_mic = f"ninguno ({type(e).__name__})"
+    print(f"\n   Microfono predeterminado de Windows: {nombre_mic}", flush=True)
+    input("   Pulsa Enter y di 'Nova' con voz normal (graba 4 s)... ")
+    audio = sd.rec(64000, samplerate=16000, channels=1, dtype="int16")
+    sd.wait()
+    nivel = int(np.sqrt(np.mean(audio.astype(np.float32) ** 2)))
+    paso(3, nivel >= 150, f"micro: volumen {nivel} (menos de 150 = no te oye)",
+         "Configuracion de Windows > Sonido > Entrada: elige el micro bueno y sube el volumen")
+    try:
+        import vosk
+        vosk.SetLogLevel(-1)
+        modelo = vosk.Model(MODELO_VOSK)
+        rec = vosk.KaldiRecognizer(modelo, 16000, GRAMATICA_VOSK)
+        rec.SetWords(True)
+        rec.AcceptWaveform(audio.tobytes())
+        res = json.loads(rec.FinalResult()).get("result", [])
+        pal = [w for w in res if w.get("word") != "[unk]"]
+        libre = vosk.KaldiRecognizer(modelo, 16000)
+        libre.AcceptWaveform(audio.tobytes())
+        texto_libre = json.loads(libre.FinalResult()).get("text", "").strip().lower()
+        conf = max([w.get("conf", 0) for w in pal if w.get("word") == "nova"] or [0])
+        oye = (len(pal) == 1 and pal[0]["word"] == "nova" and conf >= 0.7 and len(res) <= 2
+               and bool(RE_NOVA_LIBRE.match(texto_libre)))
+        paso(4, oye, f"palabra 'Nova': oyo {[w['word'] for w in pal]} (confianza {conf:.2f}), libre: '{texto_libre}'",
+             "di solo 'Nova', clara y sin nada mas, a un palmo del micro; si sigue, pasale esta linea a soporte")
+    except Exception as e:  # noqa: BLE001
+        paso(4, False, f"reconocedor de voz local (Vosk): {type(e).__name__}: {e}",
+             "ejecuta el Doctor: falta el modelo de Vosk")
+    if pack_voz_listo():
+        ayla = VozAyla(activa=True)
+        print("\n   Servidor de Ayla: " + ayla.estado_servidor() + " (si hay que cargarlo tarda hasta ~2 min)...", flush=True)
+        lista = ayla.arrancar(esperar_s=180)
+        paso(5, lista, "servidor de Ayla " + ("listo" if lista else "NO cargo en 3 min"),
+             f"mira {LOG_SERVIDOR}")
+        if lista:
+            ok = ayla.decir_ya(f"Hola {nombre_usuario()}, soy Nova. Te oigo bien.".replace("Hola ,", "Hola,"))
+            paso(6, ok, "Ayla ha hablado (deberias haberla oido)")
+    else:
+        paso(5, None, "sin pack de voz: hablara la voz de Gemini")
+    if clave:
+        async def _gemini():
+            from google import genai
+            cli = genai.Client(api_key=clave, http_options={"api_version": "v1beta"})
+            cfg = {"response_modalities": ["AUDIO"], "output_audio_transcription": {},
+                   "system_instruction": "Responde con una frase corta en espanol."}
+            texto = ""
+            async with cli.aio.live.connect(model=MODELO, config=cfg) as s:
+                await s.send_realtime_input(text="Di solo: hola, te escucho.")
+                async for r in s.receive():
+                    sc = r.server_content
+                    if sc and sc.output_transcription and sc.output_transcription.text:
+                        texto += sc.output_transcription.text
+                    if sc and sc.turn_complete:
+                        break
+            return texto.strip()
+        try:
+            t0 = time.time()
+            texto = asyncio.run(asyncio.wait_for(_gemini(), 30))
+            paso(7, bool(texto), f"Gemini Live contesta en {time.time() - t0:.1f} s: '{texto}'")
+        except Exception as e:  # noqa: BLE001
+            paso(7, False, f"Gemini Live: {type(e).__name__}: {str(e)[:200]}", "revisa la clave de Gemini")
+    print("\n=== " + ("TODO OK: di 'Nova' y habla" if not fallos else f"FALLAN los pasos {fallos}") + " ===\n", flush=True)
+    return 0 if not fallos else 1
+
 
 def main():
     p = argparse.ArgumentParser(description="Nova Voz Live (fase 1)")
@@ -1020,7 +1140,10 @@ def main():
     p.add_argument("--auriculares", action="store_true", help="micro siempre abierto: puedes interrumpirla")
     p.add_argument("--texto", help="prueba sin micro: manda este texto y escucha la respuesta")
     p.add_argument("--sin-monito", action="store_true", help="no abrir el monito flotante")
+    p.add_argument("--prueba", action="store_true", help="prueba de punta a punta (no para la voz que ya funciona)")
     args = p.parse_args()
+    if args.prueba:
+        sys.exit(prueba(args))
 
     viejo = leer_pid(PID_VIEJO)
     if not args.texto and viejo and pid_vivo(viejo):
