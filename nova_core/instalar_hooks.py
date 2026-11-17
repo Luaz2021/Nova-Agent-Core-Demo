@@ -24,20 +24,27 @@ AQUI = Path(__file__).resolve().parent
 HOOKS = Path.home() / ".gemini" / "config" / "hooks.json"
 
 
+def _corta(p: str) -> str | None:
+    try:
+        import ctypes
+
+        buf = ctypes.create_unicode_buffer(1024)
+        if ctypes.windll.kernel32.GetShortPathNameW(p, buf, 1024) and " " not in buf.value:
+            return buf.value
+    except Exception:
+        pass
+    return None
+
+
 def ruta_para_comando(p: str) -> str:
     if os.name == "nt":
         if " " in p:
-            try:
-                import ctypes
-
-                buf = ctypes.create_unicode_buffer(1024)
-                if (
-                    ctypes.windll.kernel32.GetShortPathNameW(p, buf, 1024)
-                    and " " not in buf.value
-                ):
-                    return buf.value
-            except Exception:
-                pass
+            # v3.2: solo la CARPETA en nombre corto (8.3) y el archivo con su nombre largo. El nombre corto de un
+            # ARCHIVO (NOVA_H~1.PY) cambia cuando el actualizador lo reescribe y los hooks dejaban de funcionar.
+            carpeta, nombre = os.path.split(p)
+            corta = _corta(carpeta)
+            if corta and " " not in nombre:
+                return f"{corta}\\{nombre}"
             return f'"{p}"'
         return p
     return shlex.quote(p)

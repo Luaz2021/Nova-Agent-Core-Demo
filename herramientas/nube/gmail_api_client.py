@@ -47,22 +47,19 @@ def load_vault_credentials():
     if user and pwd:
         return user, pwd.replace(" ", "")
 
-    for letter in "GDEFGHIJKLMNOPQRSTUVWXYZC":
-        for sub in [r"Mi unidad\Antigravity\vault\google_cloud.env", r"My Drive\Antigravity\vault\google_cloud.env"]:
-            vault_path = os.path.join(f"{letter}:\\", sub)
-            if os.path.exists(vault_path):
-                try:
-                    with open(vault_path, "r", encoding="utf-8") as f:
-                        for line in f:
-                            line = line.strip()
-                            if line.startswith("GMAIL_USER="):
-                                user = line.split("=", 1)[1].strip()
-                            elif line.startswith("GMAIL_APP_PASSWORD="):
-                                pwd = line.split("=", 1)[1].strip().replace(" ", "")
-                    if user and pwd:
-                        return user, pwd
-                except Exception:
-                    pass
+    # v3.2: cofre local del usuario (antes buscaba el Drive privado del autor)
+    vault_path = os.path.join(os.path.expanduser("~"), ".gemini", "config", "secrets.env")
+    if os.path.exists(vault_path):
+        try:
+            with open(vault_path, "r", encoding="utf-8") as f:
+                for line in f:
+                    line = line.strip()
+                    if line.startswith("GMAIL_USER="):
+                        user = line.split("=", 1)[1].strip()
+                    elif line.startswith("GMAIL_APP_PASSWORD="):
+                        pwd = line.split("=", 1)[1].strip().replace(" ", "")
+        except Exception:
+            pass
     return user, pwd
 
 

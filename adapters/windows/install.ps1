@@ -3,7 +3,8 @@
 # Zero-Tokens | Escaner de Hardware | IA local opcional (Ollama) | Reglas automaticas (hooks)
 # Creado por Saul Alexander Martinez Rivas (@Luaz2021)
 # ==============================================================================
-$ErrorActionPreference = "SilentlyContinue"
+# v3.2: "Continue" (antes SilentlyContinue escondia los fallos: herramientas y clonador no se instalaban y nadie lo veia)
+$ErrorActionPreference = "Continue"
 
 # 0. Requisito: Python 3.10 o superior (hooks, redactor, biblioteca de webs, actualizador)
 function Find-NovaPython {
@@ -187,20 +188,24 @@ $perfilData = @{
 # UTF-8 SIN BOM (con BOM, algunos lectores JSON fallan)
 [System.IO.File]::WriteAllText("$novaLocalMemory\perfil_usuario.json", $perfilData, (New-Object System.Text.UTF8Encoding $false))
 
-# 5. Enlace de las Skills mediante Junctions
+# 5. Skills: COPIA REAL en ~/.gemini (v3.2). Antes eran Junctions a la carpeta desde la que se ejecuto el instalador:
+#    si el usuario lo lanzaba desde Descargas y luego borraba esa carpeta, las skills quedaban rotas y el actualizador
+#    escribia a traves del enlace dentro de la descarga ("no reconoce la carpeta donde esta instalado").
 $repoRoot = (Resolve-Path (Join-Path $PSScriptRoot "..\..")).Path
 $repoSkills = Join-Path $repoRoot "skills"
 if (Test-Path $repoSkills) {
-    Write-Host "[INFO] Enlazando el catalogo de skills..." -ForegroundColor Cyan
+    Write-Host "[INFO] Copiando el catalogo de skills..." -ForegroundColor Cyan
     Get-ChildItem -Path $repoSkills -Directory | ForEach-Object {
         foreach ($targetDir in @($novaLocalSkills, $novaConfigSkills)) {
             $dest = Join-Path $targetDir $_.Name
-            if (-not (Test-Path $dest)) {
-                cmd /c mklink /J "$dest" "$($_.FullName)" 2>$null | Out-Null
+            $it = Get-Item -LiteralPath $dest -Force -ErrorAction SilentlyContinue
+            if ($it -and ($it.Attributes -band [IO.FileAttributes]::ReparsePoint)) {
+                cmd /c rmdir "$dest" | Out-Null   # quita solo el enlace viejo (no toca el destino)
             }
+            robocopy "$($_.FullName)" "$dest" /E /R:1 /W:1 /NFL /NDL /NJH /NJS /NP | Out-Null
         }
     }
-    Write-Host "[OK] Skills enlazadas correctamente." -ForegroundColor Green
+    Write-Host "[OK] Skills copiadas en tu carpeta de Nova." -ForegroundColor Green
 }
 
 # 6. Copiar scripts (con subcarpetas), nucleo (hooks, redactor) y biblioteca de webs
@@ -212,7 +217,9 @@ $repoAlmacen = Join-Path $repoRoot "almacen"
 if (Test-Path $repoAlmacen) { Copy-Item -Path "$repoAlmacen\*" -Destination $novaAlmacen -Recurse -Force }
 foreach ($extra in @("herramientas", "clonador")) {
     $src = Join-Path $repoRoot $extra
-    if (Test-Path $src) { New-Item -ItemType Directory -Path "$geminiDirntigravity\$extra" -Force | Out-Null; Copy-Item -Path "$src\*" -Destination "$geminiDirntigravity\$extra" -Recurse -Force }
+    # v3.2: antes la ruta tenia un caracter invisible (BEL) en lugar de "\a" y herramientas/clonador NUNCA se instalaban
+    $dstExtra = Join-Path $geminiDir (Join-Path "antigravity" $extra)
+    if (Test-Path $src) { New-Item -ItemType Directory -Path $dstExtra -Force | Out-Null; Copy-Item -Path "$src\*" -Destination $dstExtra -Recurse -Force }
 }
 Copy-Item (Join-Path $repoRoot "manifest_master.json") "$geminiDir\antigravity\manifest_master.json" -Force
 Get-ChildItem -Path $novaLocalScripts, $novaCore, $novaAlmacen -Recurse -Directory -Filter "__pycache__" | Remove-Item -Recurse -Force
@@ -252,7 +259,10 @@ if (Test-Path "$novaLocalScripts\start_session_guard.vbs") {
     Copy-Item "$novaLocalScripts\start_session_guard.vbs" (Join-Path $startupDir "Nova_SessionGuard.vbs") -Force
     Start-Process -FilePath "wscript.exe" -ArgumentList "`"$novaLocalScripts\start_session_guard.vbs`""
 }
-if (Test-Path "$novaLocalScripts\nova_doctor.ps1") {
+# v3.2: Doctor multiplataforma (enlaces viejos, carpeta rota de la v3.1, hooks, navegador) + Doctor de Windows
+if (Test-Path "$novaLocalScripts\nova_doctor.py") {
+    & $novaPython "$novaLocalScripts\nova_doctor.py" --reparar
+} elseif (Test-Path "$novaLocalScripts\nova_doctor.ps1") {
     & powershell.exe -NoProfile -ExecutionPolicy Bypass -File "$novaLocalScripts\nova_doctor.ps1" -SinServicios -SinAviso
 }
 
@@ -262,6 +272,22 @@ if ($quiereIA) {
     if ($LASTEXITCODE -ne 0) {
         Write-Host "[AVISO] La IA local no quedo lista. Repitelo cuando quieras o di 'Nova, instala la IA local'." -ForegroundColor Yellow
     }
+}
+
+# Voz propia de Nova (opcional, v3.2): Ayla (Nova) y Marina (guardian y videos). Solo si el equipo puede.
+$vozScript = "$geminiDir\antigravity\herramientas\voz_clon\instalar.ps1"
+$vramMb = 0
+$smi = (Get-Command nvidia-smi -ErrorAction SilentlyContinue).Source
+if ($smi) { try { $vramMb = [int](((& $smi --query-gpu=memory.total --format=csv,noheader,nounits) | Select-Object -First 1).Trim()) } catch {} }
+Write-Host ""
+if ((Test-Path $vozScript) -and $vramMb -ge 6000 -and $freeDiskGB -ge 12) {
+    Write-Host "[VOZ] Tu equipo puede usar la voz propia de Nova (Ayla) y del guardian (Marina), generadas en local (~9 GB)." -ForegroundColor Cyan
+    Write-Host "      Son voces de personas reales (espanolas) autorizadas SOLO para uso dentro de Nova (LICENCIA_VOCES.md, ley espanola)." -ForegroundColor Gray
+    Write-Host "      Prohibido extraerlas, clonarlas con otras herramientas, suplantar a sus titulares o el uso comercial: el mal uso puede acarrear acciones civiles y penales." -ForegroundColor Gray
+    $askVoz = Read-Host "Aceptas esa licencia e instalo la voz de Nova? (s/n) [n]"
+    if ($askVoz -and $askVoz.ToLower() -eq "s") { & powershell.exe -NoProfile -ExecutionPolicy Bypass -File $vozScript -Aceptado }
+} else {
+    Write-Host "[VOZ] Nova usara la voz de Windows (la voz propia necesita GPU NVIDIA con 6 GB y 12 GB libres)." -ForegroundColor Gray
 }
 
 # Claves opcionales (tipo 'iniciar sesion'): se guardan solo en este equipo

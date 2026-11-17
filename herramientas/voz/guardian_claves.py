@@ -8,7 +8,7 @@ Windows del usuario, para que el codigo la use con os.environ.get("NOMBRE"). En 
 Uso por terminal (Nova puede usarlo: nunca muestra valores):
     python guardian_claves.py lista                       -> nombres guardados y como terminan (...a1B)
     python guardian_claves.py renombrar CLAVE_1530 TRELLO_API_KEY
-    python guardian_claves.py borrar CLAVE_1112_141500        (solo si Alexander lo pide)
+    python guardian_claves.py borrar CLAVE_1112_141500        (solo si el usuario lo pide)
 """
 
 from __future__ import annotations
@@ -20,7 +20,7 @@ import sys
 import winreg
 from pathlib import Path
 
-VAULT = Path(os.environ.get("NOVA_VAULT_DIR", r"G:\Mi unidad\Antigravity\vault"))
+VAULT = Path(os.environ.get("NOVA_VAULT_DIR", str(Path.home() / ".gemini" / "antigravity" / "vault")))  # v3.2
 ARCHIVO = "google_cloud.env"
 RE_NOMBRE = re.compile(r"^[A-Z][A-Z0-9_]{2,60}$")
 

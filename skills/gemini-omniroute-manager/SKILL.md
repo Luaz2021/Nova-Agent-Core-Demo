@@ -8,7 +8,7 @@ description: "Optimizacion de cuotas y pools de tokens para maratones de codigo 
 Protocolo de gestión de costos para sesiones largas de programación (8 a 12 horas).
 
 ## 1. La Regla de Oro: "Primero lo Gratis, Reserva lo de Pago"
-Cuando Alexander diga:
+Cuando el usuario diga:
 - *"Nova, estaré 12 horas programando, activa OmniRoute"*
 - *"Modo maratón de código"*
 - *"Gasta lo gratis primero"*
@@ -26,7 +26,7 @@ El agente activa la estrategia de cascada (*Ladder Fallback*):
 
 ### Fase 3: Artillería Pesada Reservada (Claude Sonnet 5.5 / Opus / Argon)
 - **Bloqueado para tareas triviales**.
-- Solo se activa cuando Alexander pida explícitamente:
+- Solo se activa cuando el usuario pida explícitamente:
   - Diseño de arquitectura de microservicios compleja.
   - Refactorización de código crítico de producción.
   - Resolución de bugs imposibles que requieran razonamiento profundo.

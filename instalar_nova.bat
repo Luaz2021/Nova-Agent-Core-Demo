@@ -8,57 +8,36 @@ echo    Copiloto Tecnico Senior ^& Arquitectura de Software
 echo ==========================================================
 echo.
 
-REM 1. Comprobar si Antigravity ya esta instalado en el sistema
+REM 1. Antigravity: Nova NO lo instala (v3.2). Solo mira si esta y, si no, da el enlace oficial.
+REM    (Antes intentaba winget y un .exe con version fija: fallaba en muchos equipos y caducaba con cada version.)
 set "ANTIGRAVITY_FOUND=0"
 if exist "%LOCALAPPDATA%\Programs\antigravity\Antigravity.exe" set "ANTIGRAVITY_FOUND=1"
 if exist "%LOCALAPPDATA%\Programs\Antigravity IDE\Antigravity IDE.exe" set "ANTIGRAVITY_FOUND=1"
-
+if exist "%USERPROFILE%\.gemini\antigravity" set "ANTIGRAVITY_FOUND=1"
 where agy >nul 2>&1
 if !errorlevel! equ 0 set "ANTIGRAVITY_FOUND=1"
 
 if "!ANTIGRAVITY_FOUND!"=="1" (
     echo [OK] Google Antigravity detectado en el equipo.
-    goto :DESCARGAR_CORE
-)
-
-echo [AVISO] No se detecto Google Antigravity instalado en tu equipo.
-echo Antigravity es el entorno nativo de Google necesario para que Nova opere.
-echo.
-set /p INSTALAR_AGY="Deseas descargar e instalar Google Antigravity oficial ahora? (s/n) [s]: "
-if /i "!INSTALAR_AGY!"=="n" (
-    echo [!] Se continuara con la instalacion de skills y reglas, pero necesitaras
-    echo     instalar Antigravity manualmente desde: https://antigravity.google/
-    goto :DESCARGAR_CORE
-)
-
-echo.
-echo [INFO] Descargando e instalando Google Antigravity oficial...
-where winget >nul 2>&1
-if !errorlevel! equ 0 (
-    echo [INFO] Instalando mediante Windows Package Manager (winget)...
-    winget install Google.Antigravity --accept-source-agreements --accept-package-agreements
-    if !errorlevel! equ 0 (
-        echo [OK] Google Antigravity instalado correctamente con winget.
-        goto :DESCARGAR_CORE
-    )
-)
-
-echo [INFO] Descargando instalador directo oficial de Google Antigravity...
-set "TEMP_INSTALLER=%TEMP%\AntigravitySetup.exe"
-powershell -NoProfile -Command "Invoke-WebRequest -Uri 'https://storage.googleapis.com/antigravity-public/antigravity-hub/2.26.0-6546645232517120/windows-x64/Antigravity-x64.exe' -OutFile $env:TEMP_INSTALLER"
-if exist "%TEMP_INSTALLER%" (
-    echo [INFO] Ejecutando instalador de Google Antigravity...
-    start /wait "" "%TEMP_INSTALLER%"
-    echo [OK] Instalador finalizado.
 ) else (
-    echo [ERROR] No se pudo descargar automaticamente.
-    echo Por favor descargalo desde: https://antigravity.google/
+    echo [AVISO] No encuentro Google Antigravity en este equipo. Nova funciona DENTRO de Antigravity.
+    echo         1. Descargalo e instalalo desde la pagina oficial:  https://antigravity.google/
+    echo         2. Abrelo una vez, inicia sesion y cierralo.
+    echo         3. Vuelve a ejecutar este instalador.
+    echo.
+    set /p SEGUIR="Instalo Nova igualmente ahora (quedara lista para cuando tengas Antigravity)? (s/n) [s]: "
+    if /i "!SEGUIR!"=="n" (
+        echo Hasta luego. Cuando tengas Antigravity, vuelve a ejecutar este instalador.
+        pause
+        exit /b 0
+    )
 )
 
 :DESCARGAR_CORE
 set "INSTALL_SCRIPT=%~dp0adapters\windows\install.ps1"
 if exist "!INSTALL_SCRIPT!" goto :CONFIGURAR_NOVA
 
+if not defined NOVA_RAMA set "NOVA_RAMA=main"
 set "NOVA_ROOT=%USERPROFILE%\.nova-agent"
 set "NOVA_NUEVO=%USERPROFILE%\.nova-agent-nuevo"
 echo.
@@ -66,10 +45,10 @@ echo [INFO] Descargando nucleo de Nova Agent en !NOVA_ROOT!...
 if exist "!NOVA_NUEVO!" rmdir /s /q "!NOVA_NUEVO!"
 where git >nul 2>&1
 if !errorlevel! equ 0 (
-    git clone --depth 1 https://github.com/Luaz2021/Nova-Agent-Core-Demo.git "!NOVA_NUEVO!" >nul 2>&1
+    git clone --depth 1 -b !NOVA_RAMA! https://github.com/Luaz2021/Nova-Agent-Core-Demo.git "!NOVA_NUEVO!" >nul 2>&1
 ) else (
     echo [INFO] No hay git: descargo el ZIP oficial de GitHub...
-    powershell -NoProfile -Command "$ErrorActionPreference='Stop'; $zip = Join-Path $env:TEMP 'nova_core.zip'; $tmp = Join-Path $env:TEMP 'nova_core_zip'; if (Test-Path $tmp) { Remove-Item $tmp -Recurse -Force }; Invoke-WebRequest -Uri 'https://github.com/Luaz2021/Nova-Agent-Core-Demo/archive/refs/heads/main.zip' -OutFile $zip; Expand-Archive -Path $zip -DestinationPath $tmp -Force; Move-Item (Join-Path $tmp 'Nova-Agent-Core-Demo-main') $env:NOVA_NUEVO"
+    powershell -NoProfile -Command "$ErrorActionPreference='Stop'; $zip = Join-Path $env:TEMP 'nova_core.zip'; $tmp = Join-Path $env:TEMP 'nova_core_zip'; if (Test-Path $tmp) { Remove-Item $tmp -Recurse -Force }; Invoke-WebRequest -Uri 'https://github.com/Luaz2021/Nova-Agent-Core-Demo/archive/refs/heads/' + $env:NOVA_RAMA + '.zip' -OutFile $zip; Expand-Archive -Path $zip -DestinationPath $tmp -Force; Move-Item (Get-ChildItem $tmp -Directory | Select-Object -First 1).FullName $env:NOVA_NUEVO"
 )
 if not exist "!NOVA_NUEVO!\adapters\windows\install.ps1" (
     echo [ERROR] No se pudo descargar Nova ^(revisa tu conexion a internet o que GitHub este accesible^).

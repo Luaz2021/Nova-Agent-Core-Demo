@@ -95,7 +95,7 @@ def _language_server() -> tuple[str, list[int]] | None:
           "-ErrorAction SilentlyContinue).LocalPort }")
     try:
         out = subprocess.run(["powershell", "-NoProfile", "-c", ps], capture_output=True, text=True, timeout=15,
-                             creationflags=0x08000000).stdout
+                             creationflags=0x08000000 if os.name == "nt" else 0).stdout
     except (OSError, subprocess.SubprocessError):
         return None
     if "#PUERTOS#" not in out:

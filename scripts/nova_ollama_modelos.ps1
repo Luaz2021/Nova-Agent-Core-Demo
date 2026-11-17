@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
     Sincronizador y Gestor de Modelos Ollama para Nova (PC & Laptop) v2026.
     1. Purga primero los modelos locales obsoletos (v4, v1 y versiones previas).

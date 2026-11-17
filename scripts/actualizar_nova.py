@@ -51,13 +51,21 @@ def _get(ruta_relativa: str, timeout: int = 20) -> bytes | None:
             return (Path(REPO_RAW_URL[7:].lstrip("/") if os.name == "nt" else REPO_RAW_URL[7:]) / ruta).read_bytes()
         except OSError:
             return None
-    try:
-        req = urllib.request.Request(f"{REPO_RAW_URL}/{ruta}", headers={"User-Agent": "Nova-Agent-Updater"})
-        with urllib.request.urlopen(req, timeout=timeout) as resp:
-            if resp.status == 200:
-                return resp.read()
-    except Exception:
-        return None
+    import time
+    for intento in range(3):  # v3.2: fallos de red puntuales -> se reintenta aqui mismo (antes quedaba "para la proxima vez")
+        try:
+            req = urllib.request.Request(f"{REPO_RAW_URL}/{ruta}", headers={"User-Agent": "Nova-Agent-Updater"})
+            with urllib.request.urlopen(req, timeout=timeout) as resp:
+                if resp.status == 200:
+                    return resp.read()
+                if resp.status == 404:
+                    return None
+        except urllib.error.HTTPError as e:
+            if e.code == 404:
+                return None
+        except Exception:
+            pass
+        time.sleep(2 * (intento + 1))
     return None
 
 
@@ -78,6 +86,18 @@ def sha256_file(path: Path) -> str:
         return sha256_bytes(path.read_bytes())
     except OSError:
         return ""
+
+
+def sha256_file_lf(path: Path) -> str:
+    """v3.2: firma con saltos de linea LF (como la calcula el manifiesto). Antes los .ps1/.bat/.vbs, que en Windows
+    se guardan con CRLF, nunca coincidian y se volvian a bajar en CADA actualizacion."""
+    try:
+        datos = path.read_bytes()
+    except OSError:
+        return ""
+    if b"\0" not in datos[:8000]:
+        datos = datos.replace(b"\r\n", b"\n")
+    return sha256_bytes(datos)
 
 
 def leer_manifest_local() -> dict:
@@ -123,7 +143,7 @@ def comprobar(forzar: bool = False) -> tuple[dict | None, list]:
         existe = destino.exists()
         if preservar and existe:
             continue
-        if forzar or not existe or (esperado and sha256_file(destino) != esperado):
+        if forzar or not existe or (esperado and esperado not in (sha256_file(destino), sha256_file_lf(destino))):
             cambios.append((comp, rel, destino, esperado))
     return remoto, cambios
 
@@ -144,15 +164,18 @@ def respaldo_memoria(carpeta: Path) -> None:
 
 
 
+def doctor(*args: str) -> None:
+    """v3.2: el Nova Doctor multiplataforma repara lo que el parche solo no puede (enlaces viejos, carpeta rota
+    de la v3.1, librerias, hooks). Si aun no existe (primer parche), no pasa nada: llega en este mismo parche."""
+    script = ANTIGRAVITY / "scripts" / "nova_doctor.py"
+    if script.exists():
+        subprocess.run([sys.executable, str(script), "--reparar", *args], check=False)
+
+
 def reparar_arranque_windows() -> None:
     if os.name != 'nt':
         return
-    bad = GEMINI.parent / '.gemini ntigravity'
-    if bad.is_dir():
-        for sub in ('herramientas', 'clonador'):
-            if (bad / sub).is_dir():
-                shutil.copytree(bad / sub, ANTIGRAVITY / sub, dirs_exist_ok=True)
-        shutil.rmtree(bad, ignore_errors=True)
+    # (v3.2: la carpeta rota de la v3.1 la rescata ahora nova_doctor.py; aqui solo el arranque del guardian)
     vbs = ANTIGRAVITY / 'scripts' / 'start_session_guard.vbs'
     startup = Path(os.environ.get('APPDATA', '')) / 'Microsoft/Windows/Start Menu/Programs/Startup/Nova_SessionGuard.vbs'
     if vbs.is_file() and startup.parent.is_dir():
@@ -167,6 +190,7 @@ def registrar_hooks() -> None:
 
 
 def apply_update(forzar: bool = False) -> int:
+    doctor("--estructura")  # v3.2: ANTES de bajar: quita enlaces rotos y rescata la carpeta rota (si no, fallan las escrituras)
     remoto, cambios = comprobar(forzar)
     if remoto is None:
         print("[AVISO] No se pudo conectar con GitHub para buscar actualizaciones (revisa tu conexion).")
@@ -176,6 +200,7 @@ def apply_update(forzar: bool = False) -> int:
     if not cambios:
         LOCAL_MANIFEST.write_text(json.dumps(remoto, indent=2, ensure_ascii=False), encoding="utf-8")
         print(f"[OK] Ya tienes la version mas reciente de Nova Agent (v{ver_r}). No hay parches pendientes.")
+        doctor()  # v3.2: aunque no haya parche, se revisa y repara la instalacion
         return 0
 
     print("----------------------------------------------------------------------")
@@ -213,17 +238,32 @@ def apply_update(forzar: bool = False) -> int:
         if rel == "scripts/actualizar_nova.py":
             auto = True
 
+    a_medias = ANTIGRAVITY / "memory" / "actualizacion_a_medias.json"
     if not fallidos:
         LOCAL_MANIFEST.write_text(json.dumps(remoto, indent=2, ensure_ascii=False), encoding="utf-8")
+        a_medias.unlink(missing_ok=True)
+    else:  # v3.2: el hook de turno la termina SOLO en segundo plano (el usuario ya dijo que si)
+        try:
+            a_medias.parent.mkdir(parents=True, exist_ok=True)
+            a_medias.write_text(json.dumps({"fecha": datetime.datetime.now().strftime("%Y-%m-%d %H:%M"),
+                                            "pendientes": fallidos[:50]}), encoding="utf-8")
+        except OSError:
+            pass
     if hooks_tocados:
         registrar_hooks()
     reparar_arranque_windows()
+    if auto and not os.environ.get("NOVA_REEJECUTADO"):
+        # v3.2: el actualizador se actualizo a si mismo -> se vuelve a lanzar SOLO con la version nueva (una vez)
+        print("[INFO] El actualizador se actualizo a si mismo: sigo con la version nueva...")
+        os.environ["NOVA_REEJECUTADO"] = "1"
+        return subprocess.run([sys.executable, str(Path(__file__).resolve()), *sys.argv[1:]], check=False).returncode
+    doctor()  # v3.2: revision y reparacion completa despues del parche
 
     print(f"[OK] Parche v{ver_r} aplicado: {escritos} archivos actualizados.")
     if nuevas_skills:
         print(f"[INFO] Nuevas skills ({len(nuevas_skills)}): {', '.join(nuevas_skills[:6])}")
     if fallidos:
-        print(f"[AVISO] {len(fallidos)} archivos no se pudieron traer (se reintentara la proxima vez):")
+        print(f"[AVISO] {len(fallidos)} archivos no se pudieron traer: Nova lo reintentara sola en segundo plano:")
         for f in fallidos[:10]:
             print(f"   - {f}")
     if hooks_tocados:
@@ -236,6 +276,13 @@ def apply_update(forzar: bool = False) -> int:
 
 def check_updates() -> int:
     remoto, cambios = comprobar()
+    try:  # v3.2: el hook de turno lo lee y Nova ofrece la actualizacion en el chat
+        (ANTIGRAVITY / "memory").mkdir(parents=True, exist_ok=True)
+        (ANTIGRAVITY / "memory" / "actualizacion_disponible.json").write_text(json.dumps({
+            "fecha": datetime.datetime.now().strftime("%Y-%m-%d %H:%M"), "hay": bool(remoto and cambios),
+            "version": (remoto or {}).get("Version", ""), "archivos": len(cambios)}), encoding="utf-8")
+    except OSError:
+        pass
     if remoto is None:
         print("[AVISO] No se pudo conectar con GitHub para buscar actualizaciones (revisa tu conexion).")
         return 1

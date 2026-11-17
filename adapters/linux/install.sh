@@ -158,15 +158,15 @@ with open(ruta, "w", encoding="utf-8") as f:
     json.dump(perfil, f, indent=2, ensure_ascii=False)
 PYEOF
 
-# Skills: enlaces al repositorio (si no se puede enlazar, copia)
+# Skills: COPIA REAL (v3.2; antes enlaces al repo: si se borraba la carpeta descargada, las skills quedaban rotas)
 for skill_path in "$REPO_ROOT/skills"/*; do
     if [ -d "$skill_path" ]; then
         skill_name="$(basename "$skill_path")"
         for target_skills_dir in "$GEMINI_DIR/skills" "$CONFIG_DIR/skills"; do
             dest_link="$target_skills_dir/$skill_name"
-            if [ ! -e "$dest_link" ]; then
-                ln -s "$skill_path" "$dest_link" 2>/dev/null || cp -R "$skill_path" "$dest_link"
-            fi
+            [ -L "$dest_link" ] && rm -f "$dest_link"   # enlace viejo -> fuera (no toca su destino)
+            mkdir -p "$dest_link"
+            cp -R "$skill_path/." "$dest_link/"
         done
     fi
 done
@@ -196,33 +196,60 @@ rm -f "$GEMINI_HOME/GEMINI.md"
 if [ -f "$REPO_ROOT/AYUDA.md" ]; then cp "$REPO_ROOT/AYUDA.md" "$CONFIG_DIR/AYUDA.md"; fi
 
 
-# Entorno Python propio (~/.gemini/nova_env) para paridad con Windows
+# Entorno Python propio (~/.gemini/nova_env) para paridad con Windows (v3.2: antes este bloque estaba 3 veces y
+# NUNCA instalaba las librerias: redactar, adjuntos, voz... fallaban en Mac/Linux por falta de modulos)
 if [ ! -x "$GEMINI_HOME/nova_env/bin/python" ]; then
-    "$PY" -m venv "$GEMINI_HOME/nova_env" 2>/dev/null && touch "$GEMINI_HOME/nova_env/.huella_nova" || true
+    "$PY" -m venv "$GEMINI_HOME/nova_env" 2>/dev/null || echo "[AVISO] No pude crear ~/.gemini/nova_env (en Debian/Ubuntu: sudo apt install python3-venv)."
 fi
-if [ -x "$GEMINI_HOME/nova_env/bin/python" ]; then PY="$GEMINI_HOME/nova_env/bin/python"; fi
-
-
-# Entorno Python propio (~/.gemini/nova_env) para paridad con Windows
-if [ ! -x "$GEMINI_HOME/nova_env/bin/python" ]; then
-    "$PY" -m venv "$GEMINI_HOME/nova_env" 2>/dev/null && touch "$GEMINI_HOME/nova_env/.huella_nova" || true
+if [ -x "$GEMINI_HOME/nova_env/bin/python" ]; then
+    PY="$GEMINI_HOME/nova_env/bin/python"
+    echo "[INFO] Instalando las librerias de Nova en su Python propio (puede tardar unos minutos)..."
+    "$PY" -m pip install --upgrade pip >/dev/null 2>&1 || true
+    if "$PY" -m pip install -r "$GEMINI_HOME/nova_core/requisitos_nova.txt" >/dev/null 2>&1; then
+        echo "[OK] Librerias de Nova instaladas."
+    else
+        # versiones fijadas para Windows/Python 3.14: si alguna no existe aqui, se instalan una a una sin version
+        echo "[AVISO] Algunas versiones no existen en este sistema: instalo las librerias una a una..."
+        grep -v '^[[:space:]]*#' "$GEMINI_HOME/nova_core/requisitos_nova.txt" | sed 's/[=<>].*//' | while read -r lib; do
+            [ -n "$lib" ] && { "$PY" -m pip install "$lib" >/dev/null 2>&1 || echo "        - no se pudo instalar $lib (esa funcion no ira)"; }
+        done
+    fi
+    "$PY" -c 'import sys; open(sys.argv[1], "w").write("mac-linux")' "$GEMINI_HOME/nova_env/.huella_nova" 2>/dev/null || true
 fi
-if [ -x "$GEMINI_HOME/nova_env/bin/python" ]; then PY="$GEMINI_HOME/nova_env/bin/python"; fi
-
-
-# Entorno Python propio (~/.gemini/nova_env) para paridad con Windows
-if [ ! -x "$GEMINI_HOME/nova_env/bin/python" ]; then
-    "$PY" -m venv "$GEMINI_HOME/nova_env" 2>/dev/null && touch "$GEMINI_HOME/nova_env/.huella_nova" || true
-fi
-if [ -x "$GEMINI_HOME/nova_env/bin/python" ]; then PY="$GEMINI_HOME/nova_env/bin/python"; fi
 
 # Reglas automaticas (hooks): el sistema vigila las leyes, no el modelo
 "$PY" "$GEMINI_HOME/nova_core/instalar_hooks.py" || echo "[AVISO] No se pudieron registrar los hooks (Nova funciona igual)."
+
+# v3.2: Nova Doctor (revisa y repara: carpetas, enlaces viejos, librerias, hooks, navegador)
+"$PY" "$GEMINI_DIR/scripts/nova_doctor.py" --reparar || true
 
 # ---------------------------------------------------------------- 3. IA local (opcional)
 if [ "$quiereIA" = "true" ]; then
     "$PY" "$GEMINI_DIR/scripts/nova_instalar_ia_local.py" --perfil "$hwTier" < /dev/tty || \
         echo "[AVISO] La IA local no quedo lista. Repitelo cuando quieras: \"$PY\" \"$GEMINI_DIR/scripts/nova_instalar_ia_local.py\""
+fi
+
+# ---------------------------------------------------------------- 3b. Voz propia de Nova (opcional)
+VOZ_SH="$GEMINI_DIR/herramientas/voz_clon/instalar.sh"
+puedeVoz=""
+if [ "$SO" = "macOS" ] && [ "$(uname -m)" = "arm64" ] && [ "$ramGB" -ge 8 ]; then
+    puedeVoz="chip Apple, ~2 GB, experimental"
+elif command -v nvidia-smi >/dev/null 2>&1; then
+    vramVoz="$(nvidia-smi --query-gpu=memory.total --format=csv,noheader,nounits 2>/dev/null | head -n 1 | tr -d ' ')"
+    [ -n "$vramVoz" ] && [ "$vramVoz" -ge 6000 ] && [ "$freeDiskGB" -ge 12 ] && puedeVoz="GPU NVIDIA, ~9 GB"
+fi
+echo ""
+if [ -n "$puedeVoz" ] && [ -f "$VOZ_SH" ]; then
+    echo "[VOZ] Tu equipo puede usar la voz propia de Nova (Ayla) y del guardian (Marina), generadas en local ($puedeVoz)."
+    echo "      Son voces de personas reales (espanolas) autorizadas SOLO para uso dentro de Nova (LICENCIA_VOCES.md, ley espanola)."
+    echo "      Prohibido extraerlas, clonarlas con otras herramientas, suplantar a sus titulares o el uso comercial: el mal uso puede acarrear acciones civiles y penales."
+    printf "Aceptas esa licencia e instalo la voz de Nova? (s/n) [n]: "
+    read -r askVoz || askVoz=""
+    if [ "$askVoz" = "s" ] || [ "$askVoz" = "S" ]; then
+        sh "$VOZ_SH" --aceptado < /dev/tty || echo "[AVISO] La voz no quedo lista: Nova usara la voz del sistema."
+    fi
+else
+    echo "[VOZ] Nova usara la voz del sistema (la voz propia necesita un Mac con chip Apple o una GPU NVIDIA)."
 fi
 
 # ---------------------------------------------------------------- 4. Claves opcionales (tipo "iniciar sesion")

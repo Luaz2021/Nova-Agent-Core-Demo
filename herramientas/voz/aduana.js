@@ -1,5 +1,5 @@
 // NOVA · ADUANA DE ADJUNTOS dentro de Antigravity (la inyecta nova_voz.py por CDP, igual que la mascota). 09/11/2026, Claude.
-// Lo que Alexander pega, arrastra o elige con el boton de adjuntar (PDF, imagenes, Word, Excel...) NO entra al chat:
+// Lo que el usuario pega, arrastra o elige con el boton de adjuntar (PDF, imagenes, Word, Excel...) NO entra al chat:
 // se le pasa a Python (binding novaAduana), que lo guarda en temporal\ y lo lee EN LOCAL (InternVL / destilador).
 // En el chat aparece "[adjunto local: <archivo>]" y el hook de turno le da a Nova el texto ya leido -> 0 tokens de nube.
 // - Manteniendo SHIFT al pegar/soltar/elegir, pasa como siempre (por si Gemini tiene que ver el original).

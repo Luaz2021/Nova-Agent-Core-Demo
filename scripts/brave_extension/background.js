@@ -2,11 +2,11 @@
 // Mantiene el WebSocket con el puente local de Nova y enruta los comandos.
 // Las acciones de navegador (pestañas, capturas) se resuelven aqui; las de pagina van al content script.
 // v4: CLICK, TYPE, PRESS_KEY, HOVER, CLICK_AT y UPLOAD_FILE usan RATON Y TECLADO REALES (chrome.debugger -> CDP Input.*),
-//     como si fuera Alexander: las webs no los distinguen de una persona, llegan a iframes y permiten subir archivos.
+//     como si fuera el usuario: las webs no los distinguen de una persona, llegan a iframes y permiten subir archivos.
 //     Brave muestra la barra "esta depurando este navegador" solo mientras Nova actua (se suelta a los 8 s).
 //     args.real === false -> modo simulado de la v3 (por si una web va mejor asi).
 // Pagos: bloqueados salvo PASE DE PAGO de un solo uso (10 min) que solo llega desde el puente (/pase_pago con la
-//     clave secreta que solo tiene el hook de Alexander). Campos de contraseña y de tarjeta: bloqueo fijo.
+//     clave secreta que solo tiene el hook del usuario). Campos de contraseña y de tarjeta: bloqueo fijo.
 
 const WS_URL = "ws://127.0.0.1:5005/ws";
 const VERSION = chrome.runtime.getManifest().version;
@@ -223,7 +223,7 @@ function sendToTab(tabId, msg) {
 }
 
 // ---------------------------------------------------------------------------
-// v4 · Pase de pago (un solo uso, lo concede Alexander via hook -> puente)
+// v4 · Pase de pago (un solo uso, lo concede el usuario via hook -> puente)
 // ---------------------------------------------------------------------------
 let pase = null; // { hasta: ms, motivo }
 function paseActivo() {
@@ -510,7 +510,7 @@ async function handleCommand(msg) {
       case "GRANT_PAYMENT_PASS": {
         const min = Math.min(Math.max(Number(args.minutes) || 10, 1), 30);
         pase = { hasta: Date.now() + min * 60000, motivo: String(args.motivo || "").slice(0, 200) };
-        console.log("[Nova] Pase de pago concedido por Alexander:", min, "min ·", pase.motivo);
+        console.log("[Nova] Pase de pago concedido por el usuario:", min, "min ·", pase.motivo);
         return { ok: true, data: { pase: `activo ${min} min, un solo pago` } };
       }
 

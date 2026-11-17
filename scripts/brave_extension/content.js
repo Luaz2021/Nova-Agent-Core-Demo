@@ -2,7 +2,7 @@
 // Modelo PULL: no envia nada por su cuenta, solo responde a comandos.
 // Reglas fijas (no configurables desde Nova): no escribe en campos de contraseña ni de tarjeta.
 // Botones de compra/pago y paginas de checkout: bloqueados SALVO que el service worker mande _permitirPago,
-// que solo existe si Alexander dio un permiso de pago de un solo uso (hook -> puente /pase_pago -> extension).
+// que solo existe si el usuario dio un permiso de pago de un solo uso (hook -> puente /pase_pago -> extension).
 // v4: LOCATE devuelve donde esta el elemento para que el service worker haga un clic/tecleo REAL (chrome.debugger).
 
 (function () {
@@ -22,10 +22,10 @@
     return String(s || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/\s+/g, " ").trim();
   }
 
-  // kind "payment": se puede desbloquear con el permiso de un solo uso de Alexander. Sin kind: bloqueo fijo.
+  // kind "payment": se puede desbloquear con el permiso de un solo uso del usuario. Sin kind: bloqueo fijo.
   function humanRequired(reason, kind) {
-    const extra = kind === "payment" ? " Si Alexander quiere que lo hagas tu, tiene que decirte 'autorizo el pago' (vale para un solo pago)." : "";
-    return { ok: false, code: "HUMAN_REQUIRED", kind: kind || "fixed", error: `Bloqueado: ${reason}. Esta accion debe hacerla Alexander manualmente.${extra}` };
+    const extra = kind === "payment" ? " Si el usuario quiere que lo hagas tu, tiene que decirte 'autorizo el pago' (vale para un solo pago)." : "";
+    return { ok: false, code: "HUMAN_REQUIRED", kind: kind || "fixed", error: `Bloqueado: ${reason}. Esta accion debe hacerla el usuario manualmente.${extra}` };
   }
 
   function isPaymentPage() {
@@ -300,7 +300,7 @@
     el.click();
   }
 
-  // _permitirPago solo lo pone el service worker cuando Alexander dio un permiso de pago (una web no puede mandarlo:
+  // _permitirPago solo lo pone el service worker cuando el usuario dio un permiso de pago (una web no puede mandarlo:
   // los mensajes a este content script solo pueden venir de la propia extension).
   const permitido = (args) => args && args._permitirPago === true;
 
@@ -312,8 +312,8 @@
     if (!el) return notFound(args);
     if (proposito === "type") {
       const kind = sensitiveKind(el);
-      if (kind === "password") return humanRequired("campo de contraseña (las rellena Alexander o el autocompletado de Brave)");
-      if (kind === "payment") return humanRequired("campo de tarjeta o cuenta bancaria (los datos de pago los pone Alexander)");
+      if (kind === "password") return humanRequired("campo de contraseña (las rellena el usuario o el autocompletado de Brave)");
+      if (kind === "payment") return humanRequired("campo de tarjeta o cuenta bancaria (los datos de pago los pone el usuario)");
     }
     const pago = isPaymentPage();
     const activa = proposito === "click" || proposito === "enter";

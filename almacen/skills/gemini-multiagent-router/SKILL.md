@@ -55,4 +55,4 @@ Cuando una tarea presenta errores, tests en rojo o bloqueos técnicos, el Router
 4. **Capa 4 — Claude Sonnet / Opus (El Chivo Expiatorio · Tribunal Supremo):**
    - Solo se activa si las capas anteriores se dan contra una pared tras 3 intentos combinados.
    - **Acción del Router:** Bloqueo total de terminales, redacción de la "Servilleta de Rescate" (`memory\ultimo_contexto_puente.md`) con las hipótesis descartadas y notificación para cambio de selector en Antigravity.
-   - Claude entra con ojos frescos y rinde cuentas con la consigna: *"Alexander, Nova me pasó la batuta con este error..."*.
+   - Claude entra con ojos frescos y rinde cuentas con la consigna: *"el usuario, Nova me pasó la batuta con este error..."*.

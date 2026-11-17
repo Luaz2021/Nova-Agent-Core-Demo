@@ -1,7 +1,7 @@
 """Documentos de DATOS: presupuesto (lo emites tu) y solicitud de presupuesto (se la pides a un proveedor).
 
 Aqui no escribe la IA: todo sale del guion y las cuentas las hace el codigo. Lo que falte sale como [PENDIENTE: ...]
-para que Nova se lo pida a Alexander en vez de inventarlo.
+para que Nova se lo pida al usuario en vez de inventarlo.
 """
 
 from decimal import Decimal

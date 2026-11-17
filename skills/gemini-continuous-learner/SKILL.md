@@ -61,6 +61,6 @@ Cada aprendizaje se documenta de forma concisa y accionable:
 ## 4. Evolución de Skills y Reglas (`/learn`)
 
 Cuando una preferencia o corrección se repita más de 2 veces o sea fundamental:
-1. El agente propondrá al usuario actualizar directamente la skill afectada en `<NOVA_HOME>ntigravitylmacen\skills\` o el archivo de reglas global `GEMINI.md`.
+1. El agente propondrá al usuario actualizar directamente la skill afectada en `<NOVA_HOME>\antigravity\almacen\skills\` o el archivo de reglas global `GEMINI.md`.
 2. Si el usuario dice *"Aprende esto"* o utiliza el comando `/learn`, el agente registrará de inmediato el nuevo principio en su memoria permanente.
 

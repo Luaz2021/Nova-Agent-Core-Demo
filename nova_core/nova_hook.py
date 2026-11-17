@@ -1,4 +1,4 @@
-﻿"""
+"""
 NOVA HOOK - Antigravity llama a este script ANTES de cada herramienta del agente (PreToolUse, ~/.gemini/config/hooks.json)
 
 Por que: las leyes de GEMINI.md son texto y Flash se las salta (07/11: la nube pico las webs con write_file aunque la
@@ -12,11 +12,11 @@ Modos (nova_hooks_config.json, junto a este archivo):
        - leer dentro de node_modules / .git / dist / build / .next / __pycache__
        - leer de golpe archivos enormes (> MAX_KB) o documentos/datos (.pdf .docx .xlsx .pptx .ipynb .jsonl .parquet...)
          -> usar resumir.py / conversor.py, o buscar con grep/rg
-     force_ask (Antigravity se lo pregunta a Alexander siempre):
+     force_ask (Antigravity se lo pregunta al usuario siempre):
        - la nube escribiendo mas de MAX_LINEAS de codigo (el codigo nuevo lo pica Qwen con nova_tarea.py)
        - comandos destructivos (borrados recursivos, git push --force, git reset --hard, DROP TABLE, formatear...)
        - FRENO DE GASTO: la conversacion pasa de cada TOPE_TOKENS (1M, 2M, 3M...) -> pregunta una vez por tope
-       - mas de MAX_SEGUIDAS herramientas encadenadas sin que Alexander escriba -> pregunta una vez cada bloque
+       - mas de MAX_SEGUIDAS herramientas encadenadas sin que el usuario escriba -> pregunta una vez cada bloque
 Siempre: si algo falla dentro del hook, responde "allow" (un hook roto no puede dejar a Nova sin trabajar) y lo apunta.
 
 Formato (docs de Antigravity): entra por stdin un JSON con toolCall.name, toolCall.args y transcriptPath; sale por
@@ -26,6 +26,7 @@ stdout {"decision": "allow" | "deny" | "force_ask", "reason": "..."}.
 from __future__ import annotations
 
 import json
+import os
 import re
 import sys
 import time
@@ -56,7 +57,8 @@ PROTEGIDAS = (
 # 11/11 (Claude): el codigo oficial de Nova. Nova no lo edita con sus herramientas de archivos (en el PC lo parcheaba
 # "para arreglar" y dejaba restos). Si algo falla -> nova_doctor.ps1. Por terminal se sigue pudiendo EJECUTAR.
 _RAIZ_NOVA = str(Path.home() / ".gemini" / "antigravity").lower()
-CODIGO_OFICIAL = (_RAIZ_NOVA + "\\scripts\\", _RAIZ_NOVA + "\\herramientas\\")
+# v3.2: os.sep (antes "\\" fijo: en macOS/Linux ninguna proteccion de rutas funcionaba)
+CODIGO_OFICIAL = (_RAIZ_NOVA + os.sep + "scripts" + os.sep, _RAIZ_NOVA + os.sep + "herramientas" + os.sep)
 # Copiar a mano desde Drive (en el PC Nova copio carpetas enteras saltandose el sync y dejo duplicados)
 RE_COPIA_DE_DRIVE = re.compile(
     r"(?i)\b(Copy-Item|copy|xcopy|robocopy|cp|Move-Item|move|mv|Expand-Archive)\b.*"
@@ -69,8 +71,8 @@ RE_VENV_PROYECTO = re.compile(
 )
 _GEM = str(Path.home() / ".gemini").lower()
 PROTEGIDAS_RUTAS = (
-    _GEM + "\\config",
-)  # reglas y skills de Nova: solo las cambian Claude o Alexander
+    _GEM + os.sep + "config",
+)  # reglas y skills de Nova: solo las cambian Claude o el usuario
 # Secretos: ni se leen ni se muestran en la nube (los scripts que los necesitan los leen solos, en local)
 RE_SECRETO = re.compile(
     r"(?i)(^|[\\/])vault([\\/]|$)|(^|[\\/])\.env(\.(?!example\b|sample\b|template\b)[\w.-]+)?$|(^|[\\/])\.env(?=[\s'\"]|$)"
@@ -87,7 +89,7 @@ RE_CMD_ESCRIBE = re.compile(
 )
 MARCA_PROTEGIDO = ".nova_protegido"
 # 12/11 (Claude): Nova escribio la clave de Gamma a mano en scripts de scratch. Las claves SOLO viven en el cofre
-# (vault\secrets.json, lo rellena Alexander) y el codigo las lee en local (os.environ / el cofre). Formas conocidas:
+# (vault\secrets.json, lo rellena el usuario) y el codigo las lee en local (os.environ / el cofre). Formas conocidas:
 RE_CLAVE_API = re.compile(
     r"\bsk-(?:gamma-|ant-|proj-)?[A-Za-z0-9_-]{20,}"  # Gamma, Anthropic, OpenAI
     r"|\bsk_[a-f0-9]{32,}"  # ElevenLabs
@@ -103,9 +105,9 @@ RE_CLAVE_API = re.compile(
 )
 MSG_CLAVE = (
     "Las CLAVES DE API no se escriben en codigo, comandos ni documentos: viven SOLO en el cofre "
-    "(G:\\Mi unidad\\Antigravity\\vault\\secrets.json), que rellena Alexander. En el codigo leela en local: "
-    'os.environ.get("NOMBRE_API_KEY") (las carga nova_vault_sync.ps1) o el cofre con json. Si falta una clave, '
-    "pidele a Alexander que la anada al cofre; no la pegues tu."
+    "(<NOVA_HOME>/config/secrets.env), que rellena el usuario con nova_claves.py. En el codigo leela en local: "
+    'os.environ.get("NOMBRE_API_KEY") o el cofre. Si falta una clave, '
+    "pidele al usuario que la anada (nova_claves.py); no la pegues tu."
 )
 
 
@@ -169,7 +171,7 @@ def _python_del_equipo() -> str:
 PYTHON_NOVA = _python_del_equipo()
 # "python x.py", "py -3 ...", "cmd /c python ...", "& python ..." (no cuenta si ya va con ruta: ...\python.exe)
 # ruta de un programa (.exe/.ps1/.bat/.cmd/.py) CON espacios y SIN comillas al empezar el comando (o tras ; | &&)
-# (el espacio tiene que estar DENTRO de una carpeta, "...\Alexander Martinez\...", no entre el programa y sus argumentos)
+# (el espacio tiene que estar DENTRO de una carpeta, "...\Ana Maria\...", no entre el programa y sus argumentos)
 RE_RUTA_ESPACIO_SIN_COMILLAS = re.compile(
     r"(?i)(^|[;|]\s*|&&\s*)[a-z]:\\(?:[^\"'\\\r\n;|]+\\)*?[^\"'\\\r\n;|]* [^\"'\\\r\n;|]*\\"
     r"(?:[^\"'\\\r\n;|]+\\)*[^\"'\\\s;|]+\.(exe|ps1|bat|cmd|py)\b"
@@ -207,7 +209,7 @@ RE_DOC_EN_SCRATCH = re.compile(
 MAX_LINEAS = 150  # linea dulce 08/11: hasta 150 lineas las escribe Nova; mas, Qwen por secciones (nova_secciones.py)
 MAX_KB = 200
 TOPE_TOKENS = 300_000  # 09/11: tokens REALES (cache al 10 %); antes 1M contando la cache entera (~200k reales)
-TOPE_CONTEXTO = 100_000  # regla de Alexander: contexto de la ventana > 100k -> /compact
+TOPE_CONTEXTO = 100_000  # regla del usuario: contexto de la ventana > 100k -> /compact
 MAX_SEGUIDAS = 25
 CARPETAS_BASURA = {
     "node_modules",
@@ -347,10 +349,24 @@ def lineas_nuevas(args: dict) -> int:
     return total
 
 
+def carpeta_sync_nube(r: str) -> bool:
+    """v3.2: la carpeta de Nova Sync en Google Drive SOLO la toca nova_sync.py (blindaje: solo Subir escribe en Drive)."""
+    try:
+        cfg = json.loads((Path.home() / ".gemini" / "config" / "nova_sync.json").read_text(encoding="utf-8"))
+        nube = str(Path(cfg.get("carpeta", ""))).lower()
+    except (OSError, ValueError):
+        return False
+    return bool(nube) and str(Path(r)).lower().startswith(nube)
+
+
 def protegida(ruta: str) -> bool:
     if not ruta:
         return False
     p = Path(ruta)
+    if carpeta_sync_nube(ruta):
+        return True
+    if "nova_voz_clon" in str(p).lower() or "voz_clon" in [x.lower() for x in p.parts]:
+        return True  # v3.2: pack de voz (voces con licencia propia y su aceptacion): Nova no lo toca a mano
     if str(p).lower().startswith(_GEM) and any(parte.lower() in PROTEGIDAS for parte in p.parts):
         return True
     if str(p).lower().startswith(PROTEGIDAS_RUTAS):
@@ -363,7 +379,7 @@ PRECIO_CACHE = 0.10  # 09/11: Gemini cobra la entrada leida de cache con un 90 %
 
 def gasto(transcript: str) -> tuple[int, int, int, dict]:
     """(tokens REALES de la conversacion = nuevos + cache al 10 % + salida, herramientas seguidas desde el ultimo
-    mensaje de Alexander, tamano del contexto en la ultima llamada, desglose {nuevos, cache, salida, bruto})."""
+    mensaje del usuario, tamano del contexto en la ultima llamada, desglose {nuevos, cache, salida, bruto})."""
     nuevos = cache = salida = 0
     seguidas, contexto = 0, 0
     try:
@@ -402,7 +418,7 @@ def gasto(transcript: str) -> tuple[int, int, int, dict]:
 # Orden de Nova (08/11): dentro de .gemini\antigravity, los ARCHIVOS NUEVOS solo se crean en estas carpetas.
 ANTIGRAVITY = (Path.home() / ".gemini" / "antigravity").resolve()
 CARPETAS_PERMITIDAS = {
-    "scratch": "herramientas o scripts nuevos (pasan por inspeccion de Alexander y Claude)",
+    "scratch": "herramientas o scripts nuevos (pasan por inspeccion del usuario y Claude)",
     "documentos_generados": "todo documento, imagen o txt que genere Nova (por proyecto: documentos_generados\\<proyecto>\\)",
     "proyectos": "ideas (_ideas\\<nombre>.md) y conocimiento de cada proyecto (README.md, docs\\)",
     "temporal": "adjuntos del chat (lo gestiona el puente)",
@@ -448,7 +464,7 @@ EXT_WEB = {
 }
 AUTORIZA_CODIGO = (
     AQUI / ".autoriza_codigo.json"
-)  # lo escribe nova_hook_turno.py con cada mensaje de Alexander
+)  # lo escribe nova_hook_turno.py con cada mensaje del usuario
 NOVA_TAREA = str(Path.home() / ".gemini" / "antigravity" / "scripts" / "nova_tarea.py")
 
 
@@ -461,13 +477,13 @@ def regla_contenido(nombre: str, args: dict, conv: str = "") -> tuple[str, str]:
     ruta = ruta_de(args)
     p = Path(ruta) if ruta else None
     comando = str(args.get("CommandLine") or args.get("command") or "")
-    # 09/11 (Claude): el permiso de pago de Brave solo lo da Alexander. Nova no lee la clave ni llama a /pase_pago.
+    # 09/11 (Claude): el permiso de pago de Brave solo lo da el usuario. Nova no lee la clave ni llama a /pase_pago.
     if re.search(
         r"(?i)pase_pago|GRANT_PAYMENT_PASS|_permitirPago|\.clave\b|nova_core[\\/]+\.[\w*?]|nova_core[\\/]+\*",
         ruta + " " + comando + " " + json.dumps(args, ensure_ascii=False),
     ):
         return "deny", (
-            "El permiso de pago de Brave solo lo da Alexander escribiendo 'autorizo el pago'. Nova no toca esa "
+            "El permiso de pago de Brave solo lo da el usuario escribiendo 'autorizo el pago'. Nova no toca esa "
             "clave ni llama a /pase_pago."
         )
     if lleva_clave(nombre, args, comando):
@@ -495,10 +511,42 @@ def regla_contenido(nombre: str, args: dict, conv: str = "") -> tuple[str, str]:
     # 11/11 (Claude) BLINDAJE: cuando algo falla Nova no improvisa arreglos en el equipo.
     if cmd_limpio and RE_COPIA_DE_DRIVE.search(cmd_limpio):
         return "deny", (
-            "No copies nada de Drive a mano: Drive llega a este equipo SOLO con el sync "
-            "(<PYTHON> <NOVA_HOME>\\antigravity\\scripts\\nova_sync_pedir.py Bajar). Si falta algo despues del "
-            "sync, ejecuta el Doctor (powershell -ExecutionPolicy Bypass -File "
-            '"<NOVA_HOME>\\antigravity\\scripts\\nova_doctor.ps1") y cuentale a Alexander su ultima linea.'
+            "No copies archivos de Nova a mano desde otra carpeta o nube: las mejoras llegan con /actualizar-nova. "
+            "Si falta algo, ejecuta el Doctor (<PYTHON> \"<NOVA_HOME>/antigravity/scripts/nova_doctor.py\" --reparar) "
+            "y cuentale al usuario su ultima linea."
+        )
+    # v3.2 Nova Sync: los borrados masivos (--forzar) y desconectar los decide el usuario en una terminal, no Nova
+    if cmd_limpio and re.search(r"(?i)nova_sync(_pedir)?\.py\b.*(--forzar|\bdesconectar\b)", cmd_limpio):
+        return "deny", (
+            "Forzar borrados masivos o desconectar Nova Sync lo decide el usuario: dile que lo ejecute el en una "
+            "terminal si de verdad lo quiere. Tu usa nova_sync_pedir.py bajar|subir|espejo|estado|configurar."
+        )
+    # v3.2 Pack de voz: la licencia de las voces (LICENCIA_VOCES.md) la acepta el USUARIO, nunca Nova por el
+    consentido = False
+    try:  # el usuario escribio "acepto la licencia de las voces" hace menos de 30 min (lo apunta nova_hook_turno.py)
+        consentido = time.time() - json.loads((AQUI / ".voces_licencia_usuario.json").read_text(encoding="utf-8"))["fecha"] < 1800
+    except (OSError, ValueError, KeyError):
+        pass
+    if cmd_limpio and (
+        re.search(r"(?i)\bACEPTO\b", cmd_limpio) and re.search(r"(?i)voz_clon|instalar\.(ps1|sh)", cmd_limpio)
+        or re.search(r"(?i)-{1,2}aceptado\b", cmd_limpio) and re.search(r"(?i)voz_clon", cmd_limpio) and not consentido
+        or re.search(r"(?i)licencia_voces_aceptada", cmd_limpio)
+    ):
+        return "deny", (
+            "La licencia de las voces Ayla y Marina la acepta el usuario en persona: ensenale el resumen de LICENCIA_VOCES.md "
+            "y pidele que escriba en el chat 'acepto la licencia de las voces'. Entonces podras instalar el pack."
+        )
+    # G2b (17/11): "& ...\\instalar.ps1" lo bloquea la Execution Policy de Windows -> el comando EXACTO
+    if (
+        cmd_limpio
+        and re.search(r"(?i)voz_clon[\\/]+instalar\.ps1", cmd_limpio)
+        and not re.search(r"(?i)-(ExecutionPolicy|ep)\s+Bypass", cmd_limpio)
+    ):
+        return "deny", (
+            "En Windows el instalador de la voz se lanza SIEMPRE asi (si no, Windows lo bloquea): powershell "
+            "-ExecutionPolicy Bypass -File \"<NOVA_HOME>\\antigravity\\herramientas\\voz_clon\\instalar.ps1\" -Aceptado "
+            "(-Aceptado solo si el usuario escribio 'acepto la licencia de las voces'). Si se lo das al usuario, dale "
+            "ese comando exacto, nunca '& instalar.ps1'."
         )
     if (
         cmd_limpio
@@ -507,21 +555,21 @@ def regla_contenido(nombre: str, args: dict, conv: str = "") -> tuple[str, str]:
     ):
         return "deny", (
             "Las librerias de Nova las instala el Doctor en su Python propio (nova_core\\requisitos_nova.txt), "
-            "no tu con pip. Ejecuta el Doctor (powershell -ExecutionPolicy Bypass -File "
-            '"<NOVA_HOME>\\antigravity\\scripts\\nova_doctor.ps1"); si falta una libreria nueva, diselo a '
-            "Alexander para que Claude la anada a la lista. Para un PROYECTO usa su propio .venv."
+            "no tu con pip. Ejecuta el Doctor (<PYTHON> \"<NOVA_HOME>/antigravity/scripts/nova_doctor.py\" --reparar); "
+            "si falta una libreria nueva, diselo a "
+            "el usuario para que lo reporte con /reportar-fallo. Para un PROYECTO usa su propio .venv."
         )
     # 09/11 Ley 5 vigilada: nada "en caliente". Editar un proyecto con git estando en la rama principal -> que Nova
-    # cree antes una rama de pruebas (git switch -c nova/<arreglo>) o que Alexander lo confirme con un clic.
+    # cree antes una rama de pruebas (git switch -c nova/<arreglo>) o que el usuario lo confirme con un clic.
     if RE_ESCRIBIR.search(nombre) and p and not str(p).lower().startswith(_GEM):
         rama, repo = rama_git(p)
         if rama in RAMAS_PRINCIPALES and not autoriza_web(conv):
             return "force_ask", (
                 f"LEY 5 (cero experimentos en vivo): vas a editar {p.name} en la rama PRINCIPAL '{rama}' de "
                 f'{repo.name}. Primero crea una rama de pruebas: git -C "{repo}" switch -c nova/<arreglo> '
-                "(no copia nada, es instantaneo). Solo si Alexander dice que es en caliente, lo confirma aqui."
+                "(no copia nada, es instantaneo). Solo si el usuario dice que es en caliente, lo confirma aqui."
             )
-    # Documentos para Alexander: a documentos_generados\<proyecto>, nunca a scratch (regla de la ley 6)
+    # Documentos para el usuario: a documentos_generados\<proyecto>, nunca a scratch (regla de la ley 6)
     texto_args = ruta + " " + comando
     if RE_DOC_EN_SCRATCH.search(texto_args) and (RE_ESCRIBIR.search(nombre) or comando):
         return "deny", (
@@ -536,7 +584,7 @@ def regla_contenido(nombre: str, args: dict, conv: str = "") -> tuple[str, str]:
     ):
         return "force_ask", (
             "AVISO CLAVES: ese comando muestra claves (vault, .env, credenciales) y su contenido viajara a los "
-            "servidores del modelo. Solo si Alexander lo ha pedido expresamente."
+            "servidores del modelo. Solo si el usuario lo ha pedido expresamente."
         )
     if comando and RE_CMD_ESCRIBE.search(comando):
         for trozo in re.findall(
@@ -545,34 +593,34 @@ def regla_contenido(nombre: str, args: dict, conv: str = "") -> tuple[str, str]:
             if protegida(trozo.strip()):
                 return "deny", (
                     f"Comando que escribe en una carpeta protegida ({trozo.strip()[:120]}). "
-                    "Nova no escribe ahi ni por terminal. Pideselo a Alexander."
+                    "Nova no escribe ahi ni por terminal. Pideselo al usuario."
                 )
     if comando and RE_PELIGROSO.search(comando):
         return (
             "force_ask",
-            f"Comando destructivo: {comando[:160]}. Alexander tiene que confirmarlo.",
+            f"Comando destructivo: {comando[:160]}. el usuario tiene que confirmarlo.",
         )
     if RE_ESCRIBIR.search(nombre) and p:
         if protegida(ruta):
             return (
                 "deny",
-                f"Carpeta protegida ({ruta}): Nova no escribe aqui. Pideselo a Alexander.",
+                f"Carpeta protegida ({ruta}): Nova no escribe aqui. Pideselo al usuario.",
             )
         if str(p).lower().startswith(CODIGO_OFICIAL):
             return "deny", (
                 f"{p.name} es codigo oficial de Nova (scripts/herramientas): no se parchea desde el chat. Si algo "
-                "no funciona, ejecuta el Doctor (powershell -ExecutionPolicy Bypass -File "
-                '"<NOVA_HOME>\\antigravity\\scripts\\nova_doctor.ps1") y cuentale a Alexander el resultado. '
+                "no funciona, ejecuta el Doctor (<PYTHON> \"<NOVA_HOME>/antigravity/scripts/nova_doctor.py\" --reparar) "
+                "y cuentale al usuario el resultado. "
                 "Una herramienta NUEVA va a scratch\\<AAAAMMDD>_<nombre>\\."
             )
         if p.name.lower().startswith(".env"):
-            return "deny", "Los .env y las claves solo los toca Alexander."
+            return "deny", "Los .env y las claves solo los toca el usuario."
         sitio = sitio_no_permitido(p)
         if sitio:
             return "deny", sitio
         n = lineas_nuevas(args)
         # 09/11 tarde (Claude, a pedido de Luaz): una WEB grande desde la nube ya no es un clic (se aprobaba sin leer:
-        # cafe_especialidad 372 y 460 lineas). Es BLOQUEO salvo que Alexander dijera "escribelo tu" en su ultimo mensaje
+        # cafe_especialidad 372 y 460 lineas). Es BLOQUEO salvo que el usuario dijera "escribelo tu" en su ultimo mensaje
         # (lo apunta nova_hook_turno.py en .autoriza_codigo.json); con permiso pasa sin clic.
         if p.suffix.lower() in EXT_WEB and n > MAX_LINEAS:
             if autoriza_web(conv):
@@ -581,18 +629,18 @@ def regla_contenido(nombre: str, args: dict, conv: str = "") -> tuple[str, str]:
                 f"BLOQUEADO: {n} lineas de web ({p.name}) escritas desde la nube (limite {MAX_LINEAS}). Las webs las "
                 f'hace la Capa 0 en local: & "{PYTHON_NOVA}" "{NOVA_TAREA}" "<pedido>" --carpeta "<ruta>" '
                 "(con & y comillas). Si nova_tarea.py no imprime lineas [NOVA TAREA], el comando esta mal escrito: "
-                "corrigelo. Solo si Alexander dice 'escribelo tu' puedes escribirla tu."
+                "corrigelo. Solo si el usuario dice 'escribelo tu' puedes escribirla tu."
             )
         if p.suffix.lower() in EXT_CODIGO and n > MAX_LINEAS:
             return "force_ask", (
                 f"La nube va a escribir {n} lineas de codigo en {p.name} (limite 150). Algo tan grande lo pica "
                 "Qwen por secciones: <PYTHON> <NOVA_HOME>\\antigravity\\scripts\\nova_secciones.py --carpeta <ruta> "
-                "(Nova escribe secciones.json). Alexander decide si lo autoriza."
+                "(Nova escribe secciones.json). el usuario decide si lo autoriza."
             )
     if RE_LEER.search(nombre) and p and RE_SECRETO.search(str(p)):
         return "force_ask", (
             f"AVISO CLAVES: {p.name} guarda claves y, si se lee, su contenido viajara a los servidores del "
-            "modelo. Solo si Alexander lo ha pedido expresamente (los scripts las cargan solos en local)."
+            "modelo. Solo si el usuario lo ha pedido expresamente (los scripts las cargan solos en local)."
         )
     if RE_LEER.search(nombre) and p:
         if set(x.lower() for x in p.parts) & CARPETAS_BASURA:
@@ -617,7 +665,7 @@ def regla_contenido(nombre: str, args: dict, conv: str = "") -> tuple[str, str]:
     return "allow", ""
 
 
-# ---------------------------------------------------------------- nivel verde: auto_approve (sin clic de Alexander)
+# ---------------------------------------------------------------- nivel verde: auto_approve (sin clic del usuario)
 # Antigravity: "auto_approve" aprueba cuando el modo Default preguntaria, respetando las reglas de File Permissions.
 # Solo comandos de LECTURA o de la piramide de Nova, y ediciones pequenas en proyectos. Lo demas sigue el modo Default.
 RE_ENVOLTORIO = re.compile(
@@ -685,9 +733,10 @@ def nivel_verde(nombre: str, args: dict) -> bool:
         casa = str(Path.home()).lower()
         fuera = (
             (not r.startswith(casa))
-            or "\\appdata\\" in r
-            or "\\.gemini\\" in r
-            or r.startswith(casa + "\\.")
+            or f"{os.sep}appdata{os.sep}" in r
+            or f"{os.sep}.gemini{os.sep}" in r
+            or r.startswith(casa + os.sep + ".")
+            or carpeta_sync_nube(r)
         )
         return not fuera and lineas_nuevas(args) <= MAX_LINEAS
     return False
@@ -718,7 +767,7 @@ def regla_gasto(conv: str, transcript: str) -> tuple[str, str, dict]:
                 f"FRENO DE GASTO: esta conversacion lleva ~{total // 1000}k tokens REALES "
                 f"({des['nuevos'] // 1000}k nuevos + {des['cache'] // 1000}k de cache al 10 % + {des['salida'] // 1000}k de salida; "
                 f"sin descontar la cache serian {des['bruto'] // 1000}k). "
-                "Alexander decide si se sigue o se abre una ventana nueva con el puente."
+                "el usuario decide si se sigue o se abre una ventana nueva con el puente."
             ),
         )
     bloque = seguidas // MAX_SEGUIDAS
@@ -727,13 +776,13 @@ def regla_gasto(conv: str, transcript: str) -> tuple[str, str, dict]:
         decision, motivo = (
             "force_ask",
             (
-                f"Llevo {seguidas} herramientas seguidas sin que Alexander escriba. "
+                f"Llevo {seguidas} herramientas seguidas sin que el usuario escriba. "
                 "Pregunto antes de seguir."
             ),
         )
     if seguidas < MAX_SEGUIDAS:
         e["bloque"] = (
-            0  # Alexander ha escrito: el contador de seguidas vuelve a empezar
+            0  # el usuario ha escrito: el contador de seguidas vuelve a empezar
         )
     estado[conv] = e
     try:

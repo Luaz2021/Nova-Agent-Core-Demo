@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Nova Agent para Brave",
-  "version": "4.0.0",
-  "description": "Puente local entre Nova y Brave con ratón y teclado reales (como Alexander): pestañas, clics, escribir, subir archivos, iframes, YouTube y WhatsApp. Pagos bloqueados salvo permiso de un solo uso que da Alexander.",
+  "name": "Nova Agent para navegador",
+  "version": "4.1.0",
+  "description": "Puente local entre Nova y tu navegador Chromium (Brave, Chrome, Edge, Opera, Vivaldi) con ratón y teclado reales: pestañas, clics, escribir, subir archivos, iframes, YouTube y WhatsApp. Pagos bloqueados salvo permiso de un solo uso que das tú.",
   "minimum_chrome_version": "120",
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'self'; connect-src 'self' ws://127.0.0.1:5005;"

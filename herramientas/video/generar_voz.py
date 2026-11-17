@@ -49,11 +49,32 @@ async def main():
     for i, e in enumerate(ESCENAS, 1):
         destino = SALIDA / f"escena{i}.mp3"
         print(f"Escena {i}: {e['n']}")
+        if narrar_con_marina(e["t"], destino):  # v3.2: pack de voz instalado -> narra Marina (estilo locutora)
+            continue
         await edge_tts.Communicate(e["t"], VOZ, rate=VELOCIDAD, pitch=TONO).save(str(destino))
     # Voces embebidas: la web las usa para crear el vídeo sin pedir archivos
     import base64, json
     voces = [base64.b64encode((SALIDA / f"escena{i}.mp3").read_bytes()).decode() for i in range(1, len(ESCENAS) + 1)]
     (SALIDA / "voces.js").write_text("window.VOCES=" + json.dumps(voces) + ";\n", encoding="utf-8")
     print("\nListo. Abre printlab_video.html: el vídeo ya usa estas voces.")
+
+def narrar_con_marina(texto: str, destino: Path) -> bool:
+    """v3.2: con el pack de voz de Nova (y su licencia aceptada) la narradora es MARINA, estilo locutora.
+    Uso permitido: videos hechos con Nova, sin fines comerciales (LICENCIA_VOCES.md). Si no, voz de Edge."""
+    import os
+    import subprocess
+    import sys
+    base = Path.home() / "nova_voz_clon"
+    py = base / "env_fq" / ("Scripts/python.exe" if os.name == "nt" else "bin/python")
+    clon = Path.home() / ".gemini" / "antigravity" / "herramientas" / "voz_clon" / "clonador.py"
+    if not (py.exists() and clon.exists() and (base / "licencia_voces_aceptada.json").exists()):
+        return False
+    r = subprocess.run([str(py), str(clon), "decir", "--voz", "videos", "--estilo", "locutora", "--texto", texto,
+                        "--salida", str(destino), "--mp3"], capture_output=True, text=True)
+    if r.returncode != 0 or not destino.with_suffix(".mp3").exists():
+        print(f"   (Marina no disponible: {(r.stdout + r.stderr).strip()[-120:]}; uso la voz de Edge)", file=sys.stderr)
+        return False
+    return True
+
 
 asyncio.run(main())

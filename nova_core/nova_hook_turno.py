@@ -2,10 +2,10 @@
 NOVA HOOK DE TURNO (Antigravity: PreInvocation + Stop). Complementa a nova_hook.py (PreToolUse), que solo ve herramientas.
 
 Problema que arregla: Nova pegaba 75-100 lineas de codigo EN EL CHAT (sin herramienta), y eso no lo ve PreToolUse.
-  - PreInvocation: si Alexander pide codigo, antes de cada llamada al modelo se inyecta un recordatorio efimero
+  - PreInvocation: si el usuario pide codigo, antes de cada llamada al modelo se inyecta un recordatorio efimero
     (no se acumula en el historial) con la regla: codigo de mas de 150 lineas -> Qwen por secciones (nova_secciones.py).
-  - Stop: al terminar el turno, si la respuesta trae mas de MAX_LINEAS lineas de codigo y Alexander no dijo
-    "escribelo tu", obliga a Nova a seguir UNA vez (por mensaje de Alexander) para corregirlo y avisarle.
+  - Stop: al terminar el turno, si la respuesta trae mas de MAX_LINEAS lineas de codigo y el usuario no dijo
+    "escribelo tu", obliga a Nova a seguir UNA vez (por mensaje del usuario) para corregirlo y avisarle.
 
 Uso:  python nova_hook_turno.py pre   |   python nova_hook_turno.py stop
 Siempre: si algo falla, no bloquea (devuelve {}) y lo apunta en memory/registros/telemetria_hooks.jsonl.
@@ -14,10 +14,14 @@ Siempre: si algo falla, no bloquea (devuelve {}) y lo apunta en memory/registros
 from __future__ import annotations
 
 import json
+import os
 import re
 import sys
 import time
 from pathlib import Path
+
+# v3.2: CREATE_NO_WINDOW solo existe en Windows (en macOS/Linux subprocess da ValueError y el hook revienta)
+SIN_VENTANA = 0x08000000 if os.name == "nt" else 0
 
 AQUI = Path(__file__).resolve().parent
 ESTADO = AQUI / ".nova_turno_estado.json"
@@ -31,7 +35,7 @@ RE_PIDE_CODIGO = re.compile(
 RE_AUTORIZA = re.compile(r"(?i)escr[ií]be(lo|melo)\s+t[uú]|hazlo\s+t[uú]|p[eé]ga(lo|melo)\s+(aqu[ií]|en el chat)|en el chat")
 
 RECORDATORIO = (
-    "REGLA DE NOVA (ley 14, la vigila un hook): Alexander pide codigo. Hasta 150 lineas en 1-2 archivos: escribelo TU con "
+    "REGLA DE NOVA (ley 14, la vigila un hook): el usuario pide codigo. Hasta 150 lineas en 1-2 archivos: escribelo TU con "
     "edit_file/write_file (no en el chat). Una web o pieza mas grande: escribe secciones.json MASTICADO (un encargo preciso "
     "por seccion) y lanza `<PYTHON> <NOVA_HOME>\\antigravity\\scripts\\nova_secciones.py --carpeta <ruta>` (Qwen en local). "
     "Si dice 'escribelo tu', lo escribes. No leas el codigo de los scripts de Nova: solo ejecutalos."
@@ -59,7 +63,7 @@ def lineas_de_codigo(texto: str) -> int:
 
 
 def respuestas_del_turno(transcript: str) -> tuple[str, str]:
-    """(id del ultimo mensaje de Alexander, texto de las respuestas del modelo desde entonces)."""
+    """(id del ultimo mensaje del usuario, texto de las respuestas del modelo desde entonces)."""
     ultimo_id, textos = "", []
     with open(transcript, encoding="utf-8", errors="replace") as f:
         for linea in f:
@@ -82,7 +86,7 @@ def leer_estado() -> dict:
 
 
 # ---------------------------------------------------------------- adjuntos (09/11, Claude, a pedido de Luaz)
-# Antigravity guarda lo que Alexander pega en brain/<conv>/.user_uploaded/ y nova_puente_capturas.py (cada 2 s) lo
+# Antigravity guarda lo que el usuario pega en brain/<conv>/.user_uploaded/ y nova_puente_capturas.py (cada 2 s) lo
 # mueve a temporal/<AAAA-MM>/<fecha>_<nombre> y deja <nombre>.resumen.md (documento) o .vista.md (imagen) leido EN LOCAL.
 # Antes Nova contestaba sin esperar y analizaba el original en la nube. Ahora, en la 1a llamada del turno, el hook espera
 # a que el .md este listo y le ordena a Nova leer ESE .md. (El hook no puede quitar el adjunto del mensaje: la API de
@@ -102,7 +106,7 @@ def _segundos_desde(iso: str) -> float:
 
 
 def adjuntos_del_turno(datos: dict, ventana_s: float = 180) -> list[str]:
-    """Nombres de los archivos que Alexander pego en este turno (carpeta .user_uploaded + 'media' del transcript;
+    """Nombres de los archivos que el usuario pego en este turno (carpeta .user_uploaded + 'media' del transcript;
     del transcript solo si ese mensaje es reciente, para no repetir el adjunto de un turno anterior)."""
     nombres: list[str] = []
     conv = str(datos.get("conversationId") or "")
@@ -151,7 +155,7 @@ def lanzar_puente(conv: str) -> bool:
         pyw = Path(sys.executable).with_name("pythonw.exe")
         subprocess.Popen([str(pyw if pyw.exists() else sys.executable), str(PUENTE), "--mover", "--procesar", "--conv-id", conv],
                          stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
-                         creationflags=0x08000000)  # CREATE_NO_WINDOW
+                         creationflags=SIN_VENTANA)  # CREATE_NO_WINDOW
         return True
     except OSError as e:
         apuntar({"evento": "PreInvocation", "error_lanzar_puente": str(e)})
@@ -185,7 +189,7 @@ def aviso_adjuntos(datos: dict) -> str:
              "listos": len(listos), "espera_s": round(time.time() - t0, 1), "puente_lanzado_por_hook": lanzado})
     # 09/11 v2: Antigravity NO deja a Nova abrir archivos de .gemini\antigravity ("hardcoded system protection
     # boundary"), asi que el contenido del .md va aqui mismo. Ademas ahorra llamadas: cada herramienta reenvia ~20k tokens.
-    partes = ["REGLA DE NOVA (adjuntos, la vigila un hook): Alexander ha pegado un adjunto y YA esta leido EN LOCAL "
+    partes = ["REGLA DE NOVA (adjuntos, la vigila un hook): el usuario ha pegado un adjunto y YA esta leido EN LOCAL "
               "(0 tokens de nube). Su contenido esta AQUI ABAJO. Trabaja SOLO con este texto: NO abras el original, NO "
               "intentes extraerlo con Python/PowerShell ni pidas permisos para hacerlo, y no busques el .md (Antigravity "
               "bloquea esa carpeta)."]
@@ -195,12 +199,12 @@ def aviso_adjuntos(datos: dict) -> str:
         except OSError as e:
             texto = f"(no se pudo leer {md.name}: {e})"
         if len(texto) > MAX_CHARS_ADJUNTO:
-            texto = texto[:MAX_CHARS_ADJUNTO] + "\n[... recortado: es largo. Responde con esto y dile a Alexander que hay mas.]"
+            texto = texto[:MAX_CHARS_ADJUNTO] + "\n[... recortado: es largo. Responde con esto y dile al usuario que hay mas.]"
         partes.append(f"\n===== ADJUNTO {n} =====\n{texto.strip()}\n===== FIN {n} =====")
     if faltan:
-        partes.append("Aun procesandose en local: " + ", ".join(faltan) + ". Dile a Alexander que lo repita en unos "
+        partes.append("Aun procesandose en local: " + ", ".join(faltan) + ". Dile al usuario que lo repita en unos "
                       "segundos; no lo analices tu.")
-    partes.append("Si este texto no basta para responder, dile a Alexander que falta y por que.")
+    partes.append("Si este texto no basta para responder, dile al usuario que falta y por que.")
     return "\n".join(partes)
 
 
@@ -221,7 +225,7 @@ def interruptor_mcp(datos: dict) -> str:
     pedido = RE_ADJUNTO_LOCAL.sub("", pedido)  # que el nombre de un adjunto no encienda nada
     avisos = []
     if PIDE_BRAVE.search(pedido):
-        avisos.append("Para navegar en el Brave de Alexander (con sus sesiones) usa el puente de Brave "
+        avisos.append("Para navegar en el Brave del usuario (con sus sesiones) usa el puente de Brave "
                       "(http://127.0.0.1:5005: /status, /snapshot, /screenshot, POST /execute), NO Playwright.")
     for nombre, patron in PIDE_MCP.items():
         if patron.search(pedido):
@@ -229,7 +233,7 @@ def interruptor_mcp(datos: dict) -> str:
             try:
                 # timeout 35 s: la recarga en caliente (RefreshMcpServers) reinicia los MCP y tarda ~10 s
                 r = subprocess.run([sys.executable, str(NOVA_MCP), "activar", nombre], capture_output=True, timeout=35,
-                                   creationflags=0x08000000)
+                                   creationflags=SIN_VENTANA)
                 salida = r.stdout.decode("utf-8", "replace").strip()
             except Exception as e:
                 salida = f"error: {e}"
@@ -237,21 +241,21 @@ def interruptor_mcp(datos: dict) -> str:
                      "resultado": salida[:120]})
             if "recargado en caliente" in salida:
                 avisos.append(f"Se ha ENCENDIDO el MCP {nombre} ({salida}). Si sus herramientas aun no te aparecen en esta "
-                              "llamada, apareceran en la siguiente; si tampoco, dile a Alexander que repita el pedido y PARA "
+                              "llamada, apareceran en la siguiente; si tampoco, dile al usuario que repita el pedido y PARA "
                               "(no investigues). Nunca pidas contraseñas en el chat. Se apaga solo al cerrar Antigravity.")
             elif "ya estaba" not in salida:
                 # 09/11 P4: sin recarga en caliente Nova creia que las herramientas llegarian y se puso a investigar
                 # (list_resources, leer archivos, docker ps -> abrio Docker; ~95k tokens) y acabo pidiendo la contraseña.
                 avisos.append(f"Se ha ACTIVADO el MCP {nombre} en la configuracion, pero sus herramientas NO estaran hasta "
-                              "reabrir Antigravity. Dile a Alexander SOLO esto, en una linea: 'He activado " + nombre +
+                              "reabrir Antigravity. Dile al usuario SOLO esto, en una linea: 'He activado " + nombre +
                               "; cierra y abre Antigravity y repite el pedido.' y PARA. No investigues (nada de docker, "
                               "puertos, archivos del MCP ni list_resources) y NUNCA pidas contraseñas en el chat.")
     return ("REGLA DE NOVA (MCP bajo demanda, la vigila un hook): " + " ".join(avisos)) if avisos else ""
 
 
 # ---------------------------------------------------------------- pase de pago en Brave (09/11, Claude, a pedido de Luaz)
-# La extension v4 bloquea botones de pago/compra. Solo se desbloquea UN pago (10 min) si Alexander lo escribe/dice.
-# lastUserInput es el mensaje real de Alexander (una web o un adjunto no pueden escribirlo). La clave solo la tienen
+# La extension v4 bloquea botones de pago/compra. Solo se desbloquea UN pago (10 min) si el usuario lo escribe/dice.
+# lastUserInput es el mensaje real del usuario (una web o un adjunto no pueden escribirlo). La clave solo la tienen
 # este hook y el puente; nova_hook.py impide que Nova la lea o llame a /pase_pago.
 # Solo primera persona y afirmativo: "autorizo el pago", "te doy permiso para comprar", "tienes mi permiso para pagar".
 # NO: "no autorizo el pago", "¿autorizaste el pago?", "la autorizacion del pago fallo", "nunca te permito comprar".
@@ -262,7 +266,7 @@ CLAVE_PASE = AQUI / ".pase_pago.clave"
 
 
 def autoriza_pago(pedido: str) -> bool:
-    """True solo si Alexander autoriza en afirmativo (la frase que lo dice no es pregunta ni negacion)."""
+    """True solo si el usuario autoriza en afirmativo (la frase que lo dice no es pregunta ni negacion)."""
     for m in RE_AUTORIZA_PAGO.finditer(pedido):
         ini = max(pedido.rfind(c, 0, m.start()) for c in ".!?\n¿¡") + 1  # inicio de esa frase
         fin = min([i for i in (pedido.find(c, m.end()) for c in ".!?\n") if i >= 0] or [len(pedido)])
@@ -292,21 +296,21 @@ def pase_de_pago(datos: dict) -> str:
         apuntar({"evento": "PreInvocation", "decision": "pase_pago_error", "error": f"{type(e).__name__}: {e}"[:160]})
     apuntar({"evento": "PreInvocation", "conv": str(datos.get("conversationId", ""))[:8], "decision": "pase_pago", "ok": bool(ok)})
     if not ok:
-        return ("REGLA DE NOVA (pagos): Alexander quiere autorizar un pago, pero el puente de Brave no respondio (¿Brave cerrado "
+        return ("REGLA DE NOVA (pagos): el usuario quiere autorizar un pago, pero el puente de Brave no respondio (¿Brave cerrado "
                 "o la extension sin conectar?). Diselo; no intentes pagar.")
-    return ("REGLA DE NOVA (pagos, la vigila un hook): Alexander ha AUTORIZADO UN SOLO PAGO en Brave durante 10 minutos. "
+    return ("REGLA DE NOVA (pagos, la vigila un hook): el usuario ha AUTORIZADO UN SOLO PAGO en Brave durante 10 minutos. "
             "Antes de pulsar el boton final dile en una frase que vas a pagar (que, cuanto, donde). Tras ese pago el "
-            "permiso se gasta solo. Los numeros de tarjeta y contraseñas NO los escribes nunca: los pone Alexander o el "
+            "permiso se gasta solo. Los numeros de tarjeta y contraseñas NO los escribes nunca: los pone el usuario o el "
             "autocompletado de Brave.")
 
 
 # ---------------------------------------------------------------- guardian de tokens en el chat (Ley 16, 09/11 Claude)
-# Flujo de Alexander: al pasar de 100k -> copia del chat al .txt de memory\chat_logs (con la fecha del chat) y aviso
+# Flujo del usuario: al pasar de 100k -> copia del chat al .txt de memory\chat_logs (con la fecha del chat) y aviso
 # "escribe /compact" (hasta 5 compactaciones); con 5 hechas -> "salta de ventana" (el puente queda listo y en la
 # ventana nueva basta con "seguimos"). El guardian de memoria (nova_buffer_guardian.py) hace la copia y el aviso por
 # voz; este hook pone el aviso DENTRO del chat (antes solo salia si Nova usaba una herramienta, y como un clic).
 TOPE_BUFER = 100_000
-RECORDAR_CADA = 50_000  # si Alexander no compacta, se vuelve a avisar cada +50k
+RECORDAR_CADA = 50_000  # si el usuario no compacta, se vuelve a avisar cada +50k
 GUARDIAN = Path.home() / ".gemini" / "antigravity" / "scripts" / "nova_buffer_guardian.py"
 CHAT_LOGS = Path.home() / ".gemini" / "antigravity" / "memory" / "chat_logs"
 
@@ -336,7 +340,7 @@ def medir_bufer(transcript: str) -> tuple[int, int]:
 
 
 def aviso_bufer(datos: dict) -> str:
-    if int(datos.get("invocationNum") or 0) != 0:  # una vez por mensaje de Alexander
+    if int(datos.get("invocationNum") or 0) != 0:  # una vez por mensaje del usuario
         return ""
     transcript = str(datos.get("transcriptPath") or "")
     if not transcript or not Path(transcript).exists():
@@ -358,7 +362,7 @@ def aviso_bufer(datos: dict) -> str:
     # Antes de cada aviso: copia del chat al .txt (el guardian escribe chat_<fecha>_inicio-<HHmm>_conv-<id>.txt)
     import subprocess
     try:
-        subprocess.run([sys.executable, str(GUARDIAN), "--silent"], capture_output=True, timeout=25, creationflags=0x08000000)
+        subprocess.run([sys.executable, str(GUARDIAN), "--silent"], capture_output=True, timeout=25, creationflags=SIN_VENTANA)
     except Exception:
         pass
     copia = next(iter(sorted(CHAT_LOGS.glob(f"chat_*_conv-{conv[:8]}.txt"))), None)
@@ -374,13 +378,13 @@ def aviso_bufer(datos: dict) -> str:
                  "tokens (la conversacion queda guardada).")
         extra = f"Quedan {5 - hechas} compactaciones antes de tener que saltar de ventana."
     return (f"AVISO DE BUFER (Ley 16, lo vigila un hook): el contexto va por {k}k tokens (tope 100k). La copia del chat "
-            f"esta en {donde}. {extra} Responde a Alexander con normalidad y TERMINA tu respuesta con esta linea, tal "
+            f"esta en {donde}. {extra} Responde al usuario con normalidad y TERMINA tu respuesta con esta linea, tal "
             f"cual: {linea}")
 
 
 # ---------------------------------------------------------------- aprendizaje automatico SIN ruido (Ley 3, 09/11 Claude)
 # Antes dependia de que Nova se acordara (skill con trigger model_decision): desde el 08/11 no apunto nada.
-# Solo cuando hay SEÑAL (Alexander corrige o el turno anterior tuvo 2+ comandos fallidos) se le pide UNA linea.
+# Solo cuando hay SEÑAL (el usuario corrige o el turno anterior tuvo 2+ comandos fallidos) se le pide UNA linea.
 RE_CORRIGE = re.compile(
     r"(?i)\b(te equivocaste|te has equivocado|est[aá] mal|lo hiciste mal|eso no (es|era)|no era eso|no es as[ií]|"
     r"otra vez (lo mismo|igual|mal)|sigue (igual|sin|fallando)|no funciona|no sirve|fallaste|no (me )?(hiciste|haces|hace) caso|"
@@ -389,7 +393,7 @@ INBOX = r"<NOVA_HOME>\antigravity\memory\inbox_lecciones.md"
 
 
 def fallos_turno_anterior(transcript: str) -> int:
-    """Comandos fallidos entre el penultimo y el ultimo mensaje de Alexander."""
+    """Comandos fallidos entre el penultimo y el ultimo mensaje del usuario."""
     turnos: list[int] = [0]
     try:
         with open(transcript, encoding="utf-8", errors="replace") as f:
@@ -414,7 +418,7 @@ def aviso_leccion(datos: dict) -> str:
     fallos = fallos_turno_anterior(transcript) if transcript and Path(transcript).exists() else 0
     if not corrige and fallos < 2:
         return ""
-    motivo = "Alexander te esta corrigiendo" if corrige else f"en tu turno anterior fallaron {fallos} comandos"
+    motivo = "el usuario te esta corrigiendo" if corrige else f"en tu turno anterior fallaron {fallos} comandos"
     conv = str(datos.get("conversationId", ""))
     apuntar({"evento": "PreInvocation", "conv": conv[:8], "decision": "pedir_leccion",
              "corrige": corrige, "fallos": fallos})
@@ -488,8 +492,8 @@ def revisar_leccion(datos: dict, texto_turno: str) -> dict:
 
 
 # 09/11 tarde (Claude, a pedido de Luaz): nova_hook.py BLOQUEA webs de >150 lineas escritas desde la nube salvo que
-# Alexander lo autorice en SU mensaje ("escribelo tu", "hazlo tu"). Este hook ve el mensaje; nova_hook.py no. Se apunta
-# aqui (por conversacion, se renueva con cada mensaje de Alexander) y nova_hook.py lo lee.
+# el usuario lo autorice en SU mensaje ("escribelo tu", "hazlo tu"). Este hook ve el mensaje; nova_hook.py no. Se apunta
+# aqui (por conversacion, se renueva con cada mensaje del usuario) y nova_hook.py lo lee.
 AUTORIZA_CODIGO = AQUI / ".autoriza_codigo.json"
 RE_AUTORIZA_WEB = re.compile(r"(?i)\b(escr[ií]be(lo|la|melo|mela)|hazlo|hazla|hazmela|h[aá]zmelo)\s+t[uú]\b|\b(tienes\s+permiso|luz\s+verde|haz\s+los\s+cambios|s[uú]belo|ed[ií]talo|haz\s+(el\s+)?(commit|push)|sube\s+a\s+github)\b")
 # 09/11 (regla de Luaz): por defecto webs minimalistas con la biblioteca (0 nube); si da una WEB DE REFERENCIA, la nube
@@ -518,12 +522,12 @@ def apuntar_autorizacion(datos: dict) -> None:
 
 
 DOCTOR_ESTADO = Path.home() / ".gemini" / "antigravity" / "memory" / "doctor_estado.json"
-DOCTOR_PS = r"<NOVA_HOME>\antigravity\scripts\nova_doctor.ps1"
+DOCTOR_PS = r"<NOVA_HOME>/antigravity/scripts/nova_doctor.py"
 
 
 def aviso_doctor(datos: dict) -> str:
     """11/11 (Claude): si el Nova Doctor de ESTE equipo encontro fallos (Python de Nova, hooks, Ollama, voz, aduana...),
-    se lo cuenta a Nova UNA vez por conversacion para que avise a Alexander. Nova no repara nada a mano."""
+    se lo cuenta a Nova UNA vez por conversacion para que avise al usuario. Nova no repara nada a mano."""
     conv = str(datos.get("conversationId") or "")
     try:
         est = json.loads(DOCTOR_ESTADO.read_text(encoding="utf-8-sig"))
@@ -539,15 +543,112 @@ def aviso_doctor(datos: dict) -> str:
     apuntar({"evento": "PreInvocation", "conv": conv[:8], "decision": "aviso_doctor"})
     fallos = "; ".join(str(f) for f in (est.get("fallos") or []))[:600]
     return (f"[NOVA DOCTOR {est.get('fecha', '')}] En este equipo hay fallos: {fallos}. Al empezar tu respuesta diselo a "
-            "Alexander en UNA linea. NO intentes arreglarlo tu (nada de pip, copiar de Drive ni editar scripts): si quiere, "
-            f"vuelve a pasar el Doctor con: powershell -ExecutionPolicy Bypass -File \"{DOCTOR_PS}\" y le das su ultima linea. "
-            "Si sigue fallando, es cosa de Claude.")
+            "el usuario en UNA linea. NO intentes arreglarlo tu (nada de pip, copiar archivos a mano ni editar scripts): si quiere, "
+            f"vuelve a pasar el Doctor con: <PYTHON> \"<NOVA_HOME>/antigravity/scripts/nova_doctor.py\" --reparar y le das su ultima linea. "
+            "Si sigue fallando, ofrece /reportar-fallo.")
+
+
+def aviso_informe_mensual() -> str:
+    """v3.2: si el usuario dijo SI al informe al instalar, una vez al mes Nova se lo propone (nunca lo envia sola)."""
+    mem = Path.home() / ".gemini" / "antigravity" / "memory"
+    try:
+        if not json.loads((mem / "perfil_usuario.json").read_text(encoding="utf-8-sig")).get("telemetry_opt_in"):
+            return ""
+    except (OSError, ValueError):
+        return ""
+    marca = mem / "informe_ultimo_aviso.txt"
+    try:
+        if not marca.exists():  # la primera vez solo se apunta la fecha: el primer aviso llega al mes de instalar
+            marca.write_text(time.strftime("%Y-%m-%d"), encoding="utf-8")
+            return ""
+        if time.time() - marca.stat().st_mtime < 30 * 86400:
+            return ""
+        marca.write_text(time.strftime("%Y-%m-%d"), encoding="utf-8")
+    except OSError:
+        return ""
+    return ("[INFORME MENSUAL] El usuario acepto ayudar a mejorar Nova. Al final de tu respuesta, en UNA linea, ofrecele "
+            "preparar el informe del mes (/enviar-informe: solo lecciones, servilleta y tipos de error; el lo revisa antes). "
+            "No lo prepares ni lo envies sin que diga que si.")
+
+
+def aviso_actualizacion() -> str:
+    """v3.2: Nova se mantiene al dia SOLA. Una vez al dia comprueba en segundo plano si hay parche (actualizar_nova.py
+    --check) y, si lo hay, se lo ofrece al usuario (como mucho una vez cada 3 dias). Con su SI, ejecuta /actualizar-nova."""
+    import subprocess
+    ag = Path.home() / ".gemini" / "antigravity"
+    mem = ag / "memory"
+    estado = mem / "actualizacion_disponible.json"
+    marca = mem / "actualizacion_ultimo_aviso.txt"
+    act = ag / "scripts" / "actualizar_nova.py"
+    doc = ag / "scripts" / "nova_doctor.py"
+
+    def fondo(*args):
+        subprocess.Popen([sys.executable, *args], stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL,
+                         stderr=subprocess.DEVNULL, creationflags=SIN_VENTANA)
+    try:
+        # AUTOREPARACION (sin intervencion humana): actualizacion a medias (descargas fallidas, o el actualizador viejo
+        # pidio "ejecutalo otra vez") -> se termina SOLA en segundo plano: el usuario ya dijo que si al empezarla.
+        reciente = any(time.time() - b.stat().st_mtime < 86400 for b in (ag / "backups").glob("backup_previo_*")) \
+            if (ag / "backups").exists() else False
+        a_medias = mem / "actualizacion_a_medias.json"
+        terminar = mem / "actualizacion_terminando.txt"
+        if act.exists() and (a_medias.exists() or reciente and estado.exists() and json.loads(estado.read_text(encoding="utf-8")).get("hay")) \
+                and not (terminar.exists() and time.time() - terminar.stat().st_mtime < 1800):
+            terminar.write_text(time.strftime("%Y-%m-%d %H:%M"), encoding="utf-8")
+            estado.unlink(missing_ok=True)
+            fondo(str(act))
+            return ("[ACTUALIZACION] Estoy terminando en segundo plano la actualizacion que empezo el usuario (descargas "
+                    "pendientes y revision del Doctor). No hace falta que haga nada; diselo en UNA linea.")
+        # MANTENIMIENTO DIARIO: Doctor reparando + comprobar si hay version nueva
+        if (not estado.exists()) or time.time() - estado.stat().st_mtime > 86400:
+            if act.exists():
+                fondo(str(act), "--check")
+            if doc.exists():
+                fondo(str(doc), "--reparar")
+            return ""
+        d = json.loads(estado.read_text(encoding="utf-8"))
+        if not d.get("hay") or (marca.exists() and time.time() - marca.stat().st_mtime < 3 * 86400):
+            return ""
+        marca.write_text(time.strftime("%Y-%m-%d"), encoding="utf-8")
+    except (OSError, ValueError):
+        return ""
+    return (f"[ACTUALIZACION] Hay una version nueva de Nova (v{d.get('version')}, {d.get('archivos')} archivos). Al final de tu "
+            "respuesta, en UNA linea, ofrecele actualizar. Si dice que si: /actualizar-nova (si dice 'ejecutalo otra vez', "
+            "repitelo UNA vez) y despues el Doctor. Nunca sin su si.")
+
+
+RE_ACEPTA_VOCES = re.compile(r"(?i)\bacepto\b.{0,40}\blicencia\b.{0,30}\bvoce?s?\b")
+CONSENTIMIENTO_VOCES = AQUI / ".voces_licencia_usuario.json"
+
+
+def consentimiento_voces(pedido: str) -> str:
+    """v3.2: la licencia de las voces la acepta el USUARIO escribiendolo en el chat; el hook lo apunta (30 min) y solo
+    entonces nova_hook.py deja lanzar el instalador del pack de voz con -Aceptado."""
+    if not RE_ACEPTA_VOCES.search(pedido or ""):
+        return ""
+    try:
+        CONSENTIMIENTO_VOCES.write_text(json.dumps({"fecha": time.time(), "texto": pedido[:200]}), encoding="utf-8")
+    except OSError:
+        return ""
+    return ("[VOCES] El usuario ACEPTO la licencia de las voces (LICENCIA_VOCES.md) en este mensaje. Lanza el instalador "
+            "del pack de voz con la aceptacion: Windows `powershell -ExecutionPolicy Bypass -File "
+            "\"<NOVA_HOME>\\antigravity\\herramientas\\voz_clon\\instalar.ps1\" -Aceptado`; Mac/Linux "
+            "`sh <NOVA_HOME>/antigravity/herramientas/voz_clon/instalar.sh --aceptado`. Avisale de que descarga varios GB.")
 
 
 def pre(datos: dict) -> dict:
     pedido = str(datos.get("lastUserInput") or "")
     apuntar_autorizacion(datos)
     pasos = []
+    aviso_v = consentimiento_voces(pedido)
+    if aviso_v:
+        pasos.append({"ephemeralMessage": aviso_v})
+    aviso_u = aviso_actualizacion()
+    if aviso_u:
+        pasos.append({"ephemeralMessage": aviso_u})
+    aviso_i = aviso_informe_mensual()
+    if aviso_i:
+        pasos.append({"ephemeralMessage": aviso_i})
     aviso_d = aviso_doctor(datos)
     if aviso_d:
         pasos.append({"ephemeralMessage": aviso_d})
@@ -584,7 +685,7 @@ def stop(datos: dict) -> dict:
         return revisar_leccion(datos, texto)
     estado = leer_estado()
     clave = f"{conv}:{ultimo_id}"
-    if estado.get(clave):  # una sola correccion por mensaje de Alexander (nunca un bucle)
+    if estado.get(clave):  # una sola correccion por mensaje del usuario (nunca un bucle)
         return {}
     estado[clave] = True
     try:
@@ -594,7 +695,7 @@ def stop(datos: dict) -> dict:
     apuntar({"evento": "Stop", "conv": conv[:8], "lineas_codigo_chat": n, "decision": "continue"})
     return {"decision": "continue", "reason": (
         f"[HOOK NOVA] Has escrito unas {n} lineas de codigo en el chat desde la nube: eso incumple la ley 14 (el codigo va "
-        "en archivos, y mas de 150 lineas las pica Qwen por secciones). Ahora, en un mensaje corto: 1) dile a Alexander que te has saltado la regla, "
+        "en archivos, y mas de 150 lineas las pica Qwen por secciones). Ahora, en un mensaje corto: 1) dile al usuario que te has saltado la regla, "
         "2) ofrecele lanzarlo con `<PYTHON> <NOVA_HOME>\\antigravity\\scripts\\nova_tarea.py \"<pedido>\" --carpeta <ruta>` "
         "(pregunta la carpeta si no la sabes). NO vuelvas a pegar el codigo.")}
 

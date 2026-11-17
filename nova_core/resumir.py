@@ -1,7 +1,7 @@
 """
 Destilador y Resumidor Local de Documentos para el Chat de Nova (Sin API de Anthropic).
 
-Recibe el archivo o los archivos que Alexander pasa por el chat:
+Recibe el archivo o los archivos que el usuario pasa por el chat:
 - Si el documento es corto (<= 1 trozo), entrega directamente el texto limpio (0 llamadas).
 - Si el documento es largo y se pide --ollama, lo resume en local con Ollama (0 tokens de nube).
 - Si no se pide --ollama, extrae los encabezados, tablas y primeros fragmentos clave a 0 tokens

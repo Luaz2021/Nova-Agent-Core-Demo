@@ -31,5 +31,5 @@ Abrir con `read_file` al ejecutar pipelines de video, scrapers o ingenieria agen
 - **Scrapers, Excel & Automatizacion:** `skills\zero-token-scraper-forge\SKILL.md` | `skills\gemini-xlsx-mastery\SKILL.md` | `skills\gemini-brave-sentinel\SKILL.md`
 - **Ingenieria Agentica & Optimizacion:** `skills\agentic-engineering\SKILL.md` | `skills\autonomous-loops\SKILL.md` | `skills\benchmark-optimization-loop\SKILL.md` | `skills\agent-introspection-debugging\SKILL.md` | `skills\gemini-superpowers-engine\SKILL.md` | `skills\council\SKILL.md`
 - **Presentaciones (alta 08/11):** `skills\frontend-slides\SKILL.md` (deck web en un solo HTML 16:9) | `skills\guizang-ppt\SKILL.md` (estilo suizo y editorial) | `skills\ppt-master\SKILL.md` (PPTX nativo con plantillas) | `skills\mcp-server-ppt\SKILL.md` (controlar PowerPoint en Windows)
-- **Voz y video en herramientas (08/11):** `herramientasoz
-ova_voz.py` (manos libres) | `herramientasideo\` (narracion, intro, destilador de reels, router de escenas)
+- **Voz y video en herramientas (08/11):** `herramientas\voz
+ova_voz.py` (manos libres) | `herramientas\video\` (narracion, intro, destilador de reels, router de escenas)

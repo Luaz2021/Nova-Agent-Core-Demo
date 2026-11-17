@@ -412,7 +412,8 @@ def a_pdf(docx: Path) -> Path | None:
     soffice = shutil.which("soffice") or next(
         (
             str(x)
-            for x in (Path("C:/Program Files/LibreOffice/program/soffice.exe"),)
+            for x in (Path("C:/Program Files/LibreOffice/program/soffice.exe"),
+                      Path("/Applications/LibreOffice.app/Contents/MacOS/soffice"))  # v3.2: macOS
             if x.exists()
         ),
         None,

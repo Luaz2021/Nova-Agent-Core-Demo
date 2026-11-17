@@ -4,7 +4,7 @@ Dim voiceText
 If WScript.Arguments.Count > 0 Then
     voiceText = WScript.Arguments(0)
 Else
-    voiceText = "Atencion Alexander: La sesion ha superado el limite optimo de tokens. El puente esta guardado en Drive para saltar a una ventana limpia."
+    voiceText = "Atencion: la sesion ha superado el limite optimo de tokens. El puente esta guardado en memoria para saltar a una ventana limpia."
 End If
 
 On Error Resume Next

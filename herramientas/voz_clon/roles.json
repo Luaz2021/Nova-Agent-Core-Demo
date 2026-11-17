@@ -1,0 +1,47 @@
+{
+ "_nota": "Voces oficiales de Nova. Voces reales autorizadas por sus titulares SOLO para uso dentro de Nova (LICENCIA_VOCES.md, no MIT). nova = Ayla; guardian (avisos de tokens) y videos (narracion) = Marina.",
+ "nova": {
+  "voz": "ayla",
+  "uso": "voz oficial de Nova (respuestas habladas, avisos)"
+ },
+ "guardian": {
+  "voz": "marina",
+  "uso": "avisos del guardian de tokens",
+  "estilo_por_defecto": "crudo"
+ },
+ "videos": {
+  "voz": "marina",
+  "uso": "narradora del generador de videos",
+  "estilo_por_defecto": "locutora"
+ },
+ "_estilos": "Estilos aprobados por el autor: Ayla normal y agresiva; Marina locutora (filtro de radio) y crudo.",
+ "estilos": {
+  "ayla": {
+   "normal": {
+    "generacion": {},
+    "filtro": ""
+   },
+   "agresiva": {
+    "generacion": {
+     "temperature": 1.0,
+     "top_p": 0.95
+    },
+    "filtro": ""
+   }
+  },
+  "marina": {
+   "crudo": {
+    "generacion": {
+     "temperature": 0.8
+    },
+    "filtro": ""
+   },
+   "locutora": {
+    "generacion": {
+     "temperature": 0.8
+    },
+    "filtro": "silenceremove=stop_periods=-1:stop_duration=0.4:stop_threshold=-42dB,atempo=1.08,highpass=f=70,equalizer=f=150:t=q:w=1:g=2,equalizer=f=3000:t=q:w=1.2:g=3,acompressor=threshold=-18dB:ratio=3:attack=10:release=120,loudnorm=I=-16:TP=-1.5"
+   }
+  }
+ }
+}

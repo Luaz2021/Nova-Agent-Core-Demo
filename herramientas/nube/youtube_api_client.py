@@ -16,17 +16,16 @@ def get_api_key():
     if key:
         return key
 
-    # 2. Buscar en vault de Drive
-    for letter in "GDEFGHIJKLMNOPQRSTUVWXYZC":
-        vault_path = os.path.join(f"{letter}:\\", r"Mi unidad\Antigravity\vault\google_cloud.env")
-        if os.path.exists(vault_path):
-            try:
-                with open(vault_path, "r", encoding="utf-8") as f:
-                    for line in f:
-                        if line.startswith("YOUTUBE_API_KEY="):
-                            return line.split("=", 1)[1].strip()
-            except Exception:
-                pass
+    # 2. Cofre local del usuario (v3.2: antes buscaba el Drive privado del autor)
+    vault_path = os.path.join(os.path.expanduser("~"), ".gemini", "config", "secrets.env")
+    if os.path.exists(vault_path):
+        try:
+            with open(vault_path, "r", encoding="utf-8") as f:
+                for line in f:
+                    if line.startswith("YOUTUBE_API_KEY="):
+                        return line.split("=", 1)[1].strip()
+        except Exception:
+            pass
     return None
 
 def search_videos(query, max_results=5):

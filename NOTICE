@@ -48,3 +48,10 @@ Nova Agent respectfully builds upon and acknowledges the following foundations:
 - Vercel Labs & skills.sh community (Web interface guidelines)
 - OWASP Foundation (Defensive security benchmarks)
 ==============================================================================
+
+------------------------------------------------------------------------------
+VOICES / VOCES:
+------------------------------------------------------------------------------
+The official Nova voices "Ayla" and "Marina" belong to two real people (Spanish nationals) who authorized
+their use ONLY within Nova Agent. They are excluded from the MIT License and governed by LICENCIA_VOCES.md.
+Voice engine: Qwen3-TTS (Apache 2.0, Alibaba Qwen team); faster-qwen3-tts (MIT); mlx-audio (MIT) on Apple Silicon.
