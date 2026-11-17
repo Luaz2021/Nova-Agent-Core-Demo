@@ -1,4 +1,4 @@
-"""Ortografia y gramatica con el corrector de WORD en espanol (el que Alexander ya tiene instalado). 12/11/2026, Claude.
+"""Ortografia y gramatica con el corrector de WORD en espanol (el que el usuario ya tiene instalado). 12/11/2026, Claude.
 
 Se pasa el texto a un .docx temporal marcado como espanol (es-ES), Word lo revisa y devuelve las palabras mal
 escritas y las frases con fallos de gramatica. Sin internet, sin tokens, sin instalar nada.
@@ -93,7 +93,7 @@ def revisar_texto(texto: str, extra: str = "") -> tuple[list[str], list[str]]:
                 errors="replace",
             )
             datos = json.loads(r.stdout.strip() or "{}")
-        except (subprocess.TimeoutExpired, ValueError) as e:
+        except (subprocess.TimeoutExpired, ValueError, OSError) as e:  # v3.2: OSError = sin PowerShell/Word (macOS/Linux)
             return [], [
                 f"No se pudo usar el corrector de Word ({e.__class__.__name__})"
             ]

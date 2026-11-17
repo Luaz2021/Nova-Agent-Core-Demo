@@ -138,7 +138,7 @@ def consultar_ollama(
 def redactar_documento(escaleta: dict, modelo: str | None = None) -> list[dict]:
     """Genera cada seccion del documento llamando a Ollama por bloques."""
     titulo_doc = escaleta.get("titulo", "Documento Tecnico")
-    autor = escaleta.get("autor", "Alexander Martinez")
+    autor = escaleta.get("autor", "[PENDIENTE: autor]")
     asignatura = escaleta.get("asignatura", "")
     tono = escaleta.get("tono", "academico, riguroso y formal")
     sistema = (
@@ -335,7 +335,7 @@ def _crear_portada_apa(doc, escaleta: dict, config: dict):
     from docx.shared import Pt
 
     titulo = escaleta.get("titulo", "Título del Trabajo Académico")
-    autor = escaleta.get("autor", "Alexander Martínez")
+    autor = escaleta.get("autor", "[PENDIENTE: autor]")
     institucion = escaleta.get("institucion", "Universidad / Centro de Estudios")
     asignatura = escaleta.get("asignatura", "Módulo de Especialización")
     profesor = escaleta.get("profesor", "Profesor / Docente")
@@ -399,7 +399,7 @@ def _crear_portada_ejecutiva(doc, escaleta: dict, config: dict):
     subtitulo = escaleta.get(
         "subtitulo", escaleta.get("asignatura", "Documento Estratégico y Técnico")
     )
-    autor = escaleta.get("autor", "Alexander Martínez")
+    autor = escaleta.get("autor", "[PENDIENTE: autor]")
     fecha = escaleta.get("fecha", "2026")
 
     for _ in range(2):

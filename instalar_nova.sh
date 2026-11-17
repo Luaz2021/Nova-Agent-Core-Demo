@@ -19,18 +19,16 @@ fi
 if [ "$ANTIGRAVITY_FOUND" -eq 1 ]; then
     echo "[OK] Google Antigravity detectado en el sistema."
 else
-    echo "[AVISO] No se detecto Google Antigravity en tu equipo."
-    echo "Antigravity es el entorno necesario para que Nova opere."
-    printf "Deseas abrir la pagina oficial para descargarlo ahora? (s/n) [s]: "
+    # v3.2: Nova NO instala Antigravity: solo da el enlace oficial
+    echo "[AVISO] No encuentro Google Antigravity en este equipo. Nova funciona DENTRO de Antigravity."
+    echo "        1. Descargalo e instalalo desde la pagina oficial:  https://antigravity.google/"
+    echo "        2. Abrelo una vez, inicia sesion y cierralo."
+    echo "        3. Vuelve a ejecutar este instalador."
+    printf "Instalo Nova igualmente ahora (quedara lista para cuando tengas Antigravity)? (s/n) [s]: "
     read -r resp < /dev/tty || resp="s"
-    if [ "$resp" != "n" ] && [ "$resp" != "N" ]; then
-        if command -v open >/dev/null 2>&1; then
-            open "https://antigravity.google/"
-        elif command -v xdg-open >/dev/null 2>&1; then
-            xdg-open "https://antigravity.google/"
-        else
-            echo "Abre https://antigravity.google/ en tu navegador."
-        fi
+    if [ "$resp" = "n" ] || [ "$resp" = "N" ]; then
+        echo "Hasta luego. Cuando tengas Antigravity, vuelve a ejecutar este instalador."
+        exit 0
     fi
 fi
 

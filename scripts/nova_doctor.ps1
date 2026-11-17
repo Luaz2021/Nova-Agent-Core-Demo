@@ -4,7 +4,7 @@
 ------------------------------------------------------------------------------
  Revisa y REPARA solo lo que Nova necesita en ESTE equipo, y deja UNA linea de resumen:
    1. Python PROPIO de Nova (.gemini\nova_env, con uv y Python 3.14 gestionado por uv) con las librerias de
-      nova_core\requisitos_nova.txt. Da igual el Python que Luaz instale o actualice en Windows.
+      nova_core\requisitos_nova.txt. Da igual el Python que el usuario instale o actualice en Windows.
       Si la lista cambia (huella distinta) o falta una libreria -> reinstala solo.
    2. Variables NOVA_PYTHON / NOVA_PYTHONW -> ese Python (GEMINI.md <PYTHON>, hooks, voz, guardian).
    3. config\hooks.json generado con las rutas de ESTE equipo (rutas cortas, sin espacios) y probado.
@@ -14,14 +14,14 @@
  Resultado: memory\doctor_estado.json (lo lee el hook de turno y se lo cuenta a Nova si algo falla),
             memory\registros\doctor.log y, si algo falla, un aviso de Windows.
 
- Lo lanzan: session_guard.ps1 al abrir Antigravity (-AlAbrir), sync_antigravity.ps1 al bajar (-SinServicios)
+ Lo lanzan: session_guard.ps1 al abrir Antigravity (-AlAbrir), el instalador y nova_doctor.py tras cada parche (-SinServicios)
  y Nova cuando algo no va: powershell -ExecutionPolicy Bypass -File "<NOVA_HOME>\antigravity\scripts\nova_doctor.ps1"
  Nova NUNCA repara a mano: ejecuta esto y cuenta el resultado.
 ==============================================================================
 #>
 param(
     [switch]$AlAbrir,        # recien abierto Antigravity: espera a que arranquen voz/puente/aduana
-    [switch]$SinServicios,   # solo entorno, hooks, Ollama y Vosk (lo usa el sync, a veces sin Antigravity)
+    [switch]$SinServicios,   # solo entorno, hooks, Ollama y Vosk (instalador/parche, a veces sin Antigravity)
     [switch]$SinAviso        # sin globo de Windows
 )
 $ErrorActionPreference = "Continue"
@@ -115,7 +115,7 @@ if ($envSano) {
 } elseif (-not $uv) {
     Nota "python" "FALLA" "falta uv para montar el Python de Nova"
 } elseif (-not (Test-Path -LiteralPath $Req)) {
-    Nota "python" "FALLA" "no esta nova_core\requisitos_nova.txt (di 'Nova, sincroniza')"
+    Nota "python" "FALLA" "no esta nova_core\requisitos_nova.txt (di 'Nova, actualizate': /actualizar-nova)"
 } else {
     $detalle = ""
     # Python que no arranca (p. ej. le borraron la base): se aparta y se crea de nuevo

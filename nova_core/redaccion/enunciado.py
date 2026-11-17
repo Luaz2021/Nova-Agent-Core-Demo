@@ -325,7 +325,7 @@ def plantilla_guion(archivo: Path, reqs: list[dict], normas: dict) -> dict:
         "titulo": "...",
         "subtitulo": "...",
         "modulo": "...",
-        "autor": "Alexander Martínez",
+        "autor": "Nombre Apellido",
         "fecha": "...",
         "enunciado": str(archivo),
         "reglas_del_enunciado": normas,

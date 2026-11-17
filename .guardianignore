@@ -1,0 +1,4 @@
+# Falsos positivos revisados a mano (v3.2, autorizado por el autor): estas lineas contienen NOMBRES de variables
+# de entorno (TRELLO_API_KEY) y cabeceras HTTP (Content-Type, x-codeium-csrf-token), no claves.
+herramientas/trello/trello.py
+scripts/nova_mcp.py

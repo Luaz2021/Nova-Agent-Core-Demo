@@ -16,7 +16,7 @@ import urllib.request
 from pathlib import Path
 
 API = "https://public-api.gamma.app/v1.0/generations"
-COFRE = Path(r"G:\Mi unidad\Antigravity\vault\secrets.json")
+COFRE = Path.home() / ".gemini" / "config" / "secrets.env"  # v3.2: cofre local del usuario (NOMBRE=valor, nova_claves.py)
 INSTRUCCIONES = (
     "Presentación en español de España, con tildes. Una diapositiva por cada bloque 'Diapositiva N'. "
     "Mantén el texto tal cual (ya está revisado). Diseño limpio y profesional, azul marino, sin emojis."
@@ -26,17 +26,11 @@ INSTRUCCIONES = (
 def clave() -> str:
     if valor := os.environ.get("GAMMA_API_KEY"):
         return valor
-    for linea in _leer(
-        COFRE.with_name("google_cloud.env")
-    ).splitlines():  # GAMMA_API_KEY=... (lo carga nova_vault_sync)
+    for linea in _leer(COFRE).splitlines():  # GAMMA_API_KEY=...
         nombre, _, valor = linea.partition("=")
         if nombre.strip() == "GAMMA_API_KEY" and valor.strip():
             return valor.strip()
-    try:
-        return json.loads(_leer(COFRE) or "{}").get("gamma_api_key", "")
-    except ValueError:
-        return ""
-
+    return ""
 
 def _leer(ruta: Path) -> str:
     try:
@@ -74,7 +68,7 @@ def generar(
     if not api_key:
         raise SystemExit(
             '[error] Falta la clave de Gamma: añade "gamma_api_key" al cofre (vault\\secrets.json) '
-            "o la variable GAMMA_API_KEY. Pídesela a Alexander; no la escribas en ningún script."
+            "o la variable GAMMA_API_KEY. Pídesela al usuario; no la escribas en ningún script."
         )
     peticion = {
         "inputText": texto_presentacion(guion, secciones),

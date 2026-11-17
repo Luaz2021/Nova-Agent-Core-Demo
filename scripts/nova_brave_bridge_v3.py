@@ -3,7 +3,7 @@ Nova Brave Bridge v4.0 (09/11/2026, Claude: pase de pago de un solo uso; el arch
 Puente local (WebSocket + HTTP) entre Nova y la extension de Brave.
 
 v4: POST /pase_pago (cabecera X-Nova-Clave) -> la extension permite UN pago durante 10 min. La clave vive en
-    nova_core\.pase_pago.clave: la lee el hook de turno cuando Alexander escribe "autorizo el pago"; nova_hook.py
+    nova_core\.pase_pago.clave: la lee el hook de turno cuando el usuario escribe "autorizo el pago"; nova_hook.py
     impide que Nova la lea o llame a /pase_pago. /execute rechaza las acciones del pase (Nova no puede darselo).
 
 - WebSocket /ws : solo acepta conexiones de extensiones (Origin chrome-extension://).
@@ -82,10 +82,15 @@ async def guard_middleware(request, handler):
 
 def traer_brave_delante(titulo):
     """Trae delante la ventana de Brave cuyo titulo empieza por el de la pestaña (Windows no deja a Brave hacerlo solo).
-    Truco estandar: pulsar y soltar Alt antes de SetForegroundWindow desbloquea el cambio de primer plano."""
+    Truco estandar: pulsar y soltar Alt antes de SetForegroundWindow desbloquea el cambio de primer plano.
+    v3.2: vale para cualquier navegador Chromium (Brave, Chrome, Edge, Opera, Vivaldi, Chromium). En macOS/Linux
+    no hay user32: devuelve False y la extension trabaja con la pestaña que este a la vista."""
+    if os.name != "nt":
+        return False
     import ctypes
     from ctypes import wintypes
     u = ctypes.windll.user32
+    sufijos = ("Brave", "Google Chrome", "Microsoft Edge", "Microsoft​ Edge", "Opera", "Vivaldi", "Chromium")
     candidatas = []
 
     @ctypes.WINFUNCTYPE(wintypes.BOOL, wintypes.HWND, wintypes.LPARAM)
@@ -95,7 +100,7 @@ def traer_brave_delante(titulo):
             b = ctypes.create_unicode_buffer(n + 1)
             u.GetWindowTextW(h, b, n + 1)
             t = b.value
-            if t.endswith("Brave") and (not titulo or t.startswith(titulo[:60])):
+            if t.endswith(sufijos) and (not titulo or t.startswith(titulo[:60])):
                 candidatas.append(h)
         return True
 
@@ -189,7 +194,9 @@ async def send_command(action, args, timeout=DEFAULT_TIMEOUT):
     if not active_ws or active_ws.closed:
         return 503, {
             "ok": False,
-            "error": "La extension de Brave no esta conectada. Abre Brave y revisa que 'Nova Agent para Brave' este activa en brave://extensions.",
+            "error": "La extension de Nova no esta conectada. Abre tu navegador (Brave, Chrome, Edge...) y revisa que "
+                     "'Nova Agent para navegador' este activa en brave://extensions, chrome://extensions o edge://extensions. "
+                     "Firefox no es compatible: usa el navegador automatico de Nova (Playwright).",
         }
     req_id = f"cmd_{uuid.uuid4().hex[:10]}"
     fut = asyncio.get_running_loop().create_future()
@@ -221,7 +228,7 @@ async def execute_handler(request):
             return web.json_response({"ok": False, "error": f"No existen estos archivos: {faltan}"}, status=400)
     if str(action).upper() in ACCIONES_RESERVADAS:
         log(f"/execute intento usar una accion reservada ({action}): rechazado")
-        return web.json_response({"ok": False, "error": "El permiso de pago solo lo da Alexander (escribiendo 'autorizo el pago')."},
+        return web.json_response({"ok": False, "error": "El permiso de pago solo lo da el usuario (escribiendo 'autorizo el pago')."},
                                  status=403)
     try:
         timeout = min(float(payload.get("timeout", DEFAULT_TIMEOUT)), MAX_TIMEOUT)
@@ -252,7 +259,7 @@ async def pase_pago_handler(request):
         payload = {}
     args = {"minutes": payload.get("minutos", 10), "motivo": str(payload.get("motivo", ""))[:200]}
     status, body = await send_command("GRANT_PAYMENT_PASS", args)
-    log(f"Pase de pago concedido por Alexander ({args['minutes']} min): {body}")
+    log(f"Pase de pago concedido por el usuario ({args['minutes']} min): {body}")
     return web.json_response(body, status=status)
 
 

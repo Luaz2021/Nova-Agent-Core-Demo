@@ -4,7 +4,7 @@ Qwen lee el documento entero (y los requisitos del enunciado, si los hay) y devu
 - requisitos que el texto NO responde de verdad (aunque la seccion diga que los cubre)
 - contradicciones entre partes del documento
 - frases sin sentido o que no se entienden
-Solo AVISA: un modelo local se puede equivocar, la decision es de Alexander.
+Solo AVISA: un modelo local se puede equivocar, la decision es del usuario.
 """
 
 import json

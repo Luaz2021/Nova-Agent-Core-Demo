@@ -2,8 +2,8 @@
 
 borrador.md es el documento de trabajo. Cada seccion lleva una marca:
     <!-- nova:seccion id=3 estado=borrador -->     Qwen la puede rehacer
-    <!-- nova:seccion id=3 estado=bloqueada -->    Alexander la dio por buena: nadie la toca
-Alexander puede corregir el .md a mano; las secciones que edita se respetan si las bloquea.
+    <!-- nova:seccion id=3 estado=bloqueada -->    el usuario la dio por buena: nadie la toca
+el usuario puede corregir el .md a mano; las secciones que edita se respetan si las bloquea.
 """
 
 import re
@@ -55,7 +55,7 @@ def _prompt(
     if texto_previo:
         prompt += f"\n\nVersion anterior de la seccion:\n{texto_previo}"
     if nota:
-        prompt += f"\n\nCorreccion pedida por Alexander (obligatoria): {nota}"
+        prompt += f"\n\nCorreccion pedida por el usuario (obligatoria): {nota}"
     return prompt, sistema
 
 

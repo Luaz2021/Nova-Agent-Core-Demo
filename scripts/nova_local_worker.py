@@ -175,7 +175,7 @@ def main():
     except Exception as e:
         # el agente de nube lee esta salida: el fallo se dice claro y se frena (no picar ese codigo en la nube)
         print(f"[FRENO CAPA 0] {e}")
-        print("NO escribas este codigo desde la nube: vuelca el fallo a nova_pendiente.txt y avisa a Alexander.")
+        print("NO escribas este codigo desde la nube: vuelca el fallo a nova_pendiente.txt y avisa al usuario.")
         sys.exit(2)
 
     out_file = args.out or os.path.join(mem_dir, "registros", "resultado_local_worker.md")

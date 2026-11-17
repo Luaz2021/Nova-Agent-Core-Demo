@@ -55,7 +55,7 @@ def kill_other_instances():
     try:
         subprocess.run(
             ["powershell.exe", "-NoProfile", "-WindowStyle", "Hidden", "-Command", ps_cmd],
-            timeout=4, creationflags=0x08000000
+            timeout=4, creationflags=0x08000000 if os.name == "nt" else 0
         )
     except Exception:
         pass
@@ -141,7 +141,7 @@ def _speak_neural(text, cache_key=None, wait=True):
     except Exception:
         safe_text = re.sub(r'[\'\"`$]', '', text)
         cmd = f"Add-Type -AssemblyName System.Speech; $s = New-Object System.Speech.Synthesis.SpeechSynthesizer; $s.Speak('{safe_text}')"
-        subprocess.run(["powershell.exe", "-NoProfile", "-WindowStyle", "Hidden", "-Command", cmd], timeout=10, creationflags=0x08000000)
+        subprocess.run(["powershell.exe", "-NoProfile", "-WindowStyle", "Hidden", "-Command", cmd], timeout=10, creationflags=0x08000000 if os.name == "nt" else 0)
 
 def ensure_cache():
     """Garantiza que los audios pre-cacheados existan en disco."""
@@ -315,7 +315,7 @@ def _puertos_antigravity():
               "(Get-Process Antigravity -ErrorAction SilentlyContinue).Id } | Select-Object -ExpandProperty LocalPort")
     try:
         res = subprocess.run(["powershell.exe", "-NoProfile", "-WindowStyle", "Hidden", "-Command", ps_cmd],
-                             capture_output=True, text=True, timeout=12, creationflags=0x08000000)
+                             capture_output=True, text=True, timeout=12, creationflags=0x08000000 if os.name == "nt" else 0)
         return [int(x) for x in res.stdout.split() if x.strip().isdigit()]
     except Exception:
         return []

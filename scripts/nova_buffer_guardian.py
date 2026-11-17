@@ -25,7 +25,7 @@ import time
 from datetime import datetime
 
 # ---------- Claves fuera de los chat logs (se suben a Drive) ----------
-# Si Alexander pega una clave en el chat, el log y el puente la guardan TACHADA: la clave real solo vive en el cofre
+# Si el usuario pega una clave en el chat, el log y el puente la guardan TACHADA: la clave real solo vive en el cofre
 # (vault\google_cloud.env). 12/11 (Claude): + Gamma, ElevenLabs, Resend, Supabase, Stripe, Groq, HF y api_key="...".
 PATRONES_CLAVE = [
     re.compile(r"sk-(?:gamma-|or-|proj-|ant-)?[A-Za-z0-9_-]{20,}"),    # Gamma / OpenAI / OpenRouter / Anthropic
@@ -58,58 +58,12 @@ def tachar_claves(texto: str) -> str:
 
 def get_memory_dir():
     """Sync v4 (local primero): la memoria vive en ~/.gemini/antigravity/memory.
-    Drive solo es respaldo; nova_sync_v4.ps1 la sube y la baja entre equipos."""
+    (v3.2: ya no se busca en Google Drive)."""
     local_mem = os.path.expanduser(
         os.path.join("~", ".gemini", "antigravity", "memory")
     )
     os.makedirs(local_mem, exist_ok=True)
     return local_mem
-
-
-def _legacy_get_drive_memory_dir():
-    """(Retirado en v4) Busqueda antigua de la memoria en Google Drive."""
-    # 1. macOS (Google Drive for Desktop moderno usa CloudStorage)
-    if sys.platform == "darwin":
-        cloud_storage = os.path.expanduser("~/Library/CloudStorage")
-        if os.path.exists(cloud_storage):
-            for d in os.listdir(cloud_storage):
-                if "GoogleDrive" in d:
-                    for sub in [
-                        "Mi unidad/Antigravity/memory",
-                        "My Drive/Antigravity/memory",
-                        "Antigravity/memory",
-                    ]:
-                        candidate = os.path.join(cloud_storage, d, sub)
-                        if os.path.exists(candidate):
-                            return candidate
-
-    # 2. Linux / macOS rutas directas comunes (rclone, Google Drive CLI, sync clients)
-    for linux_path in [
-        os.path.expanduser("~/GoogleDrive/Antigravity/memory"),
-        os.path.expanduser("~/Drive/Antigravity/memory"),
-        os.path.expanduser("~/Google Drive/Antigravity/memory"),
-        "/mnt/gdrive/Antigravity/memory",
-    ]:
-        if os.path.exists(linux_path):
-            return linux_path
-
-    # 3. Windows (busqueda dinamica por letras de unidad)
-    for letter in "GDEFGHIJKLMNOPQRSTUVWXYZC":
-        for sub in [
-            r"Mi unidad\Antigravity\memory",
-            r"My Drive\Antigravity\memory",
-            r"Antigravity\memory",
-        ]:
-            candidate = os.path.join(f"{letter}:\\", sub)
-            if os.path.exists(candidate):
-                return candidate
-
-    # Fallback local agnostico al SO
-    local_fallback = os.path.expanduser(
-        os.path.join("~", ".gemini", "antigravity", "memory")
-    )
-    os.makedirs(local_fallback, exist_ok=True)
-    return local_fallback
 
 
 BRAIN_DIR = os.path.expanduser(os.path.join("~", ".gemini", "antigravity", "brain"))
@@ -341,44 +295,33 @@ def parse_and_sync_transcript(conv_id, transcript_path):
 
 
 def trigger_alert(current_tokens, ciclos_compact=0):
-    """Dispara alerta sonora, aviso de voz nativo y persiste puente en Drive."""
+    """Dispara alerta sonora, aviso de voz nativo y guarda el puente en memoria."""
     k_tokens = int(current_tokens / 1000)
     print(
-        f"[ALERTA BUFFER] Sesion en {current_tokens:,} tokens ({k_tokens}k) | Ciclos: {ciclos_compact}/5. Puente persistido en Drive."
+        f"[ALERTA BUFFER] Sesion en {current_tokens:,} tokens ({k_tokens}k) | Ciclos: {ciclos_compact}/5. Puente guardado en memoria."
     )
 
-    # 1. Beep nativo del sistema
+    # v3.2: el aviso llama al usuario por SU nombre (el que dio al instalar, perfil_usuario.json) y suena en
+    # Windows, macOS y Linux (nova_comun). Antes decia un nombre fijo y solo sonaba en Windows.
     try:
-        import winsound
+        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+        import nova_comun
 
-        winsound.MessageBeep(winsound.MB_ICONEXCLAMATION)
-    except Exception:
-        pass
-
-    # 2. Aviso por voz nativo en segundo plano via VBScript (SAPI Helena a 0 tokens)
-    try:
-        vbs_path = os.path.join(os.path.dirname(__file__), "play_token_alert.vbs")
-        if not os.path.exists(vbs_path):
-            vbs_path = os.path.join(
-                get_memory_dir(), "..", "scripts", "play_token_alert.vbs"
+        nombre = nova_comun.nombre_usuario()
+        trato = f"{nombre}, " if nombre else ""
+        if ciclos_compact < 5:
+            voice_msg = (
+                f"{trato}la sesion supero los {k_tokens} mil tokens. "
+                f"Llevas {ciclos_compact} de 5 compactaciones. Escribe compact para resetear el bufer a 17 mil tokens."
             )
-        if os.path.exists(vbs_path):
-            if ciclos_compact < 5:
-                voice_msg = (
-                    f"Alexander, la sesion supero los {k_tokens} mil tokens. "
-                    f"Tienes {ciclos_compact} de 5 compactaciones. Escribe compact para resetear el bufer a 17 mil tokens."
-                )
-            else:
-                voice_msg = (
-                    f"Alexander, alcanzaste 5 compactaciones en esta sesion. "
-                    f"El puente esta guardado en Drive para saltar a una ventana nueva limpia."
-                )
-            subprocess.Popen(
-                ["wscript.exe", vbs_path, voice_msg],
-                stdin=subprocess.DEVNULL,
-                stdout=subprocess.DEVNULL,
-                stderr=subprocess.DEVNULL,
+        else:
+            voice_msg = (
+                f"{trato}alcanzaste 5 compactaciones en esta sesion. "
+                f"El puente esta guardado en memoria para saltar a una ventana nueva limpia."
             )
+        nova_comun.pitido()
+        nova_comun.notificar("Nova: aviso de tokens", voice_msg)
+        nova_comun.hablar(voice_msg)
     except Exception:
         pass
 

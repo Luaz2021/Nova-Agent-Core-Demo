@@ -1,10 +1,10 @@
 # Guia Rapida de Comandos y Atajos · NOVA Copilot Engine
-*Arquitectura creada por Saul usuario Martinez Rivas (@Luaz2021) · Lectura estatica a 0 tokens de generacion*
+*Arquitectura creada por Saul Alexander Martinez Rivas (@Luaz2021) · Lectura estatica a 0 tokens de generacion*
 
 ```text
 ==========================================================================
    NOVA COPILOT ENGINE - BIENVENIDA Y MAPA DE COMANDOS (125 SKILLS)
-   Creado por Saul usuario Martinez Rivas (@Luaz2021)
+   Creado por Saul Alexander Martinez Rivas (@Luaz2021)
 ==========================================================================
 ¡Hola! Soy Nova, tu copiloto tecnica y arquitecta de trinchera en Antigravity.
 Reglas base: Cero servilismo, codigo limpio (KISS), cero experimentos en vivo
@@ -19,9 +19,11 @@ sobre tu rama activa y permiso primero antes de tocar tu terminal.
 | :--- | :--- |
 | `hola` / `continuamos` / `seguimos` | Lee el puente de sesion y `tasks.md` y retoma exactamente en la ultima frase respondiendo en 2-3 lineas ejecutivas. |
 | `/ayuda` o `ayuda` | Muestra este archivo estatico completo sin gastar tokens de salida (`6.0x`) redactando desde cero. |
-| `Nova, sincroniza` | **Puente de salida:** absorbe de Drive (el original) lo nuevo, cambiado o borrado. Si chocan versiones gana Drive y la tuya queda al lado como `*.local-*`. Tambien corre solo al encender Windows. |
-| `Nova, sube los cambios` | **Puente de entrada:** sube a Drive las skills, reglas y scripts que creaste o cambiaste aqui. Si el otro equipo subio algo mas nuevo, ese archivo queda bloqueado hasta que sincronices. |
-| *(automatico al cerrar Antigravity)* | Sube solo la memoria: puente de contexto, chat logs e inbox de lecciones. |
+| `Nova, configura el sync` | **Nova Sync (varios equipos):** te guia paso a paso. Si no tienes Google Drive para escritorio te da el enlace oficial; luego crea la carpeta `Nova_Sync` en tu Drive (te pide permiso) y hace la primera pasada. En el 2o equipo deja tu Nova igual que la del 1o. Windows y Mac (Linux: con rclone). |
+| `Nova, sincroniza` | **Baja** de Drive lo nuevo. Nunca escribe en Drive. Si un archivo cambio en los dos equipos gana Drive y el tuyo queda al lado como `*.local-*`. En Windows corre solo al abrir Antigravity. |
+| `Nova, sube los cambios` | **Sube** a Drive lo que cambiaste aqui (lo UNICO que escribe en Drive). Si otro equipo subio algo mas nuevo, ese archivo queda bloqueado hasta que sincronices. En Windows corre solo al cerrar Antigravity. |
+| `Nova, deja este equipo igual que Drive` | **Espejo:** guarda una copia de lo distinto y deja este equipo identico a Drive (para un equipo desordenado). |
+| `Nova, revisate` | **Nova Doctor:** revisa y repara la instalacion (carpetas, skills, reglas automaticas, librerias, navegador). |
 | `/destilar` | Con Claude o Argon: pasa el inbox de lecciones y `mis_quejas.md` a las secciones Trampas / Definicion de hecho de cada indice y vacia el inbox. |
 | `/keys` o `configurar llaves` | Despliega la guia paso a paso para activar el Router Multi-Modelo y herramientas a 0 EUR. |
 | `buenos dias` / `que tenemos pendiente` | Entrega el resumen ejecutivo matutino de proyectos activos y tareas abiertas. |
@@ -37,12 +39,13 @@ sobre tu rama activa y permiso primero antes de tocar tu terminal.
 
 ---
 
-## 3. Linea Directa con el Creador (Saul usuario Martinez Rivas)
+## 3. Linea Directa con el Creador (Saul Alexander Martinez Rivas)
 | Atajo Comunitario / Frase | Que hace Nova por detras (Sanitizado y Seguro) |
 | :--- | :--- |
-| `/creador [mensaje]` o *"mandale un mensaje al creador: ..."* | Pasa el texto por `feedback_sanitizer.py` (borra rutas privadas o claves) y lo envia al buzon oficial en GitHub (`Luaz2021/Nova-Agent-Core-Demo`, etiqueta `buzon-creador`) via `gh issue create` o enlace directo en 1 clic. |
+| `/creador [mensaje]` o *"mandale un mensaje al creador: ..."* | Pasa el texto por `scripts/enviar_feedback.py` (borra rutas privadas, IPs y claves) y lo envia al buzon oficial en GitHub (`Luaz2021/Nova-Agent-Core-Demo`, etiqueta `buzon-creador`) via `gh issue create` o enlace directo en 1 clic. |
 | `/reportar-fallo` o *"reportar error al creador"* | Empaqueta el fallo resuelto bajo formato Servilleta (`[SO] -> [Error] -> [Fix]`) sin datos privados y lo envia con etiqueta `napkin-crowd`. |
 | `/compartir-skill [nombre]` | Empaqueta un `SKILL.md` creado o mejorado por el usuario y lo propone al Core oficial con etiqueta `skill-comunitaria` para revision y creditos de autor. |
+| `/enviar-informe` | Prepara el informe de aprendizaje (SOLO lecciones, servilleta nueva y TIPO de errores; sin rutas, correos ni claves) en `memory/informe_para_enviar.md`. Lo revisas, borras lo que quieras y, si dices que si, abre el formulario de GitHub (etiqueta `informe-uso`). Si aceptaste al instalar, Nova te lo propone una vez al mes. |
 | `/actualizar-nova` o *"Nova, busca actualizaciones"* / *"Nova, ¿hay actualizaciones?"* | Ejecuta `actualizar_nova.py` con backup preventivo, descarga skills/scripts nuevos y el Napkin oficial de Saul (`napkin_oficial.md`) sin tocar tus notas personales ni tareas. |
 | *(Exclusivo Saul)* `revisa el buzon de la comunidad` | Escanea los issues recibidos (`buzon-creador`, `napkin-crowd`, `skill-comunitaria`), aplica el filtro forense de 4 puntos (KISS, Seguridad, SO, Originalidad) y presenta el resumen listo para aprobar. |
 

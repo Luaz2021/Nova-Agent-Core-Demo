@@ -1,8 +1,8 @@
 {
-    "Version": "3.1",
+    "Version": "3.2",
     "Engine": "NovaManifestGuardian v3",
-    "GeneratedAt": "2026-11-14 01:08:03",
-    "TotalComponents": 1495,
+    "GeneratedAt": "2026-11-17 15:15:37",
+    "TotalComponents": 1494,
     "Components": [
         {
             "Id": "rule_gemini_md",
@@ -10,8 +10,8 @@
             "Type": "Rule",
             "RelativePath": "GEMINI.md",
             "TargetRelative": "config/GEMINI.md",
-            "SizeBytes": 23264,
-            "SHA256": "D0A3B05A1C172E7093B36D925A6020C53A6248D486A3E05D0C2EB9691FA4D623"
+            "SizeBytes": 22668,
+            "SHA256": "4C3F16F4A6B076BC73C6425FA4D5A30FC5E54C936AB424DBB5E6847C725932A3"
         },
         {
             "Id": "config_ayuda_md",
@@ -19,8 +19,8 @@
             "Type": "Config",
             "RelativePath": "AYUDA.md",
             "TargetRelative": "config/AYUDA.md",
-            "SizeBytes": 5079,
-            "SHA256": "9E11D40AB06EFF50F472779C5BBE187A3F288E6D86F0E0356DB146255C5619E8"
+            "SizeBytes": 5954,
+            "SHA256": "1F05F2A124F68A4A921E493892DA6B766A8CE80590AEF24503BACC6209818942"
         },
         {
             "Id": "script_scripts_actualizar_nova_py",
@@ -28,8 +28,8 @@
             "Type": "Script",
             "RelativePath": "scripts/actualizar_nova.py",
             "TargetRelative": "antigravity/scripts/actualizar_nova.py",
-            "SizeBytes": 10901,
-            "SHA256": "1B85B86A1D7196B14247FCC6A9C516712146120CB0755B5894EBC5E6362497DD"
+            "SizeBytes": 12334,
+            "SHA256": "5C79BB742839FFD0C448FA38D30AE7BC2A101F45D26237332104C71B6C284F8F"
         },
         {
             "Id": "file_scripts_brave_extension_background_js",
@@ -37,8 +37,8 @@
             "Type": "File",
             "RelativePath": "scripts/brave_extension/background.js",
             "TargetRelative": "antigravity/scripts/brave_extension/background.js",
-            "SizeBytes": 27114,
-            "SHA256": "9F2472E7B1ECBF92138D13334384D1E1951753A48BB0AA30AD5CF849B0CCE96F"
+            "SizeBytes": 27116,
+            "SHA256": "5F2C101F56F14D4C587395E57A11866DFFCE5811CDB08CBC12FAAFFA6EF23CAD"
         },
         {
             "Id": "file_scripts_brave_extension_content_js",
@@ -46,8 +46,8 @@
             "Type": "File",
             "RelativePath": "scripts/brave_extension/content.js",
             "TargetRelative": "antigravity/scripts/brave_extension/content.js",
-            "SizeBytes": 34476,
-            "SHA256": "C687509261B5AC207B384AEFEFF2FE320D33CBECD46B30E0A44C28396544BF03"
+            "SizeBytes": 34481,
+            "SHA256": "1C341ECC08807C3229A0B7E57F92646FD1EF75EBC9F53B83A63AA3D588C915C6"
         },
         {
             "Id": "file_scripts_brave_extension_manifest_json",
@@ -55,8 +55,8 @@
             "Type": "File",
             "RelativePath": "scripts/brave_extension/manifest.json",
             "TargetRelative": "antigravity/scripts/brave_extension/manifest.json",
-            "SizeBytes": 841,
-            "SHA256": "52CF2F3F85F2B5D07703A072BDA81AA2B276F18C77EA4B7F06098B21FEB7A802"
+            "SizeBytes": 877,
+            "SHA256": "BD8BB04F5530BC648C44479D95419F805A140375DD391B8AC25FD73C6A2D38C0"
         },
         {
             "Id": "script_scripts_enviar_feedback_py",
@@ -64,8 +64,8 @@
             "Type": "Script",
             "RelativePath": "scripts/enviar_feedback.py",
             "TargetRelative": "antigravity/scripts/enviar_feedback.py",
-            "SizeBytes": 3749,
-            "SHA256": "958592DC5D83D14911BACBD8B2FC10C0CEFEA913A17E87BEF262C03FC4DEAD64"
+            "SizeBytes": 7664,
+            "SHA256": "4B173FE549C90EB78533F723DA81CBBF8552F5886B461483DF63A142107C94EF"
         },
         {
             "Id": "script_scripts_humanize_check_py",
@@ -109,8 +109,8 @@
             "Type": "Script",
             "RelativePath": "scripts/nova_brave_bridge_v3.py",
             "TargetRelative": "antigravity/scripts/nova_brave_bridge_v3.py",
-            "SizeBytes": 12071,
-            "SHA256": "752FE90496BE1524FB0DBB50BFCBBFA1AA14A4B35FDB1875765128BB3D106FC3"
+            "SizeBytes": 12638,
+            "SHA256": "7B19323E77F5CC6EE2D56AB55A6EED09E83DDDD3DAB1C6CFA40C6494CB1D7899"
         },
         {
             "Id": "script_scripts_nova_buffer_guardian_py",
@@ -118,8 +118,8 @@
             "Type": "Script",
             "RelativePath": "scripts/nova_buffer_guardian.py",
             "TargetRelative": "antigravity/scripts/nova_buffer_guardian.py",
-            "SizeBytes": 22871,
-            "SHA256": "5ADA2A96184DBAA0A6CEA7ED604A66B27EDF42A970FAD47D64994B264D583F39"
+            "SizeBytes": 20736,
+            "SHA256": "C3AAEB96165593486E6A3CE741E6BDB958B79AC3D4071F5CEE91E22474ABA14F"
         },
         {
             "Id": "script_scripts_nova_buffer_guardian_sh",
@@ -163,8 +163,8 @@
             "Type": "Script",
             "RelativePath": "scripts/nova_cost_logger.py",
             "TargetRelative": "antigravity/scripts/nova_cost_logger.py",
-            "SizeBytes": 7822,
-            "SHA256": "4FD3F5823B49322FD6FC532D50764525DA9E0150497D01968C2BBB0179CB8045"
+            "SizeBytes": 7802,
+            "SHA256": "2925EC6F48299DFEAAB8DD52D35710E94D22FE52428759883EE26D70323BA8CF"
         },
         {
             "Id": "script_scripts_nova_doctor_ps1",
@@ -172,8 +172,17 @@
             "Type": "Script",
             "RelativePath": "scripts/nova_doctor.ps1",
             "TargetRelative": "antigravity/scripts/nova_doctor.ps1",
-            "SizeBytes": 20258,
-            "SHA256": "AD9C7E31F26686C7E98A073EA398F9ED22A1B5BEB6CCFFDFEE1E6881FD7AA676"
+            "SizeBytes": 20304,
+            "SHA256": "243AF0174C525060EB1FB8D35C12A3523E408EBDEA77F0CAF2BBBAD2E1C6BE1D"
+        },
+        {
+            "Id": "script_scripts_nova_doctor_py",
+            "Name": "nova_doctor.py",
+            "Type": "Script",
+            "RelativePath": "scripts/nova_doctor.py",
+            "TargetRelative": "antigravity/scripts/nova_doctor.py",
+            "SizeBytes": 15702,
+            "SHA256": "2835A20C8E921344423F7FE583E0AFB41DF7599EABBA8F3D8D182E490228F881"
         },
         {
             "Id": "script_scripts_nova_instalar_ia_local_py",
@@ -190,8 +199,8 @@
             "Type": "Script",
             "RelativePath": "scripts/nova_local_worker.py",
             "TargetRelative": "antigravity/scripts/nova_local_worker.py",
-            "SizeBytes": 7560,
-            "SHA256": "32260F5BE5BC2312D753C7C84E73F650EE58DA0A4E97A29F368D55BB6C6F9CD3"
+            "SizeBytes": 7559,
+            "SHA256": "116F9838FCC6E6EF341577E85BED845C65AFCC458CC1127734142030275DAEDC"
         },
         {
             "Id": "script_scripts_nova_mcp_py",
@@ -199,8 +208,8 @@
             "Type": "Script",
             "RelativePath": "scripts/nova_mcp.py",
             "TargetRelative": "antigravity/scripts/nova_mcp.py",
-            "SizeBytes": 6639,
-            "SHA256": "EB1B8D06D5688233A92E0AAA6EF733BCF234F2DCAA301785783612580D521364"
+            "SizeBytes": 6665,
+            "SHA256": "2AC0EBE3C078575411146CAA40CBBB41B9DE3113BCBB27FA12405CEF28D26523"
         },
         {
             "Id": "script_scripts_nova_modelos_json",
@@ -217,8 +226,8 @@
             "Type": "Script",
             "RelativePath": "scripts/nova_ollama_modelos.ps1",
             "TargetRelative": "antigravity/scripts/nova_ollama_modelos.ps1",
-            "SizeBytes": 3434,
-            "SHA256": "0448A068718007862DC0A2A3F51124F6FD1C0FB15CDDD40AED71AFEB3918A4C9"
+            "SizeBytes": 3437,
+            "SHA256": "4CAA7C2C37A3AF6849B834764909A861335FE44057C209E604DF0116636A1A52"
         },
         {
             "Id": "script_scripts_nova_pipeline_local_py",
@@ -226,8 +235,8 @@
             "Type": "Script",
             "RelativePath": "scripts/nova_pipeline_local.py",
             "TargetRelative": "antigravity/scripts/nova_pipeline_local.py",
-            "SizeBytes": 40404,
-            "SHA256": "59701C3AE19AF85153864A4AE66A69090FCE7F1A99C505215855A511C53D5B4D"
+            "SizeBytes": 40402,
+            "SHA256": "C381BF7E9A2410977D1F717FDA12FA3D7C870517C949EA980F592EC7C0319CDE"
         },
         {
             "Id": "script_scripts_nova_puente_capturas_py",
@@ -235,8 +244,8 @@
             "Type": "Script",
             "RelativePath": "scripts/nova_puente_capturas.py",
             "TargetRelative": "antigravity/scripts/nova_puente_capturas.py",
-            "SizeBytes": 9822,
-            "SHA256": "74535B3958F9C1B537D291D09968E5E1ED9287CCF38476D6BC3810DF8A5F8CA3"
+            "SizeBytes": 9823,
+            "SHA256": "D6421901DCFDAB28EDF6079A6C920F473185C77B92E5F91908B8F42D2FB2BD19"
         },
         {
             "Id": "script_scripts_nova_python_ps1",
@@ -262,8 +271,26 @@
             "Type": "Script",
             "RelativePath": "scripts/nova_secciones.py",
             "TargetRelative": "antigravity/scripts/nova_secciones.py",
-            "SizeBytes": 20771,
-            "SHA256": "513FCA0CE0CA7AFFB5D7D90471C0672B3F5FDA73CA4DD58B58E2AD6815CB7F37"
+            "SizeBytes": 20770,
+            "SHA256": "63D5EA5583E9A41CD49908636A37393EA05A1DCF4B3652D516D9AC810C910B37"
+        },
+        {
+            "Id": "script_scripts_nova_sync_py",
+            "Name": "nova_sync.py",
+            "Type": "Script",
+            "RelativePath": "scripts/nova_sync.py",
+            "TargetRelative": "antigravity/scripts/nova_sync.py",
+            "SizeBytes": 28759,
+            "SHA256": "039DA4058501EC3844EFE8B1FCF0922579C5BDE1321A49F4B6F36CB156A2FB6C"
+        },
+        {
+            "Id": "script_scripts_nova_sync_pedir_py",
+            "Name": "nova_sync_pedir.py",
+            "Type": "Script",
+            "RelativePath": "scripts/nova_sync_pedir.py",
+            "TargetRelative": "antigravity/scripts/nova_sync_pedir.py",
+            "SizeBytes": 3807,
+            "SHA256": "7BAF47AF8771E7ABBA752D6E9A565F63E88E5F4777D77CB465DEC8941DBCE3BD"
         },
         {
             "Id": "script_scripts_nova_tarea_py",
@@ -271,8 +298,8 @@
             "Type": "Script",
             "RelativePath": "scripts/nova_tarea.py",
             "TargetRelative": "antigravity/scripts/nova_tarea.py",
-            "SizeBytes": 25391,
-            "SHA256": "5238F080A81460963C5EBE1FF852EBDDC3A61414606E5FA81060E1FE2C0FAC23"
+            "SizeBytes": 25385,
+            "SHA256": "7A697C53C28E0BA87F888D54A08614A58A5FD4DFF59F660A50FB756539DF8E5D"
         },
         {
             "Id": "script_scripts_nova_turn_telemetry_py",
@@ -307,8 +334,8 @@
             "Type": "Script",
             "RelativePath": "scripts/play_token_alert.vbs",
             "TargetRelative": "antigravity/scripts/play_token_alert.vbs",
-            "SizeBytes": 614,
-            "SHA256": "1CA1F89AA4BAAAE36B255141E071F8A029F434392DF36C3715176DFEE8D0A1C6"
+            "SizeBytes": 606,
+            "SHA256": "AE4033B75FD9D9DD8ED5C9DE1D02DAAAD13A008C87E0D1F03ECC1B4CDB8008B5"
         },
         {
             "Id": "file_scripts_qa_audit_dependencies_py",
@@ -361,8 +388,8 @@
             "Type": "Script",
             "RelativePath": "scripts/session_guard.ps1",
             "TargetRelative": "antigravity/scripts/session_guard.ps1",
-            "SizeBytes": 6839,
-            "SHA256": "5D1424E25C1B8A95991B5CF7CCA26B1C0C24FF2E1FD1DF8CC8E1FFDC974AC2FA"
+            "SizeBytes": 6310,
+            "SHA256": "EE80DEC0F0843EF14C5201691D3B21603F1D7BD5C125294AB1AB75E14E8F27F5"
         },
         {
             "Id": "script_scripts_start_awake_sentinel_vbs",
@@ -370,8 +397,8 @@
             "Type": "Script",
             "RelativePath": "scripts/start_awake_sentinel.vbs",
             "TargetRelative": "antigravity/scripts/start_awake_sentinel.vbs",
-            "SizeBytes": 143,
-            "SHA256": "622F8EDD48DA6E0152C9EECDD3145B3B1DB5A81FB2417B7CB26E6140327478F1"
+            "SizeBytes": 435,
+            "SHA256": "62CE113249AF52844DDB5CFDCB450399F686611CA3B8ED0D805DABFB975289F3"
         },
         {
             "Id": "script_scripts_start_session_guard_vbs",
@@ -388,17 +415,8 @@
             "Type": "Script",
             "RelativePath": "scripts/start_vigia_lint.vbs",
             "TargetRelative": "antigravity/scripts/start_vigia_lint.vbs",
-            "SizeBytes": 422,
-            "SHA256": "B9318747233E3B2F6CE7CB624D609021ABC6F48EA13EBA52CBFDBB2AE48ED5B7"
-        },
-        {
-            "Id": "script_scripts_sync_antigravity_ps1",
-            "Name": "sync_antigravity.ps1",
-            "Type": "Script",
-            "RelativePath": "scripts/sync_antigravity.ps1",
-            "TargetRelative": "antigravity/scripts/sync_antigravity.ps1",
-            "SizeBytes": 13196,
-            "SHA256": "B83C6EE785C920C4F218B8EC6E9824AA5710DF5BEAEB33AE94554058132BA46B"
+            "SizeBytes": 423,
+            "SHA256": "DFA21A4FF29E2E9B2B95E6E4FC809D1A971DFE3637DACD2F85C771CD145BA9F9"
         },
         {
             "Id": "template_memory_templates_gimnasio_template_md",
@@ -446,33 +464,6 @@
             "SHA256": "D868F7EC1ACA27608F76C2E6923FA35D957F43E8066D61768A1E2E07C5E85C0E"
         },
         {
-            "Id": "file_nova_core__ruff_cache__gitignore",
-            "Name": ".gitignore",
-            "Type": "File",
-            "RelativePath": "nova_core/.ruff_cache/.gitignore",
-            "TargetRelative": "nova_core/.ruff_cache/.gitignore",
-            "SizeBytes": 35,
-            "SHA256": "9E3A60F1E6EC4AE60215C11D54B171392745EC25E9DDED433D5BD921363AF316"
-        },
-        {
-            "Id": "file_nova_core__ruff_cache_0_17_3_4916115006977613782",
-            "Name": "4916115006977613782",
-            "Type": "File",
-            "RelativePath": "nova_core/.ruff_cache/0.17.3/4916115006977613782",
-            "TargetRelative": "nova_core/.ruff_cache/0.17.3/4916115006977613782",
-            "SizeBytes": 220,
-            "SHA256": "CB4DA01567672C4F203CBE94EFD6409B839B13E1F33C445329C839070C335E50"
-        },
-        {
-            "Id": "file_nova_core__ruff_cache_cachedir_tag",
-            "Name": "CACHEDIR.TAG",
-            "Type": "File",
-            "RelativePath": "nova_core/.ruff_cache/CACHEDIR.TAG",
-            "TargetRelative": "nova_core/.ruff_cache/CACHEDIR.TAG",
-            "SizeBytes": 43,
-            "SHA256": "5953156D7E0C564A427251316EAF26F8870E6483AE2197F916B630E4F93E31AE"
-        },
-        {
             "Id": "file_nova_core_analysis_options_yaml",
             "Name": "analysis_options.yaml",
             "Type": "File",
@@ -505,8 +496,8 @@
             "Type": "File",
             "RelativePath": "nova_core/conversor.py",
             "TargetRelative": "nova_core/conversor.py",
-            "SizeBytes": 10145,
-            "SHA256": "66BCED68CCAE1241CE959EE01B047EA3FD09F05C371AC39F9480F51700F2D49B"
+            "SizeBytes": 10146,
+            "SHA256": "3EE337F4F5CE7D2A58937D9645F1917E3E818C13C4433D4B865C997C3A20DD5C"
         },
         {
             "Id": "file_nova_core_herramientas_nova_py",
@@ -514,8 +505,8 @@
             "Type": "File",
             "RelativePath": "nova_core/herramientas_nova.py",
             "TargetRelative": "nova_core/herramientas_nova.py",
-            "SizeBytes": 4122,
-            "SHA256": "E786A4B8244B55FF9EE7D294A47852384791BB3E656740D4D2F72819CEEFA717"
+            "SizeBytes": 4123,
+            "SHA256": "8ECD8D2142D7DCA3E32851CFFCEB698215435D768E702492FE338BCF9C62A2A6"
         },
         {
             "Id": "file_nova_core_hook_tool_bat",
@@ -541,8 +532,8 @@
             "Type": "File",
             "RelativePath": "nova_core/instalar_hooks.py",
             "TargetRelative": "nova_core/instalar_hooks.py",
-            "SizeBytes": 3650,
-            "SHA256": "D2DFADF7FA6AF0D39A148545DB4471C62C9B0383C8DAA34D16B2E6E964D57A37"
+            "SizeBytes": 3984,
+            "SHA256": "3BDA064D2A1A82832D04452FDBBF4ADAE915219EBED19B173F36829FC0703047"
         },
         {
             "Id": "file_nova_core_kiss_haiku_txt",
@@ -568,8 +559,8 @@
             "Type": "File",
             "RelativePath": "nova_core/nova_hook.py",
             "TargetRelative": "nova_core/nova_hook.py",
-            "SizeBytes": 34188,
-            "SHA256": "A0C659DFC1EA79E779ECDABC81A05B8B621ACF2F702EB08194BC58BB563ABC8D"
+            "SizeBytes": 35204,
+            "SHA256": "11BCFBC0E97DEAE45EFFC654013706484AACFC3A7C852565B00F2350B36F55D5"
         },
         {
             "Id": "file_nova_core_nova_hook_turno_py",
@@ -577,8 +568,8 @@
             "Type": "File",
             "RelativePath": "nova_core/nova_hook_turno.py",
             "TargetRelative": "nova_core/nova_hook_turno.py",
-            "SizeBytes": 33359,
-            "SHA256": "3D0BFE42C754E399222AE2DBAC3D01AFB59292C9EAFA363224C499D11A69247F"
+            "SizeBytes": 34847,
+            "SHA256": "988FBC4BB77C7A1CEC7950C516D88906B32633AD330E6FC3B11F16396EC29300"
         },
         {
             "Id": "file_nova_core_nova_hooks_config_json",
@@ -586,8 +577,8 @@
             "Type": "File",
             "RelativePath": "nova_core/nova_hooks_config.json",
             "TargetRelative": "nova_core/nova_hooks_config.json",
-            "SizeBytes": 204,
-            "SHA256": "B1B1FEB811315CB2A9CDE92B7F21B007029AE22D68BCA665E1AFC9BFB34A457F",
+            "SizeBytes": 196,
+            "SHA256": "CE5144A9BC919F01F705459D7F82671AB88C550B65C18CC1DD33970899EAD948",
             "Preserve": true
         },
         {
@@ -650,8 +641,8 @@
             "Type": "File",
             "RelativePath": "nova_core/redaccion/borrador.py",
             "TargetRelative": "nova_core/redaccion/borrador.py",
-            "SizeBytes": 8406,
-            "SHA256": "781A137CE12468D448C3C5234714DD9F99666D8CFF314F6CF917077163D9AA77"
+            "SizeBytes": 8409,
+            "SHA256": "FC4DCEB3F563104C34A9B0C0FF540B461C28108D1742076A17E31E3E2A4F144F"
         },
         {
             "Id": "file_nova_core_redaccion_calidad_py",
@@ -659,8 +650,8 @@
             "Type": "File",
             "RelativePath": "nova_core/redaccion/calidad.py",
             "TargetRelative": "nova_core/redaccion/calidad.py",
-            "SizeBytes": 7709,
-            "SHA256": "07478F3A7CBD93A7F1FE3AD465B4610A8A860C584FEA6D90BD8D791483F7FA5A"
+            "SizeBytes": 7710,
+            "SHA256": "C31C3E27005AE44464ED8DFFFFC3F735C74D673F35312A7B5191501EF6CA9927"
         },
         {
             "Id": "file_nova_core_redaccion_datos_py",
@@ -668,8 +659,8 @@
             "Type": "File",
             "RelativePath": "nova_core/redaccion/datos.py",
             "TargetRelative": "nova_core/redaccion/datos.py",
-            "SizeBytes": 15864,
-            "SHA256": "CE791B8CE3D0B9CB7E3F58923C892A05EEC186BF06012372094191972DDBAFF9"
+            "SizeBytes": 15863,
+            "SHA256": "E75F26D6C063912387B69747F32AB0DC0FC7D843FCEB3FDD482C08666CA7F73D"
         },
         {
             "Id": "file_nova_core_redaccion_diccionario_txt",
@@ -686,8 +677,8 @@
             "Type": "File",
             "RelativePath": "nova_core/redaccion/enunciado.py",
             "TargetRelative": "nova_core/redaccion/enunciado.py",
-            "SizeBytes": 12494,
-            "SHA256": "F996EFCBB7D1D9A17FCFB857523D6ED140D94821E9FD73601524DDD96D4F2975"
+            "SizeBytes": 12490,
+            "SHA256": "438DC8A159871776E329B0FDA52A5ACC9330269741B1CE801DFB13C8EDBB6A0A"
         },
         {
             "Id": "file_nova_core_redaccion_estilos_apa_docx",
@@ -722,8 +713,8 @@
             "Type": "File",
             "RelativePath": "nova_core/redaccion/estilos.py",
             "TargetRelative": "nova_core/redaccion/estilos.py",
-            "SizeBytes": 8515,
-            "SHA256": "73DE4237420455EF45FD494960717DE657745D3AE0A8EC59DBBB8546996FED3C"
+            "SizeBytes": 8516,
+            "SHA256": "526B7DC29C3A563266BB4F2B0C170B9C051C8721AFDFB02560E4777A38E38520"
         },
         {
             "Id": "file_nova_core_redaccion_excel_py",
@@ -731,8 +722,8 @@
             "Type": "File",
             "RelativePath": "nova_core/redaccion/excel.py",
             "TargetRelative": "nova_core/redaccion/excel.py",
-            "SizeBytes": 7858,
-            "SHA256": "49884D18726E228D03755C8C858388393741AC33A848B013073891EAE07FD196"
+            "SizeBytes": 7860,
+            "SHA256": "FEDA784D0C24976E21064827C369014B43F43F95054D33D62ED7EC25A43B4CCD"
         },
         {
             "Id": "file_nova_core_redaccion_gamma_py",
@@ -740,8 +731,8 @@
             "Type": "File",
             "RelativePath": "nova_core/redaccion/gamma.py",
             "TargetRelative": "nova_core/redaccion/gamma.py",
-            "SizeBytes": 4425,
-            "SHA256": "DE8EE2AF8C735880CE7A0963A0D6B8C313098DFCB8566C9686E5AE2F18BA7508"
+            "SizeBytes": 4305,
+            "SHA256": "4FDFB2EB8426587C06F5B814DA05EA1045943EE939C7D84FB8424293966EC10A"
         },
         {
             "Id": "file_nova_core_redaccion_logica_py",
@@ -749,8 +740,8 @@
             "Type": "File",
             "RelativePath": "nova_core/redaccion/logica.py",
             "TargetRelative": "nova_core/redaccion/logica.py",
-            "SizeBytes": 2651,
-            "SHA256": "948BE1ACD98C44E8C03EF8371376537AF4A0E18A20FA2BD41C349AFA1CEBCD2F"
+            "SizeBytes": 2650,
+            "SHA256": "06CF7C730C656CA2605753E668732FEFB04231EA9DFA1FE85B3B7D8DA15545F6"
         },
         {
             "Id": "file_nova_core_redaccion_ortografia_py",
@@ -758,8 +749,8 @@
             "Type": "File",
             "RelativePath": "nova_core/redaccion/ortografia.py",
             "TargetRelative": "nova_core/redaccion/ortografia.py",
-            "SizeBytes": 4385,
-            "SHA256": "229785ED5A86B836770D0CC209CE1ED88ABB2243BAD0DD3466F6FB2D6113D8DF"
+            "SizeBytes": 4448,
+            "SHA256": "F898B25ABF642C1695B73C0A75D09884033F1E97A08E9C592259B59868C80FF1"
         },
         {
             "Id": "file_nova_core_redaccion_tipos_academico_json",
@@ -776,8 +767,8 @@
             "Type": "File",
             "RelativePath": "nova_core/redaccion/tipos/actividad.json",
             "TargetRelative": "nova_core/redaccion/tipos/actividad.json",
-            "SizeBytes": 1786,
-            "SHA256": "49FC51AF4FA6012D84857F54CF5605AE0B212ED4345DEC91E95AE6CA15B23F7C"
+            "SizeBytes": 1783,
+            "SHA256": "AAC003FEE7962EF86B1FCF7F8CD1DDAA4EFE326EDDF23B5452A08BE73AB77923"
         },
         {
             "Id": "file_nova_core_redaccion_tipos_doc_software_json",
@@ -839,8 +830,8 @@
             "Type": "File",
             "RelativePath": "nova_core/redaccion/word.py",
             "TargetRelative": "nova_core/redaccion/word.py",
-            "SizeBytes": 15689,
-            "SHA256": "AC54C75E328BE0835B2CEDF0CCFE91EE13C6F838196F2496207F07489F3AABEE"
+            "SizeBytes": 15787,
+            "SHA256": "BBF1ED2C98EB70E92BF338F4F69A6966F529509361F4907F863059077F1CDA88"
         },
         {
             "Id": "file_nova_core_redactar_py",
@@ -848,8 +839,8 @@
             "Type": "File",
             "RelativePath": "nova_core/redactar.py",
             "TargetRelative": "nova_core/redactar.py",
-            "SizeBytes": 19526,
-            "SHA256": "FB50A077C485D519474E455EC38B8EFF05669A35ADDC35FE750324E232D1598D"
+            "SizeBytes": 19529,
+            "SHA256": "939C02F1FD475FF8BE3207BD9F2CF67FD660AB55992EDC970391F61E56921CEF"
         },
         {
             "Id": "file_nova_core_redactor_py",
@@ -857,8 +848,8 @@
             "Type": "File",
             "RelativePath": "nova_core/redactor.py",
             "TargetRelative": "nova_core/redactor.py",
-            "SizeBytes": 31002,
-            "SHA256": "904BC69CBEC8A57BBAC449ED67DC4F33E44AC434106482639452AAE18D5E40A7"
+            "SizeBytes": 31000,
+            "SHA256": "07E23AC6B0E967A1DB834288CF2A45013FCC5B3BB7DE1C65FE49BF1C060D622F"
         },
         {
             "Id": "file_nova_core_reglas_sg_fastapi_on_event_yml",
@@ -920,8 +911,8 @@
             "Type": "File",
             "RelativePath": "nova_core/requisitos_nova.txt",
             "TargetRelative": "nova_core/requisitos_nova.txt",
-            "SizeBytes": 946,
-            "SHA256": "CDDE45040DB4C769D0692035BF9F0DAC200C170BC3729A316B6FE1ADAD23BD67"
+            "SizeBytes": 952,
+            "SHA256": "F0BE740EBFBBC0E295B87901D414891E0E84ED8EFC9E1CBE4B04108F84D4C8EB"
         },
         {
             "Id": "file_nova_core_resumir_py",
@@ -929,8 +920,8 @@
             "Type": "File",
             "RelativePath": "nova_core/resumir.py",
             "TargetRelative": "nova_core/resumir.py",
-            "SizeBytes": 5389,
-            "SHA256": "0CE4D71FFF98D3419EFCD87BD8CDB83279C4D88404F1C5E883D39ECA70F83A88"
+            "SizeBytes": 5390,
+            "SHA256": "1565BFFD518B01095CD1BA621A3970DB8FC03604F81558C635ADB747731E6440"
         },
         {
             "Id": "file_nova_core_sgconfig_yml",
@@ -947,8 +938,8 @@
             "Type": "File",
             "RelativePath": "nova_core/vigia_config.json",
             "TargetRelative": "nova_core/vigia_config.json",
-            "SizeBytes": 707,
-            "SHA256": "3EF924403FA576F6C5528950382C1566B13C5371AFD3D0EAAA24988EEBF66907"
+            "SizeBytes": 646,
+            "SHA256": "090D969A672012F0C3BA716F95C89AE193DB3E74B81F975C6102BE7A9BF6A0CC"
         },
         {
             "Id": "file_nova_core_vigia_lint_py",
@@ -956,8 +947,8 @@
             "Type": "File",
             "RelativePath": "nova_core/vigia_lint.py",
             "TargetRelative": "nova_core/vigia_lint.py",
-            "SizeBytes": 3784,
-            "SHA256": "8A5E290370892901532C914E93E4821CAA74C0E7C31A98E9E7AA495A6EA8744A"
+            "SizeBytes": 3867,
+            "SHA256": "5C4A430404681219C8043B67042F32CFAAF509D923B5C3253BAD0275051D99F0"
         },
         {
             "Id": "file_herramientas__nova_protegido",
@@ -983,8 +974,8 @@
             "Type": "File",
             "RelativePath": "herramientas/LEEME.md",
             "TargetRelative": "antigravity/herramientas/LEEME.md",
-            "SizeBytes": 5899,
-            "SHA256": "5549C45B6389FD070F416ED15CB3C7AB4D40B0240A0D85552674BEE8BA19635C"
+            "SizeBytes": 5916,
+            "SHA256": "C66FB6852CF4ABEB37F2D7DD3D6D09DBF924966F0647E5B2A76E894EC0488BD5"
         },
         {
             "Id": "file_herramientas_nube_gmail_api_client_py",
@@ -992,8 +983,8 @@
             "Type": "File",
             "RelativePath": "herramientas/nube/gmail_api_client.py",
             "TargetRelative": "antigravity/herramientas/nube/gmail_api_client.py",
-            "SizeBytes": 7450,
-            "SHA256": "FC09E50D0C4911EEBBC0460DF413369A8CBBA00B2950F8AAAA12EBB4689D78A1"
+            "SizeBytes": 7230,
+            "SHA256": "030B4835102C23032B2E6CCE182EA1FD735D75F4A23119C5259B110C91ACDF0B"
         },
         {
             "Id": "file_herramientas_nube_groq_zero_token_client_py",
@@ -1001,8 +992,8 @@
             "Type": "File",
             "RelativePath": "herramientas/nube/groq_zero_token_client.py",
             "TargetRelative": "antigravity/herramientas/nube/groq_zero_token_client.py",
-            "SizeBytes": 2844,
-            "SHA256": "F3E415A805E90348A58B5468B64881F6BF263A42F3FAEA75A813FF43F86AEDFA"
+            "SizeBytes": 2771,
+            "SHA256": "0E543D542B5C904D04A258B7920E383D7CCAB2D37B599982FAEC9FFEC5BBF051"
         },
         {
             "Id": "file_herramientas_nube_nova_external_shield_py",
@@ -1019,8 +1010,8 @@
             "Type": "File",
             "RelativePath": "herramientas/nube/youtube_api_client.py",
             "TargetRelative": "antigravity/herramientas/nube/youtube_api_client.py",
-            "SizeBytes": 4238,
-            "SHA256": "1807FFA3E5D91C70D2CB4959AE79B0CBBA28DBAD54380264A049E918B162B3BD"
+            "SizeBytes": 4199,
+            "SHA256": "FDEEDA051B7262D75636A5F7B9E796F2A8CCAABED0EBC4B63ACDE3F76AB7D547"
         },
         {
             "Id": "file_herramientas_proyecto_gemini_community_md",
@@ -1046,8 +1037,8 @@
             "Type": "File",
             "RelativePath": "herramientas/pruebas/phantom_test.ps1",
             "TargetRelative": "antigravity/herramientas/pruebas/phantom_test.ps1",
-            "SizeBytes": 1983,
-            "SHA256": "7A1CFDD565B4EE03D00DEA7A9C1D31578C2750639DBE2C0B4D987B6CB22B8952"
+            "SizeBytes": 1984,
+            "SHA256": "60C763D98B3442F92AEB1820B07559B657427A0978FF9925A9264344382450C3"
         },
         {
             "Id": "file_herramientas_radar_web_py",
@@ -1055,8 +1046,8 @@
             "Type": "File",
             "RelativePath": "herramientas/radar_web.py",
             "TargetRelative": "antigravity/herramientas/radar_web.py",
-            "SizeBytes": 19541,
-            "SHA256": "079809D9CB107665E73C1968B9CF602815850199E653C34B9B6206D4F4D78176"
+            "SizeBytes": 19540,
+            "SHA256": "D573764F9533972294ABE1E0CD765153B05269966FAFE3A5DC497A0D6F0106E1"
         },
         {
             "Id": "file_herramientas_seguridad_git_clone_sentinel_ps1",
@@ -1082,8 +1073,8 @@
             "Type": "File",
             "RelativePath": "herramientas/trello/trello.py",
             "TargetRelative": "antigravity/herramientas/trello/trello.py",
-            "SizeBytes": 8224,
-            "SHA256": "018350C6206F1EB49D7391979FA386DAAF800D5EA7F2788E53FFE49F13AE98B4"
+            "SizeBytes": 8138,
+            "SHA256": "C84CEEBFDC1FC95B44BF125B9F17BC4BCB2426BD6046C551FAC6E69C3EA59928"
         },
         {
             "Id": "file_herramientas_video_auditar_hoja_vl_py",
@@ -1163,8 +1154,8 @@
             "Type": "File",
             "RelativePath": "herramientas/voz/aduana.js",
             "TargetRelative": "antigravity/herramientas/voz/aduana.js",
-            "SizeBytes": 8006,
-            "SHA256": "1FC2E08B7027EA6890F3FB5903C129B701184A34521E0003C51ADC35FE383342"
+            "SizeBytes": 8007,
+            "SHA256": "DAF2FD76C61726ABA7DC31C5FC019ADE394CF8B43246E8C2694246F17E534DF8"
         },
         {
             "Id": "file_herramientas_voz_guardian_claves_py",
@@ -1172,8 +1163,8 @@
             "Type": "File",
             "RelativePath": "herramientas/voz/guardian_claves.py",
             "TargetRelative": "antigravity/herramientas/voz/guardian_claves.py",
-            "SizeBytes": 6823,
-            "SHA256": "2AC568CB3169450E12D6F1BAF3AA63BAC21CA373593EEDE6B7A0A66E32089A77"
+            "SizeBytes": 6853,
+            "SHA256": "13C412843BEA607C5F39C194022C69E2D89A2AA5F6CFAFB18623513E4EAAE6EF"
         },
         {
             "Id": "file_herramientas_voz_mascota_js",
@@ -1190,8 +1181,8 @@
             "Type": "File",
             "RelativePath": "herramientas/voz/nova_voz.py",
             "TargetRelative": "antigravity/herramientas/voz/nova_voz.py",
-            "SizeBytes": 53521,
-            "SHA256": "FC6BCDBBA8A91EE49AB933A5FCB235EA242A5D1A807D488A978192A1492C1D47"
+            "SizeBytes": 53599,
+            "SHA256": "2038552B0E0EDCEB4A27795DA048CA074DD9868E05D0813661C4B9C6F3A50EA4"
         },
         {
             "Id": "file_clonador_herramientas_exportar_jsx_py",
@@ -1604,8 +1595,8 @@
             "Type": "File",
             "RelativePath": "almacen/biblioteca_web/categorias/_meta.json",
             "TargetRelative": "antigravity/almacen/biblioteca_web/categorias/_meta.json",
-            "SizeBytes": 658,
-            "SHA256": "A38231BD5707862C5058CA676160108BD7F2AE4616D4D35BA6C76E267B14F8CA"
+            "SizeBytes": 657,
+            "SHA256": "72E215DF4FABEE792878130B5AC15BDA5D53A4B72C7075AD7B0B0127CBBEDD57"
         },
         {
             "Id": "file_almacen_biblioteca_web_categorias_alojamiento__categoria_json",
@@ -1920,7 +1911,7 @@
             "RelativePath": "almacen/biblioteca_web/cdn.json",
             "TargetRelative": "antigravity/almacen/biblioteca_web/cdn.json",
             "SizeBytes": 1876,
-            "SHA256": "A823594DC7D84AD397D4ADC92164C36BD0D073B56A7CBF2333960AF1B42164FE"
+            "SHA256": "27BAF2B069BD85F931AB6A2A0DF917A9006363909637B7CDB9ED1D004D521998"
         },
         {
             "Id": "file_almacen_biblioteca_web_efectos_py",
@@ -2450,8 +2441,8 @@
             "Type": "File",
             "RelativePath": "almacen/biblioteca_web/plantilla_datos.json",
             "TargetRelative": "antigravity/almacen/biblioteca_web/plantilla_datos.json",
-            "SizeBytes": 2271,
-            "SHA256": "BC676D1B9E9EB77569E38652D298B9497041CBBBBA499C84CEDFEDF408E43D97"
+            "SizeBytes": 2270,
+            "SHA256": "EE56744D6F9F4D628145E6CC38D94B27DFF5BEA5702F320C59F139B06BAC703D"
         },
         {
             "Id": "file_almacen_biblioteca_web_plantilla_datos_hosteleria_json",
@@ -2459,8 +2450,8 @@
             "Type": "File",
             "RelativePath": "almacen/biblioteca_web/plantilla_datos_hosteleria.json",
             "TargetRelative": "antigravity/almacen/biblioteca_web/plantilla_datos_hosteleria.json",
-            "SizeBytes": 1841,
-            "SHA256": "7EAC94C8076F812F240EC75E8F57EA3D63D9B014F4D24404F5CAB758D6BD9822"
+            "SizeBytes": 1840,
+            "SHA256": "79FA2A8AC2F5AE51BC0675AE89B4C2188A2B6F99257EE861C230F8554437F8CF"
         },
         {
             "Id": "file_almacen_biblioteca_web_sistema_css",
@@ -2540,8 +2531,8 @@
             "Type": "File",
             "RelativePath": "almacen/skills/ai-deploy-advisor/SKILL.md",
             "TargetRelative": "antigravity/almacen/skills/ai-deploy-advisor/SKILL.md",
-            "SizeBytes": 2918,
-            "SHA256": "262EB0EBC1402622E59E487C25BF8A3B9EE04742F9B62CD1D890BC5FC0807A59"
+            "SizeBytes": 2919,
+            "SHA256": "9626B4B9DA2B1B8C6FC87FB2713CD1866CA27BB5099CE3A24883E2988DC0710E"
         },
         {
             "Id": "file_almacen_skills_android_core_skill_md",
@@ -6122,8 +6113,8 @@
             "Type": "File",
             "RelativePath": "almacen/skills/gemini-brave-sentinel/SKILL.md",
             "TargetRelative": "antigravity/almacen/skills/gemini-brave-sentinel/SKILL.md",
-            "SizeBytes": 8897,
-            "SHA256": "0979C8919536DD09E5781A2E3F41BAF35DD64EAE89F840DE831991E0743544C7"
+            "SizeBytes": 8894,
+            "SHA256": "AB630B8772A59120CEF5270D048C85216A3CF02D704D7F36D1EFDD4A7CC93E65"
         },
         {
             "Id": "file_almacen_skills_gemini_chaos_qa_skill_md",
@@ -6167,8 +6158,8 @@
             "Type": "File",
             "RelativePath": "almacen/skills/gemini-continuous-learner/SKILL.md",
             "TargetRelative": "antigravity/almacen/skills/gemini-continuous-learner/SKILL.md",
-            "SizeBytes": 3157,
-            "SHA256": "0C25F2C855035E093DC0E48F2C3A73348E473046A9AEE7E6853B37C11E738952"
+            "SizeBytes": 3159,
+            "SHA256": "504842BDDA465719531CF3C1A9C799E8C235E2233EACE3D2BCEDB988008CE879"
         },
         {
             "Id": "file_almacen_skills_gemini_daily_briefing_skill_md",
@@ -6176,8 +6167,8 @@
             "Type": "File",
             "RelativePath": "almacen/skills/gemini-daily-briefing/SKILL.md",
             "TargetRelative": "antigravity/almacen/skills/gemini-daily-briefing/SKILL.md",
-            "SizeBytes": 2705,
-            "SHA256": "DF9C408041774D733BF3D7865E9FAA71F5C7C063C5D866FF3307C7AE2C562BAC"
+            "SizeBytes": 2703,
+            "SHA256": "49937F5D0267DA4F8E64F65F400661DD2E34A492CCE6C88738DAACD2A22CF5DB"
         },
         {
             "Id": "file_almacen_skills_gemini_database_mastery_skill_md",
@@ -6482,8 +6473,8 @@
             "Type": "File",
             "RelativePath": "almacen/skills/gemini-multiagent-router/SKILL.md",
             "TargetRelative": "antigravity/almacen/skills/gemini-multiagent-router/SKILL.md",
-            "SizeBytes": 3798,
-            "SHA256": "EDAC76D0398E1819627DF9F6E7D58547761B4BA6C1EC523FB2FDF598A9E88DB8"
+            "SizeBytes": 3799,
+            "SHA256": "40D64F1B4C5E97DB3631A8BBF03D8E32C9B128A985DE853055904AE9162E9540"
         },
         {
             "Id": "file_almacen_skills_gemini_omniroute_manager_skill_md",
@@ -6491,8 +6482,8 @@
             "Type": "File",
             "RelativePath": "almacen/skills/gemini-omniroute-manager/SKILL.md",
             "TargetRelative": "antigravity/almacen/skills/gemini-omniroute-manager/SKILL.md",
-            "SizeBytes": 1521,
-            "SHA256": "9BAE69577A7731EDFBFCDE0ED0B2936DA471308CC92FBE5939FF7D9828340A79"
+            "SizeBytes": 1523,
+            "SHA256": "20356CA43AC4812479C409C3364232E9F4BBA36DF776D5CD5902AD4F385B03B6"
         },
         {
             "Id": "file_almacen_skills_gemini_owasp_sentinel_skill_md",
@@ -6653,8 +6644,8 @@
             "Type": "File",
             "RelativePath": "almacen/skills/gemini-skill-architect/SKILL.md",
             "TargetRelative": "antigravity/almacen/skills/gemini-skill-architect/SKILL.md",
-            "SizeBytes": 3603,
-            "SHA256": "DD3A2E22A62ADC11B126CB667D1B2CFC93FDABC0809B9F665D1D07B4F73235C6"
+            "SizeBytes": 3609,
+            "SHA256": "71838A6D071AF4A7BFF6E5A3B39DAB28AF8FBB6ABDB32430787743CDBA1EE790"
         },
         {
             "Id": "file_almacen_skills_gemini_stack_advisor_skill_md",
@@ -7943,9 +7934,9 @@
             "Type": "Skill",
             "RelativePath": "skills/ai-deploy-advisor",
             "TargetRelative": "config/skills/ai-deploy-advisor",
-            "SizeBytes": 2918,
-            "SHA256": "262EB0EBC1402622E59E487C25BF8A3B9EE04742F9B62CD1D890BC5FC0807A59",
-            "SkillSHA256": "262EB0EBC1402622E59E487C25BF8A3B9EE04742F9B62CD1D890BC5FC0807A59"
+            "SizeBytes": 2919,
+            "SHA256": "9626B4B9DA2B1B8C6FC87FB2713CD1866CA27BB5099CE3A24883E2988DC0710E",
+            "SkillSHA256": "9626B4B9DA2B1B8C6FC87FB2713CD1866CA27BB5099CE3A24883E2988DC0710E"
         },
         {
             "Id": "skill_android_core",
@@ -11568,9 +11559,9 @@
             "Type": "Skill",
             "RelativePath": "skills/gemini-brave-sentinel",
             "TargetRelative": "config/skills/gemini-brave-sentinel",
-            "SizeBytes": 8897,
-            "SHA256": "0979C8919536DD09E5781A2E3F41BAF35DD64EAE89F840DE831991E0743544C7",
-            "SkillSHA256": "0979C8919536DD09E5781A2E3F41BAF35DD64EAE89F840DE831991E0743544C7"
+            "SizeBytes": 8894,
+            "SHA256": "AB630B8772A59120CEF5270D048C85216A3CF02D704D7F36D1EFDD4A7CC93E65",
+            "SkillSHA256": "AB630B8772A59120CEF5270D048C85216A3CF02D704D7F36D1EFDD4A7CC93E65"
         },
         {
             "Id": "skill_gemini_chaos_qa",
@@ -11618,9 +11609,9 @@
             "Type": "Skill",
             "RelativePath": "skills/gemini-continuous-learner",
             "TargetRelative": "config/skills/gemini-continuous-learner",
-            "SizeBytes": 3157,
-            "SHA256": "0C25F2C855035E093DC0E48F2C3A73348E473046A9AEE7E6853B37C11E738952",
-            "SkillSHA256": "0C25F2C855035E093DC0E48F2C3A73348E473046A9AEE7E6853B37C11E738952"
+            "SizeBytes": 3159,
+            "SHA256": "504842BDDA465719531CF3C1A9C799E8C235E2233EACE3D2BCEDB988008CE879",
+            "SkillSHA256": "504842BDDA465719531CF3C1A9C799E8C235E2233EACE3D2BCEDB988008CE879"
         },
         {
             "Id": "skill_gemini_daily_briefing",
@@ -11628,9 +11619,9 @@
             "Type": "Skill",
             "RelativePath": "skills/gemini-daily-briefing",
             "TargetRelative": "config/skills/gemini-daily-briefing",
-            "SizeBytes": 2705,
-            "SHA256": "DF9C408041774D733BF3D7865E9FAA71F5C7C063C5D866FF3307C7AE2C562BAC",
-            "SkillSHA256": "DF9C408041774D733BF3D7865E9FAA71F5C7C063C5D866FF3307C7AE2C562BAC"
+            "SizeBytes": 2703,
+            "SHA256": "49937F5D0267DA4F8E64F65F400661DD2E34A492CCE6C88738DAACD2A22CF5DB",
+            "SkillSHA256": "49937F5D0267DA4F8E64F65F400661DD2E34A492CCE6C88738DAACD2A22CF5DB"
         },
         {
             "Id": "skill_gemini_database_mastery",
@@ -11943,9 +11934,9 @@
             "Type": "Skill",
             "RelativePath": "skills/gemini-multiagent-router",
             "TargetRelative": "config/skills/gemini-multiagent-router",
-            "SizeBytes": 3798,
-            "SHA256": "EDAC76D0398E1819627DF9F6E7D58547761B4BA6C1EC523FB2FDF598A9E88DB8",
-            "SkillSHA256": "EDAC76D0398E1819627DF9F6E7D58547761B4BA6C1EC523FB2FDF598A9E88DB8"
+            "SizeBytes": 3799,
+            "SHA256": "40D64F1B4C5E97DB3631A8BBF03D8E32C9B128A985DE853055904AE9162E9540",
+            "SkillSHA256": "40D64F1B4C5E97DB3631A8BBF03D8E32C9B128A985DE853055904AE9162E9540"
         },
         {
             "Id": "skill_gemini_omniroute_manager",
@@ -11953,9 +11944,9 @@
             "Type": "Skill",
             "RelativePath": "skills/gemini-omniroute-manager",
             "TargetRelative": "config/skills/gemini-omniroute-manager",
-            "SizeBytes": 1521,
-            "SHA256": "9BAE69577A7731EDFBFCDE0ED0B2936DA471308CC92FBE5939FF7D9828340A79",
-            "SkillSHA256": "9BAE69577A7731EDFBFCDE0ED0B2936DA471308CC92FBE5939FF7D9828340A79"
+            "SizeBytes": 1523,
+            "SHA256": "20356CA43AC4812479C409C3364232E9F4BBA36DF776D5CD5902AD4F385B03B6",
+            "SkillSHA256": "20356CA43AC4812479C409C3364232E9F4BBA36DF776D5CD5902AD4F385B03B6"
         },
         {
             "Id": "skill_gemini_owasp_sentinel",
@@ -12123,9 +12114,9 @@
             "Type": "Skill",
             "RelativePath": "skills/gemini-skill-architect",
             "TargetRelative": "config/skills/gemini-skill-architect",
-            "SizeBytes": 3603,
-            "SHA256": "DD3A2E22A62ADC11B126CB667D1B2CFC93FDABC0809B9F665D1D07B4F73235C6",
-            "SkillSHA256": "DD3A2E22A62ADC11B126CB667D1B2CFC93FDABC0809B9F665D1D07B4F73235C6"
+            "SizeBytes": 3609,
+            "SHA256": "71838A6D071AF4A7BFF6E5A3B39DAB28AF8FBB6ABDB32430787743CDBA1EE790",
+            "SkillSHA256": "71838A6D071AF4A7BFF6E5A3B39DAB28AF8FBB6ABDB32430787743CDBA1EE790"
         },
         {
             "Id": "skill_gemini_stack_advisor",
@@ -13005,9 +12996,9 @@
             "Type": "Skill",
             "RelativePath": "skills/index-ai-multimedia",
             "TargetRelative": "config/skills/index-ai-multimedia",
-            "SizeBytes": 5114,
-            "SHA256": "F125F9C23B0761ED388B250DBDA4483860B86E5F5427B64709879FD266FAD537",
-            "SkillSHA256": "F125F9C23B0761ED388B250DBDA4483860B86E5F5427B64709879FD266FAD537"
+            "SizeBytes": 5116,
+            "SHA256": "F8678594DEDB1AB2B0167DCF71F6A9D866A9292A4E88283F78D5BBC259A7F64B",
+            "SkillSHA256": "F8678594DEDB1AB2B0167DCF71F6A9D866A9292A4E88283F78D5BBC259A7F64B"
         },
         {
             "Id": "skill_index_backend_db",
@@ -13055,9 +13046,9 @@
             "Type": "Skill",
             "RelativePath": "skills/index-nova-core",
             "TargetRelative": "config/skills/index-nova-core",
-            "SizeBytes": 4938,
-            "SHA256": "37C793EBFE20DA6E7EA03EAE4B01F26C28EF2F37EBDC278F68B729F49A002F88",
-            "SkillSHA256": "37C793EBFE20DA6E7EA03EAE4B01F26C28EF2F37EBDC278F68B729F49A002F88"
+            "SizeBytes": 4942,
+            "SHA256": "3F52F0B2C82E103AD5900BC162787D291BC641077A379126941FFACE1B463387",
+            "SkillSHA256": "3F52F0B2C82E103AD5900BC162787D291BC641077A379126941FFACE1B463387"
         },
         {
             "Id": "skill_index_security_deploy",
@@ -13075,9 +13066,9 @@
             "Type": "Skill",
             "RelativePath": "skills/index-ui-frontend",
             "TargetRelative": "config/skills/index-ui-frontend",
-            "SizeBytes": 14743,
-            "SHA256": "6CECA45AA6CB1B7D06141336D8AAD6452B12E1AB8ED662A44AB36EB7B10281F1",
-            "SkillSHA256": "6CECA45AA6CB1B7D06141336D8AAD6452B12E1AB8ED662A44AB36EB7B10281F1"
+            "SizeBytes": 14740,
+            "SHA256": "1EA95CCA2E3C7A2CE8B6113BC13534198722F0B70E627FD697ED859E3588648A",
+            "SkillSHA256": "1EA95CCA2E3C7A2CE8B6113BC13534198722F0B70E627FD697ED859E3588648A"
         },
         {
             "Id": "file_skills_instagram_common_references_algorithm_heuristics_md",

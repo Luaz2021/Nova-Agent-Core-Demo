@@ -8,7 +8,7 @@ lo comprueba el codigo.
 - CIFRAS  (bloquea): porcentajes, multiplicadores y numeros de 2+ cifras que no aparecen en los datos dados
                      (contexto, puntos o enunciado). Si la cifra es real, se anade al "contexto" del guion.
 - JERGA   (aviso):  palabras de folleto que hacen que el texto no parezca escrito por una persona.
-Saltarse los bloqueos: redactar.py exportar --forzar (solo si Alexander lo dice).
+Saltarse los bloqueos: redactar.py exportar --forzar (solo si el usuario lo dice).
 """
 
 import re

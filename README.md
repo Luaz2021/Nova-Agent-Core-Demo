@@ -2,7 +2,7 @@
 ### Agente Autónomo de Ingeniería de Software, Copiloto Técnico Senior & Motor de Eficiencia de Tokens para Google Antigravity 2.0
 
 [![License: MIT + Attribution](https://img.shields.io/badge/License-MIT%20%2B%20Attribution-blue.svg)](LICENSE)
-[![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20macOS%20%7C%20Linux-success.svg)](#-instalación-en-1-clic-auto-instalador-de-antigravity-incluido)
+[![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20macOS%20%7C%20Linux-success.svg)](#-instalación-en-1-clic)
 [![Native Runtime](https://img.shields.io/badge/Native%20Runtime-Google%20Antigravity%202.0-orange.svg)](https://antigravity.google)
 [![Ecosystem](https://img.shields.io/badge/Ideology-100%25%20Google%20Ecosystem-4285F4.svg)](#-la-ideología-100-ecosistema-google)
 [![Skills](https://img.shields.io/badge/Skills-145%20Optimizadas%20Gemini-purple.svg)](#-catálogo-detallado-de-skills-por-especialidad)
@@ -91,16 +91,38 @@ flowchart TD
 ## 📑 Índice de Contenidos
 1. [La Ideología: 100% Ecosistema Google](#-la-ideología-100-ecosistema-google)
 2. [Google Antigravity 2.0 vs. Antigravity IDE](#-distinción-fundamental-google-antigravity-20-vs-antigravity-ide)
-3. [Novedades de Ingeniería v3.1](#-novedades-de-ingeniería-v31)
-4. [Novedades de Ingeniería v2.3](#-novedades-de-ingeniería-v23)
-5. [Instalación en 1 Clic (Windows, macOS y Linux)](#-instalación-en-1-clic-auto-instalador-de-antigravity-incluido)
-6. [¿Ya tienes Nova? Actualiza a v3.1 sin perder nada](#-ya-tienes-nova-actualiza-a-v31-sin-perder-nada)
-7. [Router Multi-Modelo y Herramientas a 0 Tokens](#-router-multi-modelo-y-herramientas-a-0-tokens)
-8. [Catálogo Detallado de Skills por Especialidad](#-catálogo-detallado-de-skills-por-especialidad)
-9. [Atribuciones y Agradecimientos Open Source](#-atribuciones-y-agradecimientos-open-source-cero-cajas-negras)
-10. [Capa de Integridad Criptográfica y Anti-Plagio](#-capa-de-integridad-criptográfica-y-anti-plagio)
-11. [Llamada a Colaboradores: Proyecto Nova GUI](#-llamada-a-colaboradores-proyecto-nova-gui-open-source)
-12. [Créditos, Licencia y Autoría](#-créditos--autoría)
+3. [Novedades v3.2: Nova Sync, Nova Doctor y reparación automática](#-novedades-v32-nova-sync-nova-doctor-y-reparación-automática)
+4. [Novedades de Ingeniería v3.1](#-novedades-de-ingeniería-v31)
+5. [Novedades de Ingeniería v2.3](#-novedades-de-ingeniería-v23)
+6. [Instalación en 1 Clic (Windows, macOS y Linux)](#-instalación-en-1-clic)
+7. [¿Ya tienes Nova? Actualiza a v3.2 sin perder nada](#-ya-tienes-nova-actualiza-a-v32-sin-perder-nada)
+8. [Nova Sync: tu Nova en varios equipos](#-nova-sync-tu-nova-en-varios-equipos)
+9. [¿Qué funciona en cada sistema?](#-qué-funciona-en-cada-sistema)
+10. [Si algo falla: Nova Doctor](#-si-algo-falla-nova-doctor)
+11. [Línea directa con el creador](#-línea-directa-con-el-creador)
+12. [Router Multi-Modelo y Herramientas a 0 Tokens](#-router-multi-modelo-y-herramientas-a-0-tokens)
+13. [Catálogo Detallado de Skills por Especialidad](#-catálogo-detallado-de-skills-por-especialidad)
+14. [Atribuciones y Agradecimientos Open Source](#-atribuciones-y-agradecimientos-open-source-cero-cajas-negras)
+15. [Capa de Integridad Criptográfica y Anti-Plagio](#-capa-de-integridad-criptográfica-y-anti-plagio)
+16. [Llamada a Colaboradores: Proyecto Nova GUI](#-llamada-a-colaboradores-proyecto-nova-gui-open-source)
+17. [Créditos, Licencia y Autoría](#-créditos--autoría)
+
+---
+
+## 🔥 Novedades v3.2: Nova Sync, Nova Doctor y reparación automática
+
+La v3.2 se centra en que Nova **funcione igual en todos los equipos y se repare sola**.
+
+| Mejora | Qué problema resuelve | Cómo se usa |
+| :--- | :--- | :--- |
+| **1. Nova Sync (`scripts/nova_sync.py`)** | Usar la misma Nova (memoria, proyectos, skills y documentos) en varios equipos. La carpeta de Google Drive manda; solo *"sube los cambios"* escribe en Drive, con conflictos, freno de borrados masivos y papelera. | *"Nova, configura el sync"* y te guía paso a paso. |
+| **2. Nova Doctor multiplataforma (`scripts/nova_doctor.py`)** | Revisa y repara la instalación en Windows, macOS y Linux: carpetas, skills enlazadas o rotas de versiones viejas, reglas automáticas (hooks), librerías, navegador para la extensión, Ollama y el sync. | *"Nova, revísate"*. También corre solo en cada parche. |
+| **3. Parches que reparan** | El actualizador lanza el Doctor antes y después de cada parche, ya no vuelve a bajar los mismos archivos en cada pasada y se relanza solo cuando se actualiza a sí mismo. | *"Nova, busca actualizaciones"*. |
+| **4. Arreglos de Windows** | En la v3.1 las carpetas `herramientas` y `clonador` no se instalaban en Windows, las skills quedaban enlazadas a la carpeta de descarga y las reglas automáticas se rompían al actualizar. | Corregido en el instalador; los equipos ya instalados se arreglan con el parche. |
+| **5. Arreglos de macOS y Linux** | El entorno `nova_env` se creaba sin librerías, las protecciones de rutas de los hooks no funcionaban fuera de Windows y el hook de turno fallaba al recibir adjuntos. | Corregido. |
+| **6. Extensión para cualquier navegador Chromium** | Antes solo Brave. Ahora **Brave, Chrome, Edge, Opera y Vivaldi**. Firefox no es compatible (no tiene la API de depuración que usa la extensión): ahí Nova usa su navegador automático (Playwright). | Carga `~/.gemini/antigravity/scripts/brave_extension` en `<navegador>://extensions` (modo desarrollador). |
+| **7. Informe de aprendizaje (`/enviar-informe`)** | Ya funciona: prepara el informe en tu equipo, lo revisas y solo se envía si dices que sí. | `/enviar-informe`. |
+| **8. Antigravity solo con enlace oficial** | El instalador ya no intenta instalar Antigravity (fallaba y caducaba con cada versión): si no lo encuentra, te da el enlace oficial. | [antigravity.google](https://antigravity.google/) |
 
 ---
 
@@ -116,8 +138,8 @@ Esta versión sincroniza la Nova pública al 100% con el núcleo maestro en la n
 | **4. Biblioteca de webs local con Identidad Automática (`almacen/biblioteca_web/identidad.py`)** | Webs de negocio **minimalistas y con identidad propia** elegida automáticamente según el tipo de negocio: 15 categorías, 36 estilos inspirados en principios de diseño reales, paleta cromática automática, fotos con licencia libre, efectos de scroll y 3D (Three.js) adaptativos. | Una web completa en local **sin gastar tokens de nube**. Con una web de referencia, la nube o el clonador trabajan bajo medida. |
 | **5. Motor de Redacción Formal (`nova_core/redactar.py` + `nova_core/redaccion/`)** | Sustituye y amplía al redactor clásico con soporte tipado para `presupuesto`, `solicitud_presupuesto`, `proyecto`, `academico` (APA 7), `tesis`, `informe`, `doc_software` y `actividad` (con validación contra enunciado), exportación a PDF, Word, Excel nativo y Gamma, y bloqueo de cifras inventadas. Incluye `resumir.py` y `conversor.py`. | Documentos técnicos, académicos y comerciales verificados a 0 tokens. |
 | **6. IA local de nueva generación (`scripts/nova_instalar_ia_local.py`)** | **Qwen 3.5** (9B o 4B) para código y textos + **InternVL 3.5** para visión, según tu equipo. Si falta Ollama, Nova lo instala (winget, Homebrew o el instalador oficial de Linux). Un único catálogo: `scripts/nova_modelos.json`. | Di *"Nova, instala la IA local"* y listo. |
-| **7. Actualizador por parches con firma SHA-256 (`scripts/actualizar_nova.py`)** | Compara **archivo por archivo** contra `manifest_master.json` (1.492 componentes firmados con normalización LF multi-OS), verifica cada descarga, hace copia de seguridad antes de cambiar nada y **nunca toca** tus notas, tu perfil ni tus claves. | Parches seguros con un *"Nova, busca actualizaciones"*. |
-| **8. Multiplataforma con entorno aislado (`~/.gemini/nova_env`)** | Instaladores unificados en Windows (`install.ps1`), macOS y Linux (`install.sh`) que aprovisionan automáticamente el entorno virtual `~/.gemini/nova_env` (`Scripts/python.exe` en Windows, `bin/python` en Unix), avisos nativos, voz, batería y autodiagnóstico con `nova_doctor`. | La misma Nova y el mismo aislamiento de dependencias en los tres sistemas. |
+| **7. Actualizador por parches con firma SHA-256 (`scripts/actualizar_nova.py`)** | Compara **archivo por archivo** contra `manifest_master.json` (cerca de 1.500 componentes firmados con normalización LF multi-OS), verifica cada descarga, hace copia de seguridad antes de cambiar nada y **nunca toca** tus notas, tu perfil ni tus claves. | Parches seguros con un *"Nova, busca actualizaciones"*. |
+| **8. Multiplataforma con entorno aislado (`~/.gemini/nova_env`)** | Instaladores unificados en Windows (`install.ps1`), macOS y Linux (`install.sh`) que aprovisionan automáticamente el entorno virtual `~/.gemini/nova_env` (`Scripts/python.exe` en Windows, `bin/python` en Unix), avisos nativos, batería y autodiagnóstico con `nova_doctor` (la voz manos libres es solo de Windows, ver [qué funciona en cada sistema](#-qué-funciona-en-cada-sistema)). | La misma Nova y el mismo aislamiento de dependencias en los tres sistemas. |
 | **9. Pipeline de webs completo (`scripts/nova_tarea.py` + `nova_secciones.py`)** | Comando único para la Capa 0: Qwen construye webs multipágina o de varias secciones con contexto de 8k (`nova_secciones.py`), el linter (`nova_core/orquestador.py`) y Playwright + InternVL revisan escritorio y móvil (`nova_pipeline_local.py`), y Nova solo aplica micro-cirugía en lo que falla. | Webs auditadas visualmente (Contexto 1 + Contexto 2) antes de entregarlas. |
 | **10. Herramientas internas (`herramientas/`)** | Trello, Gmail, Groq (Whisper + Llama gratis), YouTube, escudo de datos para la nube gratis, escáner de repos de terceros, pruebas fantasma en rama temporal, radar de webs del sector, vídeo (narración, intro, hoja de fotogramas auditada por InternVL, destilador de reels) y guardián de claves. | Lo que Nova ya sabe hacer sin escribir scripts nuevos. |
 | **11. Catálogo completo de 145+ skills y 8 Índices Macro** | Móvil nativo (Android, iOS, Flutter, React Native, seguridad MASVS), presentaciones (HTML, suizo/editorial, PPTX nativo, PowerPoint), Web3 (Foundry, tokenización y MiCA), vídeo Canvas 2.5D y los **8 índices de 1 salto** (`index-*`) que hacen que Nova lea solo lo que necesita. | Más dominios con el mismo gasto de tokens. |
@@ -141,6 +163,64 @@ Esta versión introduce el **Motor de Vídeo Programático Dual**, el **Enrutado
 
 ---
 
+## 🔁 Nova Sync: tu Nova en varios equipos
+
+Con **Nova Sync** tu memoria, proyectos, documentos, skills y reglas viajan entre tus equipos a través de **tu propio Google Drive** (nada pasa por servidores de terceros).
+
+**Necesitas:** [Google Drive para escritorio](https://www.google.com/drive/download/) en cada equipo (Windows o macOS) con tu cuenta iniciada.
+
+**Configurar (una vez por equipo):** di *"Nova, configura el sync"*. Nova:
+1. Comprueba que tienes Google Drive para escritorio (si no, te da el enlace oficial y te dice qué hacer).
+2. Encuentra tu "Mi unidad" y **te pide permiso** para crear la carpeta `Nova_Sync`.
+3. Si es tu primer equipo, sube tu Nova. Si la carpeta ya tiene la Nova de otro equipo, deja este **igual** (guardando antes una copia de lo que tuviera distinto).
+
+| Frase | Qué hace |
+| :--- | :--- |
+| *"Nova, sincroniza"* | **Baja** lo nuevo de Drive. Nunca escribe en Drive. Si un archivo cambió en los dos equipos gana Drive y el tuyo queda al lado (`*.local-<fecha>`). |
+| *"Nova, sube los cambios"* | **Sube** lo que cambiaste. Es lo **único** que escribe en Drive. Si otro equipo subió antes una versión más nueva, ese archivo queda **bloqueado** hasta que sincronices. |
+| *"Nova, deja este equipo igual que Drive"* | **Espejo:** resetea este equipo a Drive (con copia de lo distinto en `backups/sync/espejo/` e informe). |
+| *"Nova, ¿cómo va el sync?"* | Estado y última pasada. |
+
+**Blindaje:** las claves (`secrets.env`), las reglas automáticas (`hooks.json`), el entorno `nova_env` y tu perfil de hardware **no viajan**; más de 25 borrados en una pasada se frenan; lo borrado va a una papelera (`Nova_Sync/_papelera`); si Drive está a medio montar, esa carpeta no se toca; y Nova no puede escribir a mano en la carpeta de Drive ni forzar borrados (lo decides tú). En Windows, Nova sincroniza sola al abrir Antigravity y sube al cerrarlo; en macOS se pide con las frases.
+
+**Linux:** Google no tiene Drive para escritorio en Linux. Puedes montar tu Drive con [rclone](https://rclone.org/drive/) y configurar con `python ~/.gemini/antigravity/scripts/nova_sync.py configurar --carpeta <ruta a Mi unidad>`.
+
+---
+
+## 🧭 ¿Qué funciona en cada sistema?
+
+| Función | Windows | macOS (Intel y Apple Silicon) | Linux |
+| :--- | :---: | :---: | :---: |
+| Reglas, 145+ skills, memoria y reglas automáticas (hooks) | ✅ | ✅ | ✅ |
+| Documentos (`redactar.py`), webs, IA local (Ollama), clonador, radar | ✅ | ✅ | ✅ |
+| Corrector ortográfico de Word / PDF con Word | ✅ | PDF con LibreOffice | PDF con LibreOffice |
+| Extensión de navegador (Brave, Chrome, Edge, Opera, Vivaldi) | ✅ | ✅ | ✅ |
+| Nova Sync | ✅ automático | ✅ con las frases | Con rclone |
+| Nova Doctor y parches que reparan | ✅ | ✅ | ✅ |
+| Voz manos libres, aduana de adjuntos y mascota | ✅ | — | — |
+| Servicios de fondo automáticos (guardián de sesión) | ✅ | Próximamente | Próximamente |
+
+---
+
+## 🩺 Si algo falla: Nova Doctor
+
+Di *"Nova, revísate"* (o en una terminal: `python ~/.gemini/antigravity/scripts/nova_doctor.py --reparar`). Revisa carpetas, skills, reglas automáticas, librerías, navegador, IA local y Nova Sync, **repara lo que sabe reparar** y te da una línea de resumen. Nunca borra tus datos: lo que aparta va a `~/.gemini/antigravity/backups/`. Si sigue fallando, Nova te ofrece `/reportar-fallo`.
+
+---
+
+## 📬 Línea directa con el creador
+
+| Comando | Qué hace |
+| :--- | :--- |
+| `/creador [mensaje]` | Te abre un mensaje directo al creador en GitHub (etiqueta `buzon-creador`), con rutas, IPs y claves borradas antes. |
+| `/reportar-fallo` | Comparte un fallo que resolviste en formato servilleta (`[Problema] -> [Causa] -> [Solución]`), sin datos privados (etiqueta `napkin-crowd`). |
+| `/compartir-skill [nombre]` | Propone una skill tuya para el núcleo oficial, con créditos de autor (etiqueta `skill-comunitaria`). |
+| `/enviar-informe` | Informe de aprendizaje: solo lecciones, servilleta y tipo de errores. Lo revisas antes y solo se envía si dices que sí. Si aceptaste al instalar, Nova te lo propone una vez al mes. |
+
+Todo se envía **desde tu navegador y con tu cuenta de GitHub**: tú ves exactamente qué sale antes de pulsar enviar.
+
+---
+
 ## 🛠️ Router Multi-Modelo y Herramientas a 0 Tokens
 
 Nova Agent incluye una suite de utilidades CLI nativas en `nova_core/`, `scripts/` y `scripts/scrapers/` que operan bajo el **Principio API/CLI First (Ley 17)**:
@@ -157,7 +237,9 @@ Nova CLI Tools
 ├── nova_claves.py        -> Asistente de claves gratis (se guardan solo en tu equipo)
 ├── nova_revisor.py       -> Informe semanal local: qué hizo Nova, cuánto gastó y dónde falló
 ├── actualizar_nova.py    -> Parches oficiales con firma SHA-256 y copia de seguridad
-└── enviar_feedback.py    -> Conexión directa y sanitizada con el creador vía GitHub Issues
+├── nova_doctor.py        -> Revisa y repara la instalación (Windows, macOS y Linux)
+├── nova_sync.py          -> Nova Sync: tu Nova en varios equipos con Google Drive
+└── enviar_feedback.py    -> Mensajes al creador, fallos resueltos, skills e informe de aprendizaje (sanitizados)
 ```
 
 ### Herramientas internas (`~/.gemini/antigravity/herramientas/`, índice en `herramientas/LEEME.md`)
@@ -169,7 +251,7 @@ herramientas/
 ├── pruebas/phantom_test.ps1    -> Prueba código en una rama temporal y la descarta si falla
 ├── radar_web.py                -> Mide 3-5 webs reales del sector (estructura y ritmo, sin copiar textos ni fotos)
 ├── video/                      -> Narración, intro de 10 s, hoja de fotogramas auditada por InternVL, destilador de reels
-└── voz/                        -> Manos libres (nova_voz.py) y guardián local de claves (guardian_claves.py)
+└── voz/                        -> Manos libres (nova_voz.py) y guardián local de claves (guardian_claves.py) · solo Windows
 
 clonador/                       -> Motor que rehace una web de REFERENCIA en local (se cambian textos, marcas y fotos)
 ```
@@ -203,10 +285,10 @@ python ~/.gemini/antigravity/scripts/nova_instalar_ia_local.py --estado
 
 ---
 
-## ⚡ Instalación en 1 Clic (Auto-Instalador de Antigravity Incluido)
+## ⚡ Instalación en 1 Clic
 
 > [!TIP]
-> **¿No tienes Google Antigravity instalado?** Al ejecutar el instalador en Windows, comprobará tu sistema y **te preguntará si deseas que descargue e instale Google Antigravity oficial automáticamente** antes de enlazar las 145 skills.
+> **Primero instala Google Antigravity** desde la página oficial: [antigravity.google](https://antigravity.google/). Ábrelo una vez, inicia sesión y ciérralo. Si el instalador de Nova no lo encuentra, te lo recordará con el enlace (Nova no instala Antigravity por ti).
 
 > [!NOTE]
 > **Requisitos:** Python 3.10 o superior y git (en Windows, si falta Python, el instalador te ofrece instalarlo con winget). La IA local es opcional y el instalador solo la ofrece si tu equipo tiene RAM y disco suficientes.
@@ -234,17 +316,18 @@ El instalador es interactivo: te pregunta tu nombre y tu perfil, analiza tu equi
 
 ---
 
-## 🔄 ¿Ya tienes Nova? Actualiza a v3.1 sin perder nada
+## 🔄 ¿Ya tienes Nova? Actualiza a v3.2 sin perder nada
 
 No hace falta reinstalar. En el chat de Antigravity escribe:
 
-> **"Nova, busca actualizaciones"**
+> **"Nova, busca actualizaciones"** (o `/actualizar-nova`)
 
-- La **primera vez** desde la v2.x, Nova actualiza su propio actualizador. Dilo **una segunda vez** para que traiga el resto (reglas automáticas, biblioteca de webs, redactor, IA local nueva).
+- Si vienes de la v3.1 o anterior, la **primera pasada** actualiza el propio actualizador; Nova repite **una vez** sola para traer el resto.
 - Antes de cambiar nada guarda una copia en `~/.gemini/antigravity/backups/`.
+- Después del parche, el **Nova Doctor** revisa y repara tu instalación (en Windows recupera `herramientas` y `clonador`, convierte las skills enlazadas en copias reales y vuelve a registrar las reglas automáticas).
 - **Nunca toca** `memory/` (tareas, servilleta, lecciones), tu `perfil_usuario.json`, tus claves ni tu configuración del IDE.
 - Cuando termine, **cierra y abre Antigravity** para activar las reglas automáticas.
-- Para pasar a los modelos nuevos: *"Nova, instala la IA local"* (y opcionalmente borra los viejos `qwen2.5-coder` con `nova_instalar_ia_local.py --limpiar-obsoletos`).
+- Si algo sigue sin ir: *"Nova, revísate"*.
 
 ---
 
@@ -449,7 +532,7 @@ Nova Agent es un proyecto de código abierto construido con orgullo sobre los ho
 
 Nova Agent es un proyecto **Open Source bajo Licencia MIT con Cláusula de Atribución Obligatoria**:
 - **No es un simple prompt:** Detrás de este motor hay más de un mes de ingeniería de contexto, diseño de skills, scripts de automatización y millones de tokens invertidos en pruebas de estrés reales.
-- **Firma Criptográfica SHA-256:** Cada archivo y skill está indexado con su hash SHA-256 en [manifest_master.json](manifest_master.json). El script `nova_manifest_guardian.ps1` audita la integridad del árbol para detectar manipulaciones no autorizadas o alteraciones de procedencia.
+- **Firma Criptográfica SHA-256:** Cada archivo y skill está indexado con su hash SHA-256 en [manifest_master.json](manifest_master.json). `python ~/.gemini/antigravity/scripts/actualizar_nova.py --check` compara tu instalación con el manifiesto oficial y el actualizador rechaza cualquier descarga cuya firma no coincida.
 - **Cláusula de Atribución Ética:** Cualquier fork, derivado o proyecto comercial que utilice el núcleo de Nova Agent está obligado legalmente por el archivo [NOTICE](NOTICE) a mantener visible la autoría original de **Saúl Alexander Martínez Rivas (@Luaz2021)** y el enlace a este repositorio.
 
 ---

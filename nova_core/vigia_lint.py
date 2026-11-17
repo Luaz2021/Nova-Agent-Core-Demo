@@ -12,6 +12,7 @@ Uso:
 
 from __future__ import annotations
 
+import os
 import json
 import socket
 import sys
@@ -34,7 +35,7 @@ def cargar_config_vigia() -> tuple[list[Path], set[str]]:
     if CONFIG_VIGIA.exists():
         try:
             datos = json.loads(CONFIG_VIGIA.read_text(encoding="utf-8"))
-            candidatas = [Path(p) for p in datos.get("carpetas", [])]
+            candidatas = [Path(os.path.expandvars(os.path.expanduser(p))) for p in datos.get("carpetas", [])]  # v3.2: ~ = carpeta del usuario
             excluidos |= {d.lower() for d in datos.get("excluir_directorios", [])}
         except ValueError:
             candidatas = [Path.cwd()]

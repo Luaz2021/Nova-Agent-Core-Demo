@@ -1,6 +1,6 @@
 # Librerias del Python PROPIO de Nova (11/11/2026, Claude). Viaja por Drive (nova_core).
 # El Doctor (antigravity\scripts\nova_doctor.ps1) crea en cada equipo .gemini\nova_env con uv y Python 3.14
-# gestionado por uv: da igual el Python que Luaz instale o actualice en Windows, el de Nova no cambia.
+# gestionado por uv: da igual el Python que el usuario instale o actualice en Windows, el de Nova no cambia.
 # Si cambias esta lista, el Doctor lo nota (huella) y reinstala solo en cada equipo.
 # Versiones = las que funcionan en la laptop el 11/11 (sacadas de los imports reales de nova_core, scripts,
 # herramientas y biblioteca_web).

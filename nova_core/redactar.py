@@ -108,7 +108,7 @@ def _control(
     if bloqueos and not forzar:
         print(
             f"[NO EXPORTADO] {len(bloqueos)} bloqueos. Corrige el borrador (o rehacer --nota) y vuelve a exportar. "
-            "Solo si Alexander lo pide: exportar --forzar."
+            "Solo si el usuario lo pide: exportar --forzar."
         )
         return False
     return True
@@ -243,7 +243,7 @@ def cmd_nuevo(args) -> None:
     faltan = _faltan_obligatorios(guion, ficha)
     if faltan:
         print(
-            f"[PENDIENTE] Faltan datos: {', '.join(faltan)}. Pideselos a Alexander; en el documento salen como [PENDIENTE]."
+            f"[PENDIENTE] Faltan datos: {', '.join(faltan)}. Pideselos al usuario; en el documento salen como [PENDIENTE]."
         )
 
     if ficha["clase"] == "datos":
@@ -268,7 +268,7 @@ def cmd_nuevo(args) -> None:
         f"[ok] Borrador: {carpeta / BORRADOR}\n{borrador.resumen(carpeta / BORRADOR)}"
     )
     listo = _control(carpeta, guion, ficha, forzar=False)
-    print("Siguiente: Alexander lo lee y corrige -> rehacer / bloquear -> exportar.")
+    print("Siguiente: el usuario lo lee y corrige -> rehacer / bloquear -> exportar.")
     if args.exportar and listo:
         for ruta in exportar(carpeta, guion, ficha, _formatos(args, ficha)):
             print(f"[ok] {ruta}")
@@ -465,13 +465,13 @@ def main() -> None:
                 "--seccion", required=nombre != "rehacer", help="1,2,3 o todas"
             )
         if nombre == "rehacer":
-            p.add_argument("--nota", help="Que quiere cambiar Alexander")
+            p.add_argument("--nota", help="Que quiere cambiar el usuario")
         if nombre == "exportar":
             p.add_argument("--formatos", help="docx,pdf,xlsx,md,txt")
             p.add_argument(
                 "--forzar",
                 action="store_true",
-                help="Exportar aunque haya bloqueos de calidad (SOLO si Alexander lo pide)",
+                help="Exportar aunque haya bloqueos de calidad (SOLO si el usuario lo pide)",
             )
             p.add_argument(
                 "--sin-logica",

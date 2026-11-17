@@ -80,6 +80,18 @@ def sha256_file(path: Path) -> str:
         return ""
 
 
+def sha256_file_lf(path: Path) -> str:
+    """v3.2: firma con saltos de linea LF (como la calcula el manifiesto). Antes los .ps1/.bat/.vbs, que en Windows
+    se guardan con CRLF, nunca coincidian y se volvian a bajar en CADA actualizacion."""
+    try:
+        datos = path.read_bytes()
+    except OSError:
+        return ""
+    if b"\0" not in datos[:8000]:
+        datos = datos.replace(b"\r\n", b"\n")
+    return sha256_bytes(datos)
+
+
 def leer_manifest_local() -> dict:
     try:
         return json.loads(LOCAL_MANIFEST.read_text(encoding="utf-8-sig"))
@@ -123,7 +135,7 @@ def comprobar(forzar: bool = False) -> tuple[dict | None, list]:
         existe = destino.exists()
         if preservar and existe:
             continue
-        if forzar or not existe or (esperado and sha256_file(destino) != esperado):
+        if forzar or not existe or (esperado and esperado not in (sha256_file(destino), sha256_file_lf(destino))):
             cambios.append((comp, rel, destino, esperado))
     return remoto, cambios
 
@@ -144,15 +156,18 @@ def respaldo_memoria(carpeta: Path) -> None:
 
 
 
+def doctor(*args: str) -> None:
+    """v3.2: el Nova Doctor multiplataforma repara lo que el parche solo no puede (enlaces viejos, carpeta rota
+    de la v3.1, librerias, hooks). Si aun no existe (primer parche), no pasa nada: llega en este mismo parche."""
+    script = ANTIGRAVITY / "scripts" / "nova_doctor.py"
+    if script.exists():
+        subprocess.run([sys.executable, str(script), "--reparar", *args], check=False)
+
+
 def reparar_arranque_windows() -> None:
     if os.name != 'nt':
         return
-    bad = GEMINI.parent / '.gemini ntigravity'
-    if bad.is_dir():
-        for sub in ('herramientas', 'clonador'):
-            if (bad / sub).is_dir():
-                shutil.copytree(bad / sub, ANTIGRAVITY / sub, dirs_exist_ok=True)
-        shutil.rmtree(bad, ignore_errors=True)
+    # (v3.2: la carpeta rota de la v3.1 la rescata ahora nova_doctor.py; aqui solo el arranque del guardian)
     vbs = ANTIGRAVITY / 'scripts' / 'start_session_guard.vbs'
     startup = Path(os.environ.get('APPDATA', '')) / 'Microsoft/Windows/Start Menu/Programs/Startup/Nova_SessionGuard.vbs'
     if vbs.is_file() and startup.parent.is_dir():
@@ -167,6 +182,7 @@ def registrar_hooks() -> None:
 
 
 def apply_update(forzar: bool = False) -> int:
+    doctor("--estructura")  # v3.2: ANTES de bajar: quita enlaces rotos y rescata la carpeta rota (si no, fallan las escrituras)
     remoto, cambios = comprobar(forzar)
     if remoto is None:
         print("[AVISO] No se pudo conectar con GitHub para buscar actualizaciones (revisa tu conexion).")
@@ -176,6 +192,7 @@ def apply_update(forzar: bool = False) -> int:
     if not cambios:
         LOCAL_MANIFEST.write_text(json.dumps(remoto, indent=2, ensure_ascii=False), encoding="utf-8")
         print(f"[OK] Ya tienes la version mas reciente de Nova Agent (v{ver_r}). No hay parches pendientes.")
+        doctor()  # v3.2: aunque no haya parche, se revisa y repara la instalacion
         return 0
 
     print("----------------------------------------------------------------------")
@@ -218,6 +235,12 @@ def apply_update(forzar: bool = False) -> int:
     if hooks_tocados:
         registrar_hooks()
     reparar_arranque_windows()
+    if auto and not os.environ.get("NOVA_REEJECUTADO"):
+        # v3.2: el actualizador se actualizo a si mismo -> se vuelve a lanzar SOLO con la version nueva (una vez)
+        print("[INFO] El actualizador se actualizo a si mismo: sigo con la version nueva...")
+        os.environ["NOVA_REEJECUTADO"] = "1"
+        return subprocess.run([sys.executable, str(Path(__file__).resolve()), *sys.argv[1:]], check=False).returncode
+    doctor()  # v3.2: revision y reparacion completa despues del parche
 
     print(f"[OK] Parche v{ver_r} aplicado: {escritos} archivos actualizados.")
     if nuevas_skills:

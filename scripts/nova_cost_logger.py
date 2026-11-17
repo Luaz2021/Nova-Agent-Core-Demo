@@ -1,6 +1,6 @@
 r"""
 Nova Cost Logger v2.1 (Consenso Final Nova Argon + Claude)
-Ubicacion: G:\Mi unidad\Antigravity\scripts\nova_cost_logger.py
+Ubicacion: ~/.gemini/antigravity/scripts/nova_cost_logger.py
 Registra automaticamente cada tarea sumando cache_read_tokens de todas las llamadas API.
 Incluye modo --auto-last-task para leer directamente desde transcript.jsonl sin error humano.
 Formula:
@@ -15,7 +15,7 @@ import datetime
 import argparse
 
 def _resolve_log_path():
-    # Sync v4: memoria siempre en local; nova_sync_v4.ps1 la respalda en Drive.
+    # Memoria siempre en local (~/.gemini/antigravity/memory).
     local_mem = os.path.expanduser(os.path.join("~", ".gemini", "antigravity", "memory"))
     os.makedirs(local_mem, exist_ok=True)
     os.makedirs(os.path.join(local_mem, "registros"), exist_ok=True)

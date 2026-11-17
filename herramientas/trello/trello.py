@@ -39,9 +39,8 @@ def credenciales() -> tuple[str, str]:
     clave, token = os.environ.get("TRELLO_API_KEY", ""), os.environ.get("TRELLO_TOKEN", "")
     if clave and token:
         return clave, token
-    candidatos = [Path(f"{l}:/") / sub / "Antigravity" / "vault" / "secrets.json"
-                  for l in "GDEFHIJ" for sub in ("Mi unidad", "My Drive")]
-    candidatos.append(Path.home() / ".gemini" / "antigravity" / "vault" / "secrets.json")
+    # v3.2: solo el cofre local (antes tambien el Drive privado del autor)
+    candidatos = [Path.home() / ".gemini" / "antigravity" / "vault" / "secrets.json"]
     for ruta in candidatos:
         try:
             if ruta.exists():

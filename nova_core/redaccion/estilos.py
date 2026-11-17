@@ -1,6 +1,6 @@
 """Plantillas de Word: formal y APA (sin colores) y moderno (azul marino, para actividades y presentaciones).
 
-Las plantillas viven en redaccion/estilos/*.docx. Si Alexander quiere otro aspecto, abre la plantilla en Word,
+Las plantillas viven en redaccion/estilos/*.docx. Si el usuario quiere otro aspecto, abre la plantilla en Word,
 cambia los estilos (Normal, Titulo 1, Titulo 2...) y guarda: el redactor la usa tal cual.
 Si falta una plantilla se crea aqui con los valores por defecto.
 """

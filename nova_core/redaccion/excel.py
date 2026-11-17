@@ -1,7 +1,7 @@
 """Excel de verdad (.xlsx) para cualquier tabla: redactar.py excel --datos tabla.json --carpeta X (12/11/2026, Claude).
 
 Por que: el 11/11 Nova entrego un CSV separado por comas "para abrir en Excel". En este Windows el separador de
-listas es ";", asi que Excel lo metio todo en una sola columna. Nunca CSV para Alexander: siempre .xlsx.
+listas es ";", asi que Excel lo metio todo en una sola columna. Nunca CSV para el usuario: siempre .xlsx.
 
 tabla.json:
 {
@@ -14,7 +14,7 @@ tabla.json:
     "formatos": {"Coste": "moneda", "Venta": "moneda", "Margen": "moneda"},  (moneda | porcentaje | entero | decimal | texto | fecha)
     "moneda": "S/",
     "totales": ["Coste", "Venta", "Margen"],    (fila TOTAL con =SUMA)
-    "editables": ["Venta"]                       (columnas en amarillo claro: las que Alexander cambia a mano)
+    "editables": ["Venta"]                       (columnas en amarillo claro: las que el usuario cambia a mano)
   }]
 }
 Tambien acepta un .csv (detecta "," o ";") o una tabla Markdown (| a | b |).

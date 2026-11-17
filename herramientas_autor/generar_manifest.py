@@ -23,7 +23,7 @@ from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parent.parent
 EXCLUIR_PARTES = {"__pycache__", ".git", "medios_cache", "node_modules", ".DS_Store"}
-EXCLUIR_NOMBRES = {"perfil_usuario.json", "memoria_disenos.json"}
+EXCLUIR_NOMBRES = {"perfil_usuario.json", "memoria_disenos.json", "desktop.ini", "Thumbs.db"}  # v3.2: basura de Drive/Windows
 EXCLUIR_EXT = {".pyc"}
 PRESERVAR = {
     "nova_core/nova_hooks_config.json"

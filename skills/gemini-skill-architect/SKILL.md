@@ -13,7 +13,7 @@ Esta meta-habilidad permite al asistente detectar cuándo un flujo de trabajo, p
 ## 1. REGLA INQUEBRANTABLE: Transparencia y Consentimiento del Usuario
 
 El asistente **NUNCA** creará una skill de forma silenciosa u oculta. 
-Antes de escribir cualquier archivo en `<NOVA_HOME>ntigravitylmacen\skills\`:
+Antes de escribir cualquier archivo en `<NOVA_HOME>\antigravity\almacen\skills\`:
 
 1. **Avisar al usuario explícitamente:**
    - Explicar qué patrón recurrente se ha detectado.
@@ -25,7 +25,7 @@ Antes de escribir cualquier archivo en `<NOVA_HOME>ntigravitylmacen\skills\`:
 
 ## 2. Anatomía Obligatoria de una Skill para Gemini / Antigravity
 
-Cada nueva skill se almacena en `<NOVA_HOME>ntigravitylmacen\skills\<nombre-skill>/` y debe contener:
+Cada nueva skill se almacena en `<NOVA_HOME>\antigravity\almacen\skills\<nombre-skill>/` y debe contener:
 
 ### A. Frontmatter YAML Estricto en `SKILL.md`:
 ```markdown
@@ -52,7 +52,7 @@ description: "Descripción precisa de qué hace la habilidad y CUÁNDO debe acti
 2. **Estructurar la Lógica:**
    - Desglosar la habilidad en directrices accionables, ejemplos de "Antes vs Después", y comandos claros.
 3. **Escritura y Sincronización:**
-   - Escribir `SKILL.md` en `<NOVA_HOME>ntigravitylmacen\skills\<nombre-skill>/SKILL.md`.
+   - Escribir `SKILL.md` en `<NOVA_HOME>\antigravity\almacen\skills\<nombre-skill>/SKILL.md`.
    - Sincronizar la copia local en `~/.gemini/antigravity/skills/<nombre-skill>/`.
 4. **Verificación:** Confirmar al usuario que la skill ya está disponible para ambas máquinas (PC y Laptop).
 
