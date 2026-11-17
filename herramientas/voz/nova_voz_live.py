@@ -212,6 +212,14 @@ def clave_api() -> str | None:
                     pass
     except OSError:
         pass
+    try:  # v3.2: la que guarda nova_claves.py en config\secrets.env
+        with open(os.path.expanduser(r"~\.gemini\config\secrets.env"), encoding="utf-8-sig") as f:
+            for linea in f:
+                k, _, v = linea.partition("=")
+                if k.strip() in ("GEMINI_API_KEY", "GOOGLE_API_KEY") and v.strip():
+                    return v.strip()
+    except OSError:
+        pass
     return None
 
 

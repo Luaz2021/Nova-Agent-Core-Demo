@@ -136,8 +136,8 @@
             "Type": "Script",
             "RelativePath": "scripts/nova_claves.py",
             "TargetRelative": "antigravity/scripts/nova_claves.py",
-            "SizeBytes": 3256,
-            "SHA256": "D582B8F90D06C043F0C3D807D4731E8B04CCB8D4BEAF3ABE12EDABBCB17249BA"
+            "SizeBytes": 4025,
+            "SHA256": "9ABBFB25776D1E881553822819A2108D5EC2486F068DA059B3B25EA60C89C601"
         },
         {
             "Id": "script_scripts_nova_color_oracle_py",
@@ -181,8 +181,8 @@
             "Type": "Script",
             "RelativePath": "scripts/nova_doctor.py",
             "TargetRelative": "antigravity/scripts/nova_doctor.py",
-            "SizeBytes": 18265,
-            "SHA256": "01AF946D70AA0E1B0F1BEC71F3F00122861F206C3BF7FA21949C4F035E93D50D"
+            "SizeBytes": 18650,
+            "SHA256": "68A9756C8F2024A32EE2115781F0F4A4D229B5B4E66900DB2236F84C319C685B"
         },
         {
             "Id": "script_scripts_nova_instalar_ia_local_py",
@@ -388,8 +388,8 @@
             "Type": "Script",
             "RelativePath": "scripts/session_guard.ps1",
             "TargetRelative": "antigravity/scripts/session_guard.ps1",
-            "SizeBytes": 8929,
-            "SHA256": "16C0FE0B25207DCD1E3B3852552AE16F1847E86451BB6385CAAE9F474E9E6BDF"
+            "SizeBytes": 9129,
+            "SHA256": "40D5C59F28DB40CA4E30171E1FE80A99BE5F59344F5E66385C2BD136ACBA5554"
         },
         {
             "Id": "script_scripts_start_awake_sentinel_vbs",
@@ -13710,8 +13710,8 @@
             "Type": "File",
             "RelativePath": "herramientas/voz/nova_voz_live.py",
             "TargetRelative": "antigravity/herramientas/voz/nova_voz_live.py",
-            "SizeBytes": 53256,
-            "SHA256": "FE16C03981FC8D97364A4C41B3E6DB1B1F8736AFD61CFE329A0E64B2415075B4"
+            "SizeBytes": 53653,
+            "SHA256": "8539070994F81537F542433E8435C39B4A63C4079C44F61A0EADD3E004CAB63C"
         },
         {
             "Id": "file_herramientas_voz_puente_antigravity_py",

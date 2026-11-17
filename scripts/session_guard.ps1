@@ -30,6 +30,8 @@ function Test-ClaveGemini {
         if ([Environment]::GetEnvironmentVariable($n, "Process")) { return $true }
         if ([Environment]::GetEnvironmentVariable($n, "User")) { return $true }
     }
+    $sec = Join-Path (Split-Path $agDir -Parent) "config\secrets.env"
+    if ((Test-Path $sec) -and (Select-String -Path $sec -Pattern '^\s*(GEMINI|GOOGLE)_API_KEY\s*=\s*\S' -Quiet)) { return $true }
     return $false
 }
 
