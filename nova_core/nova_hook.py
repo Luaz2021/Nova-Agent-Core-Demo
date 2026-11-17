@@ -523,7 +523,7 @@ def regla_contenido(nombre: str, args: dict, conv: str = "") -> tuple[str, str]:
         )
     # v3.2 Pack de voz: la licencia de las voces (LICENCIA_VOCES.md) la acepta el USUARIO, nunca Nova por el
     if cmd_limpio and (
-        re.search(r"(?i)\bACEPTO\b", cmd_limpio) and re.search(r"(?i)voz_clon|instalar\.(ps1|sh)", cmd_limpio)
+        re.search(r"(?i)\bACEPTO\b|-{1,2}aceptado\b", cmd_limpio) and re.search(r"(?i)voz_clon|instalar\.(ps1|sh)", cmd_limpio)
         or re.search(r"(?i)licencia_voces_aceptada", cmd_limpio)
     ):
         return "deny", (

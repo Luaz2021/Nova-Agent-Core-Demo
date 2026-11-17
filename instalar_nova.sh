@@ -46,7 +46,7 @@ if [ ! -d "$SCRIPT_DIR/adapters" ]; then
     fi
     echo "[INFO] Descargando nucleo de Nova en $INSTALL_ROOT..."
     rm -rf "$NUEVO"
-    if ! git clone --depth 1 https://github.com/Luaz2021/Nova-Agent-Core-Demo.git "$NUEVO" >/dev/null 2>&1; then
+    if ! git clone --depth 1 -b "${NOVA_RAMA:-main}" https://github.com/Luaz2021/Nova-Agent-Core-Demo.git "$NUEVO" >/dev/null 2>&1; then
         rm -rf "$NUEVO"
         echo "[ERROR] No se pudo descargar Nova (revisa tu conexion a internet o que github.com este accesible)."
         echo "        Tu instalacion anterior, si la habia, sigue intacta."

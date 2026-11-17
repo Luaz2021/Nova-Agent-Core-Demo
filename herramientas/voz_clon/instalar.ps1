@@ -5,6 +5,7 @@
 # LAS VOCES AYLA Y MARINA NO SON MIT: solo se pueden usar dentro de Nova (LICENCIA_VOCES.md). Hay que aceptarla.
 # Receta probada: Python 3.12, torch cu128, faster-qwen3-tts 0.5.4, transformers 5.15.1 (la 5.23 rompe el modelo).
 # ==============================================================================
+param([switch]$Aceptado)  # lo pasa el instalador de Nova cuando el usuario ya dijo SI a la licencia
 $ErrorActionPreference = "Stop"
 $aqui = $PSScriptRoot
 $base = Join-Path $env:USERPROFILE "nova_voz_clon"
@@ -34,7 +35,7 @@ Write-Host "    suplantar a sus titulares, contenido sexual, de odio, politico, 
 Write-Host "  - Permitido: que Nova te hable (Ayla), avisos del guardian (Marina) y narrar tus videos de Nova sin fines comerciales (Marina)."
 Write-Host "  - Se rige por la ley espanola: el mal uso puede acarrear acciones civiles y penales (LO 1/1982, RGPD/LOPDGDD, Codigo Penal)."
 if ($lic) { Write-Host "  Texto completo: $((Resolve-Path $lic).Path)" }
-$r = Read-Host "Escribe ACEPTO para aceptar la licencia e instalar (cualquier otra cosa cancela)"
+$r = if ($Aceptado) { "ACEPTO" } else { Read-Host "Escribe ACEPTO para aceptar la licencia e instalar (cualquier otra cosa cancela)" }
 if ($r -cne "ACEPTO") { Write-Host "Cancelado. Nova seguira con la voz de Windows." -ForegroundColor Yellow; exit 1 }
 New-Item -ItemType Directory -Force $base, "$base\voces", "$base\salidas" | Out-Null
 @{ acepto = $true; fecha = (Get-Date -Format "yyyy-MM-dd HH:mm:ss"); equipo = $env:COMPUTERNAME; licencia = "LICENCIA_VOCES.md" } |

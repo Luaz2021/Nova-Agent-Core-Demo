@@ -1,7 +1,7 @@
 {
     "Version": "3.2",
     "Engine": "NovaManifestGuardian v3",
-    "GeneratedAt": "2026-11-17 15:45:25",
+    "GeneratedAt": "2026-11-17 15:49:40",
     "TotalComponents": 1505,
     "Components": [
         {
@@ -559,8 +559,8 @@
             "Type": "File",
             "RelativePath": "nova_core/nova_hook.py",
             "TargetRelative": "nova_core/nova_hook.py",
-            "SizeBytes": 35994,
-            "SHA256": "FBF77D3EEA294BDB33A2B89D16DF080C0610C911A729EFA87D8B5DA18F9AF203"
+            "SizeBytes": 36011,
+            "SHA256": "74FD92B112291AD8570972885429F6D73BF696933B35493063B0C09DA53839B6"
         },
         {
             "Id": "file_nova_core_nova_hook_turno_py",
@@ -1199,8 +1199,8 @@
             "Type": "File",
             "RelativePath": "herramientas/voz_clon/instalar.ps1",
             "TargetRelative": "antigravity/herramientas/voz_clon/instalar.ps1",
-            "SizeBytes": 4753,
-            "SHA256": "1C9435AE7ED13558E3B02FA68064E682EA3444C566FB1E4DD1CA72D9DFC6BFDE"
+            "SizeBytes": 4891,
+            "SHA256": "717B1A6A256402E5447B3F8A9B4830FF42CE2D8F82CFCCEE43052EA49256A58F"
         },
         {
             "Id": "file_herramientas_voz_clon_instalar_sh",
@@ -1208,8 +1208,8 @@
             "Type": "File",
             "RelativePath": "herramientas/voz_clon/instalar.sh",
             "TargetRelative": "antigravity/herramientas/voz_clon/instalar.sh",
-            "SizeBytes": 4784,
-            "SHA256": "CF0EE1DA53EBFDD538E672CDB46EE61064B88F7305D955C4F1C8AAE11EFE4E40"
+            "SizeBytes": 4907,
+            "SHA256": "2315FA0D6C07E8BF8A80BD12662D6C5D2FB5DBC2A7DC514ECAD3DF7F0C5DE7C1"
         },
         {
             "Id": "file_herramientas_voz_clon_licencia_voces_md",

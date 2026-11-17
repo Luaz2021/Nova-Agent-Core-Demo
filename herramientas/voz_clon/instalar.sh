@@ -46,8 +46,12 @@ echo "  - NO son MIT. Prohibido: extraerlas o distribuirlas, clonarlas con otras
 echo "    suplantar a sus titulares, contenido sexual, de odio, politico, publicitario o enganoso, y el uso comercial sin permiso escrito."
 echo "  - Permitido: que Nova te hable (Ayla), avisos del guardian (Marina) y narrar tus videos de Nova sin fines comerciales (Marina)."
 echo "  - Se rige por la ley espanola: el mal uso puede acarrear acciones civiles y penales (LO 1/1982, RGPD/LOPDGDD, Codigo Penal)."
-printf "Escribe ACEPTO para aceptar la licencia e instalar (cualquier otra cosa cancela): "
-read -r R < /dev/tty || R=""
+if [ "$1" = "--aceptado" ]; then
+    R="ACEPTO"   # el instalador de Nova ya pregunto y el usuario dijo SI
+else
+    printf "Escribe ACEPTO para aceptar la licencia e instalar (cualquier otra cosa cancela): "
+    read -r R < /dev/tty || R=""
+fi
 [ "$R" = "ACEPTO" ] || { echo "Cancelado. Nova seguira con la voz del sistema."; exit 1; }
 mkdir -p "$BASE/voces" "$BASE/salidas"
 printf '{"acepto": true, "fecha": "%s", "equipo": "%s", "licencia": "LICENCIA_VOCES.md"}\n' "$(date '+%Y-%m-%d %H:%M:%S')" "$(hostname)" > "$BASE/licencia_voces_aceptada.json"

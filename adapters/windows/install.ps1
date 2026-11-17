@@ -274,6 +274,22 @@ if ($quiereIA) {
     }
 }
 
+# Voz propia de Nova (opcional, v3.2): Ayla (Nova) y Marina (guardian y videos). Solo si el equipo puede.
+$vozScript = "$geminiDir\antigravity\herramientas\voz_clon\instalar.ps1"
+$vramMb = 0
+$smi = (Get-Command nvidia-smi -ErrorAction SilentlyContinue).Source
+if ($smi) { try { $vramMb = [int](((& $smi --query-gpu=memory.total --format=csv,noheader,nounits) | Select-Object -First 1).Trim()) } catch {} }
+Write-Host ""
+if ((Test-Path $vozScript) -and $vramMb -ge 6000 -and $freeDiskGB -ge 12) {
+    Write-Host "[VOZ] Tu equipo puede usar la voz propia de Nova (Ayla) y del guardian (Marina), generadas en local (~9 GB)." -ForegroundColor Cyan
+    Write-Host "      Son voces de personas reales (espanolas) autorizadas SOLO para uso dentro de Nova (LICENCIA_VOCES.md, ley espanola)." -ForegroundColor Gray
+    Write-Host "      Prohibido extraerlas, clonarlas con otras herramientas, suplantar a sus titulares o el uso comercial: el mal uso puede acarrear acciones civiles y penales." -ForegroundColor Gray
+    $askVoz = Read-Host "Aceptas esa licencia e instalo la voz de Nova? (s/n) [n]"
+    if ($askVoz -and $askVoz.ToLower() -eq "s") { & powershell.exe -NoProfile -ExecutionPolicy Bypass -File $vozScript -Aceptado }
+} else {
+    Write-Host "[VOZ] Nova usara la voz de Windows (la voz propia necesita GPU NVIDIA con 6 GB y 12 GB libres)." -ForegroundColor Gray
+}
+
 # Claves opcionales (tipo 'iniciar sesion'): se guardan solo en este equipo
 Write-Host ""
 $askKeys = Read-Host "Quieres configurar ahora tus claves gratuitas opcionales (OpenRouter, Groq...)? (s/n) [n]"
