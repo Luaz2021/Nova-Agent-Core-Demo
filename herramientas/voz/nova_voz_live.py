@@ -115,24 +115,31 @@ CONF_NOVA = 0.55  # confianza minima de Vosk para "nova" (antes 0.70; la 2a comp
 # confianza que a secas, y la 2a comprobacion (sin gramatica) tambien la oye al principio.
 CONF_NOVA_FRASE = 0.65
 CONF_NOVA_ALTA = 0.75  # con esta confianza basta que la 2a comprobacion oiga algo que empiece por "n" (no.., nu.., na..)
+# Frases normales que suenan a "Nova..." (medido: "No vamos a ir hoy" la despertaba en 4 de 5 voces). OJO: un "Nova,
+# dime la hora" colombiano se oye "no vamos dime...", asi que solo se excluyen las frases tipicas, no "no vamos" a secas.
+RE_NO_ES_NOVA = re.compile(r"^(no vamos a|no van a|no voy|no vas a|no vale|no va a (ir|ser|estar|llover|poder|haber|"
+                           r"salir|venir|pasar|funcionar|dar|hacer)\b)")
 CONF_NOVA_SEGURA = 0.90  # tan segura que la 2a comprobacion no decide (visto: 1.00 tumbado porque la 2a oyo "una")
 RE_NOVA_INICIO = re.compile(r"^(nova|no va|no vamos|no gana|nogana|noba|no ba|nueva|nová|no vá|noga)\b")
 
 
 def es_nova(resultado: list, libre: str) -> bool:
-    """La misma regla para escuchar y para --prueba. resultado = palabras de Vosk con gramatica; libre = sin ella."""
+    """La misma regla para escuchar y para --prueba. resultado = palabras de Vosk con gramatica; libre = sin ella.
+    v3.2 (medido con voces de Colombia, Mexico, Peru y Espana): lo que distingue de verdad es que el 1er paso ponga
+    "nova" como PRIMERA palabra ("no quiero..." sale "no"; "la nueva casa..." sale "la"). La 2a comprobacion solo
+    confirma que empieza por "n" (oye "no", "no va", "no a que hora", "no da que tiempo"... segun el acento)."""
     pal = [w for w in resultado if w.get("word") != "[unk]"]
     if not pal or pal[0].get("word") != "nova":
         return False
     conf = pal[0].get("conf", 0)
     libre = (libre or "").strip().lower()
-    if len(pal) == 1 and len(resultado) <= 2 and conf >= CONF_NOVA and RE_NOVA_LIBRE.match(libre):
-        return True  # "Nova" a secas
+    if RE_NO_ES_NOVA.match(libre):
+        return False  # "no vamos a...", "no va a llover"...: frase normal, no la llaman
     if conf >= CONF_NOVA_SEGURA:
-        return True  # el 1er paso (con gramatica) esta segurisimo y "nova" es la 1a palabra: el acento no la tumba
-    if conf >= CONF_NOVA_ALTA and libre[:1] == "n":
-        return True  # "Nova" clara para el 1er paso aunque el acento la cambie en el 2o (visto: 0.77 sin despertar)
-    return conf >= CONF_NOVA_FRASE and bool(RE_NOVA_INICIO.match(libre))  # "Nova, ..." de un tiron
+        return True  # segurisimo: el acento no la tumba (visto: 1.00 con la 2a oyendo "una")
+    if len(pal) == 1 and len(resultado) <= 2 and conf >= CONF_NOVA and RE_NOVA_LIBRE.match(libre):
+        return True  # "Nova" a secas, dudosa pero confirmada
+    return conf >= CONF_NOVA_FRASE and libre[:1] == "n"  # "Nova, ..." de un tiron
 
 DIAS = ["lunes", "martes", "miercoles", "jueves", "viernes", "sabado", "domingo"]
 
@@ -161,7 +168,7 @@ archivo o la accion) y pregunta "¿Le doy permiso?". Si dice que si, llama a res
 dice que no, con "no". Si el aviso dice PELIGROSO, explica el riesgo y solo aprueba si el usuario dice la palabra
 "confirmo". NUNCA respondas un permiso sin que el usuario lo haya dicho.
 Si pregunta como va una tarea, usa estado_nova.
-EL TIEMPO: usa la herramienta tiempo y contestalo TU en 1-2 frases (temperatura, si llueve, max/min).
+EL TIEMPO: usa consultar_tiempo y contestalo TU en 1-2 frases (temperatura, si llueve, max/min).
 OTRAS COSAS DE INTERNET (noticias, resultados, precios, buscar algo): tu no puedes buscar; ofrece mandarselo a
 Nova-obrera, que si tiene navegador, y con su si usa enviar_a_nova.
 Si el usuario se despide o dice que eso es todo, despidete en 3-4 palabras y llama a terminar_conversacion.
@@ -187,12 +194,10 @@ HERRAMIENTAS = [{"function_declarations": [
     {"name": "hora_actual",
      "description": "Devuelve la fecha y la hora exactas del ordenador del usuario (su hora local). Usala SIEMPRE que "
                     "pregunte la hora o la fecha; no la calcules ni la conviertas a otra zona."},
-    {"name": "tiempo",
-     "description": "El tiempo AHORA y la prevision de hoy y manana en una ciudad de cualquier pais (datos reales "
-                    "de Open-Meteo). Usala SIEMPRE que pregunte por el tiempo, la temperatura o si va a llover.",
-     "parameters": {"type": "OBJECT", "properties": {
-         "ciudad": {"type": "STRING", "description": "Ciudad (y pais si hay dudas), p. ej. 'Madrid' o 'Bogota, Colombia'."}},
-         "required": ["ciudad"]}},
+    # v3.2 OJO: la 1a version de esta declaracion (nombre "tiempo", descripciones largas con comillas) dejaba a Gemini
+    # Live SORDO al audio (sin error: solo silencio). Probado con audio real: asi, sencilla, funciona. No la "mejores".
+    {"name": "consultar_tiempo", "description": "Tiempo actual y prevision de una ciudad.",
+     "parameters": {"type": "OBJECT", "properties": {"ciudad": {"type": "STRING"}}, "required": ["ciudad"]}},
     {"name": "terminar_conversacion",
      "description": "Cierra la conversacion de voz cuando el usuario se despide o dice que eso es todo."},
 ]}]
@@ -537,6 +542,7 @@ class NovaLive:
         self.permiso: dict | None = None  # permiso que Nova-obrera espera en Antigravity
         self._permisos_vistos: set[str] = set()
         self.despertar_con: str | None = None  # aviso que abre una conversacion sin decir "Nova" (p. ej. un permiso)
+        self.audio_frase: bytes | None = None  # "Nova, que hora es" de un tiron: ese audio se le pasa a Gemini
         self.ultimo_dicho = ""           # lo que dijiste en este turno (para exigir "confirmo" en lo peligroso)
         if not args.texto:
             threading.Thread(target=self._vigilar_permisos, daemon=True).start()
@@ -861,6 +867,9 @@ class NovaLive:
                             libre.AcceptWaveform(bytes(trozo))
                             oido = json.loads(libre.FinalResult()).get("text", "")
                             if es_nova(r.get("result", []), oido):
+                                # v3.2: si dijo algo mas que "Nova" (frase de un tiron), Gemini tiene que oirlo:
+                                # antes se lo quedaba el detector y la conversacion se abria en silencio.
+                                self.audio_frase = bytes(trozo) if len(oido.split()) > 1 else None
                                 break
                             # solo la 1a palabra (para afinar el acento sin guardar lo que se dice en la habitacion)
                             self._casi(f"confianza {pal[0].get('conf', 0):.2f}, la 2a comprobacion oyo "
@@ -873,15 +882,21 @@ class NovaLive:
                     log("Nova Voz abre conversacion por un aviso (permiso)")
                     await asyncio.to_thread(lambda: sonar_wav(clip_ayla("ok")) or pitido())
                 else:
-                    log("Me llamaste")
+                    log("Me llamaste" + (" (con frase: se la paso a Gemini)" if self.audio_frase else ""))
                     self.fijar_cara("mirando", 1.5)  # "¡Te oigo!"
                     if self.usar_ayla:
                         self.ayla.calentar()
-                    await asyncio.to_thread(lambda: sonar_wav(clip_ayla("wake")) or pitido())
-                while not self.mic.empty():  # lo que se grabo mientras sonaba el "¿Si?" no cuenta
-                    self.mic.get_nowait()
+                    if not self.audio_frase:  # con frase ya esta hablando: ni "¿Si?" ni pitido que la pisen
+                        await asyncio.to_thread(lambda: sonar_wav(clip_ayla("wake")) or pitido())
+                if not self.audio_frase:  # lo que se grabo mientras sonaba el "¿Si?" no cuenta...
+                    while not self.mic.empty():
+                        self.mic.get_nowait()
+                # ...pero con frase NO se tira: es el resto de lo que esta diciendo ("...hace en Madrid") y le llega a
+                # Gemini seguido, justo detras del audio_inicial (antes se perdia y preguntaba "¿de que ciudad?")
                 try:
-                    await self.conversar(texto_inicial=f"[AVISO DEL SISTEMA] {aviso}" if aviso else None)
+                    frase, self.audio_frase = (None if aviso else self.audio_frase), None
+                    await self.conversar(texto_inicial=f"[AVISO DEL SISTEMA] {aviso}" if aviso else None,
+                                         audio_inicial=frase)
                 except Exception as e:
                     log(f"Error en la conversacion: {type(e).__name__}: {e}")
                     self.fijar_cara("error", 4)
@@ -892,7 +907,7 @@ class NovaLive:
                     self.mic.get_nowait()
 
     # ------------------------------------------------------------------ una conversacion (sesion Live)
-    async def conversar(self, texto_inicial: str | None = None):
+    async def conversar(self, texto_inicial: str | None = None, audio_inicial: bytes | None = None):
         from google.genai import types
         ahora = time.localtime()
         sistema = SISTEMA.replace("<NOMBRE>", nombre_usuario("el usuario")) + (f"\nHoy es {DIAS[ahora.tm_wday]} {time.strftime('%d/%m/%Y', ahora)}. Para la hora usa SIEMPRE "
@@ -1041,7 +1056,7 @@ class NovaLive:
                         res = {"hora": time.strftime("%H:%M", t), "dia": DIAS[t.tm_wday],
                                "fecha": time.strftime("%d/%m/%Y", t),
                                "nota": "Es la hora local del usuario. Dila tal cual (en formato de 12 h si suena mas natural)."}
-                    elif fc.name == "tiempo":
+                    elif fc.name == "consultar_tiempo":
                         res = await asyncio.to_thread(consultar_tiempo, str(args.get("ciudad", "")))
                     elif fc.name == "terminar_conversacion":
                         estado["cerrar_tras_hablar"] = True
@@ -1053,6 +1068,11 @@ class NovaLive:
 
             if texto_inicial:
                 await s.send_realtime_input(text=texto_inicial)
+            if audio_inicial:  # la frase dicha junto a "Nova"; el resto sigue llegando por el micro (mandar_mic)
+                self.turno_pendiente = True
+                for i in range(0, len(audio_inicial), 3200):
+                    await s.send_realtime_input(audio=types.Blob(data=audio_inicial[i:i + 3200],
+                                                                 mime_type="audio/pcm;rate=16000"))
             tareas = [asyncio.create_task(c()) for c in (recibir, mandar_avisos, guardian)]
             if not self.args.texto:  # con un aviso inicial tambien escucha tu respuesta (solo --texto no usa micro)
                 tareas.append(asyncio.create_task(mandar_mic()))
