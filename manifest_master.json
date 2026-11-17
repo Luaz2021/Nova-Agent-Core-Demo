@@ -13710,8 +13710,8 @@
             "Type": "File",
             "RelativePath": "herramientas/voz/nova_voz_live.py",
             "TargetRelative": "antigravity/herramientas/voz/nova_voz_live.py",
-            "SizeBytes": 67617,
-            "SHA256": "28FD6D3A6043A04FB2B17FE62AFD9FD55F900A375B442450D3743FE607991B65"
+            "SizeBytes": 68129,
+            "SHA256": "2226AEFCC9E310241DB54D113E532715D2517CDD5EDE7112829CBDCD58A8276D"
         },
         {
             "Id": "file_herramientas_voz_puente_antigravity_py",
