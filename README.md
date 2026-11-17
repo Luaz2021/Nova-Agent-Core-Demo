@@ -99,13 +99,14 @@ flowchart TD
 8. [Nova Sync: tu Nova en varios equipos](#-nova-sync-tu-nova-en-varios-equipos)
 9. [¿Qué funciona en cada sistema?](#-qué-funciona-en-cada-sistema)
 10. [Si algo falla: Nova Doctor](#-si-algo-falla-nova-doctor)
-11. [Línea directa con el creador](#-línea-directa-con-el-creador)
-12. [Router Multi-Modelo y Herramientas a 0 Tokens](#-router-multi-modelo-y-herramientas-a-0-tokens)
-13. [Catálogo Detallado de Skills por Especialidad](#-catálogo-detallado-de-skills-por-especialidad)
-14. [Atribuciones y Agradecimientos Open Source](#-atribuciones-y-agradecimientos-open-source-cero-cajas-negras)
-15. [Capa de Integridad Criptográfica y Anti-Plagio](#-capa-de-integridad-criptográfica-y-anti-plagio)
-16. [Llamada a Colaboradores: Proyecto Nova GUI](#-llamada-a-colaboradores-proyecto-nova-gui-open-source)
-17. [Créditos, Licencia y Autoría](#-créditos--autoría)
+11. [Pack de voz: Ayla y Marina](#-pack-de-voz-ayla-y-marina)
+12. [Línea directa con el creador](#-línea-directa-con-el-creador)
+13. [Router Multi-Modelo y Herramientas a 0 Tokens](#-router-multi-modelo-y-herramientas-a-0-tokens)
+14. [Catálogo Detallado de Skills por Especialidad](#-catálogo-detallado-de-skills-por-especialidad)
+15. [Atribuciones y Agradecimientos Open Source](#-atribuciones-y-agradecimientos-open-source-cero-cajas-negras)
+16. [Capa de Integridad Criptográfica y Anti-Plagio](#-capa-de-integridad-criptográfica-y-anti-plagio)
+17. [Llamada a Colaboradores: Proyecto Nova GUI](#-llamada-a-colaboradores-proyecto-nova-gui-open-source)
+18. [Créditos, Licencia y Autoría](#-créditos--autoría)
 
 ---
 
@@ -197,6 +198,7 @@ Con **Nova Sync** tu memoria, proyectos, documentos, skills y reglas viajan entr
 | Extensión de navegador (Brave, Chrome, Edge, Opera, Vivaldi) | ✅ | ✅ | ✅ |
 | Nova Sync | ✅ automático | ✅ con las frases | Con rclone |
 | Nova Doctor y parches que reparan | ✅ | ✅ | ✅ |
+| Pack de voz (Ayla y Marina, local) | ✅ con GPU NVIDIA | ✅ chip Apple (experimental) · Intel no | ✅ con GPU NVIDIA |
 | Voz manos libres, aduana de adjuntos y mascota | ✅ | — | — |
 | Servicios de fondo automáticos (guardián de sesión) | ✅ | Próximamente | Próximamente |
 
@@ -205,6 +207,29 @@ Con **Nova Sync** tu memoria, proyectos, documentos, skills y reglas viajan entr
 ## 🩺 Si algo falla: Nova Doctor
 
 Di *"Nova, revísate"* (o en una terminal: `python ~/.gemini/antigravity/scripts/nova_doctor.py --reparar`). Revisa carpetas, skills, reglas automáticas, librerías, navegador, IA local y Nova Sync, **repara lo que sabe reparar** y te da una línea de resumen. Nunca borra tus datos: lo que aparta va a `~/.gemini/antigravity/backups/`. Si sigue fallando, Nova te ofrece `/reportar-fallo`.
+
+---
+
+## 🎙️ Pack de voz: Ayla y Marina
+
+Nova tiene dos voces oficiales, de dos personas reales que las han autorizado **solo y exclusivamente para Nova**:
+
+| Voz | Para qué |
+| :--- | :--- |
+| **Ayla** | La voz de Nova: respuestas habladas, avisos y voz manos libres. |
+| **Marina** | El guardián de tokens y la narración de los vídeos que hagas con Nova. |
+
+Se generan **en tu equipo** (Qwen3-TTS 1.7B, nada sale a la nube) y el pack es **opcional**: sin él, Nova usa la voz de tu sistema.
+
+| Equipo | Motor | Instalar |
+| :--- | :--- | :--- |
+| Windows con GPU NVIDIA (6 GB de VRAM o más) | CUDA (`faster-qwen3-tts`), ~9 GB | `powershell -ExecutionPolicy Bypass -File ~/.gemini/antigravity/herramientas/voz_clon/instalar.ps1` |
+| Linux con GPU NVIDIA | CUDA, ~9 GB | `sh ~/.gemini/antigravity/herramientas/voz_clon/instalar.sh` |
+| Mac con chip Apple (M1, M2, M3, M4…) | MLX (`mlx-audio`, modelo de 8 bits), ~2 GB · **experimental** | `sh ~/.gemini/antigravity/herramientas/voz_clon/instalar.sh` |
+| Mac Intel o PC sin NVIDIA | No compatible (solo CPU, demasiado lento) | Voz del sistema |
+
+> [!IMPORTANT]
+> **Las voces Ayla y Marina NO están bajo la licencia MIT.** Se rigen por [LICENCIA_VOCES.md](LICENCIA_VOCES.md): uso **solo dentro de Nova**; prohibido extraerlas, clonarlas con otras herramientas, entrenar modelos con ellas, suplantar a sus titulares, usarlas en contenido engañoso, sexual, de odio, político o publicitario, y el uso comercial sin permiso escrito. Sus titulares son españolas y la licencia se rige por la **legislación española**: el mal uso puede acarrear **acciones civiles y penales**. El instalador solo continúa si escribes **ACEPTO** tú mismo (Nova no puede aceptarla por ti).
 
 ---
 
@@ -552,5 +577,5 @@ Si quieres colaborar, revisa las directrices de contribución en [CONTRIBUTING.m
 ## 👤 Créditos & Autoría
 
 - **Arquitecto y Creador:** **Saúl Alexander Martínez Rivas** ([@Luaz2021](https://github.com/Luaz2021))
-- **Licencia:** MIT License + Mandatory Attribution - Código libre para toda la comunidad de desarrolladores y estudiantes.
+- **Licencia:** MIT License + Mandatory Attribution - Código libre para toda la comunidad de desarrolladores y estudiantes. **Excepción: las voces Ayla y Marina** se rigen por [LICENCIA_VOCES.md](LICENCIA_VOCES.md) (solo uso dentro de Nova).
 - **Repositorio Oficial:** [https://github.com/Luaz2021/Nova-Agent-Core-Demo](https://github.com/Luaz2021/Nova-Agent-Core-Demo)

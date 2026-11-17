@@ -83,10 +83,77 @@ def pitido() -> None:
         pass
 
 
-def hablar(texto: str) -> None:
-    """Voz del sistema, sin bloquear."""
+# ------------------------------------------------------------------ v3.2: pack de voz (Ayla / Marina)
+VOZ_SERVIDOR = "http://127.0.0.1:5010"
+VOZ_BASE = Path.home() / "nova_voz_clon"
+CLONADOR = Path.home() / ".gemini" / "antigravity" / "herramientas" / "voz_clon" / "clonador.py"
+
+
+def pack_voz_instalado() -> bool:
+    """Pack de voz montado en este equipo Y licencia de las voces aceptada (LICENCIA_VOCES.md)."""
+    py = VOZ_BASE / "env_fq" / ("Scripts/python.exe" if sys.platform == "win32" else "bin/python")
+    return py.exists() and (VOZ_BASE / "licencia_voces_aceptada.json").exists() and CLONADOR.exists()
+
+
+def _servidor_voz_vivo() -> bool:
+    import urllib.request
+    try:
+        with urllib.request.urlopen(VOZ_SERVIDOR + "/", timeout=0.6) as r:
+            return r.status == 200
+    except Exception:
+        return False
+
+
+def arrancar_servidor_voz() -> None:
+    """Un SOLO servidor de voces (si hubiera dos se pisarian la GPU). Tarda 1-2 min en cargar el modelo."""
+    import time
+    marca = VOZ_BASE / "servidor_arrancando.txt"
+    try:
+        if marca.exists() and time.time() - marca.stat().st_mtime < 180:
+            return  # ya se esta arrancando
+        marca.write_text(str(time.time()), encoding="utf-8")
+    except OSError:
+        return
+    if sys.platform == "win32":
+        pyw = VOZ_BASE / "env_fq" / "Scripts" / "pythonw.exe"
+        _lanzar([str(pyw if pyw.exists() else VOZ_BASE / "env_fq" / "Scripts" / "python.exe"), str(CLONADOR),
+                 "servidor", "--inactivo", "900"])
+    else:
+        try:
+            subprocess.Popen([str(VOZ_BASE / "env_fq" / "bin" / "python"), str(CLONADOR), "servidor", "--inactivo", "900"],
+                             stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+                             start_new_session=True)
+        except OSError:
+            pass
+
+
+def _hablar_con_pack(texto: str, rol: str) -> bool:
+    """Ayla (rol 'nova') o Marina (roles 'guardian' y 'videos') por el servidor local. False = usar la voz del sistema."""
+    if not pack_voz_instalado():
+        return False
+    if not _servidor_voz_vivo():
+        arrancar_servidor_voz()
+        return False
+    import threading
+    import urllib.request
+
+    def pedir():
+        try:
+            datos = json.dumps({"voz": rol, "texto": texto}).encode("utf-8")
+            req = urllib.request.Request(VOZ_SERVIDOR + "/hablar", data=datos, headers={"Content-Type": "application/json"})
+            urllib.request.urlopen(req, timeout=180).read()
+        except Exception:
+            pass
+    threading.Thread(target=pedir).start()  # no bloquea a quien llama; el proceso espera a que termine de hablar
+    return True
+
+
+def hablar(texto: str, rol: str = "nova") -> None:
+    """v3.2: con el pack de voz, Ayla (rol 'nova') o Marina ('guardian', 'videos'); si no, la voz del sistema. No bloquea."""
     texto = (texto or "").strip()[:300]
     if not texto:
+        return
+    if _hablar_con_pack(texto, rol):
         return
     if sys.platform == "win32":
         ps = ("Add-Type -AssemblyName System.Speech; $s = New-Object System.Speech.Synthesis.SpeechSynthesizer; "

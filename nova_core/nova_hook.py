@@ -365,6 +365,8 @@ def protegida(ruta: str) -> bool:
     p = Path(ruta)
     if carpeta_sync_nube(ruta):
         return True
+    if "nova_voz_clon" in str(p).lower() or "voz_clon" in [x.lower() for x in p.parts]:
+        return True  # v3.2: pack de voz (voces con licencia propia y su aceptacion): Nova no lo toca a mano
     if str(p).lower().startswith(_GEM) and any(parte.lower() in PROTEGIDAS for parte in p.parts):
         return True
     if str(p).lower().startswith(PROTEGIDAS_RUTAS):
@@ -518,6 +520,15 @@ def regla_contenido(nombre: str, args: dict, conv: str = "") -> tuple[str, str]:
         return "deny", (
             "Forzar borrados masivos o desconectar Nova Sync lo decide el usuario: dile que lo ejecute el en una "
             "terminal si de verdad lo quiere. Tu usa nova_sync_pedir.py bajar|subir|espejo|estado|configurar."
+        )
+    # v3.2 Pack de voz: la licencia de las voces (LICENCIA_VOCES.md) la acepta el USUARIO, nunca Nova por el
+    if cmd_limpio and (
+        re.search(r"(?i)\bACEPTO\b", cmd_limpio) and re.search(r"(?i)voz_clon|instalar\.(ps1|sh)", cmd_limpio)
+        or re.search(r"(?i)licencia_voces_aceptada", cmd_limpio)
+    ):
+        return "deny", (
+            "La licencia de las voces Ayla y Marina la acepta el usuario en persona: dile que ejecute el instalador del "
+            "pack de voz en una terminal y escriba ACEPTO el mismo (herramientas/voz_clon/instalar.ps1 o instalar.sh)."
         )
     if (
         cmd_limpio

@@ -1,0 +1,6 @@
+Voz «Marina» de Nova. NO esta cubierta por la licencia MIT.
+Uso autorizado SOLO y EXCLUSIVAMENTE dentro de Nova Agent. Prohibido extraerla, clonarla con otras herramientas,
+entrenar modelos con ella, suplantar a su titular o usarla con fines comerciales sin autorizacion escrita.
+Su titular es una persona real de nacionalidad espanola: el uso indebido puede dar lugar a acciones civiles
+y penales conforme a la legislacion espanola (LO 1/1982, RGPD/LOPDGDD, Codigo Penal).
+Licencia completa: LICENCIA_VOCES.md en la raiz del repositorio de Nova.
