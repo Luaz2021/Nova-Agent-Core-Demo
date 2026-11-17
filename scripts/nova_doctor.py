@@ -330,7 +330,7 @@ def revisar_voz_live() -> None:
     else:
         nota("voz_live", "OK", "voz clasica con monito flotante; para conversar en tiempo real pon tu clave gratis de Gemini "
              "(https://aistudio.google.com/apikey) con: python \"%s\" y reabre Antigravity"
-             % (AG / "scripts" / "nova_claves.py"))
+             % (AG / "scripts" / "nova_clave_gemini.py"))
 
 
 def revisar_ollama() -> None:

@@ -2,7 +2,7 @@
     "Version": "3.2",
     "Engine": "NovaManifestGuardian v3",
     "GeneratedAt": "2026-11-17 16:09:16",
-    "TotalComponents": 1511,
+    "TotalComponents": 1512,
     "Components": [
         {
             "Id": "rule_gemini_md",
@@ -181,8 +181,8 @@
             "Type": "Script",
             "RelativePath": "scripts/nova_doctor.py",
             "TargetRelative": "antigravity/scripts/nova_doctor.py",
-            "SizeBytes": 18650,
-            "SHA256": "68A9756C8F2024A32EE2115781F0F4A4D229B5B4E66900DB2236F84C319C685B"
+            "SizeBytes": 18656,
+            "SHA256": "FF0B57E0EDD82E2EA39D4B3878B369C939BA089164C175430E3D04F46570161F"
         },
         {
             "Id": "script_scripts_nova_instalar_ia_local_py",
@@ -13748,6 +13748,15 @@
             "TargetRelative": "antigravity/herramientas/voz/widget/nova_widget.py",
             "SizeBytes": 17829,
             "SHA256": "7F55534363BB86ECC3D8B80127AB27B07A3FD8CB428727377815EBF60BB66E2C"
+        },
+        {
+            "Id": "file_scripts_nova_clave_gemini_py",
+            "Name": "nova_clave_gemini.py",
+            "Type": "File",
+            "RelativePath": "scripts/nova_clave_gemini.py",
+            "TargetRelative": "antigravity/scripts/nova_clave_gemini.py",
+            "SizeBytes": 3360,
+            "SHA256": "21D91D79481314EC6368279B929DC263B3C513A3836E92E33EA3ABEB55B0D50C"
         }
     ]
 }
