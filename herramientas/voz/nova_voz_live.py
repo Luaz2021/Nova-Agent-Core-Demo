@@ -155,6 +155,9 @@ archivo o la accion) y pregunta "¿Le doy permiso?". Si dice que si, llama a res
 dice que no, con "no". Si el aviso dice PELIGROSO, explica el riesgo y solo aprueba si el usuario dice la palabra
 "confirmo". NUNCA respondas un permiso sin que el usuario lo haya dicho.
 Si pregunta como va una tarea, usa estado_nova.
+EL TIEMPO: usa la herramienta tiempo y contestalo TU en 1-2 frases (temperatura, si llueve, max/min).
+OTRAS COSAS DE INTERNET (noticias, resultados, precios, buscar algo): tu no puedes buscar; ofrece mandarselo a
+Nova-obrera, que si tiene navegador, y con su si usa enviar_a_nova.
 Si el usuario se despide o dice que eso es todo, despidete en 3-4 palabras y llama a terminar_conversacion.
 Si solo te llama ("Nova") sin decir nada mas, contesta muy corto, por ejemplo "Dime".
 """
@@ -178,6 +181,12 @@ HERRAMIENTAS = [{"function_declarations": [
     {"name": "hora_actual",
      "description": "Devuelve la fecha y la hora exactas del ordenador del usuario (su hora local). Usala SIEMPRE que "
                     "pregunte la hora o la fecha; no la calcules ni la conviertas a otra zona."},
+    {"name": "tiempo",
+     "description": "El tiempo AHORA y la prevision de hoy y manana en una ciudad de cualquier pais (datos reales "
+                    "de Open-Meteo). Usala SIEMPRE que pregunte por el tiempo, la temperatura o si va a llover.",
+     "parameters": {"type": "OBJECT", "properties": {
+         "ciudad": {"type": "STRING", "description": "Ciudad (y pais si hay dudas), p. ej. 'Madrid' o 'Bogota, Colombia'."}},
+         "required": ["ciudad"]}},
     {"name": "terminar_conversacion",
      "description": "Cierra la conversacion de voz cuando el usuario se despide o dice que eso es todo."},
 ]}]
@@ -1023,6 +1032,8 @@ class NovaLive:
                         res = {"hora": time.strftime("%H:%M", t), "dia": DIAS[t.tm_wday],
                                "fecha": time.strftime("%d/%m/%Y", t),
                                "nota": "Es la hora local del usuario. Dila tal cual (en formato de 12 h si suena mas natural)."}
+                    elif fc.name == "tiempo":
+                        res = await asyncio.to_thread(consultar_tiempo, str(args.get("ciudad", "")))
                     elif fc.name == "terminar_conversacion":
                         estado["cerrar_tras_hablar"] = True
                         res = {"resultado": "ok, la conversacion se cerrara al terminar de hablar"}
@@ -1148,6 +1159,58 @@ def prueba(args) -> int:
             paso(7, False, f"Gemini Live: {type(e).__name__}: {str(e)[:200]}", "revisa la clave de Gemini")
     print("\n=== " + ("TODO OK: di 'Nova' y habla" if not fallos else f"FALLAN los pasos {fallos}") + " ===\n", flush=True)
     return 0 if not fallos else 1
+
+
+# ==================================================================================================================
+# EL TIEMPO (v3.2): Open-Meteo, gratis y sin clave. Solo viaja el nombre de la ciudad.
+# ==================================================================================================================
+CODIGOS_TIEMPO = {0: "despejado", 1: "casi despejado", 2: "parcialmente nublado", 3: "nublado", 45: "niebla",
+                  48: "niebla con escarcha", 51: "llovizna debil", 53: "llovizna", 55: "llovizna fuerte",
+                  56: "llovizna helada", 57: "llovizna helada fuerte", 61: "lluvia debil", 63: "lluvia",
+                  65: "lluvia fuerte", 66: "lluvia helada", 67: "lluvia helada fuerte", 71: "nieve debil", 73: "nieve",
+                  75: "nieve fuerte", 77: "granizo fino", 80: "chubascos debiles", 81: "chubascos",
+                  82: "chubascos fuertes", 85: "chubascos de nieve", 86: "chubascos de nieve fuertes",
+                  95: "tormenta", 96: "tormenta con granizo", 99: "tormenta fuerte con granizo"}
+
+
+def consultar_tiempo(ciudad: str) -> dict:
+    import urllib.parse
+    ciudad = (ciudad or "").strip()
+    if not ciudad:
+        return {"error": "Falta la ciudad: preguntale de donde."}
+    nombre = ciudad.split(",")[0].strip()
+    try:
+        q = urllib.parse.urlencode({"name": nombre, "count": 5, "language": "es", "format": "json"})
+        with urllib.request.urlopen("https://geocoding-api.open-meteo.com/v1/search?" + q, timeout=8) as r:
+            sitios = json.loads(r.read().decode("utf-8")).get("results") or []
+        if not sitios:
+            return {"error": f"No encuentro la ciudad '{ciudad}'. Preguntale el nombre o el pais."}
+        pais = ciudad.split(",")[1].strip().lower() if "," in ciudad else ""
+        s = next((x for x in sitios if pais and pais in str(x.get("country", "")).lower()), sitios[0])
+        q = urllib.parse.urlencode({
+            "latitude": s["latitude"], "longitude": s["longitude"], "timezone": "auto", "forecast_days": 2,
+            "current": "temperature_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m",
+            "daily": "temperature_2m_max,temperature_2m_min,precipitation_probability_max,weather_code"})
+        with urllib.request.urlopen("https://api.open-meteo.com/v1/forecast?" + q, timeout=8) as r:
+            d = json.loads(r.read().decode("utf-8"))
+    except Exception as e:  # noqa: BLE001
+        return {"error": f"No pude consultar el tiempo ({type(e).__name__}). Dile que lo intente en un rato."}
+    c, dia = d.get("current", {}), d.get("daily", {})
+
+    def prev(i):
+        return {"cielo": CODIGOS_TIEMPO.get(dia["weather_code"][i], "variable"),
+                "max_C": round(dia["temperature_2m_max"][i]), "min_C": round(dia["temperature_2m_min"][i]),
+                "prob_lluvia_%": dia["precipitation_probability_max"][i]}
+    try:
+        return {"lugar": f"{s.get('name')}, {s.get('country', '')}".strip(", "),
+                "hora_local_alli": str(c.get("time", "")).replace("T", " "),
+                "ahora": {"cielo": CODIGOS_TIEMPO.get(c.get("weather_code"), "variable"),
+                          "temperatura_C": round(c["temperature_2m"]), "sensacion_C": round(c["apparent_temperature"]),
+                          "lluvia_mm": c.get("precipitation", 0), "viento_kmh": round(c.get("wind_speed_10m", 0))},
+                "hoy": prev(0), "manana": prev(1),
+                "nota": "Datos reales de Open-Meteo. Dilo en 1-2 frases naturales, sin decimales ni siglas."}
+    except (KeyError, IndexError, TypeError):
+        return {"error": "El servicio del tiempo respondio raro. Dile que lo intente en un rato."}
 
 
 def main():
