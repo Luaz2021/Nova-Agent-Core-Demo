@@ -229,6 +229,29 @@ if [ "$quiereIA" = "true" ]; then
         echo "[AVISO] La IA local no quedo lista. Repitelo cuando quieras: \"$PY\" \"$GEMINI_DIR/scripts/nova_instalar_ia_local.py\""
 fi
 
+# ---------------------------------------------------------------- 3b. Voz propia de Nova (opcional)
+VOZ_SH="$GEMINI_DIR/herramientas/voz_clon/instalar.sh"
+puedeVoz=""
+if [ "$SO" = "macOS" ] && [ "$(uname -m)" = "arm64" ] && [ "$ramGB" -ge 8 ]; then
+    puedeVoz="chip Apple, ~2 GB, experimental"
+elif command -v nvidia-smi >/dev/null 2>&1; then
+    vramVoz="$(nvidia-smi --query-gpu=memory.total --format=csv,noheader,nounits 2>/dev/null | head -n 1 | tr -d ' ')"
+    [ -n "$vramVoz" ] && [ "$vramVoz" -ge 6000 ] && [ "$freeDiskGB" -ge 12 ] && puedeVoz="GPU NVIDIA, ~9 GB"
+fi
+echo ""
+if [ -n "$puedeVoz" ] && [ -f "$VOZ_SH" ]; then
+    echo "[VOZ] Tu equipo puede usar la voz propia de Nova (Ayla) y del guardian (Marina), generadas en local ($puedeVoz)."
+    echo "      Son voces de personas reales (espanolas) autorizadas SOLO para uso dentro de Nova (LICENCIA_VOCES.md, ley espanola)."
+    echo "      Prohibido extraerlas, clonarlas con otras herramientas, suplantar a sus titulares o el uso comercial: el mal uso puede acarrear acciones civiles y penales."
+    printf "Aceptas esa licencia e instalo la voz de Nova? (s/n) [n]: "
+    read -r askVoz || askVoz=""
+    if [ "$askVoz" = "s" ] || [ "$askVoz" = "S" ]; then
+        sh "$VOZ_SH" --aceptado < /dev/tty || echo "[AVISO] La voz no quedo lista: Nova usara la voz del sistema."
+    fi
+else
+    echo "[VOZ] Nova usara la voz del sistema (la voz propia necesita un Mac con chip Apple o una GPU NVIDIA)."
+fi
+
 # ---------------------------------------------------------------- 4. Claves opcionales (tipo "iniciar sesion")
 echo ""
 printf "Quieres configurar ahora tus claves gratuitas opcionales (OpenRouter, Groq...)? (s/n) [n]: "

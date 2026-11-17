@@ -37,6 +37,7 @@ if "!ANTIGRAVITY_FOUND!"=="1" (
 set "INSTALL_SCRIPT=%~dp0adapters\windows\install.ps1"
 if exist "!INSTALL_SCRIPT!" goto :CONFIGURAR_NOVA
 
+if not defined NOVA_RAMA set "NOVA_RAMA=main"
 set "NOVA_ROOT=%USERPROFILE%\.nova-agent"
 set "NOVA_NUEVO=%USERPROFILE%\.nova-agent-nuevo"
 echo.
@@ -44,10 +45,10 @@ echo [INFO] Descargando nucleo de Nova Agent en !NOVA_ROOT!...
 if exist "!NOVA_NUEVO!" rmdir /s /q "!NOVA_NUEVO!"
 where git >nul 2>&1
 if !errorlevel! equ 0 (
-    git clone --depth 1 https://github.com/Luaz2021/Nova-Agent-Core-Demo.git "!NOVA_NUEVO!" >nul 2>&1
+    git clone --depth 1 -b !NOVA_RAMA! https://github.com/Luaz2021/Nova-Agent-Core-Demo.git "!NOVA_NUEVO!" >nul 2>&1
 ) else (
     echo [INFO] No hay git: descargo el ZIP oficial de GitHub...
-    powershell -NoProfile -Command "$ErrorActionPreference='Stop'; $zip = Join-Path $env:TEMP 'nova_core.zip'; $tmp = Join-Path $env:TEMP 'nova_core_zip'; if (Test-Path $tmp) { Remove-Item $tmp -Recurse -Force }; Invoke-WebRequest -Uri 'https://github.com/Luaz2021/Nova-Agent-Core-Demo/archive/refs/heads/main.zip' -OutFile $zip; Expand-Archive -Path $zip -DestinationPath $tmp -Force; Move-Item (Join-Path $tmp 'Nova-Agent-Core-Demo-main') $env:NOVA_NUEVO"
+    powershell -NoProfile -Command "$ErrorActionPreference='Stop'; $zip = Join-Path $env:TEMP 'nova_core.zip'; $tmp = Join-Path $env:TEMP 'nova_core_zip'; if (Test-Path $tmp) { Remove-Item $tmp -Recurse -Force }; Invoke-WebRequest -Uri 'https://github.com/Luaz2021/Nova-Agent-Core-Demo/archive/refs/heads/' + $env:NOVA_RAMA + '.zip' -OutFile $zip; Expand-Archive -Path $zip -DestinationPath $tmp -Force; Move-Item (Get-ChildItem $tmp -Directory | Select-Object -First 1).FullName $env:NOVA_NUEVO"
 )
 if not exist "!NOVA_NUEVO!\adapters\windows\install.ps1" (
     echo [ERROR] No se pudo descargar Nova ^(revisa tu conexion a internet o que GitHub este accesible^).

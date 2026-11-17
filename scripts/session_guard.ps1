@@ -57,7 +57,10 @@ while ($true) {
 
     # 2. Al abrir: Doctor (segundo plano) y "sincroniza" si Nova Sync esta configurado
     $doctorPs = "$scriptDir\nova_doctor.ps1"
-    if (Test-Path $doctorPs) {
+    $doctorPy = "$scriptDir\nova_doctor.py"
+    if (Test-Path $doctorPy) {   # v3.2: Doctor multiplataforma REPARANDO al abrir (llama tambien al de Windows)
+        Start-Process -FilePath (Get-PyConsola) -ArgumentList "`"$doctorPy`" --reparar" -WindowStyle Hidden
+    } elseif (Test-Path $doctorPs) {
         Start-Process -FilePath "powershell.exe" -ArgumentList "-NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File `"$doctorPs`" -AlAbrir" -WindowStyle Hidden
     }
     if (Test-Path $syncCfg) { Invoke-NovaSync "bajar" }

@@ -1,8 +1,8 @@
 {
     "Version": "3.2",
     "Engine": "NovaManifestGuardian v3",
-    "GeneratedAt": "2026-11-17 15:15:37",
-    "TotalComponents": 1494,
+    "GeneratedAt": "2026-11-17 16:09:16",
+    "TotalComponents": 1505,
     "Components": [
         {
             "Id": "rule_gemini_md",
@@ -10,8 +10,8 @@
             "Type": "Rule",
             "RelativePath": "GEMINI.md",
             "TargetRelative": "config/GEMINI.md",
-            "SizeBytes": 22668,
-            "SHA256": "4C3F16F4A6B076BC73C6425FA4D5A30FC5E54C936AB424DBB5E6847C725932A3"
+            "SizeBytes": 23304,
+            "SHA256": "BBB92CE3A657490E1AE71741451E26369ABB23E650C0B3697BEACC85CE1A5E04"
         },
         {
             "Id": "config_ayuda_md",
@@ -19,8 +19,8 @@
             "Type": "Config",
             "RelativePath": "AYUDA.md",
             "TargetRelative": "config/AYUDA.md",
-            "SizeBytes": 5954,
-            "SHA256": "1F05F2A124F68A4A921E493892DA6B766A8CE80590AEF24503BACC6209818942"
+            "SizeBytes": 6486,
+            "SHA256": "9077EB7FC2580999DFF4C3C7BE9AAB8B0674FD15E5F59CE0D88578719A6FAEE3"
         },
         {
             "Id": "script_scripts_actualizar_nova_py",
@@ -28,8 +28,8 @@
             "Type": "Script",
             "RelativePath": "scripts/actualizar_nova.py",
             "TargetRelative": "antigravity/scripts/actualizar_nova.py",
-            "SizeBytes": 12334,
-            "SHA256": "5C79BB742839FFD0C448FA38D30AE7BC2A101F45D26237332104C71B6C284F8F"
+            "SizeBytes": 13729,
+            "SHA256": "4DFD92BA5EDA3C1B202484A8E0B93D40AD045EEACAA4A22A5615908A02DF937C"
         },
         {
             "Id": "file_scripts_brave_extension_background_js",
@@ -118,8 +118,8 @@
             "Type": "Script",
             "RelativePath": "scripts/nova_buffer_guardian.py",
             "TargetRelative": "antigravity/scripts/nova_buffer_guardian.py",
-            "SizeBytes": 20736,
-            "SHA256": "C3AAEB96165593486E6A3CE741E6BDB958B79AC3D4071F5CEE91E22474ABA14F"
+            "SizeBytes": 20782,
+            "SHA256": "BA612C6246A6110055DAF3C684FEAF7DC0249DBDED74B5F2384B6ABF449B6FAA"
         },
         {
             "Id": "script_scripts_nova_buffer_guardian_sh",
@@ -154,8 +154,8 @@
             "Type": "Script",
             "RelativePath": "scripts/nova_comun.py",
             "TargetRelative": "antigravity/scripts/nova_comun.py",
-            "SizeBytes": 4483,
-            "SHA256": "F672C9DEC475AF2DA34FBB220C6A7ED7BCD9880BBDE8FE984D8A3EAB90A5E57E"
+            "SizeBytes": 7350,
+            "SHA256": "587E9CE6DF42AF90DAB36AF5BBE9A5F0CD16048096137B8DC7047AF52C34C469"
         },
         {
             "Id": "script_scripts_nova_cost_logger_py",
@@ -181,8 +181,8 @@
             "Type": "Script",
             "RelativePath": "scripts/nova_doctor.py",
             "TargetRelative": "antigravity/scripts/nova_doctor.py",
-            "SizeBytes": 15702,
-            "SHA256": "2835A20C8E921344423F7FE583E0AFB41DF7599EABBA8F3D8D182E490228F881"
+            "SizeBytes": 17153,
+            "SHA256": "435D7EF2D71A35BFA892D064A64169DFF9E933D4FA32F12EEAD23D927AC6D76E"
         },
         {
             "Id": "script_scripts_nova_instalar_ia_local_py",
@@ -388,8 +388,8 @@
             "Type": "Script",
             "RelativePath": "scripts/session_guard.ps1",
             "TargetRelative": "antigravity/scripts/session_guard.ps1",
-            "SizeBytes": 6310,
-            "SHA256": "EE80DEC0F0843EF14C5201691D3B21603F1D7BD5C125294AB1AB75E14E8F27F5"
+            "SizeBytes": 6581,
+            "SHA256": "55F2E1592F57AD03FBA0C083608885E93D455FB2F0534107D4D234880A920119"
         },
         {
             "Id": "script_scripts_start_awake_sentinel_vbs",
@@ -559,8 +559,8 @@
             "Type": "File",
             "RelativePath": "nova_core/nova_hook.py",
             "TargetRelative": "nova_core/nova_hook.py",
-            "SizeBytes": 35204,
-            "SHA256": "11BCFBC0E97DEAE45EFFC654013706484AACFC3A7C852565B00F2350B36F55D5"
+            "SizeBytes": 37176,
+            "SHA256": "CFA13F0213E87EC0047B6732C2B3550B25093343973AC5467362999BC8CD2F97"
         },
         {
             "Id": "file_nova_core_nova_hook_turno_py",
@@ -568,8 +568,8 @@
             "Type": "File",
             "RelativePath": "nova_core/nova_hook_turno.py",
             "TargetRelative": "nova_core/nova_hook_turno.py",
-            "SizeBytes": 34847,
-            "SHA256": "988FBC4BB77C7A1CEC7950C516D88906B32633AD330E6FC3B11F16396EC29300"
+            "SizeBytes": 39029,
+            "SHA256": "914F71EC8E9D06B12A0F00C082A055044991F22C6D006C03D28993032BE09ABF"
         },
         {
             "Id": "file_nova_core_nova_hooks_config_json",
@@ -1127,8 +1127,8 @@
             "Type": "File",
             "RelativePath": "herramientas/video/generar_voz.py",
             "TargetRelative": "antigravity/herramientas/video/generar_voz.py",
-            "SizeBytes": 3584,
-            "SHA256": "4A4B468CEC52171826D8230228BE2D52AFCA9F2FE91C35F04491908B8C1757F8"
+            "SizeBytes": 4820,
+            "SHA256": "3F22D7436AFC1A7836E86E0AFEB8119D10E0111AE7439F60925D275EB3CD30A4"
         },
         {
             "Id": "file_herramientas_video_nova_intro_template_py",
@@ -1181,8 +1181,107 @@
             "Type": "File",
             "RelativePath": "herramientas/voz/nova_voz.py",
             "TargetRelative": "antigravity/herramientas/voz/nova_voz.py",
-            "SizeBytes": 53599,
-            "SHA256": "2038552B0E0EDCEB4A27795DA048CA074DD9868E05D0813661C4B9C6F3A50EA4"
+            "SizeBytes": 54813,
+            "SHA256": "1DC10E888BCA7AEB6316B2EFC8C38661B0305E30FAC3BE87DC6C9E09A35AF510"
+        },
+        {
+            "Id": "file_herramientas_voz_clon_clonador_py",
+            "Name": "clonador.py",
+            "Type": "File",
+            "RelativePath": "herramientas/voz_clon/clonador.py",
+            "TargetRelative": "antigravity/herramientas/voz_clon/clonador.py",
+            "SizeBytes": 29686,
+            "SHA256": "33D97A040C352FF56AAC0D331DE8763B2469E4DAE6CDE478D8E22E01D4393D25"
+        },
+        {
+            "Id": "file_herramientas_voz_clon_instalar_ps1",
+            "Name": "instalar.ps1",
+            "Type": "File",
+            "RelativePath": "herramientas/voz_clon/instalar.ps1",
+            "TargetRelative": "antigravity/herramientas/voz_clon/instalar.ps1",
+            "SizeBytes": 4891,
+            "SHA256": "717B1A6A256402E5447B3F8A9B4830FF42CE2D8F82CFCCEE43052EA49256A58F"
+        },
+        {
+            "Id": "file_herramientas_voz_clon_instalar_sh",
+            "Name": "instalar.sh",
+            "Type": "File",
+            "RelativePath": "herramientas/voz_clon/instalar.sh",
+            "TargetRelative": "antigravity/herramientas/voz_clon/instalar.sh",
+            "SizeBytes": 4907,
+            "SHA256": "2315FA0D6C07E8BF8A80BD12662D6C5D2FB5DBC2A7DC514ECAD3DF7F0C5DE7C1"
+        },
+        {
+            "Id": "file_herramientas_voz_clon_licencia_voces_md",
+            "Name": "LICENCIA_VOCES.md",
+            "Type": "File",
+            "RelativePath": "herramientas/voz_clon/LICENCIA_VOCES.md",
+            "TargetRelative": "antigravity/herramientas/voz_clon/LICENCIA_VOCES.md",
+            "SizeBytes": 4374,
+            "SHA256": "8203D7A9045C2036C2D95F5C70A453B769ACA8E2E6D2BD36741895552EBDAC31"
+        },
+        {
+            "Id": "file_herramientas_voz_clon_roles_json",
+            "Name": "roles.json",
+            "Type": "File",
+            "RelativePath": "herramientas/voz_clon/roles.json",
+            "TargetRelative": "antigravity/herramientas/voz_clon/roles.json",
+            "SizeBytes": 1285,
+            "SHA256": "426EE1BB599F0E0999D9407F6876FE3012F09B70FEBC021740ED999A59BA9374"
+        },
+        {
+            "Id": "file_herramientas_voz_clon_voces_ayla_licencia_txt",
+            "Name": "LICENCIA.txt",
+            "Type": "File",
+            "RelativePath": "herramientas/voz_clon/voces/ayla/LICENCIA.txt",
+            "TargetRelative": "antigravity/herramientas/voz_clon/voces/ayla/LICENCIA.txt",
+            "SizeBytes": 547,
+            "SHA256": "B290ACE1CF9DC3542BC04D7223A1A64E3A579775A74780B1159494287EC8451B"
+        },
+        {
+            "Id": "file_herramientas_voz_clon_voces_ayla_referencia_wav",
+            "Name": "referencia.wav",
+            "Type": "File",
+            "RelativePath": "herramientas/voz_clon/voces/ayla/referencia.wav",
+            "TargetRelative": "antigravity/herramientas/voz_clon/voces/ayla/referencia.wav",
+            "SizeBytes": 788496,
+            "SHA256": "091C526ADE27CD505FAB3ABEFD38A098FE36FF5A453B924C61B90858B4A3FFB2"
+        },
+        {
+            "Id": "file_herramientas_voz_clon_voces_ayla_voz_json",
+            "Name": "voz.json",
+            "Type": "File",
+            "RelativePath": "herramientas/voz_clon/voces/ayla/voz.json",
+            "TargetRelative": "antigravity/herramientas/voz_clon/voces/ayla/voz.json",
+            "SizeBytes": 508,
+            "SHA256": "57F93D024AE27D9EE340EDCB7210FDA0532942D48A7985B046CAFE205A5907D4"
+        },
+        {
+            "Id": "file_herramientas_voz_clon_voces_marina_licencia_txt",
+            "Name": "LICENCIA.txt",
+            "Type": "File",
+            "RelativePath": "herramientas/voz_clon/voces/marina/LICENCIA.txt",
+            "TargetRelative": "antigravity/herramientas/voz_clon/voces/marina/LICENCIA.txt",
+            "SizeBytes": 549,
+            "SHA256": "8CEF5CCE77FCEC8A751591F4AE14D9E96989EA77AE40AE7E180C9427747EBB35"
+        },
+        {
+            "Id": "file_herramientas_voz_clon_voces_marina_referencia_wav",
+            "Name": "referencia.wav",
+            "Type": "File",
+            "RelativePath": "herramientas/voz_clon/voces/marina/referencia.wav",
+            "TargetRelative": "antigravity/herramientas/voz_clon/voces/marina/referencia.wav",
+            "SizeBytes": 627322,
+            "SHA256": "9C578C530095B05B703AF11973D627AD3B3BA74F92C3F13E5D4AF836B1897A95"
+        },
+        {
+            "Id": "file_herramientas_voz_clon_voces_marina_voz_json",
+            "Name": "voz.json",
+            "Type": "File",
+            "RelativePath": "herramientas/voz_clon/voces/marina/voz.json",
+            "TargetRelative": "antigravity/herramientas/voz_clon/voces/marina/voz.json",
+            "SizeBytes": 516,
+            "SHA256": "88DED94704FAA1FC79462CE868FC36A4FB7F303B89D6C93BE7EDD0A9A6DAF914"
         },
         {
             "Id": "file_clonador_herramientas_exportar_jsx_py",

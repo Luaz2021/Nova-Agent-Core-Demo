@@ -365,6 +365,8 @@ def protegida(ruta: str) -> bool:
     p = Path(ruta)
     if carpeta_sync_nube(ruta):
         return True
+    if "nova_voz_clon" in str(p).lower() or "voz_clon" in [x.lower() for x in p.parts]:
+        return True  # v3.2: pack de voz (voces con licencia propia y su aceptacion): Nova no lo toca a mano
     if str(p).lower().startswith(_GEM) and any(parte.lower() in PROTEGIDAS for parte in p.parts):
         return True
     if str(p).lower().startswith(PROTEGIDAS_RUTAS):
@@ -518,6 +520,33 @@ def regla_contenido(nombre: str, args: dict, conv: str = "") -> tuple[str, str]:
         return "deny", (
             "Forzar borrados masivos o desconectar Nova Sync lo decide el usuario: dile que lo ejecute el en una "
             "terminal si de verdad lo quiere. Tu usa nova_sync_pedir.py bajar|subir|espejo|estado|configurar."
+        )
+    # v3.2 Pack de voz: la licencia de las voces (LICENCIA_VOCES.md) la acepta el USUARIO, nunca Nova por el
+    consentido = False
+    try:  # el usuario escribio "acepto la licencia de las voces" hace menos de 30 min (lo apunta nova_hook_turno.py)
+        consentido = time.time() - json.loads((AQUI / ".voces_licencia_usuario.json").read_text(encoding="utf-8"))["fecha"] < 1800
+    except (OSError, ValueError, KeyError):
+        pass
+    if cmd_limpio and (
+        re.search(r"(?i)\bACEPTO\b", cmd_limpio) and re.search(r"(?i)voz_clon|instalar\.(ps1|sh)", cmd_limpio)
+        or re.search(r"(?i)-{1,2}aceptado\b", cmd_limpio) and re.search(r"(?i)voz_clon", cmd_limpio) and not consentido
+        or re.search(r"(?i)licencia_voces_aceptada", cmd_limpio)
+    ):
+        return "deny", (
+            "La licencia de las voces Ayla y Marina la acepta el usuario en persona: ensenale el resumen de LICENCIA_VOCES.md "
+            "y pidele que escriba en el chat 'acepto la licencia de las voces'. Entonces podras instalar el pack."
+        )
+    # G2b (17/11): "& ...\\instalar.ps1" lo bloquea la Execution Policy de Windows -> el comando EXACTO
+    if (
+        cmd_limpio
+        and re.search(r"(?i)voz_clon[\\/]+instalar\.ps1", cmd_limpio)
+        and not re.search(r"(?i)-(ExecutionPolicy|ep)\s+Bypass", cmd_limpio)
+    ):
+        return "deny", (
+            "En Windows el instalador de la voz se lanza SIEMPRE asi (si no, Windows lo bloquea): powershell "
+            "-ExecutionPolicy Bypass -File \"<NOVA_HOME>\\antigravity\\herramientas\\voz_clon\\instalar.ps1\" -Aceptado "
+            "(-Aceptado solo si el usuario escribio 'acepto la licencia de las voces'). Si se lo das al usuario, dale "
+            "ese comando exacto, nunca '& instalar.ps1'."
         )
     if (
         cmd_limpio

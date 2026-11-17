@@ -321,7 +321,7 @@ def trigger_alert(current_tokens, ciclos_compact=0):
             )
         nova_comun.pitido()
         nova_comun.notificar("Nova: aviso de tokens", voice_msg)
-        nova_comun.hablar(voice_msg)
+        nova_comun.hablar(voice_msg, rol="guardian")  # con el pack de voz: Marina
     except Exception:
         pass
 

@@ -278,6 +278,30 @@ def revisar_sync() -> None:
         nota("sync", "OK", f"Nova Sync activo ({ult.get('Timestamp', 'sin pasadas aun')})")
 
 
+def comando_voz() -> str:
+    """G2b: el comando EXACTO del instalador del pack de voz (en Windows sin -ExecutionPolicy Bypass lo bloquea)."""
+    if WIN:
+        return 'powershell -ExecutionPolicy Bypass -File "%s"' % (AG / "herramientas" / "voz_clon" / "instalar.ps1")
+    return 'sh "%s"' % (AG / "herramientas" / "voz_clon" / "instalar.sh")
+
+
+def revisar_voz() -> None:
+    base = Path.home() / "nova_voz_clon"
+    pack = AG / "herramientas" / "voz_clon" / "voces"
+    py = base / "env_fq" / ("Scripts/python.exe" if WIN else "bin/python")
+    if not (pack / "ayla" / "referencia.wav").exists():
+        nota("voz", "AVISO", "faltan las voces de Nova en herramientas/voz_clon/voces (las trae: actualizar_nova.py --force)")
+    elif not py.exists():
+        import platform
+        apto = "Mac con chip Apple" if MAC and platform.machine() == "arm64" else ("GPU NVIDIA" if shutil.which("nvidia-smi") else "")
+        nota("voz", "OK", "voz del sistema (pack de voz opcional: 'Nova, instala tu voz'"
+             + (f"; tu equipo puede: {apto}; a mano: {comando_voz()})" if apto else "; necesita GPU NVIDIA o Mac con chip Apple)"))
+    elif not (base / "licencia_voces_aceptada.json").exists():
+        nota("voz", "AVISO", f"pack de voz montado pero SIN aceptar LICENCIA_VOCES.md: ejecuta {comando_voz()} y escribe ACEPTO")
+    else:
+        nota("voz", "OK", "pack de voz listo: Nova habla con Ayla y el guardian con Marina")
+
+
 def revisar_ollama() -> None:
     try:
         import urllib.request
@@ -310,6 +334,7 @@ def main() -> int:
     revisar_reglas()
     revisar_navegador()
     revisar_sync()
+    revisar_voz()
     revisar_ollama()
     fallos = [r for r in res if r["estado"] == "FALLA"]
     resumen = ("Nova Doctor: todo OK" if not fallos else

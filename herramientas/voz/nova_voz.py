@@ -126,6 +126,30 @@ def speak_neural(text, cache_key=None, wait=True):
             _HABLA["hasta"] = max(_HABLA["hasta"], time.time() + (1.0 if wait else 4.0))
 
 
+def _decir_con_ayla(text, wait=True) -> bool:
+    """Voz oficial de Nova (Ayla, LICENCIA_VOCES.md) via nova_comun. False si el pack no esta o el servidor no responde."""
+    try:
+        import sys as _sys
+        _sys.path.insert(0, os.path.join(os.path.expanduser("~"), ".gemini", "antigravity", "scripts"))
+        import nova_comun
+        if not nova_comun.pack_voz_instalado():
+            return False
+        if not nova_comun._servidor_voz_vivo():
+            nova_comun.arrancar_servidor_voz()
+            return False
+        import json as _json
+        import urllib.request as _ur
+        req = _ur.Request(nova_comun.VOZ_SERVIDOR + "/hablar", data=_json.dumps({"voz": "nova", "texto": text[:1500]}).encode("utf-8"),
+                          headers={"Content-Type": "application/json"})
+        if wait:
+            _ur.urlopen(req, timeout=180).read()
+        else:
+            threading.Thread(target=lambda: _ur.urlopen(req, timeout=180).read(), daemon=True).start()
+        return True
+    except Exception:
+        return False
+
+
 def _speak_neural(text, cache_key=None, wait=True):
     """Habla usando el caché instantáneo (<15ms) o sintetiza al vuelo."""
     if cache_key and cache_key in CACHED_PHRASES:
@@ -134,6 +158,9 @@ def _speak_neural(text, cache_key=None, wait=True):
             play_mp3_mci(fpath, wait=wait)
             return
 
+    # v3.2: con el pack de voz (y su licencia aceptada) habla AYLA por el servidor local; si no, la voz de Edge
+    if _decir_con_ayla(text, wait):
+        return
     dyn_path = os.path.join(CACHE_DIR, "dynamic_tts.mp3")
     try:
         asyncio.run(async_speak_neural(text, dyn_path))
