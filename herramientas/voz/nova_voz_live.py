@@ -111,6 +111,22 @@ GRAMATICA_VOSK = json.dumps(["nova", "novela", "nueva", "nuevo", "novia", "noven
 RE_NOVA_LIBRE = re.compile(r"^(nova|no va|nota|noba|no ba|nueva|noa|nuba|nuva|nava|lova|bova|no vas|nobas|nos va|"
                            r"no gana|nogana|no ganas|no gá|noga|no ga|no vá|nová|no bá|novia|nueva va|la nova)$")
 CONF_NOVA = 0.55  # confianza minima de Vosk para "nova" (antes 0.70; la 2a comprobacion sigue filtrando)
+# v3.2: tambien despierta con "Nova, dime la hora" de un tiron (lo natural): la frase EMPIEZA por "nova" con mas
+# confianza que a secas, y la 2a comprobacion (sin gramatica) tambien la oye al principio.
+CONF_NOVA_FRASE = 0.65
+RE_NOVA_INICIO = re.compile(r"^(nova|no va|no vamos|no gana|nogana|noba|no ba|nueva|nová|no vá|noga)\b")
+
+
+def es_nova(resultado: list, libre: str) -> bool:
+    """La misma regla para escuchar y para --prueba. resultado = palabras de Vosk con gramatica; libre = sin ella."""
+    pal = [w for w in resultado if w.get("word") != "[unk]"]
+    if not pal or pal[0].get("word") != "nova":
+        return False
+    conf = pal[0].get("conf", 0)
+    libre = (libre or "").strip().lower()
+    if len(pal) == 1 and len(resultado) <= 2 and conf >= CONF_NOVA and RE_NOVA_LIBRE.match(libre):
+        return True  # "Nova" a secas
+    return conf >= CONF_NOVA_FRASE and bool(RE_NOVA_INICIO.match(libre))  # "Nova, ..." de un tiron
 
 DIAS = ["lunes", "martes", "miercoles", "jueves", "viernes", "sabado", "domingo"]
 
@@ -825,14 +841,12 @@ class NovaLive:
                     if rec.AcceptWaveform(datos):
                         r = json.loads(rec.Result())
                         pal = [w for w in r.get("result", []) if w.get("word") != "[unk]"]
-                        suelta = (len(pal) == 1 and pal[0]["word"] == "nova" and pal[0].get("conf", 0) >= CONF_NOVA
-                                  and len(r.get("result", [])) <= 2)
-                        if suelta:
+                        if pal and pal[0]["word"] == "nova" and pal[0].get("conf", 0) >= CONF_NOVA:
                             libre = vosk.KaldiRecognizer(modelo, 16000)
                             libre.AcceptWaveform(bytes(trozo))
-                            if RE_NOVA_LIBRE.match(json.loads(libre.FinalResult()).get("text", "").strip().lower()):
+                            if es_nova(r.get("result", []), json.loads(libre.FinalResult()).get("text", "")):
                                 break
-                            self._casi("paso 1 OK, la 2a comprobacion no lo vio claro")
+                            self._casi(f"confianza {pal[0].get('conf', 0):.2f}, la 2a comprobacion no lo vio claro")
                         elif any(w.get("word") == "nova" for w in pal):
                             conf = max(w.get("conf", 0) for w in pal if w.get("word") == "nova")
                             self._casi(f"confianza {conf:.2f} (minimo {CONF_NOVA:.2f}), {len(pal)} palabra(s)")
@@ -1074,7 +1088,7 @@ def prueba(args) -> int:
     except Exception as e:  # noqa: BLE001
         nombre_mic = f"ninguno ({type(e).__name__})"
     print(f"\n   Microfono predeterminado de Windows: {nombre_mic}", flush=True)
-    input("   Pulsa Enter y di 'Nova' con voz normal (graba 4 s)... ")
+    input("   Pulsa Enter y di 'Nova' (o 'Nova, que hora es') con voz normal (graba 4 s)... ")
     audio = sd.rec(64000, samplerate=16000, channels=1, dtype="int16")
     sd.wait()
     nivel = int(np.sqrt(np.mean(audio.astype(np.float32) ** 2)))
@@ -1093,10 +1107,9 @@ def prueba(args) -> int:
         libre.AcceptWaveform(audio.tobytes())
         texto_libre = json.loads(libre.FinalResult()).get("text", "").strip().lower()
         conf = max([w.get("conf", 0) for w in pal if w.get("word") == "nova"] or [0])
-        oye = (len(pal) == 1 and pal[0]["word"] == "nova" and conf >= CONF_NOVA and len(res) <= 2
-               and bool(RE_NOVA_LIBRE.match(texto_libre)))
+        oye = es_nova(res, texto_libre)
         paso(4, oye, f"palabra 'Nova': oyo {[w['word'] for w in pal]} (confianza {conf:.2f}), libre: '{texto_libre}'",
-             "di solo 'Nova', clara y sin nada mas, a un palmo del micro; si sigue, pasale esta linea a soporte")
+             "di 'Nova' (sola o al empezar la frase), clara, a un palmo del micro; si sigue, pasale esta linea a soporte")
     except Exception as e:  # noqa: BLE001
         paso(4, False, f"reconocedor de voz local (Vosk): {type(e).__name__}: {e}",
              "ejecuta el Doctor: falta el modelo de Vosk")
