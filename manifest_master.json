@@ -10,8 +10,8 @@
             "Type": "Rule",
             "RelativePath": "GEMINI.md",
             "TargetRelative": "config/GEMINI.md",
-            "SizeBytes": 23090,
-            "SHA256": "47DBC302E6F9E6D33BC94797BB5FB5D2FB4F9E0EACC32FED7E009E304E071C4F"
+            "SizeBytes": 23304,
+            "SHA256": "BBB92CE3A657490E1AE71741451E26369ABB23E650C0B3697BEACC85CE1A5E04"
         },
         {
             "Id": "config_ayuda_md",
@@ -19,8 +19,8 @@
             "Type": "Config",
             "RelativePath": "AYUDA.md",
             "TargetRelative": "config/AYUDA.md",
-            "SizeBytes": 6264,
-            "SHA256": "9B7407FCE433D623CF29FD878F9B9DC097F709DEAAC2A4EE9C8A45449913EBD4"
+            "SizeBytes": 6486,
+            "SHA256": "9077EB7FC2580999DFF4C3C7BE9AAB8B0674FD15E5F59CE0D88578719A6FAEE3"
         },
         {
             "Id": "script_scripts_actualizar_nova_py",
@@ -181,8 +181,8 @@
             "Type": "Script",
             "RelativePath": "scripts/nova_doctor.py",
             "TargetRelative": "antigravity/scripts/nova_doctor.py",
-            "SizeBytes": 16785,
-            "SHA256": "9CBCB68598FC27B263D3A056BFA448B9B571C5F893D667759605FFCC6B7E9108"
+            "SizeBytes": 17153,
+            "SHA256": "435D7EF2D71A35BFA892D064A64169DFF9E933D4FA32F12EEAD23D927AC6D76E"
         },
         {
             "Id": "script_scripts_nova_instalar_ia_local_py",
@@ -559,8 +559,8 @@
             "Type": "File",
             "RelativePath": "nova_core/nova_hook.py",
             "TargetRelative": "nova_core/nova_hook.py",
-            "SizeBytes": 36444,
-            "SHA256": "4A23551120D50950B93AF4D72AAD00DE0745F455DDBA34F01193D6100A9FFD0A"
+            "SizeBytes": 37176,
+            "SHA256": "CFA13F0213E87EC0047B6732C2B3550B25093343973AC5467362999BC8CD2F97"
         },
         {
             "Id": "file_nova_core_nova_hook_turno_py",

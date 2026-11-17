@@ -536,6 +536,18 @@ def regla_contenido(nombre: str, args: dict, conv: str = "") -> tuple[str, str]:
             "La licencia de las voces Ayla y Marina la acepta el usuario en persona: ensenale el resumen de LICENCIA_VOCES.md "
             "y pidele que escriba en el chat 'acepto la licencia de las voces'. Entonces podras instalar el pack."
         )
+    # G2b (17/11): "& ...\\instalar.ps1" lo bloquea la Execution Policy de Windows -> el comando EXACTO
+    if (
+        cmd_limpio
+        and re.search(r"(?i)voz_clon[\\/]+instalar\.ps1", cmd_limpio)
+        and not re.search(r"(?i)-(ExecutionPolicy|ep)\s+Bypass", cmd_limpio)
+    ):
+        return "deny", (
+            "En Windows el instalador de la voz se lanza SIEMPRE asi (si no, Windows lo bloquea): powershell "
+            "-ExecutionPolicy Bypass -File \"<NOVA_HOME>\\antigravity\\herramientas\\voz_clon\\instalar.ps1\" -Aceptado "
+            "(-Aceptado solo si el usuario escribio 'acepto la licencia de las voces'). Si se lo das al usuario, dale "
+            "ese comando exacto, nunca '& instalar.ps1'."
+        )
     if (
         cmd_limpio
         and RE_PIP_INSTALA.search(cmd_limpio)
