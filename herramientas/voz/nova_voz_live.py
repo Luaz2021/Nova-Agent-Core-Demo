@@ -107,7 +107,10 @@ FIN_TURNO = os.path.join(CACHE_DIR, "nova_turno_fin.json")  # lo escribe el hook
 GRAMATICA_VOSK = json.dumps(["nova", "novela", "nueva", "nuevo", "novia", "noventa", "nueve", "nota", "nos", "nada", "no",
                              "va", "vas", "voy", "ahi", "aqui", "alla", "noble", "bola", "boba", "lo", "la", "el", "en",
                              "eso", "esa", "tele", "[unk]"])
-RE_NOVA_LIBRE = re.compile(r"^(nova|no va|nota|noba|no ba|nueva|noa|nuba|nuva|nava|lova|bova|no vas|nobas|nos va)$")
+# v3.2: tambien acentos de Latinoamerica (un "Nova" colombiano lo oia como "no gana" con confianza 0.61)
+RE_NOVA_LIBRE = re.compile(r"^(nova|no va|nota|noba|no ba|nueva|noa|nuba|nuva|nava|lova|bova|no vas|nobas|nos va|"
+                           r"no gana|nogana|no ganas|no gá|noga|no ga|no vá|nová|no bá|novia|nueva va|la nova)$")
+CONF_NOVA = 0.55  # confianza minima de Vosk para "nova" (antes 0.70; la 2a comprobacion sigue filtrando)
 
 DIAS = ["lunes", "martes", "miercoles", "jueves", "viernes", "sabado", "domingo"]
 
@@ -822,7 +825,7 @@ class NovaLive:
                     if rec.AcceptWaveform(datos):
                         r = json.loads(rec.Result())
                         pal = [w for w in r.get("result", []) if w.get("word") != "[unk]"]
-                        suelta = (len(pal) == 1 and pal[0]["word"] == "nova" and pal[0].get("conf", 0) >= 0.7
+                        suelta = (len(pal) == 1 and pal[0]["word"] == "nova" and pal[0].get("conf", 0) >= CONF_NOVA
                                   and len(r.get("result", [])) <= 2)
                         if suelta:
                             libre = vosk.KaldiRecognizer(modelo, 16000)
@@ -832,7 +835,7 @@ class NovaLive:
                             self._casi("paso 1 OK, la 2a comprobacion no lo vio claro")
                         elif any(w.get("word") == "nova" for w in pal):
                             conf = max(w.get("conf", 0) for w in pal if w.get("word") == "nova")
-                            self._casi(f"confianza {conf:.2f} (minimo 0.70), {len(pal)} palabra(s)")
+                            self._casi(f"confianza {conf:.2f} (minimo {CONF_NOVA:.2f}), {len(pal)} palabra(s)")
                         trozo = bytearray()
                 if aviso:
                     log("Nova Voz abre conversacion por un aviso (permiso)")
@@ -1055,9 +1058,10 @@ def prueba(args) -> int:
          "python nova_clave_gemini.py (en antigravity\\scripts)")
     try:
         r = subprocess.run(["powershell.exe", "-NoProfile", "-Command",
-                            "Get-CimInstance Win32_Process | ? { $_.Name -match '^pythonw?(\\.exe)?$' } | "
-                            "% { $_.CommandLine }"], capture_output=True, text=True, timeout=20, creationflags=0x08000000)
-        lineas = r.stdout.splitlines()
+                            "$p = @(Get-CimInstance Win32_Process | ? { $_.Name -match '^pythonw?(\\.exe)?$' }); "
+                            "$ids = $p.ProcessId; $p | ? { $ids -notcontains $_.ParentProcessId } | % { $_.CommandLine }"],
+                           capture_output=True, text=True, timeout=20, creationflags=0x08000000)
+        lineas = r.stdout.splitlines()  # sin los hijos del lanzador de Python (cada programa salia x2)
     except Exception:  # noqa: BLE001
         lineas = []
     clasica = [x for x in lineas if "nova_voz.py" in x and "--solo-aduana" not in x]
@@ -1089,7 +1093,7 @@ def prueba(args) -> int:
         libre.AcceptWaveform(audio.tobytes())
         texto_libre = json.loads(libre.FinalResult()).get("text", "").strip().lower()
         conf = max([w.get("conf", 0) for w in pal if w.get("word") == "nova"] or [0])
-        oye = (len(pal) == 1 and pal[0]["word"] == "nova" and conf >= 0.7 and len(res) <= 2
+        oye = (len(pal) == 1 and pal[0]["word"] == "nova" and conf >= CONF_NOVA and len(res) <= 2
                and bool(RE_NOVA_LIBRE.match(texto_libre)))
         paso(4, oye, f"palabra 'Nova': oyo {[w['word'] for w in pal]} (confianza {conf:.2f}), libre: '{texto_libre}'",
              "di solo 'Nova', clara y sin nada mas, a un palmo del micro; si sigue, pasale esta linea a soporte")
