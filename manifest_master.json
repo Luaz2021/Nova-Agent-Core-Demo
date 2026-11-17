@@ -2,7 +2,7 @@
     "Version": "3.2",
     "Engine": "NovaManifestGuardian v3",
     "GeneratedAt": "2026-11-17 16:09:16",
-    "TotalComponents": 1505,
+    "TotalComponents": 1511,
     "Components": [
         {
             "Id": "rule_gemini_md",
@@ -19,8 +19,8 @@
             "Type": "Config",
             "RelativePath": "AYUDA.md",
             "TargetRelative": "config/AYUDA.md",
-            "SizeBytes": 6486,
-            "SHA256": "9077EB7FC2580999DFF4C3C7BE9AAB8B0674FD15E5F59CE0D88578719A6FAEE3"
+            "SizeBytes": 6905,
+            "SHA256": "20815C45639EE94F804E299F8CD5DA04E597FBAC732489AE3A997A93651B2EC6"
         },
         {
             "Id": "script_scripts_actualizar_nova_py",
@@ -181,8 +181,8 @@
             "Type": "Script",
             "RelativePath": "scripts/nova_doctor.py",
             "TargetRelative": "antigravity/scripts/nova_doctor.py",
-            "SizeBytes": 17153,
-            "SHA256": "435D7EF2D71A35BFA892D064A64169DFF9E933D4FA32F12EEAD23D927AC6D76E"
+            "SizeBytes": 18265,
+            "SHA256": "01AF946D70AA0E1B0F1BEC71F3F00122861F206C3BF7FA21949C4F035E93D50D"
         },
         {
             "Id": "script_scripts_nova_instalar_ia_local_py",
@@ -388,8 +388,8 @@
             "Type": "Script",
             "RelativePath": "scripts/session_guard.ps1",
             "TargetRelative": "antigravity/scripts/session_guard.ps1",
-            "SizeBytes": 6581,
-            "SHA256": "55F2E1592F57AD03FBA0C083608885E93D455FB2F0534107D4D234880A920119"
+            "SizeBytes": 8929,
+            "SHA256": "16C0FE0B25207DCD1E3B3852552AE16F1847E86451BB6385CAAE9F474E9E6BDF"
         },
         {
             "Id": "script_scripts_start_awake_sentinel_vbs",
@@ -568,8 +568,8 @@
             "Type": "File",
             "RelativePath": "nova_core/nova_hook_turno.py",
             "TargetRelative": "nova_core/nova_hook_turno.py",
-            "SizeBytes": 39029,
-            "SHA256": "914F71EC8E9D06B12A0F00C082A055044991F22C6D006C03D28993032BE09ABF"
+            "SizeBytes": 40143,
+            "SHA256": "1C94156EEB784F5FEB6452CCF0E2925975E1498C2B20A37A6B9D7084D5E50B1B"
         },
         {
             "Id": "file_nova_core_nova_hooks_config_json",
@@ -911,8 +911,8 @@
             "Type": "File",
             "RelativePath": "nova_core/requisitos_nova.txt",
             "TargetRelative": "nova_core/requisitos_nova.txt",
-            "SizeBytes": 952,
-            "SHA256": "F0BE740EBFBBC0E295B87901D414891E0E84ED8EFC9E1CBE4B04108F84D4C8EB"
+            "SizeBytes": 972,
+            "SHA256": "E353CD619C16473F6A1A108191F397C5B741A9719A723705C7158659F64539C9"
         },
         {
             "Id": "file_nova_core_resumir_py",
@@ -1181,8 +1181,8 @@
             "Type": "File",
             "RelativePath": "herramientas/voz/nova_voz.py",
             "TargetRelative": "antigravity/herramientas/voz/nova_voz.py",
-            "SizeBytes": 54813,
-            "SHA256": "1DC10E888BCA7AEB6316B2EFC8C38661B0305E30FAC3BE87DC6C9E09A35AF510"
+            "SizeBytes": 57294,
+            "SHA256": "2384AC499B7DB05670953B562F11D8D390902C699CEBFFCAB2DE15B04B1005B0"
         },
         {
             "Id": "file_herramientas_voz_clon_clonador_py",
@@ -13694,6 +13694,60 @@
             "SizeBytes": 1125,
             "SHA256": "7B472D652379828F4FD218E0D81FEB7C9F34A888D96199092BEF373D9F5E18AD",
             "SkillSHA256": "7B472D652379828F4FD218E0D81FEB7C9F34A888D96199092BEF373D9F5E18AD"
+        },
+        {
+            "Id": "file_herramientas_voz_nova_voz_live_bat",
+            "Name": "Nova_Voz_Live.bat",
+            "Type": "File",
+            "RelativePath": "herramientas/voz/Nova_Voz_Live.bat",
+            "TargetRelative": "antigravity/herramientas/voz/Nova_Voz_Live.bat",
+            "SizeBytes": 158,
+            "SHA256": "382771DD406D0DA7E1157C73801B7344D92EDD220698AA04ED3651C844BC603C"
+        },
+        {
+            "Id": "file_herramientas_voz_nova_voz_live_py",
+            "Name": "nova_voz_live.py",
+            "Type": "File",
+            "RelativePath": "herramientas/voz/nova_voz_live.py",
+            "TargetRelative": "antigravity/herramientas/voz/nova_voz_live.py",
+            "SizeBytes": 53256,
+            "SHA256": "FE16C03981FC8D97364A4C41B3E6DB1B1F8736AFD61CFE329A0E64B2415075B4"
+        },
+        {
+            "Id": "file_herramientas_voz_puente_antigravity_py",
+            "Name": "puente_antigravity.py",
+            "Type": "File",
+            "RelativePath": "herramientas/voz/puente_antigravity.py",
+            "TargetRelative": "antigravity/herramientas/voz/puente_antigravity.py",
+            "SizeBytes": 13943,
+            "SHA256": "58A83ED628D0BB08D320F592AB2B6C91E2640C6575DD72D47FB08DD07F70B938"
+        },
+        {
+            "Id": "file_herramientas_voz_widget_fotogramas_zip",
+            "Name": "fotogramas.zip",
+            "Type": "File",
+            "RelativePath": "herramientas/voz/widget/fotogramas.zip",
+            "TargetRelative": "antigravity/herramientas/voz/widget/fotogramas.zip",
+            "SizeBytes": 14471302,
+            "SHA256": "8DCD1CCD06504913B4E409E1D51AF35C4B5F16203E1D813843E69F71582DCA2F"
+        },
+        {
+            "Id": "file_herramientas_voz_widget_generar_fotogramas_py",
+            "Name": "generar_fotogramas.py",
+            "Type": "File",
+            "RelativePath": "herramientas/voz/widget/generar_fotogramas.py",
+            "TargetRelative": "antigravity/herramientas/voz/widget/generar_fotogramas.py",
+            "SizeBytes": 2529,
+            "SHA256": "7337E748C0B6968A1868E57FBE83732A723A5A0BB02361B6D47571F37A158110"
+        },
+        {
+            "Id": "file_herramientas_voz_widget_nova_widget_py",
+            "Name": "nova_widget.py",
+            "Type": "File",
+            "RelativePath": "herramientas/voz/widget/nova_widget.py",
+            "TargetRelative": "antigravity/herramientas/voz/widget/nova_widget.py",
+            "SizeBytes": 17829,
+            "SHA256": "7F55534363BB86ECC3D8B80127AB27B07A3FD8CB428727377815EBF60BB66E2C"
         }
     ]
 }

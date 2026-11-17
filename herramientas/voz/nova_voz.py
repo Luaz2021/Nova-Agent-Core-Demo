@@ -23,6 +23,7 @@ import re
 import queue
 import json
 import urllib.request
+import socket
 import subprocess
 import winsound
 import ctypes
@@ -789,9 +790,52 @@ def _mascota_al_dia() -> bool:
     return bool(_js_antigravity(f"!!(window.__novaMascota && (window.__novaMascota.version || 1) >= {_version_mascota()})"))
 
 
+# v3.2 (17/11): en Windows el monito es el WIDGET FLOTANTE (widget\nova_widget.py), fuera de Antigravity: se arrastra,
+# recuerda su sitio y se esconde con juegos a pantalla completa. Solo si falta el widget se dibuja dentro (mascota.js).
+WIDGET = os.path.join(os.path.dirname(os.path.abspath(__file__)), "widget", "nova_widget.py")
+PUERTO_WIDGET = 5011
+_SOLO_ADUANA = [False]  # --solo-aduana: la voz (y el monito) los lleva Nova Voz Live
+
+
+def _widget_flotante() -> bool:
+    return os.name == "nt" and os.path.exists(WIDGET)
+
+
+def _widget_abierto() -> bool:
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    try:
+        s.bind(("127.0.0.1", PUERTO_WIDGET))  # si se puede ocupar el puerto, es que el monito no esta
+        return False
+    except OSError:
+        return True
+    finally:
+        s.close()
+
+
+def _widget(estado, abrir=True):
+    if abrir and not _widget_abierto():
+        pyw = os.path.join(os.path.dirname(sys.executable), "pythonw.exe")
+        try:
+            subprocess.Popen([pyw if os.path.exists(pyw) else sys.executable, WIDGET],
+                             creationflags=0x08000000 | 0x00000008, close_fds=True)
+        except Exception:
+            return
+    try:
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        s.sendto(json.dumps({"estado": estado}).encode("utf-8"), ("127.0.0.1", PUERTO_WIDGET))
+        s.close()
+    except OSError:
+        pass
+
+
 def mascota(estado):
     """Cambia la cara de la mascota (si no esta o es vieja, la crea). Nunca bloquea ni rompe la voz."""
+    if _SOLO_ADUANA[0]:
+        return
     _MASCOTA["estado"] = estado
+    if _widget_flotante():
+        _widget(estado)
+        return
 
     def _hacer():
         try:
@@ -808,6 +852,17 @@ def vigilar_mascota():
     """Si Antigravity se recarga o se abre de nuevo, la mascota vuelve a aparecer con el estado actual."""
     while True:
         time.sleep(4)
+        if _widget_flotante():
+            if os.path.exists(VOZ_APAGADA):  # "Apagar Nova Voz" en el menu del monito
+                _widget("espera", abrir=False)
+                try:
+                    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+                    s.sendto(b'{"cmd": "salir"}', ("127.0.0.1", PUERTO_WIDGET))
+                    s.close()
+                finally:
+                    os._exit(0)
+            _widget(_MASCOTA["estado"])  # si se cerro o no estaba, vuelve
+            continue
         try:
             if get_antigravity_ws_url() and not _mascota_al_dia():
                 mascota(_MASCOTA["estado"])
@@ -1222,6 +1277,14 @@ class NovaVoz:
 
 
 if __name__ == "__main__":
+    # v3.2: con Nova Voz Live (nova_voz_live.py) el guardian arranca este script SOLO para la aduana de claves y
+    # adjuntos: sin micro, sin bandeja y sin monito.
+    if "--solo-aduana" in sys.argv:
+        _SOLO_ADUANA[0] = True
+        log_event("Modo solo aduana (la voz la lleva Nova Voz Live)")
+        threading.Thread(target=vigilar_aduana, daemon=True).start()
+        while True:
+            time.sleep(3600)
     kill_other_instances()
     try:  # si la arrancan (a mano o el guardian), deja de estar "apagada"
         os.remove(VOZ_APAGADA)

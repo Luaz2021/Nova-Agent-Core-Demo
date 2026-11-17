@@ -673,7 +673,32 @@ def pre(datos: dict) -> dict:
     return {"injectSteps": pasos} if pasos else {}
 
 
+FIN_TURNO_VOZ = Path.home() / ".gemini" / "antigravity" / "voice_cache" / "nova_turno_fin.json"
+
+
+def avisar_voz(datos: dict) -> None:
+    """v3.2: senal de FIN DE TURNO para Nova Voz Live (avisa al instante, sin leer la pantalla)."""
+    try:
+        texto = ""
+        transcript = datos.get("transcriptPath") or ""
+        if transcript and Path(transcript).exists():
+            texto = respuestas_del_turno(transcript)[1]
+        voz = re.findall(r"(?m)^\s*VOZ:\s*(.+)$", texto)
+        FIN_TURNO_VOZ.parent.mkdir(parents=True, exist_ok=True)
+        FIN_TURNO_VOZ.write_text(json.dumps({
+            "hora": time.time(),
+            "conversationId": str(datos.get("conversationId", "")),
+            "terminationReason": str(datos.get("terminationReason", "")),
+            "fullyIdle": datos.get("fullyIdle"),  # False = sigue una tarea en segundo plano: NO ha terminado
+            "voz": voz[-1].strip() if voz else "",
+            "texto": texto[-1500:],
+        }, ensure_ascii=False), encoding="utf-8")
+    except Exception:
+        pass  # el aviso de voz nunca rompe el hook
+
+
 def stop(datos: dict) -> dict:
+    avisar_voz(datos)
     transcript = datos.get("transcriptPath") or ""
     if not transcript or not Path(transcript).exists():
         return {}

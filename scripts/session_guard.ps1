@@ -6,6 +6,8 @@
     - Mientras esta abierto: atiende los pedidos de sync de Nova (memory\pedir_sync.json), porque Antigravity no
       deja a Nova escribir en la unidad de Google Drive. Solo ejecuta nova_sync.py con modos permitidos.
     - Al cerrar Antigravity: apaga los servicios y, si Nova Sync esta configurado, "sube los cambios".
+    - v3.2: Nova Voz Live (si hay GEMINI_API_KEY) o la voz clasica, las dos con el MONITO FLOTANTE fuera de
+      Antigravity. Al cerrar apaga tambien el monito y los paneles sidecar huerfanos.
     - v3.2: "abierto" = Antigravity CON VENTANA. Sus procesos auxiliares huerfanos (sidecars) seguian vivos tras
       cerrar y el guardian creia que seguia abierto: nunca apagaba servicios ni guardaba.
 #>
@@ -20,6 +22,31 @@ $resultadoSync = Join-Path $memDir "sync_resultado.txt"
 
 function Test-AntigravityAbierto {
     @(Get-Process -Name "Antigravity" -ErrorAction SilentlyContinue | Where-Object { $_.MainWindowHandle -ne [IntPtr]::Zero }).Count -gt 0
+}
+
+# v3.2 (17/11): Nova Voz Live (conversacion en tiempo real con Gemini Live) solo si hay clave de Gemini
+function Test-ClaveGemini {
+    foreach ($n in @("GEMINI_API_KEY", "GOOGLE_API_KEY")) {
+        if ([Environment]::GetEnvironmentVariable($n, "Process")) { return $true }
+        if ([Environment]::GetEnvironmentVariable($n, "User")) { return $true }
+    }
+    return $false
+}
+
+# Voz, aduana, monito flotante, puente y buffer: viven solo con Antigravity abierto
+function Stop-ServiciosNova {
+    Get-CimInstance Win32_Process -ErrorAction SilentlyContinue | Where-Object {
+        $_.CommandLine -like "*nova_buffer_guardian.py*" -or $_.CommandLine -like "*nova_puente_capturas.py*" -or
+        ($_.Name -match '^pythonw?(\.exe)?$' -and ($_.CommandLine -like "*nova_voz.py*" -or
+            $_.CommandLine -like "*nova_voz_live.py*" -or $_.CommandLine -like "*nova_widget.py*"))
+    } | ForEach-Object { Stop-Process -Id $_.ProcessId -Force -ErrorAction SilentlyContinue }
+}
+
+# Paneles "sidecar" de Antigravity (Antigravity.exe en modo Node) que se quedan huerfanos al cerrarlo
+function Stop-SidecarsHuerfanos {
+    Get-CimInstance Win32_Process -Filter "Name='Antigravity.exe'" -ErrorAction SilentlyContinue | Where-Object {
+        $_.CommandLine -like "*sidecar_sdk*" -and $_.CreationDate -lt (Get-Date).AddSeconds(-60)
+    } | ForEach-Object { Stop-Process -Id $_.ProcessId -Force -ErrorAction SilentlyContinue }
 }
 
 . "$scriptDir\nova_python.ps1"
@@ -51,7 +78,11 @@ function Invoke-PedidoSync {
 
 while ($true) {
     # 1. Esperar a que Antigravity se abra
+    $vueltas = 0
     while (-not (Test-AntigravityAbierto)) {
+        if ($vueltas -eq 0) { Stop-ServiciosNova }               # restos de una sesion anterior
+        if ($vueltas % 15 -eq 0) { Stop-SidecarsHuerfanos }      # cada ~30 s
+        $vueltas++
         Start-Sleep -Seconds 2
     }
 
@@ -66,6 +97,7 @@ while ($true) {
     if (Test-Path $syncCfg) { Invoke-NovaSync "bajar" }
 
     $vozScript  = "$agDir\herramientas\voz\nova_voz.py"
+    $vozLiveScript = "$agDir\herramientas\voz\nova_voz_live.py"
     $vozApagada = "$agDir\voice_cache\voz_apagada.flag"
     $vozPyw = Get-NovaPython -W
     if (-not (Test-Path $vozPyw)) { $vozPyw = (Get-Command pythonw.exe -ErrorAction SilentlyContinue).Source }
@@ -92,22 +124,28 @@ while ($true) {
                 Start-Process -FilePath $bufPyw -ArgumentList "`"$bufferScript`" --daemon" -WindowStyle Hidden
             }
         }
-        if ($vozPyw -and (Test-Path $vozScript) -and -not (Test-Path $vozApagada)) {
+        # v3.2: con clave de Gemini -> NOVA VOZ LIVE (conversacion + monito flotante) y nova_voz.py solo como aduana.
+        # Sin clave -> la voz clasica (nova_voz.py), tambien con el monito flotante.
+        $live = $vozPyw -and (Test-Path $vozLiveScript) -and (Test-ClaveGemini)
+        if ($vozPyw -and (Test-Path $vozScript) -and ($live -or -not (Test-Path $vozApagada))) {
             $runningVoz = Get-CimInstance Win32_Process -ErrorAction SilentlyContinue | Where-Object { $_.Name -match '^pythonw?(\.exe)?$' -and $_.CommandLine -like "*nova_voz.py*" }
             if (-not $runningVoz) {
-                Start-Process -FilePath $vozPyw -ArgumentList "`"$vozScript`"" -WindowStyle Hidden
+                $argsVoz = if ($live) { "`"$vozScript`" --solo-aduana" } else { "`"$vozScript`"" }
+                Start-Process -FilePath $vozPyw -ArgumentList $argsVoz -WindowStyle Hidden
+            }
+        }
+        if ($live -and -not (Test-Path $vozApagada)) {
+            $runningLive = Get-CimInstance Win32_Process -ErrorAction SilentlyContinue | Where-Object { $_.Name -match '^pythonw?(\.exe)?$' -and $_.CommandLine -like "*nova_voz_live.py*" }
+            if (-not $runningLive) {
+                Start-Process -FilePath $vozPyw -ArgumentList "`"$vozLiveScript`"" -WindowStyle Hidden
             }
         }
         for ($i = 0; $i -lt 5; $i++) { Invoke-PedidoSync; Start-Sleep -Seconds 3 }
     }
 
     # 4. Antigravity se CERRO -> apagar servicios
-    Get-CimInstance Win32_Process -ErrorAction SilentlyContinue | Where-Object {
-        $_.CommandLine -like "*nova_buffer_guardian.py*" -or $_.CommandLine -like "*nova_puente_capturas.py*" -or
-        ($_.Name -match '^pythonw?(\.exe)?$' -and $_.CommandLine -like "*nova_voz.py*")
-    } | ForEach-Object {
-        Stop-Process -Id $_.ProcessId -Force -ErrorAction SilentlyContinue
-    }
+    Stop-ServiciosNova
+    Stop-SidecarsHuerfanos
     Remove-Item $vozApagada -Force -ErrorAction SilentlyContinue
     $mcpScript = "$scriptDir\nova_mcp.py"
     if ($vozPyw -and (Test-Path $mcpScript)) {
