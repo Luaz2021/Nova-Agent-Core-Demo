@@ -571,10 +571,61 @@ def aviso_informe_mensual() -> str:
             "No lo prepares ni lo envies sin que diga que si.")
 
 
+def aviso_actualizacion() -> str:
+    """v3.2: Nova se mantiene al dia SOLA. Una vez al dia comprueba en segundo plano si hay parche (actualizar_nova.py
+    --check) y, si lo hay, se lo ofrece al usuario (como mucho una vez cada 3 dias). Con su SI, ejecuta /actualizar-nova."""
+    import subprocess
+    mem = Path.home() / ".gemini" / "antigravity" / "memory"
+    estado = mem / "actualizacion_disponible.json"
+    marca = mem / "actualizacion_ultimo_aviso.txt"
+    try:
+        viejo = (not estado.exists()) or time.time() - estado.stat().st_mtime > 86400
+        if viejo:
+            act = Path.home() / ".gemini" / "antigravity" / "scripts" / "actualizar_nova.py"
+            if act.exists():
+                subprocess.Popen([sys.executable, str(act), "--check"], stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL,
+                                 stderr=subprocess.DEVNULL, creationflags=SIN_VENTANA)
+            return ""
+        d = json.loads(estado.read_text(encoding="utf-8"))
+        if not d.get("hay") or (marca.exists() and time.time() - marca.stat().st_mtime < 3 * 86400):
+            return ""
+        marca.write_text(time.strftime("%Y-%m-%d"), encoding="utf-8")
+    except (OSError, ValueError):
+        return ""
+    return (f"[ACTUALIZACION] Hay una version nueva de Nova (v{d.get('version')}, {d.get('archivos')} archivos). Al final de tu "
+            "respuesta, en UNA linea, ofrecele actualizar. Si dice que si: /actualizar-nova (si dice 'ejecutalo otra vez', "
+            "repitelo UNA vez) y despues el Doctor. Nunca sin su si.")
+
+
+RE_ACEPTA_VOCES = re.compile(r"(?i)\bacepto\b.{0,40}\blicencia\b.{0,30}\bvoce?s?\b")
+CONSENTIMIENTO_VOCES = AQUI / ".voces_licencia_usuario.json"
+
+
+def consentimiento_voces(pedido: str) -> str:
+    """v3.2: la licencia de las voces la acepta el USUARIO escribiendolo en el chat; el hook lo apunta (30 min) y solo
+    entonces nova_hook.py deja lanzar el instalador del pack de voz con -Aceptado."""
+    if not RE_ACEPTA_VOCES.search(pedido or ""):
+        return ""
+    try:
+        CONSENTIMIENTO_VOCES.write_text(json.dumps({"fecha": time.time(), "texto": pedido[:200]}), encoding="utf-8")
+    except OSError:
+        return ""
+    return ("[VOCES] El usuario ACEPTO la licencia de las voces (LICENCIA_VOCES.md) en este mensaje. Lanza el instalador "
+            "del pack de voz con la aceptacion: Windows `powershell -ExecutionPolicy Bypass -File "
+            "\"<NOVA_HOME>\\antigravity\\herramientas\\voz_clon\\instalar.ps1\" -Aceptado`; Mac/Linux "
+            "`sh <NOVA_HOME>/antigravity/herramientas/voz_clon/instalar.sh --aceptado`. Avisale de que descarga varios GB.")
+
+
 def pre(datos: dict) -> dict:
     pedido = str(datos.get("lastUserInput") or "")
     apuntar_autorizacion(datos)
     pasos = []
+    aviso_v = consentimiento_voces(pedido)
+    if aviso_v:
+        pasos.append({"ephemeralMessage": aviso_v})
+    aviso_u = aviso_actualizacion()
+    if aviso_u:
+        pasos.append({"ephemeralMessage": aviso_u})
     aviso_i = aviso_informe_mensual()
     if aviso_i:
         pasos.append({"ephemeralMessage": aviso_i})

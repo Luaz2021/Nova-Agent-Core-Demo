@@ -259,6 +259,13 @@ def apply_update(forzar: bool = False) -> int:
 
 def check_updates() -> int:
     remoto, cambios = comprobar()
+    try:  # v3.2: el hook de turno lo lee y Nova ofrece la actualizacion en el chat
+        (ANTIGRAVITY / "memory").mkdir(parents=True, exist_ok=True)
+        (ANTIGRAVITY / "memory" / "actualizacion_disponible.json").write_text(json.dumps({
+            "fecha": datetime.datetime.now().strftime("%Y-%m-%d %H:%M"), "hay": bool(remoto and cambios),
+            "version": (remoto or {}).get("Version", ""), "archivos": len(cambios)}), encoding="utf-8")
+    except OSError:
+        pass
     if remoto is None:
         print("[AVISO] No se pudo conectar con GitHub para buscar actualizaciones (revisa tu conexion).")
         return 1

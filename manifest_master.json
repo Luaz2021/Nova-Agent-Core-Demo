@@ -1,7 +1,7 @@
 {
     "Version": "3.2",
     "Engine": "NovaManifestGuardian v3",
-    "GeneratedAt": "2026-11-17 15:49:40",
+    "GeneratedAt": "2026-11-17 16:05:14",
     "TotalComponents": 1505,
     "Components": [
         {
@@ -10,8 +10,8 @@
             "Type": "Rule",
             "RelativePath": "GEMINI.md",
             "TargetRelative": "config/GEMINI.md",
-            "SizeBytes": 23051,
-            "SHA256": "9C224BFD56E5BE4C13104812263422EB56538BF6AF60A16A014466040974E8B9"
+            "SizeBytes": 23090,
+            "SHA256": "47DBC302E6F9E6D33BC94797BB5FB5D2FB4F9E0EACC32FED7E009E304E071C4F"
         },
         {
             "Id": "config_ayuda_md",
@@ -28,8 +28,8 @@
             "Type": "Script",
             "RelativePath": "scripts/actualizar_nova.py",
             "TargetRelative": "antigravity/scripts/actualizar_nova.py",
-            "SizeBytes": 12334,
-            "SHA256": "5C79BB742839FFD0C448FA38D30AE7BC2A101F45D26237332104C71B6C284F8F"
+            "SizeBytes": 12820,
+            "SHA256": "8AA0A2C048651570EBC174750A2E7E85297CF75DFA97D87D2CEC53D34E782F8D"
         },
         {
             "Id": "file_scripts_brave_extension_background_js",
@@ -559,8 +559,8 @@
             "Type": "File",
             "RelativePath": "nova_core/nova_hook.py",
             "TargetRelative": "nova_core/nova_hook.py",
-            "SizeBytes": 36011,
-            "SHA256": "74FD92B112291AD8570972885429F6D73BF696933B35493063B0C09DA53839B6"
+            "SizeBytes": 36444,
+            "SHA256": "4A23551120D50950B93AF4D72AAD00DE0745F455DDBA34F01193D6100A9FFD0A"
         },
         {
             "Id": "file_nova_core_nova_hook_turno_py",
@@ -568,8 +568,8 @@
             "Type": "File",
             "RelativePath": "nova_core/nova_hook_turno.py",
             "TargetRelative": "nova_core/nova_hook_turno.py",
-            "SizeBytes": 34847,
-            "SHA256": "988FBC4BB77C7A1CEC7950C516D88906B32633AD330E6FC3B11F16396EC29300"
+            "SizeBytes": 37710,
+            "SHA256": "18700EB84979B6BCE62DBCEFC7F9B070461EDB3AF2B8D0CA29446919E620D0F9"
         },
         {
             "Id": "file_nova_core_nova_hooks_config_json",

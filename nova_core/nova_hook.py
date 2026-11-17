@@ -522,13 +522,19 @@ def regla_contenido(nombre: str, args: dict, conv: str = "") -> tuple[str, str]:
             "terminal si de verdad lo quiere. Tu usa nova_sync_pedir.py bajar|subir|espejo|estado|configurar."
         )
     # v3.2 Pack de voz: la licencia de las voces (LICENCIA_VOCES.md) la acepta el USUARIO, nunca Nova por el
+    consentido = False
+    try:  # el usuario escribio "acepto la licencia de las voces" hace menos de 30 min (lo apunta nova_hook_turno.py)
+        consentido = time.time() - json.loads((AQUI / ".voces_licencia_usuario.json").read_text(encoding="utf-8"))["fecha"] < 1800
+    except (OSError, ValueError, KeyError):
+        pass
     if cmd_limpio and (
-        re.search(r"(?i)\bACEPTO\b|-{1,2}aceptado\b", cmd_limpio) and re.search(r"(?i)voz_clon|instalar\.(ps1|sh)", cmd_limpio)
+        re.search(r"(?i)\bACEPTO\b", cmd_limpio) and re.search(r"(?i)voz_clon|instalar\.(ps1|sh)", cmd_limpio)
+        or re.search(r"(?i)-{1,2}aceptado\b", cmd_limpio) and re.search(r"(?i)voz_clon", cmd_limpio) and not consentido
         or re.search(r"(?i)licencia_voces_aceptada", cmd_limpio)
     ):
         return "deny", (
-            "La licencia de las voces Ayla y Marina la acepta el usuario en persona: dile que ejecute el instalador del "
-            "pack de voz en una terminal y escriba ACEPTO el mismo (herramientas/voz_clon/instalar.ps1 o instalar.sh)."
+            "La licencia de las voces Ayla y Marina la acepta el usuario en persona: ensenale el resumen de LICENCIA_VOCES.md "
+            "y pidele que escriba en el chat 'acepto la licencia de las voces'. Entonces podras instalar el pack."
         )
     if (
         cmd_limpio
