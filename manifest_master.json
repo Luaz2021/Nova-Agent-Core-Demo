@@ -13710,8 +13710,8 @@
             "Type": "File",
             "RelativePath": "herramientas/voz/nova_voz_live.py",
             "TargetRelative": "antigravity/herramientas/voz/nova_voz_live.py",
-            "SizeBytes": 53958,
-            "SHA256": "A154E0A53F7BBB3B8125EE8F0C5D4301EADFBBE7A1B6EDF02792336487463CC2"
+            "SizeBytes": 70584,
+            "SHA256": "752CB179204D8400C6E228225EC26F33D0D46FF9FF01993FA02AB17BDB693961"
         },
         {
             "Id": "file_herramientas_voz_puente_antigravity_py",
@@ -13719,8 +13719,8 @@
             "Type": "File",
             "RelativePath": "herramientas/voz/puente_antigravity.py",
             "TargetRelative": "antigravity/herramientas/voz/puente_antigravity.py",
-            "SizeBytes": 13943,
-            "SHA256": "58A83ED628D0BB08D320F592AB2B6C91E2640C6575DD72D47FB08DD07F70B938"
+            "SizeBytes": 14239,
+            "SHA256": "7D5E53698787441F6235C0FB72DC321AE333545D8C91204A3F0BD70D3A55449E"
         },
         {
             "Id": "file_herramientas_voz_widget_fotogramas_zip",
