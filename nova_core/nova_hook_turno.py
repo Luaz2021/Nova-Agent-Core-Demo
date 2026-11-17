@@ -575,16 +575,36 @@ def aviso_actualizacion() -> str:
     """v3.2: Nova se mantiene al dia SOLA. Una vez al dia comprueba en segundo plano si hay parche (actualizar_nova.py
     --check) y, si lo hay, se lo ofrece al usuario (como mucho una vez cada 3 dias). Con su SI, ejecuta /actualizar-nova."""
     import subprocess
-    mem = Path.home() / ".gemini" / "antigravity" / "memory"
+    ag = Path.home() / ".gemini" / "antigravity"
+    mem = ag / "memory"
     estado = mem / "actualizacion_disponible.json"
     marca = mem / "actualizacion_ultimo_aviso.txt"
+    act = ag / "scripts" / "actualizar_nova.py"
+    doc = ag / "scripts" / "nova_doctor.py"
+
+    def fondo(*args):
+        subprocess.Popen([sys.executable, *args], stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL,
+                         stderr=subprocess.DEVNULL, creationflags=SIN_VENTANA)
     try:
-        viejo = (not estado.exists()) or time.time() - estado.stat().st_mtime > 86400
-        if viejo:
-            act = Path.home() / ".gemini" / "antigravity" / "scripts" / "actualizar_nova.py"
+        # AUTOREPARACION (sin intervencion humana): actualizacion a medias (descargas fallidas, o el actualizador viejo
+        # pidio "ejecutalo otra vez") -> se termina SOLA en segundo plano: el usuario ya dijo que si al empezarla.
+        reciente = any(time.time() - b.stat().st_mtime < 86400 for b in (ag / "backups").glob("backup_previo_*")) \
+            if (ag / "backups").exists() else False
+        a_medias = mem / "actualizacion_a_medias.json"
+        terminar = mem / "actualizacion_terminando.txt"
+        if act.exists() and (a_medias.exists() or reciente and estado.exists() and json.loads(estado.read_text(encoding="utf-8")).get("hay")) \
+                and not (terminar.exists() and time.time() - terminar.stat().st_mtime < 1800):
+            terminar.write_text(time.strftime("%Y-%m-%d %H:%M"), encoding="utf-8")
+            estado.unlink(missing_ok=True)
+            fondo(str(act))
+            return ("[ACTUALIZACION] Estoy terminando en segundo plano la actualizacion que empezo el usuario (descargas "
+                    "pendientes y revision del Doctor). No hace falta que haga nada; diselo en UNA linea.")
+        # MANTENIMIENTO DIARIO: Doctor reparando + comprobar si hay version nueva
+        if (not estado.exists()) or time.time() - estado.stat().st_mtime > 86400:
             if act.exists():
-                subprocess.Popen([sys.executable, str(act), "--check"], stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL,
-                                 stderr=subprocess.DEVNULL, creationflags=SIN_VENTANA)
+                fondo(str(act), "--check")
+            if doc.exists():
+                fondo(str(doc), "--reparar")
             return ""
         d = json.loads(estado.read_text(encoding="utf-8"))
         if not d.get("hay") or (marca.exists() and time.time() - marca.stat().st_mtime < 3 * 86400):

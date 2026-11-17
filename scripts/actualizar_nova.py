@@ -51,13 +51,21 @@ def _get(ruta_relativa: str, timeout: int = 20) -> bytes | None:
             return (Path(REPO_RAW_URL[7:].lstrip("/") if os.name == "nt" else REPO_RAW_URL[7:]) / ruta).read_bytes()
         except OSError:
             return None
-    try:
-        req = urllib.request.Request(f"{REPO_RAW_URL}/{ruta}", headers={"User-Agent": "Nova-Agent-Updater"})
-        with urllib.request.urlopen(req, timeout=timeout) as resp:
-            if resp.status == 200:
-                return resp.read()
-    except Exception:
-        return None
+    import time
+    for intento in range(3):  # v3.2: fallos de red puntuales -> se reintenta aqui mismo (antes quedaba "para la proxima vez")
+        try:
+            req = urllib.request.Request(f"{REPO_RAW_URL}/{ruta}", headers={"User-Agent": "Nova-Agent-Updater"})
+            with urllib.request.urlopen(req, timeout=timeout) as resp:
+                if resp.status == 200:
+                    return resp.read()
+                if resp.status == 404:
+                    return None
+        except urllib.error.HTTPError as e:
+            if e.code == 404:
+                return None
+        except Exception:
+            pass
+        time.sleep(2 * (intento + 1))
     return None
 
 
@@ -230,8 +238,17 @@ def apply_update(forzar: bool = False) -> int:
         if rel == "scripts/actualizar_nova.py":
             auto = True
 
+    a_medias = ANTIGRAVITY / "memory" / "actualizacion_a_medias.json"
     if not fallidos:
         LOCAL_MANIFEST.write_text(json.dumps(remoto, indent=2, ensure_ascii=False), encoding="utf-8")
+        a_medias.unlink(missing_ok=True)
+    else:  # v3.2: el hook de turno la termina SOLO en segundo plano (el usuario ya dijo que si)
+        try:
+            a_medias.parent.mkdir(parents=True, exist_ok=True)
+            a_medias.write_text(json.dumps({"fecha": datetime.datetime.now().strftime("%Y-%m-%d %H:%M"),
+                                            "pendientes": fallidos[:50]}), encoding="utf-8")
+        except OSError:
+            pass
     if hooks_tocados:
         registrar_hooks()
     reparar_arranque_windows()
@@ -246,7 +263,7 @@ def apply_update(forzar: bool = False) -> int:
     if nuevas_skills:
         print(f"[INFO] Nuevas skills ({len(nuevas_skills)}): {', '.join(nuevas_skills[:6])}")
     if fallidos:
-        print(f"[AVISO] {len(fallidos)} archivos no se pudieron traer (se reintentara la proxima vez):")
+        print(f"[AVISO] {len(fallidos)} archivos no se pudieron traer: Nova lo reintentara sola en segundo plano:")
         for f in fallidos[:10]:
             print(f"   - {f}")
     if hooks_tocados:

@@ -1,7 +1,7 @@
 {
     "Version": "3.2",
     "Engine": "NovaManifestGuardian v3",
-    "GeneratedAt": "2026-11-17 16:05:14",
+    "GeneratedAt": "2026-11-17 16:09:16",
     "TotalComponents": 1505,
     "Components": [
         {
@@ -28,8 +28,8 @@
             "Type": "Script",
             "RelativePath": "scripts/actualizar_nova.py",
             "TargetRelative": "antigravity/scripts/actualizar_nova.py",
-            "SizeBytes": 12820,
-            "SHA256": "8AA0A2C048651570EBC174750A2E7E85297CF75DFA97D87D2CEC53D34E782F8D"
+            "SizeBytes": 13729,
+            "SHA256": "4DFD92BA5EDA3C1B202484A8E0B93D40AD045EEACAA4A22A5615908A02DF937C"
         },
         {
             "Id": "file_scripts_brave_extension_background_js",
@@ -388,8 +388,8 @@
             "Type": "Script",
             "RelativePath": "scripts/session_guard.ps1",
             "TargetRelative": "antigravity/scripts/session_guard.ps1",
-            "SizeBytes": 6310,
-            "SHA256": "EE80DEC0F0843EF14C5201691D3B21603F1D7BD5C125294AB1AB75E14E8F27F5"
+            "SizeBytes": 6581,
+            "SHA256": "55F2E1592F57AD03FBA0C083608885E93D455FB2F0534107D4D234880A920119"
         },
         {
             "Id": "script_scripts_start_awake_sentinel_vbs",
@@ -568,8 +568,8 @@
             "Type": "File",
             "RelativePath": "nova_core/nova_hook_turno.py",
             "TargetRelative": "nova_core/nova_hook_turno.py",
-            "SizeBytes": 37710,
-            "SHA256": "18700EB84979B6BCE62DBCEFC7F9B070461EDB3AF2B8D0CA29446919E620D0F9"
+            "SizeBytes": 39029,
+            "SHA256": "914F71EC8E9D06B12A0F00C082A055044991F22C6D006C03D28993032BE09ABF"
         },
         {
             "Id": "file_nova_core_nova_hooks_config_json",
