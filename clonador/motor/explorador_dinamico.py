@@ -40,7 +40,7 @@ from extraer import (ESCRITORIO, JS_SECCIONES, LOCALE, MAX_SECCIONES, MOVIL, NAV
                      opciones_movil, preparar_pagina)
 
 BASE = Path(__file__).resolve().parent
-SALIDA = Path(__file__).resolve().parent.parent / "workspace"
+SALIDA = Path(__file__).resolve().parent.parent / "workspace"  # 22/11: sale de la carpeta del motor (PC y laptop)
 MAX_MODALES = 60
 MAX_HOVER = 60
 

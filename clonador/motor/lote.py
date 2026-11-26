@@ -25,7 +25,7 @@ from pathlib import Path
 
 BASE = Path(__file__).resolve().parent
 sys.dont_write_bytecode = True
-SALIDA = Path(__file__).resolve().parent.parent / "workspace"
+SALIDA = Path(__file__).resolve().parent.parent / "workspace"  # 22/11: sale de la carpeta del motor (PC y laptop)
 SOLO, INTENTOS = 0, 0          # sin Qwen: todas las secciones medidas, sin reparaciones (las hace Claude)
 
 

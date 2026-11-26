@@ -1,0 +1,51 @@
+{
+ "error": {
+  "hoja": "error.webp",
+  "n": 64,
+  "w": 300,
+  "h": 408,
+  "columnas": 8
+ },
+ "escuchando": {
+  "hoja": "escuchando.webp",
+  "n": 64,
+  "w": 300,
+  "h": 408,
+  "columnas": 8
+ },
+ "espera": {
+  "hoja": "espera.webp",
+  "n": 64,
+  "w": 300,
+  "h": 408,
+  "columnas": 8
+ },
+ "hablando": {
+  "hoja": "hablando.webp",
+  "n": 64,
+  "w": 300,
+  "h": 408,
+  "columnas": 8
+ },
+ "mirando": {
+  "hoja": "mirando.webp",
+  "n": 64,
+  "w": 300,
+  "h": 408,
+  "columnas": 8
+ },
+ "pausa": {
+  "hoja": "pausa.webp",
+  "n": 64,
+  "w": 300,
+  "h": 408,
+  "columnas": 8
+ },
+ "pensando": {
+  "hoja": "pensando.webp",
+  "n": 64,
+  "w": 300,
+  "h": 408,
+  "columnas": 8
+ }
+}

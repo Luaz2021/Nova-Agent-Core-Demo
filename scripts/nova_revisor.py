@@ -1,5 +1,5 @@
 r"""
-NOVA · REVISOR SEMANAL (09/11/2026, Claude, a pedido de Luaz)
+NOVA · REVISOR SEMANAL (09/11/2026, Claude, a pedido del usuario)
 =============================================================
 Que hizo Nova, cuanto gasto y donde fallo. Lo lee TODO en local (0 tokens).
 
@@ -162,6 +162,178 @@ def alertas(c: dict) -> list[str]:
     return a
 
 
+NC = Path.home() / ".gemini" / "nova_core"
+LECTURAS_CUPO = REG / "cupo_lecturas.txt"
+
+
+def _valor(archivo: Path, patron: str) -> str:
+    """Lee un parametro tal cual esta escrito en el codigo (para el informe; si no lo encuentra, '?')."""
+    try:
+        m = re.search(patron, archivo.read_text(encoding="utf-8", errors="replace"))
+        return m.group(1).strip() if m else "?"
+    except OSError:
+        return "?"
+
+
+def novedades_20_11(tel: list[dict], desde: datetime) -> list[str]:
+    """20/11 (Claude, a pedido del usuario): lo montado el 20/11 solo se probo con baterias simuladas. Esta seccion
+    cuenta si de verdad salta en el uso real de Nova, y lista los parametros que hay que calibrar con esos datos."""
+    def cuenta(cond) -> int:
+        return sum(1 for d in tel if cond(d))
+    motivo = lambda d: str(d.get("motivo", ""))
+    carril_aviso = cuenta(lambda d: d.get("decision") == "carril")
+    carril_freno = cuenta(lambda d: d.get("decision") == "deny" and "CARRIL" in motivo(d).upper())
+    asesor_permiso = cuenta(lambda d: "ASESOR" in motivo(d) and d.get("decision") == "force_ask")
+    asesor_fallos = cuenta(lambda d: d.get("decision") == "aviso_asesor")
+    rea = cuenta(lambda d: "REA EJECUTA" in motivo(d))
+    orq_lineas = cuenta(lambda d: d.get("orquestador") or d.get("aviso_orquestador"))
+    orq_convs = len({d.get("conv") for d in tel if d.get("orquestador") or d.get("aviso_orquestador")})
+    bufer = [d for d in tel if d.get("decision") == "aviso_bufer"]
+    informes_orq = [f for f in (REG / "orquestador").glob("*.md")
+                    if datetime.fromtimestamp(f.stat().st_mtime).astimezone() >= desde] if (REG / "orquestador").exists() else []
+    cons_dir = A / "memory" / "consultas"
+    consultas = [f for f in cons_dir.glob("*.json")] if cons_dir.exists() else []
+    abiertas = 0
+    for f in consultas:
+        try:
+            abiertas += json.loads(f.read_text(encoding="utf-8")).get("estado") not in ("resuelto", "no_resuelto", "cerrada")
+        except (OSError, ValueError):
+            pass
+    # % de cupo maximo que marco el hook por dia (para calibrar CUPO_1PC contra el visor de Antigravity)
+    por_dia: dict[str, dict] = {}
+    for d in tel:
+        p = d.get("pct_cupo")
+        if isinstance(p, dict):
+            dia = d.get("t", "")[:10]
+            clave = (dia, d.get("conv"))
+            por_dia.setdefault(dia, {}).setdefault(d.get("conv"), p)
+            por_dia[dia][d.get("conv")] = {k: max(v, por_dia[dia][d.get("conv")].get(k, 0)) for k, v in p.items()}
+    ok = lambda n: "✅ salta" if n else "⏳ sin datos aun"
+    L = ["## 7. Novedades del 20/11: ¿funcionan en uso real?", "",
+         "| Pieza | Veces esta semana | Estado |", "|---|---|---|",
+         f"| Carril: aviso + kit al empezar tema | {carril_aviso} | {ok(carril_aviso)} |",
+         f"| Carril: freno por escribir sin leer el kit | {carril_freno} | {'normal si 0 (leyo el kit)' if carril_aviso else ok(0)} |",
+         f"| Asesor: pidio permiso para consultarlo | {asesor_permiso} | {ok(asesor_permiso)} |",
+         f"| Asesor: aviso tras 2 fallos | {asesor_fallos} | {ok(asesor_fallos)} |",
+         f"| REA: herramienta que ejecuta -> pidio permiso | {rea} | {ok(rea)} (solo si usaste REA) |",
+         f"| Orquestador: linea de gasto | {orq_lineas} en {orq_convs} conversaciones | {ok(orq_lineas)} |",
+         f"| Orquestador: informes en `registros\\orquestador` | {len(informes_orq)} | {ok(len(informes_orq))} |",
+         f"| Consultas de ventana (`nova_consulta.py`) | {len(consultas)} ({abiertas} abiertas) | {ok(len(consultas))} |",
+         f"| Guardian: aviso de bufer/compactacion | {len(bufer)} | max compactaciones vistas: "
+         f"{max((d.get('compactaciones') or 0 for d in bufer), default=0)} |", ""]
+    L += ["**Cupo que calculo el hook (max por conversacion, sumado por dia)** — compara con lo que marca el visor:", ""]
+    if por_dia:
+        # 24/11: desde Antigravity 2.35 todos los Gemini van en una bolsa ("gemini"); "pesado" solo en datos viejos
+        L += ["| Dia | Bolsa Gemini % | Antes del 24/11: pesado (Argon/Neon) % |", "|---|---|---|"]
+        for dia in sorted(por_dia):
+            g = sum(v.get("gemini", 0) for v in por_dia[dia].values())
+            p = sum(v.get("pesado", 0) for v in por_dia[dia].values())
+            L.append(f"| {dia} | {g:.1f} | {p:.1f} |")
+    else:
+        L.append("_sin datos aun_")
+    try:
+        lect = [x for x in LECTURAS_CUPO.read_text(encoding="utf-8").splitlines() if x.strip() and not x.startswith("#")]
+    except OSError:
+        lect = []
+    L += ["", f"Lecturas del visor apuntadas en `memory\\registros\\cupo_lecturas.txt`: {len(lect)}"]
+    L += [f"- {x}" for x in lect[-8:]]
+    cupo = NC / "nova_cupo.py"
+    L += ["", "**Parametros a calibrar con estos datos (valor actual):**", "",
+          "| Parametro | Donde | Valor | Que mirar |", "|---|---|---|---|",
+          f"| CUPO_1PC (tokens = 1 % de cupo) | nova_cupo.py | `{_valor(cupo, r'CUPO_1PC\s*=\s*(\{[^}]*\})')}` | "
+          "si el % del hook no cuadra con el visor, ajustar |",
+          f"| PESO por modelo | nova_cupo.py | `{_valor(cupo, r'PESO\s*=\s*(\{[^}]*\})')}` | Opus x10 confirmado por el usuario |",
+          f"| Aviso del orquestador cada X % | nova_hook.py | `{_valor(NC / 'nova_hook.py', r'TRAMO_ORQ_PCT\s*=\s*([\d.]+)')}` | "
+          "si molesta o se queda corto |",
+          f"| Ventana activa del guardian (s) | nova_buffer_guardian.py | "
+          f"`{_valor(A / 'scripts' / 'nova_buffer_guardian.py', r'VENTANA_ACTIVA_S\s*=\s*(\d+)')}` | "
+          "conversaciones que vigila a la vez |",
+          "| Tope de consultas al asesor | nova_hook.py | `2` | si se queda corto en tareas largas |",
+          "| Fallos antes del aviso del asesor | nova_hook_turno.py | `2` | si avisa demasiado pronto/tarde |",
+          "| Palabras de cada carril | herramientas\\carriles\\carriles.json | — | carriles que no saltan o saltan de mas |",
+          ""]
+    return L
+
+
+def reescrituras(tel: list[dict]) -> list[str]:
+    """24/11 (Claude, el usuario: 'siempre reemplaza todo el archivo'): cuantas veces Nova sobrescribio entero un archivo
+    que ya existia para cambiar poco (debio usar edit_file). Lo mide nova_hook.py (campo 'reescritura')."""
+    L = ["## 8. Reescrituras de archivos enteros", ""]
+    sobres = [d for d in tel if isinstance(d.get("reescritura"), dict)]
+    parciales = sum(1 for d in tel if d.get("herramienta") in ("edit_file", "replace_file_content",
+                                                                "multi_replace_file_content"))
+    if not sobres:
+        return L + [f"- Sin datos de reescrituras esta semana (ediciones por trozos con edit_file: {parciales}).",
+                    "  _El vigilante empezo a medir el 24/11; si sale esto mucho tiempo, revisar nova_hook.py._", ""]
+    medidas = [d for d in sobres if "pct" in d["reescritura"]]
+    malas = [d for d in medidas if d["reescritura"].get("innecesaria")]
+    sobrantes = sum(d["reescritura"]["despues"] - d["reescritura"]["cambiadas"] for d in malas)
+    L += [f"- **Escrituras de archivos que ya existian:** {len(sobres)} sobrescritos enteros · {parciales} editados por trozos",
+          f"- **Reescrituras innecesarias** (40+ lineas y menos del 30 % cambiado): **{len(malas)}**"
+          + (f" → ~{sobrantes:,} lineas copiadas sin cambios (tokens de salida tirados y riesgo de perder codigo)"
+             if malas else " ✅")]
+    grandes = len(sobres) - len(medidas)
+    if grandes:
+        L.append(f"- {grandes} archivos demasiado grandes para comparar (solo se apunta el tamano).")
+    if malas:
+        por_archivo = collections.Counter(Path(str(d.get("ruta", "?"))).name for d in malas)
+        L += ["- Archivos que mas reescribe: " + ", ".join(f"`{k}` ×{v}" for k, v in por_archivo.most_common(5)), "",
+              "| Cuando | Archivo | Lineas | Cambiadas | % |", "|---|---|---|---|---|"]
+        for d in sorted(malas, key=lambda x: x["reescritura"]["despues"] - x["reescritura"]["cambiadas"],
+                        reverse=True)[:10]:
+            r = d["reescritura"]
+            L.append(f"| {d.get('t', '')[5:16]} | `{Path(str(d.get('ruta', '?'))).name}` | {r['antes']} → {r['despues']} | "
+                     f"{r['cambiadas']} | {r['pct']} |")
+    L.append("")
+    return L
+
+
+DIRECTOR_ERRORES = Path.home() / ".gemini" / "antigravity" / "memory" / "registros" / "director_errores.jsonl"
+
+
+def director(desde: datetime) -> list[str]:
+    """26/11 noche (Claude, el usuario: "los errores deben ir apuntados para la revision semanal y cazar lo que falla"):
+    lo que fue mal en el NOVA DIRECTOR (herramientas\\director). Lo escribe nova_director.py registrar_error()."""
+    L = ["## 9. Nova Director: lo que fallo (para mejorarlo)", ""]
+    filas = []
+    try:
+        for linea in DIRECTOR_ERRORES.open(encoding="utf-8", errors="replace"):
+            try:
+                d = json.loads(linea)
+            except ValueError:
+                continue
+            t = local(str(d.get("t", "")).replace(" ", "T"))
+            if t is None or t >= desde:
+                filas.append(d)
+    except OSError:
+        return L + ["- Sin registro todavia (empezo el 26/11).", ""]
+    if not filas:
+        return L + ["- Nada fue mal esta semana ✅", ""]
+    tipos = collections.Counter(d.get("tipo") for d in filas)
+    L.append("- **Por tipo:** " + " · ".join(f"{k} ×{v}" for k, v in tipos.most_common()))
+    L.append("- **Proyectos:** " + ", ".join(sorted({str(d.get('proyecto')) for d in filas})))
+
+    def huella(d: dict) -> str:  # primera linea con contenido del error, sin rutas ni numeros: agrupa lo repetido
+        texto = str(d.get("error") or d.get("detalle") or d.get("motivo") or d.get("titulo") or "")
+        lineas = [x for x in texto.splitlines() if x.strip() and not x.startswith("$") and "->" not in x[:4]]
+        base = (lineas[0] if lineas else texto)[:140]
+        return re.sub(r"[A-Za-z]:\\[^ ]+|\d+", "#", base)
+
+    repetidos = collections.Counter((d.get("tipo"), huella(d)) for d in filas)
+    patrones = [(k, v) for k, v in repetidos.most_common() if v >= 2]
+    if patrones:
+        L += ["", "**Patrones que se repiten (candidatos a arreglar en codigo, como el freno de 150 lineas):**", ""]
+        for (tipo, h), v in patrones[:8]:
+            L.append(f"- ×{v} `{tipo}` · {h}")
+    L += ["", "| Cuando | Proyecto | Tipo | Fase / rol | Modelo | Detalle |", "|---|---|---|---|---|---|"]
+    for d in filas[-15:]:
+        L.append(f"| {str(d.get('t', ''))[5:16]} | {d.get('proyecto', '')} | {d.get('tipo', '')} | "
+                 f"{d.get('fase') or d.get('rol') or d.get('titulo', '')[:30]} | {d.get('modelo', '')} | "
+                 f"{huella(d)[:80].replace('|', '/')} |")
+    L.append("")
+    return L
+
+
 def informe(dias: int) -> Path:
     desde = datetime.now().astimezone() - timedelta(days=dias)
     convs = [c for c in leer_libro().values() if (local(c.get("fin", "")) or desde) >= desde]
@@ -279,6 +451,9 @@ def informe(dias: int) -> Path:
             L.append(f"- **{nombre}:** {len(lineas)} avisos/errores recientes" + (f" (ultimo: `{lineas[-1][:110]}`)" if lineas else " ✅"))
         except OSError:
             L.append(f"- **{nombre}:** sin registro")
+    L += [""] + novedades_20_11(tel, desde)
+    L += [""] + reescrituras(tel)
+    L += [""] + director(desde)
     L += ["", "---", "_Umbrales de alerta: >300k tokens reales por conversacion, 12+ herramientas seguidas, 3+ comandos "
           "fallidos, comandos repetidos 3+ veces, adjuntos a la nube, 'python' a secas, documentos en scratch._"]
 
@@ -293,7 +468,14 @@ def main() -> int:
     ap.add_argument("--recolectar", action="store_true")
     ap.add_argument("--informe", action="store_true")
     ap.add_argument("--dias", type=int, default=7)
+    # 20/11 (Claude): no existia ninguna tarea semanal que hiciera el informe (el ultimo era del 15/11).
+    # --si-toca lo genera solo si el ultimo informe tiene 7+ dias; lo lanza auto_save_session.ps1 al cerrar Antigravity.
+    ap.add_argument("--si-toca", action="store_true")
     a = ap.parse_args()
+    if a.si_toca:
+        previos = sorted(SALIDA.glob("informe_*.md")) if SALIDA.exists() else []
+        ultimo = datetime.fromtimestamp(previos[-1].stat().st_mtime) if previos else datetime.min
+        a.informe = (datetime.now() - ultimo).days >= a.dias
     if not (a.recolectar or a.informe):
         a.recolectar = a.informe = True
     if a.recolectar:

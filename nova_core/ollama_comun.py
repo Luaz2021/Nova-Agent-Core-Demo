@@ -2,7 +2,7 @@
 Modulo comun de conexion y auto-arranque de Ollama para Nova-Core (Capa 0 Local).
 
 Centraliza `ensure_ollama_service()` para que todos los scripts locales
-(nova_local_worker.py, redactor.py, resumir.py, auditar_hoja_vl.py) levanten
+(nova_local_worker.py, redactar.py, resumir.py, auditar_hoja_vl.py) levanten
 el demonio `ollama serve` automaticamente si esta detenido.
 """
 

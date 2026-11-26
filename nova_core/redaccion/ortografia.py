@@ -21,7 +21,7 @@ $w = New-Object -ComObject Word.Application
 $w.Visible = $false
 try {
   $d = $w.Documents.Open('__DOCX__', $false, $true)
-  $d.Content.LanguageID = 3082
+  $d.Content.LanguageID = __LANG_ID__
   $d.Content.NoProofing = $false
   $orto = @($d.SpellingErrors | ForEach-Object { $_.Text })
   $gram = @($d.GrammaticalErrors | Select-Object -First 25 | ForEach-Object { $_.Text })
@@ -53,28 +53,40 @@ def _ignorar(palabra: str, conocidas: set[str]) -> bool:
     )
 
 
-def revisar_texto(texto: str, extra: str = "") -> tuple[list[str], list[str]]:
-    """(palabras_mal_escritas, frases_con_fallos_de_gramatica). Si Word no esta, ([], ['aviso'])."""
-    import docx
+def _separar_por_idioma(texto: str) -> tuple[str, str]:
+    """Separa el bloque Abstract (inglés) del resto del texto (español)."""
+    lineas_es, lineas_en = [], []
+    en_abstract = False
+    for linea in texto.splitlines():
+        limpia = linea.strip()
+        if re.match(r"(?i)^(?:#{1,6}\s+)?abstract\b", limpia):
+            en_abstract = True
+            continue
+        if en_abstract and re.match(
+            r"(?i)^(?:#{1,6}\s+|(?:\d+\.\s*)?(?:introducci[oó]n|objetivos|marco\s+te[oó]rico|metodolog[ií]a|desarrollo|conclusiones|referencias|anexos)\b)",
+            limpia,
+        ):
+            en_abstract = False
+        (lineas_en if en_abstract else lineas_es).append(linea)
+    return "\n".join(lineas_es), "\n".join(lineas_en)
 
-    texto = re.sub(
-        r"\s*\(\s*`[^`]*`\s*\)", "", texto
-    )  # "vigilante (`nova_hook.py`)" -> "vigilante"
+
+def _limpiar_para_word(texto: str) -> str:
+    texto = re.sub(r"\s*\(\s*`[^`]*`\s*\)", "", texto)
     texto = re.sub(
         r"`[^`]*`|https?://\S+|\S+\.(?:py|md|json|docx|pdf|com|org|es|io)\b\S*",
         "Nova",
         texto,
     )
-    texto = re.sub(
-        r"(?m)^\s*(?:#{1,6}|>|[-*•]|\d+[.)])\s+", "", texto
-    )  # marcas de titulo, cita y lista
-    texto = re.sub(
-        r"(?m)^:::.*$|^\s*\|?\s*:?-{2,}.*$", "", texto
-    )  # bloques ::: y separadores de tabla
-    texto = re.sub(
-        r"\s*\|\s*", "\n", texto.replace("**", "")
-    )  # celdas de tabla: cada una en su linea
-    texto = re.sub(r"(?m)^([DAFO]):\s", "", texto)  # puntos del bloque :::dafo
+    texto = re.sub(r"(?m)^\s*(?:#{1,6}|>|[-*•]|\d+[.)])\s+", "", texto)
+    texto = re.sub(r"(?m)^:::.*$|^\s*\|?\s*:?-{2,}.*$", "", texto)
+    texto = re.sub(r"\s*\|\s*", "\n", texto.replace("**", ""))
+    return re.sub(r"(?m)^([DAFO]):\s", "", texto)
+
+
+def _revisar_bloque_word(texto: str, lang_id: int) -> dict:
+    import docx
+
     with tempfile.TemporaryDirectory() as tmp:
         ruta = Path(tmp) / "revision.docx"
         doc = docx.Document()
@@ -82,32 +94,45 @@ def revisar_texto(texto: str, extra: str = "") -> tuple[list[str], list[str]]:
             if parrafo.strip():
                 doc.add_paragraph(parrafo.strip())
         doc.save(str(ruta))
-        ps = _PS.replace("__DOCX__", str(ruta).replace("'", "''"))
+        ps = _PS.replace("__DOCX__", str(ruta).replace("'", "''")).replace(
+            "__LANG_ID__", str(lang_id)
+        )
+        r = subprocess.run(
+            ["powershell", "-NoProfile", "-Command", ps],
+            capture_output=True,
+            text=True,
+            timeout=240,
+            encoding="utf-8",
+            errors="replace",
+        )
+        return json.loads(r.stdout.strip() or "{}")
+
+
+def revisar_texto(texto: str, extra: str = "") -> tuple[list[str], list[str]]:
+    """(palabras_mal_escritas, frases_con_fallos_de_gramatica). Revisa español (3082) y Abstract en inglés (1033)."""
+    texto_es, texto_en = _separar_por_idioma(texto)
+    conocidas = diccionario(extra)
+    malas, gramatica = [], []
+    for bloque, lang_id in ((texto_es, 3082), (texto_en, 1033)):
+        limpio = _limpiar_para_word(bloque).strip()
+        if not limpio:
+            continue
         try:
-            r = subprocess.run(
-                ["powershell", "-NoProfile", "-Command", ps],
-                capture_output=True,
-                text=True,
-                timeout=240,
-                encoding="utf-8",
-                errors="replace",
-            )
-            datos = json.loads(r.stdout.strip() or "{}")
+            datos = _revisar_bloque_word(limpio, lang_id)
         except (subprocess.TimeoutExpired, ValueError, OSError) as e:  # v3.2: OSError = sin PowerShell/Word (macOS/Linux)
             return [], [
                 f"No se pudo usar el corrector de Word ({e.__class__.__name__})"
             ]
-    conocidas = diccionario(extra)
-    malas = []
-    for p in datos.get("ortografia") or []:
-        p = str(p).strip()
-        if p and not _ignorar(p, conocidas) and p not in malas:
-            malas.append(p)
-    gramatica = [
-        str(g).strip()[:120]
-        for g in (datos.get("gramatica") or [])
-        if _es_frase(str(g))
-    ]
+        malas.extend(
+            p
+            for raw in (datos.get("ortografia") or [])
+            if (p := str(raw).strip()) and not _ignorar(p, conocidas) and p not in malas
+        )
+        gramatica.extend(
+            str(g).strip()[:120]
+            for g in (datos.get("gramatica") or [])
+            if _es_frase(str(g))
+        )
     return malas, gramatica
 
 

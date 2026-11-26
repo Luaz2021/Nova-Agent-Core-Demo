@@ -43,7 +43,7 @@ BACKUP = AG / "backups" / f"doctor_{datetime.datetime.now():%Y%m%d_%H%M%S}"
 WIN = os.name == "nt"
 MAC = sys.platform == "darwin"
 
-CARPETAS = ["nova_core", "config", "config/skills", "antigravity/scripts", "antigravity/memory",
+CARPETAS = ["nova_core", "config", "config/skills", "config/agents", "antigravity/scripts", "antigravity/memory",
             "antigravity/almacen", "antigravity/herramientas", "antigravity/clonador", "antigravity/skills"]
 # Modulos que Nova usa en TODOS los sistemas (la voz con bandeja y la aduana son de Windows: ver LEEME)
 MODULOS = ["numpy", "PIL", "docx", "openpyxl", "pptx", "fitz", "aiohttp", "psutil", "playwright", "watchdog"]
@@ -147,6 +147,45 @@ def revisar_enlaces(reparar: bool) -> None:
         quitar_enlace(p)
     nota("skills", "ARREGLADO", f"{len(enlaces)} skills pasadas a copia real y {len(rotos)} enlaces rotos quitados "
          + ("(las que faltan las trae: python actualizar_nova.py --force)" if rotos else ""))
+
+
+# ------------------------------------------------------------------ 3b. config/skills = SOLO indices (v3.3)
+RENOMBRADAS = {"android-core": "android-compose"}  # v3.3: nombre viejo -> nuevo en el almacen
+
+
+def revisar_skills_sueltas(reparar: bool) -> None:
+    """v3.3: Antigravity mete en CADA mensaje la lista de config/skills. Hasta la v3.2 el instalador copiaba alli las
+    ~145 skills (tokens de mas en cada mensaje). Ahora config/skills lleva solo los index-* y el resto vive en
+    antigravity/almacen/skills. Se apartan (no se borran) las que YA estan en el almacen; las skills propias del
+    usuario (no estan en el almacen) no se tocan."""
+    cfg, alm = GEMINI / "config" / "skills", AG / "almacen" / "skills"
+    if not cfg.is_dir() or not alm.is_dir():
+        return
+    sueltas = []
+    for d in cfg.iterdir():
+        if not d.is_dir() or d.name.startswith("index-") or es_enlace(d):
+            continue
+        en_almacen = (alm / d.name / "SKILL.md").exists() or (alm / RENOMBRADAS.get(d.name, "-") / "SKILL.md").exists()
+        if en_almacen:
+            sueltas.append(d)
+    if not sueltas:
+        nota("skills_indices", "OK", "config/skills solo con indices (el resto en el almacen)")
+        return
+    if not reparar:
+        nota("skills_indices", "AVISO", f"{len(sueltas)} skills repetidas en config/skills gastan tokens en cada mensaje "
+             "(repara: python nova_doctor.py --reparar)")
+        return
+    destino = BACKUP / "config_skills_repetidas"
+    destino.mkdir(parents=True, exist_ok=True)
+    movidas = 0
+    for d in sueltas:
+        try:
+            shutil.move(str(d), str(destino / d.name))
+            movidas += 1
+        except OSError:
+            pass  # abierta por otro programa: se reintenta en la proxima pasada
+    nota("skills_indices", "ARREGLADO", f"{movidas} skills repetidas apartadas de config/skills (siguen en el almacen; "
+         f"copia en {destino}). Cierra y abre Antigravity")
 
 
 # ------------------------------------------------------------------ 4. Python de Nova
@@ -358,6 +397,7 @@ def main() -> int:
     revisar_carpeta_invisible(reparar)
     revisar_carpetas(reparar)
     revisar_enlaces(reparar)
+    revisar_skills_sueltas(reparar)
     if "--estructura" in sys.argv:  # lo usa el actualizador ANTES de bajar el parche (rapido, sin pip ni Doctor)
         return 0
     revisar_python(reparar)

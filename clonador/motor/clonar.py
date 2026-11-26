@@ -51,6 +51,17 @@ def main():
     url = args[0] if args else (BASE / "url.txt").read_text(encoding="utf-8").strip().splitlines()[0].strip()
     t0 = time.time()
 
+    # 22/11 (Claude): DOCUMENTO CONGELADO para todo el clon (ver extraer.goto_congelado): webs que cambian el contenido
+    # en cada carga (proyectos al azar) dan la MISMA página a las fotos de PC, de móvil y a la captura del clon.
+    # Carpeta nueva en cada clon (empieza vacía): así un clon nuevo sí recoge los cambios reales de la web.
+    import hashlib
+    import os
+    import shutil
+    congelado = BASE.parent / "workspace" / "_congelado" / hashlib.sha1(url.encode()).hexdigest()[:12]
+    shutil.rmtree(congelado, ignore_errors=True)
+    congelado.mkdir(parents=True, exist_ok=True)
+    os.environ["CLON_CONGELAR_DIR"] = str(congelado)
+
     analizar_cmd = ["analizar.py", url]
     if "--sin-ojos" in sys.argv:
         analizar_cmd.append("--sin-ojos")

@@ -1,0 +1,23 @@
+[
+ {"web": "gym KINETIK v1-v2 (14/11)", "claves": ["gym", "gimnasio", "crossfit", "fitness", "entrenamiento", "box"],
+  "fallo": "titular 'Arquitectura del movimiento' y fotos de hormigon vacio: parecia una constructora; fotos de stock con culturista y 'NO PAIN NO GAIN'",
+  "leccion": "un gym vende el ESPACIO y sus MAQUINAS: salas reales con equipamiento y gente entrenando, nada de metaforas"},
+ {"web": "gym KINETIK final (14/11)", "claves": ["gym", "gimnasio", "crossfit", "fitness", "deporte"],
+  "fallo": "negro + verde lima neon #d4ff00, fila de cifras '4 · 24/7 · 0' y precios inventados: plantilla de IA",
+  "leccion": "nada de neones ni de cifras de relleno; solo datos que dio el usuario"},
+ {"web": "cafeteria Madrid v1 (14/11)", "claves": ["cafe", "cafeteria", "coffee", "tostador", "barista"],
+  "fallo": "navbar enorme, video 480p estirado y viejo, foto de granos con fondo blanco, footer vacio: -10/100",
+  "leccion": "mirar la web en vivo antes de entregar; video y fotos con la misma luz que la paleta"},
+ {"web": "cafeteria Madrid final (14/11)", "claves": ["cafe", "cafeteria", "coffee", "tostador", "barista"],
+  "fallo": "8/10 con matices: el video no pegaba, la composicion de origenes no estaba bien acomodada",
+  "leccion": "lo que funciono: una sola direccion (negro, crema, caramelo), fotos oscuras coherentes y el producto como protagonista estilo Apple"},
+ {"web": "panaderia La Tiendesica (15/11)", "claves": ["panaderia", "pan", "bolleria", "pasteleria", "obrador", "reposteria", "tartas"],
+  "fallo": "pan pequeno en una tarjeta y un WebGL que no se ve; crema + terracota sin firma; misma hogaza 3 veces; galeria de 3 pantallas repitiendo; muchos botones 'sumar'; sin tildes",
+  "leccion": "una panaderia vende el PRODUCTO: el pan grande y de cerca en el primer pantallazo, limpio, pocas secciones, un color propio si es cadena"},
+ {"web": "panaderia La Tiendesica, version APROBADA por el usuario (15/11, pruebas_disenio_Web\\panaderia_claude)", "claves": ["panaderia", "pan", "bolleria", "pasteleria", "obrador", "reposteria", "tartas", "boulangerie"],
+  "fallo": "(lo que SI funciono)",
+  "leccion": "portada partida: bloque de color de firma con titular corto y UN boton + el pan a sangre ocupando mas de media pantalla; mosaico de familias sin botones de anadir; banda del oficio; pasteles aparte; un solo formulario de pedido. Granate francés como firma (azul tinta rechazado: frio para comida)"},
+ {"web": "regla general del usuario", "claves": [],
+  "fallo": "webs bonitas que no transmiten nada",
+  "leccion": "la web entra por los ojos como la comida: ensena lo que el cliente compra, limpio y que se entienda; lo cargado solo en e-commerce"}
+]

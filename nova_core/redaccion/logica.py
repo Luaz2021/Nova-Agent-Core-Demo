@@ -19,20 +19,27 @@ SISTEMA = (
 MAX_CARACTERES = 18000  # ~5k tokens: cabe en los 8k de contexto de Qwen con el prompt
 
 
-def revisar(texto: str, requisitos: list[dict] | None = None) -> list[str]:
-    texto = re.sub(r"<!--.*?-->", "", texto, flags=re.DOTALL).strip()
-    if len(texto) > MAX_CARACTERES:
-        texto = (
-            texto[:MAX_CARACTERES] + "\n[...documento recortado para la revision...]"
-        )
-    obligatorios = [
-        r for r in (requisitos or []) if r["clase"] not in ("entrega", "ayuda")
-    ]
-    lista = (
-        "\n".join(f"{r['id']}: {r['texto']}" for r in obligatorios) or "(sin enunciado)"
-    )
+def _trocear(texto: str, limite: int = MAX_CARACTERES) -> list[str]:
+    """Divide textos largos en bloques completos por párrafos para no truncar el final."""
+    if len(texto) <= limite:
+        return [texto]
+    bloques, actual = [], ""
+    for parrafo in texto.split("\n\n"):
+        candidato = f"{actual}\n\n{parrafo}" if actual else parrafo
+        if len(candidato) <= limite:
+            actual = candidato
+            continue
+        if actual:
+            bloques.append(actual)
+        actual = parrafo[:limite]
+    if actual:
+        bloques.append(actual)
+    return bloques
+
+
+def _revisar_trozo(trozo: str, lista: str, sufijo: str) -> list[str]:
     prompt = (
-        f"REQUISITOS DEL ENUNCIADO:\n{lista}\n\nDOCUMENTO DEL ALUMNO:\n{texto}\n\n"
+        f"REQUISITOS DEL ENUNCIADO:\n{lista}\n\nDOCUMENTO DEL ALUMNO{sufijo}:\n{trozo}\n\n"
         "Revisa el documento y responde con este JSON:\n"
         '{"no_responde": [{"id": "R3", "motivo": "..."}], '
         '"contradicciones": ["..."], "sin_sentido": ["frase exacta del documento"]}\n'
@@ -62,3 +69,19 @@ def revisar(texto: str, requisitos: list[dict] | None = None) -> list[str]:
         f"[LÓGICA] No se entiende: «{f}»" for f in datos.get("sin_sentido", []) if f
     ]
     return avisos
+
+
+def revisar(texto: str, requisitos: list[dict] | None = None) -> list[str]:
+    texto = re.sub(r"<!--.*?-->", "", texto, flags=re.DOTALL).strip()
+    obligatorios = [
+        r for r in (requisitos or []) if r["clase"] not in ("entrega", "ayuda")
+    ]
+    lista = (
+        "\n".join(f"{r['id']}: {r['texto']}" for r in obligatorios) or "(sin enunciado)"
+    )
+    trozos = _trocear(texto)
+    avisos: list[str] = []
+    for idx, trozo in enumerate(trozos, 1):
+        sufijo = f" (bloque {idx}/{len(trozos)})" if len(trozos) > 1 else ""
+        avisos.extend(_revisar_trozo(trozo, lista, sufijo))
+    return list(dict.fromkeys(avisos))

@@ -36,18 +36,38 @@ FORBIDDEN_KEYWORDS = [
     r"airbnb",
     r"edificio",
     r"bolivar",
+    # 26/11 (Claude, auditoria de Carbon): datos personales y rutas de los equipos tampoco salen
+    r"[a-z]:[\\/]+users[\\/]",
+    r"\b(alexander|mart[ií]nez|luaz|cristina)\b",
+    r"[\w.+-]+@[\w-]+\.[\w.]+",            # correos
+    r"\b\d{8}[a-z]\b|\b[xyz]\d{7}[a-z]\b",  # DNI / NIE
+    r"(\+34|\+51)?[\s-]?\b[6-9]\d{2}[\s-]?\d{3}[\s-]?\d{3}\b",  # telefonos ES / PE
+    r"\b(AIza|xox[bp]-|gsk_|ghs_|github_pat_)\w{10,}",
 ]
+# Modelo gratis por defecto: 'openrouter/free' (el router de OpenRouter elige uno gratis que este vivo). El anterior,
+# cohere/north-mini-code:free, ya no existe (comprobado en /api/v1/models el 26/11). Cambiable con OPENROUTER_MODEL.
+MODELO_OPENROUTER = os.environ.get("OPENROUTER_MODEL", "openrouter/free")
+
+
+def _entropia(s: str) -> float:
+    import math
+    from collections import Counter
+    n = len(s)
+    return -sum(c / n * math.log2(c / n) for c in Counter(s).values()) if n else 0.0
 
 
 def es_contenido_sensible(texto: str) -> tuple[bool, str]:
-    """Verifica si el texto contiene rutas, credenciales o proyectos protegidos."""
+    """Verifica si el texto contiene rutas, credenciales, datos personales o proyectos protegidos."""
     for pattern in FORBIDDEN_KEYWORDS:
         if re.search(pattern, texto, re.IGNORECASE):
             return True, f"Patron sensible detectado: {pattern}"
+    for trozo in re.findall(r"[A-Za-z0-9_\-+/=]{32,}", texto):  # claves SIN prefijo: cadena larga y muy aleatoria
+        if _entropia(trozo) > 4.2 and re.search(r"\d", trozo) and re.search(r"[A-Za-z]", trozo):
+            return True, "Cadena con pinta de clave (entropia alta)"
     return False, ""
 
 
-def invocar_openrouter(prompt: str, system_prompt: str = "", model: str = "cohere/north-mini-code:free", timeout: int = 15):
+def invocar_openrouter(prompt: str, system_prompt: str = "", model: str = MODELO_OPENROUTER, timeout: int = 15):
     api_key = os.environ.get("OPENROUTER_API_KEY", "").strip()
     if not api_key:
         return None, "OPENROUTER_API_KEY no encontrada"

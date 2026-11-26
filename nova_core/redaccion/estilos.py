@@ -37,6 +37,22 @@ TEMAS = {
             "O": ("CFE2FF", "1B559B"),
         },
     },
+    "uem": {
+        "cabecera": "C8102E",
+        "texto_cabecera": "FFFFFF",
+        "alterna": "F8F9FA",
+        "borde": "DEE2E6",
+        "cartel": "C8102E",
+        "cartel_2": "8C0B20",
+        "pilar": "FDF2F4",
+        "pilar_texto": "C8102E",
+        "dafo": {
+            "D": ("FDF2F4", "8C0B20"),
+            "A": ("F8D7DA", "B02A37"),
+            "F": ("E9ECEF", "212529"),
+            "O": ("F1F3F5", "495057"),
+        },
+    },
     None: {
         "cabecera": None,
         "texto_cabecera": "000000",
@@ -103,7 +119,49 @@ ESTILOS = {
         },
         "numero_pagina": "pie",
     },
+    "uem": {
+        "fuente": "Verdana",
+        "fuente_titulos": "Verdana",
+        "tamano": 11,
+        "interlineado": 1.5,
+        "espacio_despues": 6,
+        "sangria": 0,
+        "margenes": {"top": 2.5, "bottom": 2.5, "left": 3.0, "right": 2.5},
+        "titulos": [
+            (16, True, False, WD_ALIGN_PARAGRAPH.LEFT),
+            (14, True, False, WD_ALIGN_PARAGRAPH.LEFT),
+            (12, True, False, WD_ALIGN_PARAGRAPH.LEFT),
+        ],
+        "colores": {
+            "texto": "000000",
+            "h1": "C8102E",
+            "h2": "C8102E",
+            "h3": "C8102E",
+            "titulo": "C8102E",
+            "subtitulo": "404040",
+            "nota": "595959",
+        },
+        "numero_pagina": "pie",
+        "ocultar_numero_portada": True,
+    },
 }
+
+
+def _fijar_idioma(estilo, lang: str = "es-ES") -> None:
+    rpr = estilo.element.get_or_add_rPr()
+    el = rpr.find(qn("w:lang"))
+    if el is None:
+        el = OxmlElement("w:lang")
+        rpr.append(el)
+    el.set(qn("w:val"), lang)
+
+
+def _activar_update_fields(doc) -> None:
+    settings = doc.settings.element
+    if settings.find(qn("w:updateFields")) is None:
+        el = OxmlElement("w:updateFields")
+        el.set(qn("w:val"), "true")
+        settings.append(el)
 
 
 def _color(cfg: dict, clave: str, defecto=NEGRO):
@@ -175,14 +233,24 @@ def _numero_pagina(doc, donde: str, cfg: dict) -> None:
 def crear_plantilla(nombre: str, ruta: Path) -> None:
     cfg = ESTILOS[nombre]
     doc = Document()
+    margenes = cfg.get("margenes") or {
+        "top": cfg["margen"],
+        "bottom": cfg["margen"],
+        "left": cfg["margen"],
+        "right": cfg["margen"],
+    }
     for s in doc.sections:  # A4
         s.page_width, s.page_height = Cm(21), Cm(29.7)
-        s.top_margin = s.bottom_margin = s.left_margin = s.right_margin = Cm(
-            cfg["margen"]
-        )
+        s.top_margin = Cm(margenes["top"])
+        s.bottom_margin = Cm(margenes["bottom"])
+        s.left_margin = Cm(margenes["left"])
+        s.right_margin = Cm(margenes["right"])
+        if cfg.get("ocultar_numero_portada"):
+            s.different_first_page_header_footer = True
 
     normal = doc.styles["Normal"]
     _fuente(normal, cfg["fuente"], cfg["tamano"], color=_color(cfg, "texto"))
+    _fijar_idioma(normal, "es-ES")
     f_titulos = cfg.get("fuente_titulos", cfg["fuente"])
     pf = normal.paragraph_format
     pf.line_spacing = cfg["interlineado"]
@@ -197,13 +265,13 @@ def crear_plantilla(nombre: str, ruta: Path) -> None:
         est.paragraph_format.space_after = Pt(6)
         est.paragraph_format.keep_with_next = True
         est.paragraph_format.line_spacing = (
-            cfg["interlineado"] if nombre == "apa" else 1.0
+            cfg["interlineado"] if nombre in ("apa", "uem") else 1.0
         )
 
     _fuente(
         doc.styles["Title"],
         f_titulos,
-        {"formal": 20, "moderno": 18}.get(nombre, 12),
+        {"formal": 20, "moderno": 18, "uem": 20}.get(nombre, 12),
         negrita=True,
         color=_color(cfg, "titulo"),
     )
@@ -212,7 +280,7 @@ def crear_plantilla(nombre: str, ruta: Path) -> None:
         doc.styles["Subtitle"],
         f_titulos,
         12,
-        negrita=nombre == "moderno",
+        negrita=nombre in ("moderno", "uem"),
         color=_color(cfg, "subtitulo", GRIS),
     )
     for lista in ("List Bullet", "List Number"):
@@ -221,7 +289,8 @@ def crear_plantilla(nombre: str, ruta: Path) -> None:
     _fuente(doc.styles["Quote"], cfg["fuente"], cfg["tamano"], cursiva=True)
     doc.styles["Quote"].paragraph_format.left_indent = Cm(1.27)
 
-    if "Cuerpo" not in [s.name for s in doc.styles]:
+    nombres_est = {s.name for s in doc.styles}
+    if "Cuerpo" not in nombres_est:
         cuerpo = doc.styles.add_style("Cuerpo", WD_STYLE_TYPE.PARAGRAPH)
         cuerpo.base_style = normal
         cuerpo.paragraph_format.first_line_indent = (
@@ -229,26 +298,40 @@ def crear_plantilla(nombre: str, ruta: Path) -> None:
         )
         cuerpo.paragraph_format.alignment = (
             WD_ALIGN_PARAGRAPH.JUSTIFY
-            if nombre in ("formal", "moderno")
+            if nombre in ("formal", "moderno", "uem")
             else WD_ALIGN_PARAGRAPH.LEFT
         )
-    codigo = doc.styles.add_style("Codigo", WD_STYLE_TYPE.PARAGRAPH)
-    codigo.base_style = normal
-    _fuente(codigo, "Consolas", 9)
-    codigo.paragraph_format.line_spacing = 1.0
-    codigo.paragraph_format.space_after = Pt(0)
-    codigo.paragraph_format.left_indent = Cm(0.5)
-    pequeno = doc.styles.add_style("Nota", WD_STYLE_TYPE.PARAGRAPH)
-    pequeno.base_style = normal
-    _fuente(pequeno, cfg["fuente"], 9, color=_color(cfg, "nota", GRIS))
+    if "Codigo" not in nombres_est:
+        codigo = doc.styles.add_style("Codigo", WD_STYLE_TYPE.PARAGRAPH)
+        codigo.base_style = normal
+        _fuente(codigo, "Consolas", 9)
+        codigo.paragraph_format.line_spacing = 1.0
+        codigo.paragraph_format.space_after = Pt(0)
+        codigo.paragraph_format.left_indent = Cm(0.5)
+    if "Nota" not in nombres_est:
+        pequeno = doc.styles.add_style("Nota", WD_STYLE_TYPE.PARAGRAPH)
+        pequeno.base_style = normal
+        _fuente(pequeno, cfg["fuente"], 9, color=_color(cfg, "nota", GRIS))
+    if "Referencia" not in nombres_est:
+        ref = doc.styles.add_style("Referencia", WD_STYLE_TYPE.PARAGRAPH)
+        ref.base_style = normal
+        ref.paragraph_format.left_indent = Cm(1.27)
+        ref.paragraph_format.first_line_indent = Cm(-1.27)
+        ref.paragraph_format.space_after = Pt(6)
+        ref.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.LEFT
 
     _numero_pagina(doc, cfg["numero_pagina"], cfg)
+    _activar_update_fields(doc)
     ruta.parent.mkdir(parents=True, exist_ok=True)
     doc.save(str(ruta))
 
 
-def abrir(nombre: str = "formal"):
-    """Documento vacio con los estilos de la plantilla."""
+def abrir(nombre: str = "formal", plantilla: str | Path | None = None):
+    """Documento vacio con los estilos de la plantilla (o plantilla externa conservando su portada)."""
+    if plantilla and Path(plantilla).exists():
+        doc = Document(str(plantilla))
+        _activar_update_fields(doc)
+        return doc
     nombre = nombre if nombre in ESTILOS else "formal"
     ruta = DIR_ESTILOS / f"{nombre}.docx"
     if not ruta.exists():
@@ -258,4 +341,5 @@ def abrir(nombre: str = "formal"):
     for hijo in list(cuerpo):
         if hijo.tag != qn("w:sectPr"):
             cuerpo.remove(hijo)
+    _activar_update_fields(doc)
     return doc

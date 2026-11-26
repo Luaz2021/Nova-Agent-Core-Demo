@@ -1,1 +1,4 @@
-Carpeta OFICIAL: solo Claude o Alexander mueven aqui herramientas ya validadas. Nova no escribe aqui (lo bloquea nova_hook.py).
+Carpeta OFICIAL de herramientas de Nova. 17/11/2026 (decision del usuario): en modo CHARLA Nova no escribe
+aqui; en modo ENCARGO o CONFIANZA TOTAL si puede crear y mejorar herramientas, y nova_hook.py guarda antes una copia
+de cada archivo en .gemini\respaldos_nova\<fecha>\. Esta marca tambien hace que el linter (orquestador.py) no
+reescriba nada aqui solo.

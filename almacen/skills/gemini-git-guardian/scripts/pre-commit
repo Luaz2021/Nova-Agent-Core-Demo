@@ -18,7 +18,9 @@ if [ -n "$STAGED_ENV" ]; then
 fi
 
 # 2. Comprobar consultas SQL suicidas: DELETE FROM sin WHERE
-DANGEROUS_SQL=$(git diff --cached -S"DELETE FROM" | grep -iE "DELETE[[:space:]]+FROM[[:space:]]+[a-zA-Z0-9_]+[[:space:]]*;" || true)
+# v3.3: solo las lineas que se ANADEN (+), como pre-commit-hook.sh. Antes tambien las borradas: quitar un texto que
+# explicaba el error frenaba el commit (falso positivo).
+DANGEROUS_SQL=$(git diff --cached -S"DELETE FROM" | grep -E "^\+" | grep -v "^+++" | grep -iE "DELETE[[:space:]]+FROM[[:space:]]+[a-zA-Z0-9_]+[[:space:]]*;" || true)
 if [ -n "$DANGEROUS_SQL" ]; then
     echo "========================================================================"
     echo " [COMMIT ABORTADO] Detectada consulta destructiva 'DELETE FROM' sin WHERE:"

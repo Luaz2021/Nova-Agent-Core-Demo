@@ -11,3 +11,5 @@ nova_core/.*.json
 secrets*.json
 *.nova_tmp
 *.local-*
+nova_core/*.clave
+herramientas/datos/estudio_web/memoria.json

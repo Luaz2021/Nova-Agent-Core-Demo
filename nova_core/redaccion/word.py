@@ -12,9 +12,11 @@ from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
 from docx.shared import Cm, Pt, RGBColor
 
-from .estilos import TEMAS
+from .estilos import TEMAS, campo
 
 RE_INLINE = re.compile(r"(\*\*.+?\*\*|`[^`]+`|\*[^*\s][^*]*\*)")
+RE_IMAGEN = re.compile(r"^!\[([^\]]*)\]\(([^)]+)\)\s*$")
+RE_TABLA_APA = re.compile(r"(?i)^tabla(?:\s+\d+)?\s*:\s*(.+)$")
 DAFO_NOMBRES = {
     "D": "Debilidades",
     "A": "Amenazas",
@@ -255,13 +257,93 @@ def _es_numero(texto: str) -> bool:
     ) and any(c.isdigit() for c in texto)
 
 
-def markdown_a_word(
-    doc, md: str, estilo_cuerpo: str = "Cuerpo", tema: str | None = None
+def fijar_idioma_parrafo(parrafo, lang: str = "en-US") -> None:
+    """Marca un idioma específico (ej. en-US para Abstract) en todos los runs del párrafo."""
+    for r in parrafo.runs:
+        rpr = r._r.get_or_add_rPr()
+        el = rpr.find(qn("w:lang"))
+        if el is None:
+            el = OxmlElement("w:lang")
+            rpr.append(el)
+        el.set(qn("w:val"), lang)
+
+
+def indice_automatico(
+    doc, titulo: str, instruccion: str, tema: str | None = None
 ) -> None:
-    """Markdown sencillo -> estilos de la plantilla (### subtitulo, listas, > cita, tablas, ```codigo```).
-    Bloques especiales:  :::dafo ... :::   y   :::cartel ... :::   (ver dafo() y cartel())."""
+    """Inserta título de índice (fuera del TOC) y campo XML actualizable al abrir Word."""
+    color_tit = TEMAS.get(tema, TEMAS[None])["cartel"] if tema else "000000"
+    p_tit = doc.add_paragraph()
+    p_tit.paragraph_format.space_before = Pt(12)
+    p_tit.paragraph_format.space_after = Pt(6)
+    p_tit.paragraph_format.keep_with_next = True
+    _run(p_tit, titulo, 16 if tema == "uem" else 14, color_tit, True)
+    p_toc = doc.add_paragraph()
+    p_toc.paragraph_format.space_after = Pt(8)
+    campo(p_toc.add_run(), instruccion)
+    p_aviso = doc.add_paragraph(
+        "Haz clic derecho y selecciona «Actualizar campos» en Word para refrescar la numeración.",
+        style="Nota",
+    )
+    p_aviso.paragraph_format.space_after = Pt(12)
+
+
+def _titulo_apa(doc, etiqueta: str, titulo: str) -> None:
+    """Cabecera APA 7: 'Tabla/Figura N' (campo SEQ en negrita) + título en cursiva."""
+    p_num = doc.add_paragraph()
+    p_num.paragraph_format.space_before = Pt(10)
+    p_num.paragraph_format.space_after = Pt(2)
+    p_num.paragraph_format.keep_with_next = True
+    p_num.add_run(f"{etiqueta} ").bold = True
+    r_seq = p_num.add_run()
+    r_seq.bold = True
+    campo(r_seq, f"SEQ {etiqueta} \\* ARABIC")
+    if titulo:
+        p_tit = doc.add_paragraph()
+        p_tit.paragraph_format.space_after = Pt(4)
+        p_tit.paragraph_format.keep_with_next = True
+        p_tit.add_run(titulo).italic = True
+
+
+def _nota_apa(doc, nota: str) -> None:
+    if not nota:
+        return
+    p = doc.add_paragraph(style="Nota")
+    p.paragraph_format.space_before = Pt(2)
+    p.paragraph_format.space_after = Pt(8)
+    p.add_run("Nota. ").italic = True
+    p.add_run(re.sub(r"(?i)^nota\.?\s*", "", nota.strip()))
+
+
+def insertar_figura(
+    doc, ruta_img: Path, titulo: str, nota: str = "", ancho_cm: float = 14.5
+) -> None:
+    """Inserta figura APA 7 con campo SEQ Figura para el Índice de Ilustraciones."""
+    _titulo_apa(doc, "Figura", titulo)
+    if ruta_img.exists():
+        p_img = doc.add_paragraph()
+        p_img.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        p_img.paragraph_format.space_after = Pt(4)
+        p_img.add_run().add_picture(str(ruta_img), width=Cm(ancho_cm))
+    else:
+        doc.add_paragraph(
+            f"[PENDIENTE: imagen no encontrada ({ruta_img})]", style="Nota"
+        )
+    _nota_apa(doc, nota or "Elaboración propia.")
+
+
+def markdown_a_word(
+    doc,
+    md: str,
+    estilo_cuerpo: str = "Cuerpo",
+    tema: str | None = None,
+    lang: str | None = None,
+) -> None:
+    """Markdown sencillo -> estilos de la plantilla (### subtitulo, listas, > cita, tablas, figuras, ```codigo```).
+    Bloques especiales: :::dafo ... :::, :::cartel ... :::, Tabla: Título | Nota y ![Título | Nota](ruta)."""
     lineas = md.splitlines()
     i = 0
+    tabla_meta: tuple[str, str] | None = None
     while i < len(lineas):
         linea = lineas[i].rstrip()
         limpia = linea.strip()
@@ -282,6 +364,11 @@ def markdown_a_word(
             i += 1
             doc.add_paragraph()
             continue
+        if m_tab := RE_TABLA_APA.match(limpia):
+            tit_t, _, nota_t = m_tab.group(1).partition("|")
+            tabla_meta = (tit_t.strip(), nota_t.strip())
+            i += 1
+            continue
         if limpia.startswith("|"):
             bloque = []
             while i < len(lineas) and lineas[i].strip().startswith("|"):
@@ -289,34 +376,47 @@ def markdown_a_word(
                 i += 1
             filas = _filas_md(bloque)
             if filas:
+                if tabla_meta:
+                    _titulo_apa(doc, "Tabla", tabla_meta[0])
                 derecha = {
                     j
                     for j in range(len(filas[0]))
                     if all(_es_numero(f[j]) for f in filas[1:] if j < len(f) and f[j])
                 }
                 tabla(doc, filas, derecha=derecha, tema=tema)
-                doc.add_paragraph()
+                if tabla_meta and tabla_meta[1]:
+                    _nota_apa(doc, tabla_meta[1])
+                else:
+                    doc.add_paragraph()
+                tabla_meta = None
             continue
         i += 1
         if not limpia:
             continue
+        if m_img := RE_IMAGEN.match(limpia):
+            tit_f, _, nota_f = m_img.group(1).partition("|")
+            insertar_figura(
+                doc, Path(m_img.group(2).strip()), tit_f.strip(), nota_f.strip()
+            )
+            continue
         if m := re.match(r"^(#{3,6})\s+(.*)", limpia):
-            doc.add_heading(
+            p = doc.add_heading(
                 m.group(2).strip("* "), level=2 if len(m.group(1)) == 3 else 3
-            )  # APA: nivel 2 bajo cada seccion
+            )
         elif re.match(r"^[-*•]\s+", limpia):
-            texto_rico(
-                doc.add_paragraph(style="List Bullet"), re.sub(r"^[-*•]\s+", "", limpia)
-            )
+            p = doc.add_paragraph(style="List Bullet")
+            texto_rico(p, re.sub(r"^[-*•]\s+", "", limpia))
         elif re.match(r"^\d+[.)]\s+", limpia):
-            texto_rico(
-                doc.add_paragraph(style="List Number"),
-                re.sub(r"^\d+[.)]\s+", "", limpia),
-            )
+            p = doc.add_paragraph(style="List Number")
+            texto_rico(p, re.sub(r"^\d+[.)]\s+", "", limpia))
         elif limpia.startswith(">"):
-            texto_rico(doc.add_paragraph(style="Quote"), limpia.lstrip("> "))
+            p = doc.add_paragraph(style="Quote")
+            texto_rico(p, limpia.lstrip("> "))
         else:
-            texto_rico(doc.add_paragraph(style=estilo_cuerpo), limpia)
+            p = doc.add_paragraph(style=estilo_cuerpo)
+            texto_rico(p, limpia)
+        if lang:
+            fijar_idioma_parrafo(p, lang)
 
 
 def salto_pagina(doc) -> None:
@@ -345,6 +445,51 @@ def portada(doc, guion: dict, tipo_portada: str) -> None:
             p.alignment = centrado
             p.runs[0].italic = True
             p.paragraph_format.space_after = Pt(14)
+        return
+    if tipo_portada == "uem":
+        logo = guion.get("logo")
+        if logo and Path(logo).exists():
+            p_logo = doc.add_paragraph()
+            p_logo.alignment = centrado
+            p_logo.add_run().add_picture(str(logo), width=Cm(6.0))
+        else:
+            p_inst = doc.add_paragraph()
+            p_inst.alignment = centrado
+            _run(
+                p_inst,
+                str(
+                    guion.get("institucion")
+                    or guion.get("centro")
+                    or "UNIVERSIDAD EUROPEA"
+                ).upper(),
+                13,
+                "C8102E",
+                True,
+                "Verdana",
+            )
+        for _ in range(3):
+            doc.add_paragraph()
+        p = doc.add_paragraph(guion.get("titulo", ""), style="Title")
+        p.alignment = centrado
+        if guion.get("subtitulo"):
+            p_sub = doc.add_paragraph(guion["subtitulo"], style="Subtitle")
+            p_sub.alignment = centrado
+        for _ in range(6):
+            doc.add_paragraph()
+        for claves, etiqueta in (
+            (("ciclo", "curso", "titulacion"), "Titulación / Ciclo"),
+            (("modulo", "asignatura"), "Módulo"),
+            (("autor",), "Autor/a"),
+            (("profesor", "tutor", "docente"), "Tutor/a"),
+            (("fecha",), "Fecha"),
+        ):
+            valor = next((guion[k] for k in claves if guion.get(k)), None)
+            if valor:
+                p_d = doc.add_paragraph()
+                p_d.alignment = centrado
+                p_d.add_run(f"{etiqueta}: ").bold = True
+                p_d.add_run(str(valor))
+        salto_pagina(doc)
         return
     if tipo_portada == "apa":
         for _ in range(3):

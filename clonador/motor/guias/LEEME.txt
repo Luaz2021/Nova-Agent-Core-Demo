@@ -1,0 +1,21 @@
+GUÍAS DE VERSIÓN PARA QWEN (1 de noviembre de 2026)
+====================================================
+Hojas cortas que se le pasan a Qwen en el prompt para que escriba la sintaxis actual
+y no la que aprendió (su conocimiento llega más o menos a 2024). No es entrenamiento.
+
+  tailwind4.md      Tailwind CSS 4 (actual 4.3)          PROBADA: sin guía usó Tailwind 2.2; con guía, v4 correcto
+  css_moderno.md    CSS moderno 2024-2026
+  gsap.md           GSAP 3.13+ (todo gratis, SplitText nuevo)
+  react19.md        React 19.2 + Next.js (App Router)
+  react_native.md   React Native 0.85 + Expo SDK 56 + Expo Router
+  dart_flutter.md   Dart 3.12 + Flutter 3.44
+  node.md           Node.js 24 LTS / 26
+  php_laravel.md    PHP 8.4 / 8.5 + Laravel 13
+  java.md           Java 21 / 25 LTS
+
+Probar una guía con Qwen (con y sin guía, cuenta errores de versión):
+  orden del vigilante:  probar_guia tailwind4
+  resultado:            guias/resultado_tailwind4.md  ·  código en guias/salidas/
+(de momento solo tailwind4 tiene sus tareas y reglas de prueba; las demás se añaden en probar_guia.py)
+
+Las versiones se comprobaron en la web el 1-nov-2026. Revisarlas cada pocos meses.

@@ -33,7 +33,8 @@ IGNORAR = {"node_modules", ".git", "dist", "build", ".next", "__pycache__", ".ve
            "nova_tareas", "nova_auditoria", ".nova_respaldo"}
 CODIGO = {".js", ".jsx", ".ts", ".tsx", ".mjs", ".cjs", ".py", ".php", ".java", ".kt", ".cs", ".go", ".rb", ".vue", ".svelte"}
 WEB = {".js", ".jsx", ".ts", ".tsx", ".vue", ".svelte", ".html"}
-EXT = CODIGO | {".sql", ".html", ".env", ".json", ".yml", ".yaml", ".toml"}
+EXT = CODIGO | {".sql", ".html", ".env", ".json", ".yml", ".yaml", ".toml", ".xml"}  # 25/11: .xml (AndroidManifest)
+JAVA = {".java", ".kt"}
 
 SQL = r"(?i)\b(select\s.+\sfrom|insert\s+into|update\s+\w+\s+set|delete\s+from)\b"
 DATO_USUARIO = r"(req|request|params|body|query|input)\b"
@@ -69,6 +70,18 @@ REGLAS = [
      r"origin\s*:\s*(['\"]\*['\"]|true)\b|Access-Control-Allow-Origin['\"]?\s*[:,]\s*['\"]\*", "lista de origenes permitidos", CODIGO),
     (4, "MEDIA", "cookie sin httpOnly", r"res\.cookie\((?![^)]*httpOnly)[^)]*\)", "httpOnly, secure y sameSite", CODIGO),
     (5, "MEDIA", "modo DEBUG activo", r"(?i)\bDEBUG\s*=\s*True\b|app\.run\([^)]*debug\s*=\s*True", "DEBUG solo en local", CODIGO),
+    # 25/11 (Claude): Java/JDBC y Android (las practicas de DAM del usuario)
+    (1, "ALTA", "Statement con SQL concatenado (Java: inyeccion)",
+     r"(?i)\.(executeQuery|executeUpdate|execute)\s*\(\s*\"[^\"]*\"\s*\+", "PreparedStatement con ? y setX()", JAVA),
+    (2, "MEDIA", "contrasena guardada y comparada en texto plano en la BD",
+     r"(?i)\b(password|contrase[nñ]a|passwd|clave)\s*=\s*\?",
+     "guardar un hash (BCrypt/Argon2 o PBKDF2 con sal) y comparar el hash; en practicas, al menos anotarlo", JAVA | {".py", ".php", ".cs", ".sql"}),
+    (2, "MEDIA", "conexion a la BD como root",
+     r"(?i)(getConnection\([^)]*\"root\"|\b(USER|USUARIO)\s*=\s*\"root\")", "usuario de BD con permisos minimos", JAVA),
+    (3, "MEDIA", "componente de Android exportado (revisar si necesita permiso)",
+     r"android:exported\s*=\s*\"true\"", "exported=false salvo la Activity de inicio; si es true, protegerlo con un permiso", {".xml"}),
+    (5, "MEDIA", "trafico sin cifrar permitido (Android)", r"usesCleartextTraffic\s*=\s*\"true\"",
+     "solo HTTPS; cleartext solo en debug con network security config", {".xml"}),
     (5, "MEDIA", "verificacion TLS desactivada", r"verify\s*=\s*False|rejectUnauthorized\s*:\s*false|NODE_TLS_REJECT_UNAUTHORIZED",
      "no desactivar la verificacion de certificados", CODIGO),
 ]

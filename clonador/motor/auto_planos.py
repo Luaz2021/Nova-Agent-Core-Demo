@@ -25,7 +25,7 @@ from collections import Counter
 from pathlib import Path
 
 BASE = Path(__file__).resolve().parent
-WORKSPACE = Path(__file__).resolve().parent.parent / "workspace"
+WORKSPACE = Path(__file__).resolve().parent.parent / "workspace"  # 22/11: sale de la carpeta del motor (PC y laptop)
 MARCA = "<!-- AUTO auto_planos"
 PESOS = {100: "font-thin", 200: "font-extralight", 300: "font-light", 400: "font-normal", 500: "font-medium",
          600: "font-semibold", 700: "font-bold", 800: "font-extrabold", 900: "font-black"}

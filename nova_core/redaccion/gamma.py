@@ -4,7 +4,7 @@ Por que: cuando el enunciado pide una PRESENTACION, un Word no vale. El texto pa
 (tildes, cifras, humano, ortografia, logica) y a Gamma se le manda con textMode "preserve": maqueta, pero NO
 reescribe lo que ya esta revisado.
 
-Clave: variable GAMMA_API_KEY o "gamma_api_key" en el cofre (G:\\Mi unidad\\Antigravity\\vault\\secrets.json).
+Clave: variable GAMMA_API_KEY o GAMMA_API_KEY=... en el cofre local (~/.gemini/config/secrets.env, con nova_claves.py).
 Nunca se imprime ni se escribe en ningun archivo.
 """
 
@@ -67,7 +67,7 @@ def generar(
     api_key = clave()
     if not api_key:
         raise SystemExit(
-            '[error] Falta la clave de Gamma: añade "gamma_api_key" al cofre (vault\\secrets.json) '
+            '[error] Falta la clave de Gamma: añade GAMMA_API_KEY al cofre local con nova_claves.py '
             "o la variable GAMMA_API_KEY. Pídesela al usuario; no la escribas en ningún script."
         )
     peticion = {

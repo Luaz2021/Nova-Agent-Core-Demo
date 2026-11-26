@@ -481,18 +481,12 @@ def orden_servidor(a) -> int:
     ultimo = {"t": time.time()}
 
     def soltar():
-        global _MODELO
         while True:
             time.sleep(15)
             with candado:
-                if _MODELO is not None and time.time() - ultimo["t"] > a.inactivo:
-                    _MODELO = None
-                    import gc
-
-                    gc.collect()
-                    if torch is not None:
-                        torch.cuda.empty_cache()
-                    print("[VOZ] Modelo soltado de la GPU por inactividad", flush=True)
+                if not _ALTAVOZ["sonando"] and time.time() - ultimo["t"] > min(a.inactivo, 300):
+                    print("[VOZ] Servidor cerrado por inactividad para liberar RAM y GPU", flush=True)
+                    os._exit(0)
 
     class Manejador(BaseHTTPRequestHandler):
         def log_message(self, *args):

@@ -9,7 +9,7 @@ import re
 import sys
 from pathlib import Path
 
-WORKSPACE = Path(__file__).resolve().parent.parent / "workspace"
+WORKSPACE = Path(__file__).resolve().parent.parent / "workspace"  # 22/11: sale de la carpeta del motor (PC y laptop)
 
 
 def traducir(linea):

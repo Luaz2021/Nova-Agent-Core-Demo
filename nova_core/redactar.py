@@ -46,6 +46,7 @@ def _fuentes(carpeta: Path, guion: dict) -> str:
         json.dumps(guion.get("datos", ""), ensure_ascii=False),
     ]
     partes += [p for s in guion.get("secciones", []) for p in s.get("puntos", [])]
+    partes += [s["literal"] for s in guion.get("secciones", []) if s.get("literal")]
     partes.append(enunciado.texto_guardado(carpeta))
     return "\n".join(partes)
 

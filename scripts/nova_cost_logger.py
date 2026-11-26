@@ -24,14 +24,22 @@ def _resolve_log_path():
 LOG_PATH = _resolve_log_path()
 BRAIN_DIR = os.path.expanduser(os.path.join("~", ".gemini", "antigravity", "brain"))
 
+# 26/11 (Claude, auditoria de Carbon): Flash/Argon/GPT-OSS se retiran el 30/11. Pesos de nova_core\nova_cupo.py
+# (fuente de verdad): Hydrogen 1, Carbon/Neon 4 (bolsa Gemini); Sonnet 4, Opus 10 (bolsa Claude+GPT).
+# flash/pro/argon se quedan solo para leer registros viejos.
 MODEL_MULTIPLIERS = {
+    "hydrogen": 1.0,
+    "carbon": 4.0,
+    "neon": 4.0,
+    "sonnet": 4.0,
+    "opus": 10.0,
     "flash": 1.0,
     "pro": 4.0,
     "argon": 4.0,
 }
 
 
-def compute_weighted_cost(sum_input_nuevo, sum_cache_leida, sum_output, modelo="flash"):
+def compute_weighted_cost(sum_input_nuevo, sum_cache_leida, sum_output, modelo="hydrogen"):
     """Calcula el costo base (Flash=1.0x) y el costo ponderado real segun el tier de modelo."""
     tier = modelo.lower().strip()
     factor_modelo = MODEL_MULTIPLIERS.get(tier, 1.0)
@@ -109,7 +117,7 @@ def log_task_cost(
     sum_input_nuevo,
     sum_cache_leida,
     sum_output,
-    modelo="flash",
+    modelo="hydrogen",
     rondas=1,
     resultado="OK",
     intervencion_humana=False,
@@ -150,7 +158,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Registrador oficial v2.1 de costo ponderado de tareas")
     parser.add_argument("--tarea", required=True, help="Tipo de tarea")
     parser.add_argument("--modo", required=True, help="Modo de ejecucion")
-    parser.add_argument("--modelo", default="flash", choices=["flash", "pro", "argon"], help="Nivel de modelo")
+    parser.add_argument("--modelo", default="hydrogen", choices=sorted(MODEL_MULTIPLIERS), help="Nivel de modelo")
     parser.add_argument("--auto-transcript", action="store_true", help="Extrae metricas automaticamente del transcript activo")
     parser.add_argument("--all-session", action="store_true", help="Con --auto-transcript, suma toda la sesion en vez del ultimo turno")
     parser.add_argument("--conv-id", default=None, help="ID de conversacion opcional para --auto-transcript")

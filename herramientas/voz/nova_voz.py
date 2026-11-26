@@ -39,8 +39,27 @@ import edge_tts
 # ==============================================================================
 # 0. AUTO-GUARDIÁN DE INSTANCIA ÚNICA (MATA DUPLICADOS ANTERIORES)
 # ==============================================================================
+PID_FILE = os.path.expanduser(r"~\.gemini\antigravity\voice_cache\nova_voz.pid")
+
+
 def kill_other_instances():
+    """15/11: dos Nova Voz a la vez se pisaban el micro (ninguna entendia la orden). 1o el archivo PID (inmediato y
+    fiable); 2o el barrido por PowerShell, ahora con 20 s (con bateria 4 s no le daba para listar procesos)."""
     my_pid = os.getpid()
+    try:
+        with open(PID_FILE, encoding="utf-8") as f:
+            viejo = int(f.read().strip() or 0)
+        if viejo and viejo != my_pid:
+            subprocess.run(["taskkill", "/PID", str(viejo), "/T", "/F"], capture_output=True, timeout=10,
+                           creationflags=0x08000000)
+    except (OSError, ValueError, subprocess.TimeoutExpired):
+        pass
+    try:
+        os.makedirs(os.path.dirname(PID_FILE), exist_ok=True)
+        with open(PID_FILE, "w", encoding="utf-8") as f:
+            f.write(str(my_pid))
+    except OSError:
+        pass
     ps_cmd = f"""
     $myPid = {my_pid}
     $myParent = (Get-CimInstance Win32_Process -Filter "ProcessId = $myPid").ParentProcessId
@@ -48,7 +67,7 @@ def kill_other_instances():
         ($_.Name -like 'python*') -and
         ($_.ProcessId -ne $myPid) -and
         ($_.ProcessId -ne $myParent) -and
-        ($_.CommandLine -match 'nova_voice_companion|nova_native_widget|nova_voz')
+        ($_.CommandLine -match 'nova_voice_companion|nova_native_widget|nova_voz\\.py')
     }} | ForEach-Object {{
         Stop-Process -Id $_.ProcessId -Force -ErrorAction SilentlyContinue
     }}
@@ -56,7 +75,7 @@ def kill_other_instances():
     try:
         subprocess.run(
             ["powershell.exe", "-NoProfile", "-WindowStyle", "Hidden", "-Command", ps_cmd],
-            timeout=4, creationflags=0x08000000 if os.name == "nt" else 0
+            timeout=20, creationflags=0x08000000 if os.name == "nt" else 0
         )
     except Exception:
         pass
@@ -105,7 +124,184 @@ async def async_speak_neural(text, output_path):
     comm = edge_tts.Communicate(text, VOICE_NAME, rate="+4%")
     await comm.save(output_path)
 
-# 11/11 (Claude, Luaz: "rompe el bucle"): la respuesta se lee en un HILO aparte mientras el micro sigue esperando "Nova".
+
+# 15/11 (Claude, decision del usuario): la VOZ OFICIAL de Nova es Ayla (clonada con Qwen3-TTS en local, herramientas\voz_clon).
+# Frases fijas: archivos ayla_*.wav ya generados (al instante). Respuestas: servidor de voz local (127.0.0.1:5010) con
+# faster-qwen3-tts en streaming (16/11: suena en ~0,6 s); suelta la GPU tras 15 min sin uso. Si no esta montado o falla, se usa la voz de Edge de siempre (no se queda muda).
+VOZ_CLON_URL = "http://127.0.0.1:5010"
+CLONADOR = os.path.expanduser(r"~\.gemini\antigravity\herramientas\voz_clon\clonador.py")
+PYW_CLON = os.path.expanduser(r"~\nova_voz_clon\env_fq\Scripts\pythonw.exe")  # 16/11: faster-qwen3-tts
+
+
+def _servidor_voz_listo(timeout=1.5):
+    import urllib.request
+    try:
+        with urllib.request.urlopen(VOZ_CLON_URL + "/", timeout=timeout) as r:
+            return r.status == 200
+    except Exception:
+        return False
+
+
+def _arrancar_servidor_voz():
+    if _servidor_voz_listo():
+        return True
+    if not (os.path.exists(PYW_CLON) and os.path.exists(CLONADOR)):
+        return False
+    try:
+        subprocess.Popen([PYW_CLON, CLONADOR, "servidor", "--inactivo", "900"], creationflags=0x08000000 | 0x00000008,
+                         stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, close_fds=True)
+    except Exception:
+        return False
+    for _ in range(40):
+        time.sleep(0.5)
+        if _servidor_voz_listo():
+            return True
+    return False
+
+
+# 15/11 (el usuario: "en esos huecos meter voz ya generada"): clips de Ayla ya hechos para que no haya silencios.
+# voice_cache\ayla\: wake_*, ok_*, relleno_*, casi_* (frases cortas variadas) y piezas de la hora (hora_N, min_N, periodo_X).
+AYLA_DIR = os.path.join(CACHE_DIR, "ayla")
+RX_HORA = re.compile(r"(?i)\b(qu[eé] hora es|qu[eé] hora tenemos|dime la hora|la hora)\b")
+
+
+def clip_ayla(grupo):
+    import glob
+    import random
+    opciones = glob.glob(os.path.join(AYLA_DIR, f"{grupo}_*.wav"))
+    return random.choice(opciones) if opciones else None
+
+
+def sonar_ayla(ruta, wait=True):
+    """Reproduce un clip con el 'no te escuches a ti misma' de speak_neural. False si no existe."""
+    if not ruta or not os.path.exists(ruta):
+        return False
+    with _HABLA_LOCK:
+        _HABLA["activas"] += 1
+    try:
+        play_mp3_mci(ruta, wait=wait)
+    finally:
+        with _HABLA_LOCK:
+            _HABLA["activas"] -= 1
+            _HABLA["hasta"] = max(_HABLA["hasta"], time.time() + (1.0 if wait else 3.0))
+    return True
+
+
+# 18/11 (Claude, el usuario: "solo la voz de Marina para que avise del hook"): el hook (nova_hook.py) deja aviso_hook.json
+# cuando frena a Nova y aqui suena un clip de Marina ya grabado (voice_cache\marina\aviso_<tipo>_N.wav). Sin modelo
+# cargado: 0 RAM de GPU. Como mucho un aviso cada 20 s para no dar la lata.
+AVISO_HOOK = os.path.join(CACHE_DIR, "aviso_hook.json")
+MARINA_DIR = os.path.join(CACHE_DIR, "marina")
+
+
+def vigilar_avisos_hook():
+    import glob
+    import random
+    try:
+        visto = os.path.getmtime(AVISO_HOOK)  # avisos viejos no se repiten al arrancar
+    except OSError:
+        visto = 0.0
+    ultimo = 0.0
+    while True:
+        time.sleep(1.0)
+        try:
+            m = os.path.getmtime(AVISO_HOOK)
+        except OSError:
+            continue
+        if m <= visto:
+            continue
+        visto = m
+        if time.time() - ultimo < 20:
+            continue
+        try:
+            with open(AVISO_HOOK, encoding="utf-8") as f:
+                tipo = json.load(f).get("tipo", "permiso")
+        except (OSError, ValueError):
+            continue
+        clips = glob.glob(os.path.join(MARINA_DIR, f"aviso_{tipo}_*.wav")) or glob.glob(
+            os.path.join(MARINA_DIR, "aviso_permiso_*.wav"))
+        if clips:
+            ultimo = time.time()
+            log_event(f"Aviso del hook con Marina: {tipo}")
+            try:
+                play_mp3_mci(random.choice(clips), wait=True)
+            except Exception as e:
+                log_event(f"No pude sonar el aviso de Marina ({type(e).__name__})")
+
+
+def unir_wavs(rutas, destino, pausa_ms=40):
+    """Junta clips (mismo formato) en un solo wav: suena seguido, sin cortes de abrir/cerrar el reproductor."""
+    import wave
+    with wave.open(rutas[0], "rb") as w0:
+        params = w0.getparams()
+    hueco = b"\x00" * int(params.framerate * pausa_ms / 1000) * params.sampwidth * params.nchannels
+    with wave.open(destino, "wb") as out:
+        out.setparams(params)
+        for i, r in enumerate(rutas):
+            with wave.open(r, "rb") as w:
+                out.writeframes(w.readframes(w.getnframes()))
+            if i < len(rutas) - 1:
+                out.writeframes(hueco)
+
+
+def hora_local():
+    """'¿Que hora es?' sin pasar por Antigravity: 'Son las ocho' + 'y treinta y cuatro' + 'de la noche' (al instante)."""
+    ahora = time.localtime()
+    h24, m = ahora.tm_hour, ahora.tm_min
+    h12 = h24 % 12 or 12
+    periodo = "manana" if 6 <= h24 < 12 else ("tarde" if 12 <= h24 < 21 else "noche")
+    piezas = [os.path.join(AYLA_DIR, n) for n in (f"hora_{h12}.wav", f"min_{m}.wav", f"periodo_{periodo}.wav")]
+    if not all(os.path.exists(p) for p in piezas):
+        return False
+    destino = os.path.join(CACHE_DIR, "ayla_hora.wav")
+    try:
+        unir_wavs(piezas, destino)
+    except Exception:
+        return False
+    log_event(f"Hora en local: {h24:02d}:{m:02d}")
+    estado_bandeja("hablando", f"{h24:02d}:{m:02d}")
+    return sonar_ayla(destino)
+
+
+def calentar_voz_ayla():
+    """Al oir 'Nova': que el servidor cargue y caliente el modelo YA, mientras se dicta y Antigravity responde
+    (la primera carga tarda; asi se solapa con el dictado en vez de sumarse). No bloquea."""
+    if not os.path.exists(PYW_CLON):
+        return
+
+    def _hilo():
+        import urllib.request
+        if not _arrancar_servidor_voz():
+            return
+        try:
+            urllib.request.urlopen(urllib.request.Request(VOZ_CLON_URL + "/calentar", data=b"{}",
+                                                          headers={"Content-Type": "application/json"}), timeout=5)
+        except Exception:
+            pass
+
+    threading.Thread(target=_hilo, daemon=True).start()
+
+
+def hablar_ayla(text, timeout=300):
+    """16/11 (faster-qwen3-tts): el servidor de voz lo DICE en streaming (empieza a sonar en ~0,6 s con el modelo
+    caliente). Sin rellenos ni "casi lo tengo". False si no se pudo (-> voz de Edge)."""
+    import urllib.request
+    if not _arrancar_servidor_voz():
+        return False
+    datos = json.dumps({"voz": "nova", "texto": text}).encode("utf-8")
+    req = urllib.request.Request(VOZ_CLON_URL + "/hablar", data=datos, headers={"Content-Type": "application/json"})
+    t0 = time.time()
+    try:
+        with urllib.request.urlopen(req, timeout=timeout) as r:
+            d = json.loads(r.read().decode("utf-8"))
+        if d.get("ok"):
+            log_event(f"Voz de Ayla: primer sonido a los {d.get('primer_sonido')} s, {d.get('duracion')} s de audio")
+            return True
+    except Exception as e:
+        log_event(f"Voz de Ayla no disponible ({type(e).__name__})")
+    return time.time() - t0 > 4  # si fallo a mitad de hablar, no se repite todo con Edge
+
+# 11/11 (Claude, el usuario: "rompe el bucle"): la respuesta se lee en un HILO aparte mientras el micro sigue esperando "Nova".
 # Si Nova decia "Nova" en su respuesta, se despertaba a si misma. Mientras habla (y 1 s despues) el micro no cuenta.
 _HABLA = {"activas": 0, "hasta": 0.0}
 _HABLA_LOCK = threading.Lock()
@@ -154,7 +350,8 @@ def _decir_con_ayla(text, wait=True) -> bool:
 def _speak_neural(text, cache_key=None, wait=True):
     """Habla usando el caché instantáneo (<15ms) o sintetiza al vuelo."""
     if cache_key and cache_key in CACHED_PHRASES:
-        fpath = CACHED_PHRASES[cache_key]["file"]
+        ayla = os.path.join(CACHE_DIR, f"ayla_{cache_key}.wav")  # voz oficial (Ayla), generada de antemano
+        fpath = ayla if os.path.exists(ayla) else CACHED_PHRASES[cache_key]["file"]
         if os.path.exists(fpath):
             play_mp3_mci(fpath, wait=wait)
             return
@@ -540,7 +737,7 @@ def esperar_fin_modo_voz():
 
 
 # ------------------------------------------------------------------------------
-# MUSICA EN LOCAL (09/11, Claude, a pedido de Luaz): YouTube en Brave via el puente (YOUTUBE_CONTROL de la extension).
+# MUSICA EN LOCAL (09/11, Claude, a pedido del usuario): YouTube en Brave via el puente (YOUTUBE_CONTROL de la extension).
 # 0 tokens: no pasa por Nova. Si la orden no es de musica, sigue el camino normal (chat de Antigravity).
 # ------------------------------------------------------------------------------
 _M = r"(canci[oó]n|m[uú]sica|tema|rola|video|v[ií]deo|youtube)"
@@ -581,11 +778,11 @@ def _volumen_windows(accion, objetivo=None):
         pulsar(VK_UP, round(min(max(objetivo, 0), 100) / 2))
 
 
-def _youtube(command, **extra):
+def _youtube(command, _timeout=8, **extra):
     req = urllib.request.Request("http://127.0.0.1:5005/execute", method="POST",
                                  data=json.dumps({"action": "YOUTUBE_CONTROL", "args": {"command": command, **extra}}).encode(),
                                  headers={"Content-Type": "application/json"})
-    with urllib.request.urlopen(req, timeout=8) as r:
+    with urllib.request.urlopen(req, timeout=_timeout) as r:
         return json.loads(r.read())
 
 
@@ -593,11 +790,12 @@ _MUSICA = {"volumen_tocado": False}
 
 
 def bajar_musica():
-    """Estilo Alexa (09/11, Luaz: "que baje la musica, no pausar"): al oir "Nova" baja YouTube al 25 % para oir
+    """Estilo Alexa (09/11, el usuario: "que baje la musica, no pausar"): al oir "Nova" baja YouTube al 25 % para oir
     la orden. Devuelve el volumen anterior (o None si no suena nada)."""
     _MUSICA["volumen_tocado"] = False
     try:
-        d = _youtube("status").get("data") or {}
+        # 15/11: timeout 1.5 s (antes 8): sin YouTube abierto, decir "Nova" tardaba 8 s en contestar
+        d = _youtube("status", _timeout=1.5).get("data") or {}
         if d and not d.get("paused") and not d.get("muted") and d.get("volume", 0) > 8:
             _youtube("volume", volume=max(d["volume"] * 0.25, 5) / 100)
             return d["volume"]
@@ -871,7 +1069,7 @@ def vigilar_mascota():
 
 
 # ==============================================================================
-# 4d. ADUANA DE ADJUNTOS (aduana.js por CDP, 09/11 Claude): lo que Luaz pega/arrastra/adjunta en Antigravity no sube
+# 4d. ADUANA DE ADJUNTOS (aduana.js por CDP, 09/11 Claude): lo que el usuario pega/arrastra/adjunta en Antigravity no sube
 #     a la nube: se guarda en temporal\, el puente lo lee EN LOCAL y en el chat queda "[adjunto local: <archivo>]".
 #     El hook de turno (nova_core\nova_hook_turno.py) le pasa a Nova el texto ya leido. Shift = pasar como siempre.
 # ==============================================================================
@@ -1052,7 +1250,7 @@ def log_event(text):
 # ==============================================================================
 # 5. MOTOR DE VOZ (sin ventana)
 # ==============================================================================
-# 09/11 noche (Claude, a pedido de Luaz): "Nova" se detecta EN LOCAL con Vosk (como Alexa: nada sale a Google hasta
+# 09/11 noche (Claude, a pedido del usuario): "Nova" se detecta EN LOCAL con Vosk (como Alexa: nada sale a Google hasta
 # oir la palabra). Gramatica cerrada con SENUELOS para que "novela", "nueva", "novia", "nueve"... no la activen
 # (probado 9/9). Si Vosk o su modelo faltan o fallan, la voz vuelve sola al modo de antes (Google).
 MODELO_VOSK = os.path.join(os.path.dirname(os.path.abspath(__file__)), "modelos", "vosk-model-small-es-0.42")
@@ -1069,19 +1267,23 @@ def es_nova_suelta(r: dict) -> bool:
     return len(pal) == 1 and pal[0]["word"] == "nova" and pal[0].get("conf", 0) >= 0.7 and len(r.get("result", [])) <= 2
 
 
-# 11/11 (Claude, Luaz: "se activa solo con musica y yo ni hable"): la gramatica cerrada OBLIGA a Vosk a elegir una de
+# 11/11 (Claude, el usuario: "se activa solo con musica y yo ni hable"): la gramatica cerrada OBLIGA a Vosk a elegir una de
 # sus 28 palabras para cualquier sonido, y un trozo de cancion o un golpe puede caer en "nova" con confianza alta.
 # 2o PASO: el mismo trozo de audio se escucha SIN gramatica (vocabulario libre). Una voz diciendo "Nova" ahi sale como
 # "no va" / "nova" (probado con 5 voces; acento peruano a veces "nota"); musica o ruido dan otra cosa.
-# Solo "Nova" A SECAS (Luaz 11/11): "oye nova", "hey nova"... no valen.
-RE_NOVA_LIBRE = re.compile(r"^(nova|no va|nota|noba)$")
+# Solo "Nova" A SECAS (el usuario 11/11): "oye nova", "hey nova"... no valen.
+# 15/11: con el micro flojo del portatil la voz del usuario salia como otra cosa y se descartaba. Mas variantes.
+RE_NOVA_LIBRE = re.compile(r"^(nova|no va|nota|noba|no ba|nueva|noa|nuba|nuva|nava|lova|bova|no vas|nobas|nos va)$")
 
 
 def confirma_nova(modelo, audio: bytes) -> bool:
     rec = _vosk.KaldiRecognizer(modelo, 16000)
     rec.AcceptWaveform(audio)
     texto = json.loads(rec.FinalResult()).get("text", "").strip().lower()
-    return bool(RE_NOVA_LIBRE.match(texto))
+    ok = bool(RE_NOVA_LIBRE.match(texto))
+    if not ok and len(texto.split()) <= 2:  # solo 1-2 palabras (lo que confundio con "Nova"), para afinar el filtro
+        log_event(f"2o paso oyo '{texto[:20]}' (no cuenta como Nova)")
+    return ok
 try:
     import vosk as _vosk
     VOSK_OK = os.path.isdir(MODELO_VOSK)
@@ -1146,13 +1348,18 @@ class NovaVoz:
                 continue
             log_event("Palabra de activacion (local)")
             estado_bandeja("mirando", "te ha oido")
-            volumen_antes = bajar_musica()
-            play_chime_wake()
-            time.sleep(0.15)
+            calentar_voz_ayla()  # 15/11: la voz de Ayla se va cargando mientras dictas
+            # 15/11: bajar la musica EN PARALELO (antes bloqueaba 1,5-8 s y la orden se decia antes de escuchar)
+            musica = {"vol": None}
+            hilo_musica = threading.Thread(target=lambda: musica.update(vol=bajar_musica()), daemon=True)
+            hilo_musica.start()
+            if not sonar_ayla(clip_ayla("wake")):  # "¿Si?" / "Dime." de Ayla en vez del pitido
+                play_chime_wake()
             try:
                 self.escuchar_orden(recognizer, mic)
             finally:
-                subir_musica(volumen_antes)
+                hilo_musica.join(timeout=2)
+                subir_musica(musica["vol"])
         return 0
 
     def __init__(self):
@@ -1162,10 +1369,12 @@ class NovaVoz:
     def calibrar(recognizer, mic, segundos):
         with mic as source:
             recognizer.adjust_for_ambient_noise(source, duration=segundos)
-        recognizer.energy_threshold = min(max(recognizer.energy_threshold, 120), 6000)
+        # 15/11 (el usuario: "le digo Nova y no se activa"): calibro con musica/voz sonando y el umbral subio a 4987 (suelo
+        # 3989): su voz normal ya no lo superaba. Techo 1500 y suelo maximo 600: un arranque con ruido no la deja sorda.
+        recognizer.energy_threshold = min(max(recognizer.energy_threshold, 120), 1500)
         # 09/11 noche: el umbral dinamico bajaba hasta 0 en silencio y la voz mandaba silencio a Google sin parar
         # (1.887 veces en 3 h): ahora tiene SUELO = 80 % de lo calibrado (minimo 120)
-        NovaVoz.piso = max(120.0, recognizer.energy_threshold * 0.8)
+        NovaVoz.piso = min(600.0, max(120.0, recognizer.energy_threshold * 0.8))
         log_event(f"Umbral calibrado: {recognizer.energy_threshold:.1f} (suelo {NovaVoz.piso:.0f})")
 
     def estado(self, modo, texto):
@@ -1180,11 +1389,18 @@ class NovaVoz:
                 audio = recognizer.listen(source, timeout=10, phrase_time_limit=20)
                 orden = recognizer.recognize_google(audio, language="es-ES")
                 log_event(f"Orden reconocida: '{orden}'")
-            except Exception:
+            except Exception as e:  # 15/11: apuntar POR QUE no hubo orden (sin guardar lo que se dijo)
+                motivo = {"WaitTimeoutError": "no oi nada en 10 s", "UnknownValueError": "oi algo pero no lo entendi",
+                          "RequestError": "sin conexion con Google"}.get(type(e).__name__, type(e).__name__)
+                log_event(f"Sin orden: {motivo} (umbral {recognizer.energy_threshold:.0f})")
                 orden = ""
         if orden.strip():
-            play_chime_confirm()
-            ejecutar(orden)
+            if RX_HORA.search(orden) and hora_local():  # 15/11: la hora la dice Nova Voz al instante
+                pass
+            else:
+                if not sonar_ayla(clip_ayla("ok"), wait=False):  # "Vale, ahora mismo" mientras va a Antigravity
+                    play_chime_confirm()
+                ejecutar(orden)
             time.sleep(2.0)
         else:
             play_chime_error()
@@ -1283,6 +1499,7 @@ if __name__ == "__main__":
         _SOLO_ADUANA[0] = True
         log_event("Modo solo aduana (la voz la lleva Nova Voz Live)")
         threading.Thread(target=vigilar_aduana, daemon=True).start()
+        threading.Thread(target=vigilar_avisos_hook, daemon=True).start()
         while True:
             time.sleep(3600)
     kill_other_instances()

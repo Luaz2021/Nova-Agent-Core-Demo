@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>API X-Ray · Escáner de APIs y Modelo BD</title>
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="styles/views.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-row">
+      <div class="brand">
+        <span class="brand-mark">X-RAY</span>
+        <div>
+          <h1>API X-Ray</h1>
+          <p class="subtitle">Escáner universal de APIs REST / JSON</p>
+        </div>
+      </div>
+
+      <form id="scan-form" class="scan-form">
+        <input id="url-input" type="url" required placeholder="https://dummyjson.com/products" aria-label="URL de la API">
+        <label class="check-pill" title="Recorre todas las páginas si la API pagina resultados">
+          <input id="fetch-all-input" type="checkbox">
+          <span>Escanear todo</span>
+        </label>
+        <button id="toggle-headers-btn" type="button" class="btn btn-ghost">Headers (<span id="headers-count">0</span>)</button>
+        <button id="scan-btn" type="submit" class="btn btn-primary">Escanear</button>
+      </form>
+    </div>
+
+    <section id="headers-drawer" class="headers-drawer hidden" aria-label="Cabeceras HTTP personalizadas">
+      <div class="drawer-head">
+        <span>Cabeceras personalizadas (opcional, por ejemplo Authorization)</span>
+        <button id="add-header-btn" type="button" class="btn btn-ghost btn-sm">+ Añadir cabecera</button>
+      </div>
+      <div id="headers-list" class="headers-list"></div>
+    </section>
+
+    <div id="status-strip" class="status-strip hidden"></div>
+  </header>
+
+  <nav class="tabs" role="tablist" aria-label="Secciones del escáner">
+    <button type="button" class="tab-btn active" data-tab="probe" role="tab" aria-selected="true">1. Radiografía &amp; Backend</button>
+    <button type="button" class="tab-btn" data-tab="data" role="tab" aria-selected="false">2. Datos</button>
+    <button type="button" class="tab-btn" data-tab="er" role="tab" aria-selected="false">3. Modelo BD &amp; Diagrama</button>
+    <button type="button" class="tab-btn" data-tab="diag" role="tab" aria-selected="false">4. Diagnóstico &amp; Exportar</button>
+  </nav>
+
+  <main class="workspace">
+    <section id="empty-state" class="empty-state card">
+      <h2>Pega la URL de cualquier API JSON arriba y pulsa Escanear</h2>
+      <p>Analiza cabeceras, métodos HTTP, paginación, estructura real de registros, genera el diagrama ER tipo DBeaver y exporta a SQL o SQLite sin dependencias externas.</p>
+      <div class="sample-row">
+        <span class="muted">Pruebas rápidas:</span>
+        <button type="button" class="btn btn-ghost sample-btn" data-url="https://dummyjson.com/products">DummyJSON Products</button>
+        <button type="button" class="btn btn-ghost sample-btn" data-url="https://jsonplaceholder.typicode.com/users">JSONPlaceholder Users</button>
+        <button type="button" class="btn btn-ghost sample-btn" data-url="https://dummyjson.com/products/1">DummyJSON Producto único</button>
+      </div>
+    </section>
+
+    <section id="panel-probe" class="tab-panel hidden" role="tabpanel"></section>
+    <section id="panel-data" class="tab-panel hidden" role="tabpanel"></section>
+    <section id="panel-er" class="tab-panel hidden" role="tabpanel"></section>
+    <section id="panel-diag" class="tab-panel hidden" role="tabpanel"></section>
+  </main>
+
+  <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
