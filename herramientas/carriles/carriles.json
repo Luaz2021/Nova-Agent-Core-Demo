@@ -1,0 +1,323 @@
+{
+  "_que_es": "Carriles por tema (20/11/2026, Claude). nova_core\\nova_carriles.py lee esto: si el mensaje del usuario encaja con 'palabras' (regex, sin mayusculas) o empieza por un 'atajo', el hook de turno activa el carril y manda leer su kit. Si 'obligatorio' es true, nova_hook.py frena UNA vez la primera escritura de un archivo con esas 'extensiones' si el kit no se ha leido. Ajustar aqui las palabras (lo puede hacer /destilar).",
+  "carriles": {
+    "backend": {
+      "kit": "carril_backend.md",
+      "atajos": [
+        "/backend",
+        "/bd",
+        "/sql"
+      ],
+      "palabras": [
+        "\\bsql\\b",
+        "\\bbd\\b",
+        "base de datos",
+        "\\btablas?\\b",
+        "\\bdao\\b",
+        "repositor",
+        "\\bjdbc\\b",
+        "\\bjpa\\b",
+        "hibernate",
+        "spring",
+        "\\bcrud\\b",
+        "endpoint",
+        "api rest",
+        "\\bapi\\b",
+        "mysql",
+        "postgres",
+        "sqlite",
+        "oracle",
+        "mongo",
+        "\\bconsultas?\\b",
+        "\\bquery\\b",
+        "backend",
+        "\\.sql\\b",
+        "pom\\.xml",
+        "build\\.gradle",
+        "fastapi",
+        "express",
+        "legacy",
+        "c[oó]digo (heredado|viejo|antiguo)",
+        "radiograf",
+        "desgl[oó]s",
+        "deconstru",
+        "acoplad",
+        "microservici",
+        "monolit",
+        "trocea",
+        "modulariz",
+        "refactoriz",
+        "codebase"
+      ],
+      "obligatorio": true,
+      "extensiones": [
+        ".java",
+        ".kt",
+        ".py",
+        ".sql",
+        ".js",
+        ".ts",
+        ".php",
+        ".cs"
+      ]
+    },
+    "consola": {
+      "kit": "carril_consola.md",
+      "atajos": [
+        "/consola",
+        "/cli"
+      ],
+      "palabras": [
+        "consola",
+        "terminal",
+        "scanner",
+        "\\bmen[uú]\\b",
+        "system\\.in",
+        "input\\(",
+        "\\bcli\\b",
+        "ejercicio",
+        "por teclado",
+        "programa en (java|kotlin|python)"
+      ],
+      "obligatorio": true,
+      "extensiones": [
+        ".java",
+        ".kt",
+        ".py",
+        ".cs"
+      ]
+    },
+    "web": {
+      "kit": "carril_web.md",
+      "atajos": [
+        "/web"
+      ],
+      "palabras": [
+        "\\bweb\\b",
+        "landing",
+        "p[aá]gina web",
+        "\\bhtml\\b",
+        "\\bcss\\b",
+        "dashboard",
+        "\\bpanel\\b",
+        "frontend",
+        "tailwind",
+        "react"
+      ],
+      "obligatorio": true,
+      "extensiones": [
+        ".html",
+        ".css",
+        ".jsx",
+        ".tsx",
+        ".vue"
+      ]
+    },
+    "redaccion": {
+      "kit": "carril_redaccion.md",
+      "atajos": [
+        "/redacta",
+        "/documento"
+      ],
+      "palabras": [
+        "documento",
+        "informe",
+        "actividad",
+        "enunciado",
+        "redact",
+        "presupuesto",
+        "\\bword\\b",
+        "\\bpdf\\b",
+        "trabajo de clase",
+        "memoria del proyecto",
+        "\\bensayo\\b"
+      ],
+      "obligatorio": false,
+      "extensiones": []
+    },
+    "investigacion": {
+      "kit": "carril_investigacion.md",
+      "atajos": [
+        "/investiga"
+      ],
+      "palabras": [
+        "investig",
+        "compara",
+        "comparativa",
+        "fuentes",
+        "estado del arte",
+        "mercado",
+        "averigua",
+        "busca informaci"
+      ],
+      "obligatorio": false,
+      "extensiones": []
+    },
+    "video": {
+      "kit": "carril_video.md",
+      "atajos": [
+        "/video"
+      ],
+      "palabras": [
+        "v[ií]deo",
+        "edici[oó]n",
+        "\\breels?\\b",
+        "tiktok",
+        "remotion",
+        "ffmpeg",
+        "guion",
+        "montaje",
+        "youtube short",
+        "transcrib",
+        "grabaci[oó]n",
+        "\\.mp4\\b",
+        "\\.m4a\\b",
+        "\\baudio\\b",
+        "clase grabada"
+      ],
+      "obligatorio": true,
+      "extensiones": [
+        ".mp4",
+        ".mov",
+        ".webm"
+      ]
+    },
+    "rea": {
+      "kit": "carril_rea.md",
+      "atajos": [
+        "/rea"
+      ],
+      "palabras": [
+        "ingenier[ií]a inversa",
+        "\\brea\\b",
+        "descompil",
+        "\\bapk\\b",
+        "\\.exe\\b",
+        "binario",
+        "desofusc"
+      ],
+      "obligatorio": false,
+      "extensiones": []
+    },
+    "android": {
+      "kit": "<NOVA_HOME>\\config\\skills\\index-mobile-dev\\SKILL.md",
+      "atajos": [
+        "/android"
+      ],
+      "palabras": [
+        "\\bandroid\\b",
+        "\\bkotlin\\b",
+        "\\bgradle\\b",
+        "\\bactivity\\b",
+        "\\blayouts?\\b",
+        "res[\\\\/]layout",
+        "\\bjetpack\\b",
+        "\\bcompose\\b",
+        "android studio",
+        "\\bemulador\\b"
+      ],
+      "obligatorio": true,
+      "extensiones": [
+        ".kt",
+        ".kts",
+        ".xml",
+        ".java"
+      ],
+      "rutas": [
+        "\\\\res\\\\(layout|values|drawable|menu|navigation)[^\\\\]*\\\\",
+        "\\.kts?$",
+        "AndroidManifest\\.xml$",
+        "\\\\app\\\\src\\\\(main|test|androidTest)\\\\java\\\\"
+      ],
+      "oro": [
+        "Mira que usa YA el proyecto (XML + Activities o Compose) y sigue ESE estilo: no migres a Compose ni metas Hilt/ViewModel/Flow si no lo usa.",
+        "Practica (practica_*/entregable_*): explica y propone; el usuario escribe salvo que diga 'hazlo tu'.",
+        "Cambios con edit_file SOLO en el trozo: nunca reescribir el XML o la Activity entera.",
+        "Ids del XML y del codigo tienen que coincidir; textos en strings.xml.",
+        "Proyecto en una carpeta sincronizada (Drive, OneDrive, iCloud): el build va fuera de ella (ver android-views-xml)."
+      ]
+    },
+    "java": {
+      "kit": "<NOVA_HOME>\\config\\skills\\index-java\\SKILL.md",
+      "atajos": [
+        "/java"
+      ],
+      "palabras": [
+        "\\bjava\\b",
+        "\\bswing\\b",
+        "windowbuilder",
+        "\\bjframe\\b",
+        "\\bjtable\\b",
+        "\\bjdbc\\b",
+        "\\bspring\\b",
+        "\\beclipse\\b",
+        "\\bmaven\\b",
+        "\\bjavafx\\b"
+      ],
+      "obligatorio": true,
+      "extensiones": [
+        ".java"
+      ],
+      "rutas": [
+        "\\.java$"
+      ],
+      "rutas_no": [
+        "\\\\app\\\\src\\\\(main|test|androidTest)\\\\"
+      ],
+      "oro": [
+        "Sigue el estilo del proyecto y el nivel del curso (clases anonimas, bucles clasicos, setBounds): nada de streams, records o Spring si no los usa.",
+        "MVC: la vista no importa java.sql; el controller no importa javax.swing (lo vigila un hook).",
+        "WindowBuilder: componentes en el constructor/initialize(); la logica en metodos aparte; la JTable con setViewportView.",
+        "SQL siempre con PreparedStatement y '?'; nunca concatenar lo que escribe el usuario.",
+        "Practica: explica y propone; el usuario escribe salvo que diga 'hazlo tu'."
+      ]
+    },
+    "seguridad": {
+      "kit": "<NOVA_HOME>\\config\\skills\\index-security-deploy\\SKILL.md",
+      "atajos": [
+        "/seguridad",
+        "/audita"
+      ],
+      "palabras": [
+        "\\bseguridad\\b",
+        "vulnerab",
+        "auditor[ií]a de seguridad",
+        "\\bpentest",
+        "\\bowasp\\b",
+        "inyecci[oó]n sql",
+        "\\bxss\\b",
+        "\\bcsrf\\b",
+        "\\bhackea"
+      ],
+      "obligatorio": false,
+      "extensiones": [],
+      "oro": [
+        "Auditoria: herramientas\\seguridad\\nova_seguridad.py primero (escaneres gratis); solo lo medio/alto/critico se verifica con el modelo.",
+        "Un hallazgo sin prueba (archivo:linea y de donde entra el dato hasta donde hace dano) no cuenta.",
+        "Arreglo minimo; nada de probar contra servidores reales ni datos de otros."
+      ]
+    },
+    "proyecto": {
+      "kit": "carril_proyecto.md",
+      "atajos": [
+        "/director",
+        "/proyecto"
+      ],
+      "palabras": [
+        "full ?-?stack",
+        "fullstack",
+        "app(licaci[oó]n)? (completa|entera|de cero|desde cero)",
+        "(proyecto|sistema|plataforma) (grande|completo|entero|de cero|desde cero)",
+        "sistema de gesti[oó]n",
+        "desde cero",
+        "de cero (una|un|la|el)",
+        "(front|frontend) y (el )?(back|backend)",
+        "(back|backend) y (el )?(front|frontend)",
+        "varios m[oó]dulos",
+        "con (login|usuarios) y (panel|base de datos|bd)"
+      ],
+      "obligatorio": false,
+      "extensiones": []
+    }
+  }
+}

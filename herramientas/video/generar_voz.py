@@ -1,4 +1,5 @@
-# Genera la narración de cada escena con voz neuronal (Microsoft Edge, gratis).
+# Genera la narración de cada escena. 15/11: con la voz de MARINA (clonada en local, herramientas\voz_clon);
+# si no está montada en este equipo, con voz neuronal de Microsoft Edge (gratis, necesita internet).
 # Requisitos (una sola vez):   pip install edge-tts
 # Uso: abre una terminal EN ESTA CARPETA y ejecuta:   python generar_voz.py
 # Necesita conexión a internet. Crea audio/escena1.mp3 ... escena7.mp3
@@ -44,6 +45,27 @@ ESCENAS = [
     "t": "PrintLab. De la hoja de cálculo, a la fábrica inteligente."
   }
 ]
+
+def voz_marina() -> bool:
+    """15/11 (decision del usuario): la voz de los videos es MARINA (locutora), clonada en local con herramientas\\voz_clon.
+    Genera todas las escenas con UNA sola carga del modelo. Si no esta montado, se usa la voz de Edge de siempre."""
+    import json
+    import os
+    import subprocess
+    import tempfile
+
+    clonador = Path.home() / ".gemini" / "antigravity" / "herramientas" / "voz_clon" / "clonador.py"
+    py = Path.home() / "nova_voz_clon" / "env_fq" / "Scripts" / "python.exe"
+    if not (clonador.exists() and py.exists()):
+        return False
+    tareas = [{"texto": e["t"], "salida": str(SALIDA / f"escena{i}.wav"), "mp3": True} for i, e in enumerate(ESCENAS, 1)]
+    with tempfile.NamedTemporaryFile("w", suffix=".json", delete=False, encoding="utf-8") as f:
+        json.dump(tareas, f, ensure_ascii=False)
+    print("Narracion con la voz de Marina (locutora). Tarda unas 4-9 veces lo que dura el audio...")
+    r = subprocess.run([str(py), str(clonador), "lote", "--voz", "videos", "--json", f.name])
+    os.unlink(f.name)
+    return r.returncode == 0 and all((SALIDA / f"escena{i}.mp3").exists() for i in range(1, len(ESCENAS) + 1))
+
 
 async def main():
     for i, e in enumerate(ESCENAS, 1):

@@ -77,6 +77,7 @@ def _quitar_codigo(texto: str) -> str:
     texto = re.sub(r"```.*?```", " ", texto, flags=re.DOTALL)
     texto = re.sub(r"`[^`]*`", " ", texto)
     texto = re.sub(r"\b\d{1,2}/\d{1,2}(?:/\d{2,4})?\b", " ", texto)  # fechas 12/11/2026
+    texto = re.sub(r"\bpp?\.\s*\d+(?:[–-]\d+)?\b", " ", texto)  # páginas de citas APA 7
     texto = re.sub(
         r"\b[A-Z]{2,}[\s-]?\d+\w*", " ", texto
     )  # modelos: RTX 5060, APA 7, RGPD
@@ -161,7 +162,9 @@ def _humanize_check():
     return modulo
 
 
-def humano(texto: str) -> tuple[str | None, list[str]]:
+def humano(
+    texto: str, perfil: str = "academico", es_literal: bool = False
+) -> tuple[str | None, list[str]]:
     """(bloqueo, avisos) sobre si el texto suena a persona."""
     limpio = _quitar_codigo(
         re.sub(r"(?m)^\s*\|.*$|^:::.*$", " ", texto)
@@ -172,14 +175,19 @@ def humano(texto: str) -> tuple[str | None, list[str]]:
     huellas = [h for h in HUELLAS_IA if h in bajo] + jerga(limpio)
     avisos = []
     if hc := _humanize_check():
-        for f in hc.analyze_text(limpio).get("flags", []):
-            if f.get("severidad") in ("ALTA", "MEDIA"):
+        for f in hc.analyze_text(limpio, perfil=perfil).get("flags", []):
+            if f.get("severidad") in ("CRÍTICA", "ALTA", "MEDIA"):
                 avisos.append(f"{f['tipo']}: {f['detalle'][:140]}")
     problemas = []
     if largas:
-        problemas.append(
-            f"{len(largas)} frase(s) de más de {MAX_PALABRAS_FRASE} palabras (la mayor: {max(largas)})"
+        msg_larga = (
+            f"{len(largas)} frase(s) de más de {MAX_PALABRAS_FRASE} palabras "
+            f"(la mayor: {max(largas)})"
         )
+        if es_literal:
+            avisos.append(msg_larga)
+        else:
+            problemas.append(msg_larga)
     if len(huellas) >= 3:
         problemas.append(f"suena a IA: {', '.join(huellas[:6])}")
     elif huellas:
@@ -190,22 +198,27 @@ def humano(texto: str) -> tuple[str | None, list[str]]:
 def revisar(
     secciones: list[dict], fuentes: str, cifras: bool = True
 ) -> tuple[list[str], list[str]]:
-    comprobar_cifras, cifras_raras = cifras, _cifras
-    """secciones: [{'titulo', 'cuerpo'}]. Devuelve (bloqueos, avisos)."""
+    """secciones: [{'titulo', 'cuerpo', 'estado'?}]. Devuelve (bloqueos, avisos)."""
     bloqueos, avisos = [], []
     for s in secciones:
         nombre = s["titulo"][:50]
+        bajo = nombre.strip().lower()
+        es_abstract = bajo.startswith("abstract")
+        es_refs = bajo.startswith(("referencias", "bibliograf"))
+        es_literal = s.get("estado") == "bloqueada"
         texto = f"{s['titulo']}\n{s['cuerpo']}"
-        if problema := tildes(texto):
+        if not es_abstract and (problema := tildes(texto)):
             bloqueos.append(
                 f"[TILDES] '{nombre}': {problema}. Reescríbela en español correcto."
             )
-        if comprobar_cifras and (raras := cifras_raras(texto, fuentes)):
+        if cifras and not es_refs and (raras := _cifras(texto, fuentes)):
             bloqueos.append(
                 f"[CIFRAS] '{nombre}': {', '.join(raras[:8])} no aparecen en los datos dados. "
                 "Quítalas, o si son reales ponlas en el 'contexto' del guion."
             )
-        bloqueo, notas = humano(s["cuerpo"])
+        if es_refs:
+            continue
+        bloqueo, notas = humano(s["cuerpo"], perfil="academico", es_literal=es_literal)
         if bloqueo:
             bloqueos.append(
                 f"[HUMANO] '{nombre}': {bloqueo}. Parte las frases y dilo como lo diría una persona."

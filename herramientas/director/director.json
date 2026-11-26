@@ -1,0 +1,30 @@
+{
+  "_nota": "Slugs de modelo de la CLI agy. COMPROBAR con 'agy models' la primera vez (nova_director.py modelos).",
+  "agy": "agy",
+  "modelos": {
+    "planos": "gemini-4-neon-medium",
+    "obra": "gemini-4-hydrogen-high",
+    "arreglo": "gemini-4-neon-high",
+    "arreglo_2": "gemini-4-carbon-medium",
+    "inspeccion_1": "gemini-4-neon-medium",
+    "inspeccion": "gemini-4-neon-xhigh",
+    "reinspeccion": "gemini-4-neon-medium"
+  },
+  "peso": {
+    "hydrogen": 1,
+    "neon": 4,
+    "carbon": 4
+  },
+  "max_paralelo": 2,
+  "intentos_obra": 2,
+  "timeout_llamada_s": 1800,
+  "timeout_criterio_s": 300,
+  "max_diff_caracteres": 120000,
+  "presupuesto_ponderado": 2500000,
+  "reinspeccion": true,
+  "args_extra": [],
+  "max_fases_por_conversacion": 4,
+  "inspeccion_modo": "completa",
+  "_modos": "inspeccion_modo: completa (paso 1 Medium + paso 2 XHigh si hay algo critico + arreglo + reinspeccion Medium) | ligera (solo paso 1, avisa sin arreglar) | ninguna (solo maquinas, 0 tokens)",
+  "voz_marina": true
+}

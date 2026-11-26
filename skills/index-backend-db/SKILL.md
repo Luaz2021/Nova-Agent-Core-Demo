@@ -12,7 +12,7 @@ description: "Indice Macro Backend, Base de Datos & Redes: Arquitectura Limpia, 
 - **SQL de Alto Rendimiento:** Prohibido el problema `N+1` (usar `JOIN` o carga por lotes), indexar toda clave foranea (`B-Tree`) y columnas JSONB consultadas (`GIN`), y usar paginacion por cursor en tablas grandes.
 - **Migraciones Sin Caida (Expand-Contract):** Nunca renombrar ni borrar columnas en produccion en un solo paso; agregar columna nullable, hacer doble escritura/backfill, cambiar lectura y eliminar en fase posterior. Usar `CREATE INDEX CONCURRENTLY`.
 
-## Trampas de Flash (errores reales ya cometidos)
+## Trampas de Nova (errores reales ya cometidos)
 - Antes de usar o sugerir una libreria, comprobar que esta en `package.json` / `requirements.txt` (`nodemailer` sin declarar rompio el runtime).
 - Fechas `YYYY-MM-DD HH:mm`: `.replace(' ', 'T')` antes de `new Date()`; hora de negocio con zona (`America/Lima`) porque el servidor corre en UTC.
 - La misma regla de validacion en frontend y backend (caso menores: el back exigia parentesco a todos).
@@ -24,10 +24,10 @@ description: "Indice Macro Backend, Base de Datos & Redes: Arquitectura Limpia, 
 - Middleware de autenticacion verificado en cada ruta nueva o modificada.
 - Migraciones en modo expand-contract y con vuelta atras descrita.
 
-## 2. Mapa de Salto al Almacen (`<NOVA_HOME>\antigravity\almacen\` + la ruta `skills\...` de cada entrada; copia local, nunca leer de G:)
+## 2. Mapa de Salto al Almacen (`<NOVA_HOME>/antigravity/almacen/` + la ruta `skills/...` de cada entrada; copia local, nunca leer de la carpeta de Drive)
 Abrir con `read_file` en paralelo al crear arquitectura, endpoints, tablas o redes:
-- **Arquitectura, APIs & Frameworks:** `skills\gemini-clean-architecture\SKILL.md` | `skills\gemini-system-architect\SKILL.md` | `skills\api-design\SKILL.md` | `skills\backend-patterns\SKILL.md` | `skills\fastapi-patterns\SKILL.md` | `skills\cursorrules-advisor\SKILL.md`
-- **Bases de Datos & Supabase:** `skills\gemini-database-mastery\SKILL.md` | `skills\database-migrations\SKILL.md` | `skills\gemini-supabase-security\SKILL.md`
-- **Contenedores & Servidores MCP:** `skills\docker-patterns\SKILL.md` | `skills\gemini-mcp-app\SKILL.md` | `skills\architecture-decision-records\SKILL.md`
-- **Redes Cisco & Robotica Embebida:** `skills\cisco-network-architect\SKILL.md` | `skills\embedded-robotics-maker\SKILL.md`
-- **Blockchain, Web3 & FinTech:** `skills\blockchain-security-foundry\SKILL.md` | `skills\fintech-web3-business\SKILL.md`
+- **Arquitectura, APIs & Frameworks:** `skills/gemini-clean-architecture/SKILL.md` | `skills/gemini-system-architect/SKILL.md` | `skills/api-design/SKILL.md` | `skills/backend-patterns/SKILL.md` | `skills/fastapi-patterns/SKILL.md` | `skills/cursorrules-advisor/SKILL.md`
+- **Bases de Datos & Supabase:** `skills/gemini-database-mastery/SKILL.md` | `skills/database-migrations/SKILL.md` | `skills/gemini-supabase-security/SKILL.md`
+- **Contenedores & Servidores MCP:** `skills/docker-patterns/SKILL.md` | `skills/gemini-mcp-app/SKILL.md` | `skills/architecture-decision-records/SKILL.md`
+- **Redes Cisco & Robotica Embebida:** `skills/cisco-network-architect/SKILL.md` | `skills/embedded-robotics-maker/SKILL.md`
+- **Blockchain, Web3 & FinTech:** `skills/blockchain-security-foundry/SKILL.md` | `skills/fintech-web3-business/SKILL.md`

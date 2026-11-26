@@ -2,3 +2,8 @@
 # de entorno (TRELLO_API_KEY) y cabeceras HTTP (Content-Type, x-codeium-csrf-token), no claves.
 herramientas/trello/trello.py
 scripts/nova_mcp.py
+# v3.3 (revisado a mano, con permiso del autor): nombres de variables leidas del entorno (OPENROUTER_API_KEY,
+# MISTRAL_API_KEY: os.environ.get, sin valor) y nombres de secretos de EJEMPLO en la documentacion de REA
+# ("secret_id": "admin_password"), no claves.
+herramientas/nube/nova_external_shield.py
+almacen/skills/reverse-engineer-anything/references/environments.md

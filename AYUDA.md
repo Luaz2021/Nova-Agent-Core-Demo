@@ -38,6 +38,11 @@ sobre tu rama activa y permiso primero antes de tocar tu terminal.
 | `Nuevo proyecto: [idea]` / `Planifiquemos el Sprint [X]` | Bloquea escritura de codigo, lanza de 3 a 5 preguntas quirurgicas (*Grill-Me*) y arma el tablero en `memory\tasks.md`. |
 | `Nova analiza este proyecto: [ruta]` | Triaje Read-Only en 60s y entrega del **Reporte Tanque de 7 Puntos** (Stack, UI Anti-Slop, a11y, SEO, Legal/RGPD, Ciberseguridad y Deploy 0 EUR). |
 | `te lo dejo en tus manos` | Activa el modo autonomo: ejecucion `1-Shot` consolidada, `unittest` en verde, Chaos QA y reporte final. |
+| `/director hazme una app de [idea]` (v3.3) | NOVA DIRECTOR: planos -> obra por fases -> inspeccion, sin ventanas y con tope de gasto. Pausa y te pregunta si falta algo. Necesita la CLI `agy`. |
+| `hazlo tu` / `te doy permiso` (v3.3) | Modo ENCARGO (trabaja sola en su zona) / permiso para tocar lo protegido en ESTE mensaje (con copia). Los hooks, reglas y el Doctor nunca. |
+| `¿seguro?` / `/verifica` (v3.3) | Nova lo comprueba antes de responder y contesta en modo profe (OK / NO / En parte + como comprobarlo tu). |
+| `desglosa este proyecto [ruta]` (v3.3) | Radiografia del proyecto (piezas, dependencias, ciclos, codigo muerto). La 1a vez Nova te ofrece instalar el programa. |
+| `/backend` `/web` `/consola` `/video` `/redacta` `/investiga` (v3.3) | Fuerza el carril de ese tema: Nova lee su kit corto antes de escribir. |
 
 ---
 

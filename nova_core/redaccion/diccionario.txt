@@ -1,5 +1,4 @@
 Nova
-Luaz
 Qwen
 Gemini
 Antigravity

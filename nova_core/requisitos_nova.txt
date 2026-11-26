@@ -14,6 +14,7 @@ edge-tts==7.3.1
 vosk==0.3.45
 pillow==13.0.0
 pystray==0.19.5
+# 17/11: Nova Voz Live (Gemini Live API: escucha y piensa; la voz la pone Ayla en local)
 google-genai==3.4.0
 
 # Aduana de adjuntos / destilador / redactor

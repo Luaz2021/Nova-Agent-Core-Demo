@@ -104,6 +104,21 @@ def medir_generada(ruta_html, carpeta):
             except Exception:
                 page.wait_for_timeout(3000)
             page.wait_for_timeout(700)
+            # 22/11 (Claude, W1): alarma de CSS ROTO. Un error de sintaxis (p. ej. un @font-face mal reescrito) hace que el
+            # navegador tire todo el CSS de detrás y el clon sale en Times y sin colores SIN que nada avise (python.org).
+            # Compara las reglas escritas en los <style> con las que el navegador entendió. Solo avisa: no toca la nota.
+            if nombre == "escritorio":
+                try:
+                    escritas, leidas = page.evaluate(
+                        "() => { let e = 0, l = 0; for (const s of document.querySelectorAll('style')) {"
+                        " e += (s.textContent.match(/\\}/g) || []).length; try { l += s.sheet.cssRules.length; } catch (x) {} }"
+                        " return [e, l]; }")
+                    if escritas > 40 and leidas < escritas * 0.5:
+                        print(f"  ⚠ CSS ROTO en el clon: el navegador solo entendió {leidas} de ~{escritas} reglas "
+                              f"(un error de sintaxis se come lo de detrás). Revisa los <style> antes de fiarte de la nota.")
+                        res["_css_roto"] = [leidas, escritas]
+                except Exception:
+                    pass
             datos = page.evaluate(JS_MEDIR)
             alto = min(datos["alto_total"], MAX_ALTO)
             cap = carpeta / f"generada_{nombre}.png"

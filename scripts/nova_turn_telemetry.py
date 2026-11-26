@@ -4,7 +4,7 @@ import json
 import os
 
 BRAIN_DIR = os.path.expanduser(os.path.join("~", ".gemini", "antigravity", "brain"))
-SAFE_BUFFER_LIMIT = 100000
+SAFE_BUFFER_LIMIT = 200000  # 26/11: alineado con los avisos 200k/350k/500k (Antigravity compacta solo hacia ~100k)
 
 
 def get_latest_transcript(conv_id=None):

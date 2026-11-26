@@ -19,6 +19,7 @@ botones, imágenes, columnas en escritorio y en móvil. Guarda:
 Uso directo:  python extraer.py https://basecamp.com
 """
 import json
+import os
 import re
 import sys
 from pathlib import Path
@@ -72,7 +73,60 @@ def _blindar_playwright():
 
     for nombre in ("evaluate", "add_style_tag", "content"):
         setattr(Page, nombre, envolver(getattr(Page, nombre)))
+
+    # 22/11 (Claude, W1): DOCUMENTO CONGELADO. webstudiomarketing.es enseña 6 proyectos AL AZAR en cada carga (lo elige
+    # el servidor): las fotos de PC, las de móvil y la captura del clon salían de cargas distintas y nunca coincidían
+    # (sec. 8: 68 %, lista 26 %). Con CLON_CONGELAR_DIR (lo pone clonar.py para TODO el clon), la 1ª vez que se pide el
+    # HTML de una dirección se guarda y las siguientes cargas reciben ESE MISMO HTML (PC y móvil: el clon es un solo
+    # HTML). Solo el documento principal; CSS, fotos y scripts van a la red como siempre.
+    goto_orig = Page.goto
+
+    def goto_congelado(self, url, *a, **k):
+        carpeta = os.environ.get("CLON_CONGELAR_DIR")
+        if carpeta and isinstance(url, str) and url.startswith("http") and not getattr(self, "_clon_congela", False):
+            self._clon_congela = True
+            try:
+                self.route("**/*", lambda ruta: _servir_congelado(ruta, Path(carpeta)))
+            except Exception:
+                pass
+        return goto_orig(self, url, *a, **k)
+
+    Page.goto = goto_congelado
     Page._clon_blindado = True
+
+
+def _servir_congelado(ruta, carpeta):
+    import hashlib
+    import json as _json
+
+    req = ruta.request
+    try:
+        if req.resource_type != "document" or req.method != "GET" or req.frame.parent_frame is not None:
+            return ruta.continue_()
+    except Exception:
+        return ruta.continue_()
+    clave = hashlib.sha1(req.url.split("#")[0].encode()).hexdigest()[:16]
+    cuerpo, cab = carpeta / f"{clave}.html", carpeta / f"{clave}.json"
+    if cuerpo.exists() and cab.exists():
+        try:
+            return ruta.fulfill(status=200, headers=_json.loads(cab.read_text(encoding="utf-8")), body=cuerpo.read_bytes())
+        except Exception:
+            pass
+    try:
+        resp = ruta.fetch()
+        datos = resp.body()
+        tipo = resp.headers.get("content-type", "")
+        if resp.status == 200 and "html" in tipo and resp.url.split("#")[0] == req.url.split("#")[0]:
+            carpeta.mkdir(parents=True, exist_ok=True)
+            cabeceras = {h: v for h, v in resp.headers.items() if h.lower() not in ("content-length", "content-encoding", "transfer-encoding")}
+            cuerpo.write_bytes(datos)
+            cab.write_text(_json.dumps(cabeceras), encoding="utf-8")
+        return ruta.fulfill(response=resp, body=datos)
+    except Exception:
+        try:
+            return ruta.continue_()
+        except Exception:
+            return None
 
 
 _blindar_playwright()
@@ -111,6 +165,134 @@ def esperar_aparecer(page, maximo=1500):
     page.wait_for_timeout(150)
 
 
+# 22/11 (Claude, W1 con el usuario): apple.com en MÓVIL hace aparecer la fila de productos (sec. 3) y el menú del pie (sec. 9)
+# con un fundido que ARRANCA ~1-2 s después de entrar en pantalla y dura varios segundos. esperar_aparecer() solo ve
+# animaciones ya empezadas (y con tope 1,5 s): la foto de la ORIGINAL salía vacía y el clon, que sí las tiene, suspendía.
+# Ahora: se recorre la sección con el scroll (dispara cada «aparecer al ver» de dentro) y se espera a que NADA en ella
+# cambie (opacidad, posición, tamaño) durante 900 ms, con tope. Lo que se queda oculto siempre (carrusel) no cambia.
+JS_HUELLA_SECCION = r"""(n) => { const s = document.querySelector(`[data-clon-sec="${n}"]`); if (!s) return '';
+  let h = 0, k = 0; const r0 = s.getBoundingClientRect();
+  for (const e of s.querySelectorAll('*')) { if (++k > 4000) break; const c = getComputedStyle(e); if (c.display === 'none') continue;
+    const r = e.getBoundingClientRect();
+    h = (h * 31 + Math.round(+c.opacity * 100) + Math.round(r.top - r0.top) * 7 + Math.round(r.left) * 3 + Math.round(r.width)) % 1000000007; }
+  const corriendo = document.getAnimations().filter(a => { try { return a.playState === 'running' &&
+    a.effect.getComputedTiming().iterations !== Infinity && s.contains(a.effect.target); } catch (e) { return false; } }).length;
+  return h + ':' + corriendo; }"""
+
+
+def recorrer_seccion(page, n):
+    """Pasa el scroll por toda la sección (arriba -> abajo -> arriba) para que salten sus animaciones de entrada."""
+    try:
+        page.evaluate(
+            """async (n) => { const s = document.querySelector(`[data-clon-sec="${n}"]`); if (!s) return;
+            const top = s.getBoundingClientRect().top + scrollY, alto = s.getBoundingClientRect().height, paso = innerHeight * 0.6;
+            for (let y = top - innerHeight * 0.2; y < top + alto; y += paso) { scrollTo(0, y); await new Promise(r => setTimeout(r, 180)); }
+            scrollTo(0, top); await new Promise(r => setTimeout(r, 150)); }""",
+            n,
+        )
+    except Exception:
+        pass
+
+
+def esperar_estable(page, n, maximo=12000, quieto=900):
+    """Espera a que la sección n deje de cambiar (fundidos/subidas de entrada acabados). Devuelve ms esperados."""
+    t, ultima, desde = 0, None, 0
+    while t < maximo:
+        try:
+            h = page.evaluate(JS_HUELLA_SECCION, n)
+        except Exception:
+            return t
+        if h == ultima and h.endswith(":0"):
+            if t - desde >= quieto:
+                return t
+        else:
+            ultima, desde = h, t
+        page.wait_for_timeout(150)
+        t += 150
+    return t
+
+
+# 22/11 (Claude, W1): en el Chromium del motor (iPhone emulado) apple.com deja la fila de productos y el menú del pie
+# ARMADOS (opacity 0 + animation-duration 0.9s, animation-name none) y la animación no se lanza nunca (ni con scroll,
+# ni con rueda: comprobado 12 s). Con «reducir movimiento» aparecen al instante. Antes de la foto, lo armado y sin
+# lanzar se enseña en su estado final (lo que ve una persona un segundo después). Se deshace tras la foto.
+JS_REVELAR_ARMADOS = r"""(n) => { const s = document.querySelector(`[data-clon-sec="${n}"]`); window.__clonArmados = [];
+  if (!s) return 0;
+  for (const e of s.querySelectorAll('*')) { const c = getComputedStyle(e);
+    if (+c.opacity >= 0.05 || c.display === 'none' || c.animationName !== 'none' || !(parseFloat(c.animationDuration) > 0)) continue;
+    const r = e.getBoundingClientRect(); if (r.width < 2 || r.height < 2) continue;
+    window.__clonArmados.push([e, e.style.getPropertyValue('opacity'), e.style.getPropertyPriority('opacity')]);
+    e.style.setProperty('opacity', '1', 'important'); }
+  return window.__clonArmados.length; }"""
+JS_DESHACER_ARMADOS = (
+    "() => { for (const [e, v, p] of window.__clonArmados || []) { if (v) e.style.setProperty('opacity', v, p);"
+    " else e.style.removeProperty('opacity'); } window.__clonArmados = []; }"
+)
+
+
+# Plan B (comprobado con apple.com en móvil: los productos de la sec. 3 están a opacity 0 SIN animación armada, esperando
+# una clase que en el Chromium del motor no llega nunca): si en la sección hay CONTENIDO (texto o imagen) escondido con
+# opacidad 0, se emula «reducir movimiento» (prefers-reduced-motion) — las webs serias muestran entonces su estado final
+# sin animar —. Solo se usa si así aparece más contenido; tras la foto se vuelve a la normalidad.
+JS_CONTENIDO_OCULTO = r"""(n) => { const s = document.querySelector(`[data-clon-sec="${n}"]`); if (!s) return 0; let k = 0;
+  for (const e of s.querySelectorAll('*')) { const c = getComputedStyle(e);
+    if (+c.opacity >= 0.05 || c.display === 'none') continue;
+    const r = e.getBoundingClientRect(); if (r.width < 8 || r.height < 8) continue;
+    if ((e.textContent || '').trim() || e.querySelector('img,picture,svg,video') || e.matches('img,picture,svg,video')) k++; }
+  return k; }"""
+
+
+# Plan C (apple.com lo consulta por JavaScript AL CARGAR: activarlo después no basta): el contenido escondido con
+# opacidad 0 que va EN EL FLUJO (no absolute/fixed: las diapositivas ocultas de un carrusel de fundido van apiladas en
+# absolute y NO se tocan) se enseña en su estado final. Se apunta para deshacerlo tras la foto.
+# Con cuidado (22/11, 2ª vuelta: la 1ª versión destapó en PC las fotos de las pestañas ocultas de un acordeón de apple,
+# superpuestas, y las flechitas del menú que solo salen al pasar el ratón): SOLO en móvil (<768 px, donde falla), solo
+# cajas de verdad (área >= 100 px²: la › y el «Nuevo» de apple sec. 3 en móvil) y NUNCA si se solapan con algo que ya se ve (fotos alternativas de acordeón/carrusel).
+JS_FORZAR_OCULTOS = r"""(n) => { const s = document.querySelector(`[data-clon-sec="${n}"]`); window.__clonForzados = window.__clonForzados || [];
+  if (!s || innerWidth >= 768) return 0; let k = 0;
+  const seVe = (x) => { for (let y = x; y && y !== s.parentElement; y = y.parentElement) { const c = getComputedStyle(y);
+    if (+c.opacity < 0.05 || c.visibility === 'hidden' || c.display === 'none') return false; } return true; };
+  const hojas = [...s.querySelectorAll('img,picture,svg,video,canvas,p,h1,h2,h3,h4,h5,h6,span,a,li')]
+    .filter(h => { const r = h.getBoundingClientRect(); return r.width > 4 && r.height > 4 && seVe(h); }).map(h => h.getBoundingClientRect());
+  const solapa = (r) => hojas.some(q => { const w = Math.min(r.right, q.right) - Math.max(r.left, q.left), h = Math.min(r.bottom, q.bottom) - Math.max(r.top, q.top);
+    return w > 0 && h > 0 && w * h > 0.25 * Math.min(r.width * r.height, q.width * q.height); });
+  for (const e of s.querySelectorAll('*')) { const c = getComputedStyle(e);
+    if (+c.opacity >= 0.05 || c.display === 'none' || ['absolute', 'fixed'].includes(c.position)) continue;
+    const r = e.getBoundingClientRect(); if (r.width < 8 || r.height < 8 || r.width * r.height < 100) continue;
+    if (!((e.textContent || '').trim() || e.querySelector('img,picture,svg,video') || e.matches('img,picture,svg,video'))) continue;
+    if (solapa(r)) continue;
+    window.__clonForzados.push([e, e.style.getPropertyValue('opacity'), e.style.getPropertyPriority('opacity')]);
+    e.style.setProperty('opacity', '1', 'important'); k++; }
+  return k; }"""
+JS_DESHACER_FORZADOS = (
+    "() => { for (const [e, v, p] of window.__clonForzados || []) { if (v) e.style.setProperty('opacity', v, p);"
+    " else e.style.removeProperty('opacity'); } window.__clonForzados = []; }"
+)
+
+
+def revelar_con_menos_movimiento(page, n):
+    """Devuelve True si cambió algo que hay que deshacer tras la foto («reducir movimiento» y/o plan C). Solo en móvil:
+    en PC las referencias de apple ya salían bien y aquí no se toca lo que funciona."""
+    try:
+        if (page.viewport_size or {}).get("width", 9999) >= 768:
+            return False
+        antes = page.evaluate(JS_CONTENIDO_OCULTO, n)
+        if not antes:
+            return False
+        page.emulate_media(reduced_motion="reduce")
+        page.wait_for_timeout(400)
+        esperar_estable(page, n, maximo=3000, quieto=500)
+        if page.evaluate(JS_CONTENIDO_OCULTO, n) < antes:
+            return True
+        page.emulate_media(reduced_motion="no-preference")
+        if page.evaluate(JS_FORZAR_OCULTOS, n):
+            page.wait_for_timeout(200)
+            return True
+    except Exception:
+        pass
+    return False
+
+
 def foto_seccion(page, n, destino, alto_esperado=None):
     """Foto de la sección n (captura del elemento). Si sale con otra altura que la medida (la web estaba recolocando
     una rejilla por JavaScript, cargando algo...), se espera y se repite hasta 2 veces: se queda la más fiel."""
@@ -118,8 +300,10 @@ def foto_seccion(page, n, destino, alto_esperado=None):
     if loc.count() == 0:
         return
     el = loc.first
+    recorrer_seccion(page, n)
     el.scroll_into_view_if_needed(timeout=2500)
     esperar_aparecer(page)
+    esperar_estable(page, n)
     # vídeos de la sección que se reproducen una vez (el iPhone Duo que se despliega): la foto, cuando acaben (máx. 8 s);
     # si no, la referencia sale a medias y cada análisis da una foto distinta
     page.evaluate(
@@ -127,12 +311,31 @@ def foto_seccion(page, n, destino, alto_esperado=None):
         for (let i = 0; i < 32 && vs.some(v => !v.ended && !v.paused); i++) await new Promise(r => setTimeout(r, 250)); }""",
         n,
     )
+    # 22/11 (Claude, W1): vídeos EN BUCLE de la sección al segundo 0 y en pausa: el fotograma del clon (capturar,
+    # JS_FOTOGRAMA) se saca igual; si no, original y clon enseñaban momentos distintos del vídeo (wsm sec. 2)
+    try:
+        page.evaluate(
+            """async (n) => { const vs = [...document.querySelectorAll(`[data-clon-sec="${n}"] video`)].filter(v => v.loop);
+            await Promise.all(vs.map(v => new Promise(ok => { const t = setTimeout(ok, 2500);
+              v.addEventListener('seeked', () => { clearTimeout(t); ok(); }, { once: true }); v.pause();
+              if (v.currentTime === 0) { clearTimeout(t); ok(); } else v.currentTime = 0; }))); }""",
+            n,
+        )
+    except Exception:
+        pass
     # lo fijo o pegajoso que NO es de esta sección (la cabecera que el tema fija al bajar) saldría pintado encima en
     # la foto, y en el clon no: se oculta mientras se hace la foto
     page.evaluate(JS_TAPAR_FIJOS, n)
+    menos_mov = revelar_con_menos_movimiento(page, n)
     try:
         _foto_comprobada(page, el, Path(destino), alto_esperado)
     finally:
+        if menos_mov:
+            try:
+                page.emulate_media(reduced_motion="no-preference")
+                page.evaluate(JS_DESHACER_FORZADOS)
+            except Exception:
+                pass
         page.evaluate(
             "() => { for (const [e, v, p] of window.__clonTapados || []) e.style.setProperty('opacity', v, p); window.__clonTapados = []; }"
         )

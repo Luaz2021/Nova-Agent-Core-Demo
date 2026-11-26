@@ -162,7 +162,7 @@ PYEOF
 for skill_path in "$REPO_ROOT/skills"/*; do
     if [ -d "$skill_path" ]; then
         skill_name="$(basename "$skill_path")"
-        for target_skills_dir in "$GEMINI_DIR/skills" "$CONFIG_DIR/skills"; do
+        for target_skills_dir in "$CONFIG_DIR/skills"; do   # v3.3: skills/ = solo los indices
             dest_link="$target_skills_dir/$skill_name"
             [ -L "$dest_link" ] && rm -f "$dest_link"   # enlace viejo -> fuera (no toca su destino)
             mkdir -p "$dest_link"
@@ -175,6 +175,8 @@ done
 cp -R "$REPO_ROOT/scripts/." "$GEMINI_DIR/scripts/"
 cp -R "$REPO_ROOT/nova_core/." "$GEMINI_HOME/nova_core/"
 cp -R "$REPO_ROOT/almacen/." "$GEMINI_DIR/almacen/"
+# v3.3: sub-agentes (asesor de la piramide) -> config/agents
+if [ -d "$REPO_ROOT/agents" ]; then mkdir -p "$CONFIG_DIR/agents"; cp -R "$REPO_ROOT/agents/." "$CONFIG_DIR/agents/"; fi
 mkdir -p "$GEMINI_DIR/herramientas" "$GEMINI_DIR/clonador"
 cp -R "$REPO_ROOT/herramientas/." "$GEMINI_DIR/herramientas/"
 cp -R "$REPO_ROOT/clonador/." "$GEMINI_DIR/clonador/"

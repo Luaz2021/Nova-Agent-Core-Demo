@@ -4,16 +4,27 @@
 // En el chat aparece "[adjunto local: <archivo>]" y el hook de turno le da a Nova el texto ya leido -> 0 tokens de nube.
 // - Manteniendo SHIFT al pegar/soltar/elegir, pasa como siempre (por si Gemini tiene que ver el original).
 // - Si Python no da senales de vida (latido de menos de 10 s), la aduana NO intercepta: nunca se pierde un archivo.
+// - 25/11 (v3, Claude): SOLO actua en el cuadro del chat (contenteditable). Los campos normales de Antigravity (<input>,
+//   <textarea>: codigos OAuth de plugins/MCP, claves que pide un conector, ajustes) reciben lo pegado TAL CUAL
+//   (antes el codigo OAuth de Mobbin salio como "[adjunto local: ...]"). Una v3+ se puede sustituir sin reabrir
+//   Antigravity (quitar()); las v1/v2 no guardaban sus escuchas: con una de ellas hay que reabrir Antigravity.
 (() => {
-  // v1 ya inyectada (adjuntos): se le suma v2 (claves) sin duplicar los adjuntos, que v1 sigue atendiendo antes
-  if (window.__novaAduana && window.__novaAduana.version >= 2) return 'ya';
-  const soloClaves = !!window.__novaAduana;
+  const VERSION = 3;
+  const previa = window.__novaAduana;
+  if (previa && previa.version >= VERSION) return 'ya';
+  if (previa && typeof previa.quitar !== 'function') return 'vieja: reabre Antigravity';
+  if (previa) previa.quitar();
+  const escuchas = [];
+  const escuchar = (tipo, fn) => { addEventListener(tipo, fn, true); escuchas.push([tipo, fn]); };
+  // true = campo normal de Antigravity (no es el chat): la aduana no toca nada
+  const campoNormal = el => !!el && !!el.tagName && !(el.closest && el.closest('[contenteditable="true"]')) &&
+    (el.tagName === 'INPUT' ? el.type !== 'file' : el.tagName === 'TEXTAREA');
   const TIPOS = /\.(pdf|png|jpe?g|webp|gif|bmp|docx|xlsx|xlsm|pptx|txt|md|csv|html?)$/i;
   const MAX_BYTES = 30 * 1024 * 1024;
   let shift = false;
-  addEventListener('keydown', e => { if (e.key === 'Shift') shift = true; }, true);
-  addEventListener('keyup', e => { if (e.key === 'Shift') shift = false; }, true);
-  addEventListener('blur', () => { shift = false; });
+  escuchar('keydown', e => { if (e.key === 'Shift') shift = true; });
+  escuchar('keyup', e => { if (e.key === 'Shift') shift = false; });
+  escuchar('blur', () => { shift = false; });
 
   const vivo = () => typeof window.novaAduana === 'function' && Date.now() - (window.__novaAduanaLatido || 0) < 10000;
   const apto = f => (TIPOS.test(f.name || '') || /^image\//.test(f.type || '')) && f.size <= MAX_BYTES;
@@ -32,6 +43,7 @@
   // Solo intercepta si TODOS los archivos son aptos (si hay uno raro, pasa todo como siempre: nada se pierde)
   function interceptar(e, lista, via) {
     const files = [...(lista || [])];
+    if (via !== 'boton' && campoNormal(e.target)) return false;
     if (!files.length || shift || !vivo() || !files.every(apto)) return false;
     e.preventDefault(); e.stopImmediatePropagation(); e.stopPropagation();
     enviar(files, via);
@@ -86,7 +98,7 @@
   }
 
   function guardarClaves(e) {
-    if (shift) return false;
+    if (shift || campoNormal(e.target)) return false;
     const texto = e.clipboardData && e.clipboardData.getData('text/plain');
     if (!texto) return false;
     const halladas = claves(texto);
@@ -111,27 +123,26 @@
   }
 
   // Red de seguridad: una clave escrita a mano (o pegada con Shift) no sale al pulsar Enter
-  addEventListener('keydown', e => {
-    if (e.key !== 'Enter' || e.shiftKey || e.isComposing) return;
+  escuchar('keydown', e => {
+    if (e.key !== 'Enter' || e.shiftKey || e.isComposing || campoNormal(document.activeElement)) return;
     const texto = textoEditor();
     if (texto && (texto.match(RE_CLAVE) || []).length) {
       e.preventDefault(); e.stopImmediatePropagation(); e.stopPropagation();
       aviso('Hay una clave de API en el mensaje: no lo envío. Bórrala y pégala con Ctrl+V: la guardo en el cofre.');
     }
-  }, true);
+  });
 
-  addEventListener('paste', e => {
-    if (!soloClaves && interceptar(e, e.clipboardData && e.clipboardData.files, 'pegar')) return;
+  escuchar('paste', e => {
+    if (interceptar(e, e.clipboardData && e.clipboardData.files, 'pegar')) return;
     guardarClaves(e);
-  }, true);
-  if (!soloClaves) {
-    addEventListener('drop', e => interceptar(e, e.dataTransfer && e.dataTransfer.files, 'arrastrar'), true);
-    addEventListener('change', e => {
-      const t = e.target;
-      if (t && t.tagName === 'INPUT' && t.type === 'file' && interceptar(e, t.files, 'boton')) t.value = '';
-    }, true);
-  }
+  });
+  escuchar('drop', e => interceptar(e, e.dataTransfer && e.dataTransfer.files, 'arrastrar'));
+  escuchar('change', e => {
+    const t = e.target;
+    if (t && t.tagName === 'INPUT' && t.type === 'file' && interceptar(e, t.files, 'boton')) t.value = '';
+  });
 
-  window.__novaAduana = Object.assign(window.__novaAduana || {}, { version: 2, ultimo: null });
+  window.__novaAduana = { version: VERSION, ultimo: null,
+    quitar() { for (const [tipo, fn] of escuchas) removeEventListener(tipo, fn, true); escuchas.length = 0; } };
   return 'creada';
 })();

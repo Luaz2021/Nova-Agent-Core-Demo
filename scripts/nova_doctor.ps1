@@ -1,6 +1,6 @@
 <#
 ==============================================================================
- NOVA DOCTOR v1 (11/11/2026, Claude, a pedido de Luaz: "blindar" a Nova en los dos equipos)
+ NOVA DOCTOR v1 (11/11/2026; blinda la instalacion de Nova en Windows)
 ------------------------------------------------------------------------------
  Revisa y REPARA solo lo que Nova necesita en ESTE equipo, y deja UNA linea de resumen:
    1. Python PROPIO de Nova (.gemini\nova_env, con uv y Python 3.14 gestionado por uv) con las librerias de
@@ -251,6 +251,44 @@ else {
         Remove-Item -LiteralPath $z -Force -ErrorAction SilentlyContinue
         Nota "vosk" "ARREGLADO" "modelo Vosk descargado e instalado en local"
     } catch { Nota "vosk" "FALLA" "no se pudo descargar vosk-model-small-es-0.42" }
+}
+
+# ------------------------------------------------------------------------------
+# 5f. ACCESOS DE ANTIGRAVITY CON PUERTO DE DEPURACION (v3.3; Antigravity 2.33+)
+# Desde Antigravity 2.33.0 la app ya NO abre el puerto CDP por su cuenta (no hay %APPDATA%\Antigravity\DevToolsActivePort)
+# y la aduana / mascota no se enganchan: los adjuntos se van a la nube. Arreglo: los accesos directos de Antigravity
+# (no los de "Antigravity IDE") llevan --remote-debugging-port=0. Una actualizacion puede rehacer los accesos: se revisa siempre.
+# ------------------------------------------------------------------------------
+$accesosArreglados = @(); $accesosVistos = 0
+try {
+    $wsh = New-Object -ComObject WScript.Shell
+    $sitiosLnk = @([Environment]::GetFolderPath("Desktop"), [Environment]::GetFolderPath("Programs"),
+        (Join-Path $env:APPDATA "Microsoft\Internet Explorer\Quick Launch\User Pinned\TaskBar"),
+        [Environment]::GetFolderPath("CommonDesktopDirectory"), [Environment]::GetFolderPath("CommonPrograms"))
+    foreach ($sitio in ($sitiosLnk | Where-Object { $_ -and (Test-Path $_) } | Select-Object -Unique)) {
+        foreach ($f in @(Get-ChildItem -LiteralPath $sitio -Filter "*.lnk" -Recurse -Depth 1 -ErrorAction SilentlyContinue)) {
+            $lnk = $wsh.CreateShortcut($f.FullName)
+            if ($lnk.TargetPath -notmatch '\\antigravity\\Antigravity\.exe$') { continue }
+            $accesosVistos++
+            if ($lnk.Arguments -match 'remote-debugging-port') { continue }
+            try {
+                $copiaLnk = Join-Path $G "_backups\doctor\accesos"
+                New-Item -ItemType Directory -Force $copiaLnk | Out-Null
+                Copy-Item -LiteralPath $f.FullName (Join-Path $copiaLnk $f.Name) -Force
+                $lnk.Arguments = ($lnk.Arguments + " --remote-debugging-port=0").Trim()
+                $lnk.Save()
+                $accesosArreglados += $f.Name
+            } catch { Log "accesos: no pude cambiar $($f.FullName): $($_.Exception.Message)" }
+        }
+    }
+} catch { Log "accesos: $($_.Exception.Message)" }
+if ($accesosArreglados.Count) {
+    Nota "accesos" "ARREGLADO" "$($accesosArreglados.Count) acceso(s) de Antigravity con puerto de depuracion (aduana): $($accesosArreglados -join ', '). Cierra y abre Antigravity desde el acceso"
+} elseif ($accesosVistos) { Nota "accesos" "OK" "los $accesosVistos accesos de Antigravity abren con puerto de depuracion (aduana)" }
+else { Nota "accesos" "AVISO" "no encontre accesos directos de Antigravity: abrelo con --remote-debugging-port=0 o la aduana no entra" }
+$agVentana = @(Get-Process -Name "Antigravity" -ErrorAction SilentlyContinue | Where-Object { $_.MainWindowHandle -ne [IntPtr]::Zero }).Count -gt 0
+if ($agVentana -and -not (Test-Path (Join-Path $env:APPDATA "Antigravity\DevToolsActivePort"))) {
+    Nota "puerto_cdp" "FALLA" "Antigravity esta abierto SIN puerto de depuracion: la aduana no entra y los adjuntos irian a la nube. Cierralo y abrelo desde el acceso directo"
 }
 
 # ------------------------------------------------------------------------------

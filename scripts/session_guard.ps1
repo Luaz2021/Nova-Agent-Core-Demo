@@ -153,6 +153,11 @@ while ($true) {
     if ($vozPyw -and (Test-Path $mcpScript)) {
         Start-Process -FilePath $vozPyw -ArgumentList "`"$mcpScript`" apagar" -WindowStyle Hidden -Wait
     }
+    # v3.3: revisor semanal (recoge la telemetria y escribe el informe si el ultimo tiene 7+ dias)
+    $revisorScript = "$scriptDir\nova_revisor.py"
+    if ($vozPyw -and (Test-Path $revisorScript)) {
+        Start-Process -FilePath $vozPyw -ArgumentList "`"$revisorScript`" --recolectar --si-toca" -WindowStyle Hidden -Wait
+    }
 
     # 5. "Sube los cambios" al cerrar (solo si Nova Sync esta configurado)
     if (Test-Path $syncCfg) { Invoke-NovaSync "subir" }

@@ -5,7 +5,7 @@
 [![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20macOS%20%7C%20Linux-success.svg)](#-instalación-en-1-clic)
 [![Native Runtime](https://img.shields.io/badge/Native%20Runtime-Google%20Antigravity%202.0-orange.svg)](https://antigravity.google)
 [![Ecosystem](https://img.shields.io/badge/Ideology-100%25%20Google%20Ecosystem-4285F4.svg)](#-la-ideología-100-ecosistema-google)
-[![Skills](https://img.shields.io/badge/Skills-145%20Optimizadas%20Gemini-purple.svg)](#-catálogo-detallado-de-skills-por-especialidad)
+[![Skills](https://img.shields.io/badge/Skills-171%20Optimizadas%20Gemini-purple.svg)](#-catálogo-detallado-de-skills-por-especialidad)
 [![Integrity Shield](https://img.shields.io/badge/Integrity-SHA--256%20Signed%20Manifest-brightgreen.svg)](#-capa-de-integridad-criptográfica-y-anti-plagio)
 [![1-Shot Protocol](https://img.shields.io/badge/Protocol-1--Shot%20Consolidado-red.svg)](#️-arquitectura-del-sistema-la-pirámide-de-escalado-de-5-capas)
 
@@ -24,7 +24,7 @@ Diseñado, entrenado y probado a fuego durante más de un mes de pruebas de estr
 Mientras la inmensa mayoría de la comunidad open source compite por hacer wrappers y extensiones para Claude Code o Cursor, **Nova Agent fue concebido desde el primer día para exprimir al máximo el poder del ecosistema de Google**:
 
 1. **Alineación con Google DeepMind:** Diseñado para correr de forma nativa en **Google Antigravity 2.0**, aprovechando su runtime por eventos, su sandbox seguro de herramientas y el CLI (`agy`).
-2. **Explotación de la Ventana de Contexto de Gemini:** Las 145 skills están optimizadas para la capacidad de absorción masiva de **Google Gemini** (1M a 2M tokens), permitiendo analizar repositorios completos de golpe sin alucinaciones.
+2. **Explotación de la Ventana de Contexto de Gemini:** Las 171 skills están optimizadas para la capacidad de absorción masiva de **Google Gemini** (1M a 2M tokens), permitiendo analizar repositorios completos de golpe sin alucinaciones.
 3. **Multimodalidad Nativa:** Inspección de capturas visuales de UI, análisis de vídeo técnico y procesamiento multimodal directo con Google Cloud.
 4. **Costo Óptimo 1-Shot:** Pensado para operar el 90% del tiempo sobre **Gemini 3.8 Flash** a máxima velocidad y mínimo coste, escalando a **Argon** solo cuando se requiere cirugía sistémica.
 
@@ -91,22 +91,43 @@ flowchart TD
 ## 📑 Índice de Contenidos
 1. [La Ideología: 100% Ecosistema Google](#-la-ideología-100-ecosistema-google)
 2. [Google Antigravity 2.0 vs. Antigravity IDE](#-distinción-fundamental-google-antigravity-20-vs-antigravity-ide)
-3. [Novedades v3.2: Nova Sync, Nova Doctor y reparación automática](#-novedades-v32-nova-sync-nova-doctor-y-reparación-automática)
-4. [Novedades de Ingeniería v3.1](#-novedades-de-ingeniería-v31)
-5. [Novedades de Ingeniería v2.3](#-novedades-de-ingeniería-v23)
-6. [Instalación en 1 Clic (Windows, macOS y Linux)](#-instalación-en-1-clic)
-7. [¿Ya tienes Nova? Actualiza a v3.2 sin perder nada](#-ya-tienes-nova-actualiza-a-v32-sin-perder-nada)
-8. [Nova Sync: tu Nova en varios equipos](#-nova-sync-tu-nova-en-varios-equipos)
-9. [¿Qué funciona en cada sistema?](#-qué-funciona-en-cada-sistema)
-10. [Si algo falla: Nova Doctor](#-si-algo-falla-nova-doctor)
-11. [Pack de voz: Ayla y Marina](#-pack-de-voz-ayla-y-marina)
-12. [Línea directa con el creador](#-línea-directa-con-el-creador)
-13. [Router Multi-Modelo y Herramientas a 0 Tokens](#-router-multi-modelo-y-herramientas-a-0-tokens)
-14. [Catálogo Detallado de Skills por Especialidad](#-catálogo-detallado-de-skills-por-especialidad)
-15. [Atribuciones y Agradecimientos Open Source](#-atribuciones-y-agradecimientos-open-source-cero-cajas-negras)
-16. [Capa de Integridad Criptográfica y Anti-Plagio](#-capa-de-integridad-criptográfica-y-anti-plagio)
-17. [Llamada a Colaboradores: Proyecto Nova GUI](#-llamada-a-colaboradores-proyecto-nova-gui-open-source)
-18. [Créditos, Licencia y Autoría](#-créditos--autoría)
+3. [Novedades v3.3](#-novedades-v33-nova-director-carriles-frenos-nuevos-y-todo-para-windows-macos-y-linux)
+4. [Novedades v3.2: Nova Sync, Nova Doctor y reparación automática](#-novedades-v32-nova-sync-nova-doctor-y-reparación-automática)
+5. [Novedades de Ingeniería v3.1](#-novedades-de-ingeniería-v31)
+6. [Novedades de Ingeniería v2.3](#-novedades-de-ingeniería-v23)
+7. [Instalación en 1 Clic (Windows, macOS y Linux)](#-instalación-en-1-clic)
+8. [¿Ya tienes Nova? Actualiza a v3.3 sin perder nada](#-ya-tienes-nova-actualiza-a-v33-sin-perder-nada)
+9. [Nova Sync: tu Nova en varios equipos](#-nova-sync-tu-nova-en-varios-equipos)
+10. [¿Qué funciona en cada sistema?](#-qué-funciona-en-cada-sistema)
+11. [Si algo falla: Nova Doctor](#-si-algo-falla-nova-doctor)
+12. [Pack de voz: Ayla y Marina](#-pack-de-voz-ayla-y-marina)
+13. [Línea directa con el creador](#-línea-directa-con-el-creador)
+14. [Router Multi-Modelo y Herramientas a 0 Tokens](#-router-multi-modelo-y-herramientas-a-0-tokens)
+15. [Catálogo Detallado de Skills por Especialidad](#-catálogo-detallado-de-skills-por-especialidad)
+16. [Atribuciones y Agradecimientos Open Source](#-atribuciones-y-agradecimientos-open-source-cero-cajas-negras)
+17. [Capa de Integridad Criptográfica y Anti-Plagio](#-capa-de-integridad-criptográfica-y-anti-plagio)
+18. [Llamada a Colaboradores: Proyecto Nova GUI](#-llamada-a-colaboradores-proyecto-nova-gui-open-source)
+19. [Créditos, Licencia y Autoría](#-créditos--autoría)
+
+---
+
+## 🔥 Novedades v3.3: Nova Director, carriles, frenos nuevos y todo para Windows, macOS y Linux
+
+La v3.3 trae lo que Nova aprendió en noviembre y **todas las herramientas nuevas funcionan en los 3 sistemas**.
+
+| Mejora | Qué problema resuelve | Cómo se usa |
+| :--- | :--- | :--- |
+| **1. Nova Director (`herramientas/director/`)** | Proyectos GRANDES (app completa, full stack) sin quemar cupo: los modelos caros solo hacen los planos y la inspección; Hydrogen construye por fases con caché y la máquina comprueba cada fase con sus criterios. Pausa y te pregunta cuando falta algo. | *"/director hazme una app de..."*. Necesita la CLI `agy` de Antigravity. |
+| **2. Carriles por tema** | Nova lee el kit corto de cada tema (backend, web, consola, redacción, vídeo, Android, Java, seguridad...) antes de escribir, con sus "errores que ya cometiste". | Automático (o `/backend`, `/web`, `/video`...). |
+| **3. Frenos nuevos (hooks)** | **Verificación** (no te da la razón sin comprobarlo: modo profe), **autonomía** (sin excusas ni "¿sigo?" en un encargo), **reescrituras** (usa `edit_file` en vez de reescribir archivos enteros), **capas** Java MVC, **modo prácticas** (en `practica_*` te explica y escribes tú) y **verificar antes de "listo"**. | Automático. |
+| **4. Modos CHARLA / ENCARGO / TOTAL y permiso explícito** | En un encargo Nova trabaja sola en su zona; con *"te doy permiso"* puede tocar lo protegido (con copia). La zona blindada (hooks, reglas, Doctor) nunca. | Hablando: *"hazlo tú"*, *"te doy permiso"*. |
+| **5. Pirámide de modelos y asesor** | Si algo no sale tras 2 intentos: asesor (sub-agente) → consulta de ventana Carbon → Neon → Opus. | Automático (`almacen/skills/nova-piramide`). |
+| **6. Radiografía de proyectos** | Entender un proyecto grande o legacy sin leerlo entero: piezas, dependencias, ciclos, código muerto, impacto de un cambio. | *"desglosa este proyecto"*. Programa: `herramientas/codebase_memory/instalar.py` (elige tu sistema). |
+| **7. Estudio web, revisión visual y API X-Ray** | Webs con criterio de directora de arte y revisadas en PC y móvil antes de decir "listo"; radiografía de cualquier API JSON (tablas, diagrama ER, SQL). | `estudio.py`, `revisar.py`, `api_xray`. |
+| **8. Arnés de seguridad** | Escáneres gratis (Semgrep, gitleaks, OSV) + método de auditoría de Cloudflare antes de dar nada por seguro. | *"audita la seguridad de..."*. |
+| **9. Destilador de vídeo y Penpot** | Ver y resumir un vídeo o una clase EN LOCAL (Whisper + FFmpeg + InternVL + Qwen); diseñar en Penpot desde Nova. | `video/destilador_video/instalar.py` · *"abre Penpot"*. |
+| **10. Menos tokens en cada mensaje** | `config/skills` lleva solo los **9 índices** (antes se copiaban las ~145 skills y Antigravity las metía en cada mensaje). El resto vive en el almacén. | El Doctor lo ordena solo al actualizar (con copia). |
+| **11. 25 skills nuevas** | Android (Views/XML y Compose + 8 oficiales de Google), Java (Swing/WindowBuilder, JDBC, 4 de Spring), estructura de proyectos, auditoría de Cloudflare, pirámide, director web. | Las abre Nova desde su índice. |
 
 ---
 
@@ -192,13 +213,17 @@ Con **Nova Sync** tu memoria, proyectos, documentos, skills y reglas viajan entr
 
 | Función | Windows | macOS (Intel y Apple Silicon) | Linux |
 | :--- | :---: | :---: | :---: |
-| Reglas, 145+ skills, memoria y reglas automáticas (hooks) | ✅ | ✅ | ✅ |
+| Reglas, 170+ skills, memoria y reglas automáticas (hooks) | ✅ | ✅ | ✅ |
 | Documentos (`redactar.py`), webs, IA local (Ollama), clonador, radar | ✅ | ✅ | ✅ |
 | Corrector ortográfico de Word / PDF con Word | ✅ | PDF con LibreOffice | PDF con LibreOffice |
 | Extensión de navegador (Brave, Chrome, Edge, Opera, Vivaldi) | ✅ | ✅ | ✅ |
 | Nova Sync | ✅ automático | ✅ con las frases | Con rclone |
 | Nova Doctor y parches que reparan | ✅ | ✅ | ✅ |
 | Pack de voz (Ayla y Marina, local) | ✅ con GPU NVIDIA | ✅ chip Apple (experimental) · Intel no | ✅ con GPU NVIDIA |
+| Nova Director (CLI `agy`), carriles, frenos y modos | ✅ | ✅ | ✅ |
+| Radiografía de proyectos, estudio web, revisión visual, API X-Ray, arnés de seguridad | ✅ | ✅ | ✅ |
+| Destilador de vídeo (Whisper local) | ✅ (GPU NVIDIA opcional) | ✅ CPU | ✅ (GPU NVIDIA opcional) |
+| Penpot (MCP, necesita Node.js) | ✅ | ✅ | ✅ |
 | Voz manos libres, aduana de adjuntos y mascota | ✅ | — | — |
 | Servicios de fondo automáticos (guardián de sesión) | ✅ | Próximamente | Próximamente |
 
@@ -341,7 +366,7 @@ El instalador es interactivo: te pregunta tu nombre y tu perfil, analiza tu equi
 
 ---
 
-## 🔄 ¿Ya tienes Nova? Actualiza a v3.2 sin perder nada
+## 🔄 ¿Ya tienes Nova? Actualiza a v3.3 sin perder nada
 
 No hace falta reinstalar. En el chat de Antigravity escribe:
 
@@ -350,6 +375,7 @@ No hace falta reinstalar. En el chat de Antigravity escribe:
 - Si vienes de la v3.1 o anterior, la **primera pasada** actualiza el propio actualizador; Nova repite **una vez** sola para traer el resto.
 - Antes de cambiar nada guarda una copia en `~/.gemini/antigravity/backups/`.
 - Después del parche, el **Nova Doctor** revisa y repara tu instalación (en Windows recupera `herramientas` y `clonador`, convierte las skills enlazadas en copias reales y vuelve a registrar las reglas automáticas).
+- **v3.3:** el Doctor deja en `config/skills` solo los 9 índices y aparta las skills repetidas a `backups/` (siguen en el almacén; tus skills propias no se tocan). Menos tokens en cada mensaje.
 - **Nunca toca** `memory/` (tareas, servilleta, lecciones), tu `perfil_usuario.json`, tus claves ni tu configuración del IDE.
 - Cuando termine, **cierra y abre Antigravity** para activar las reglas automáticas.
 - Si algo sigue sin ir: *"Nova, revísate"*.

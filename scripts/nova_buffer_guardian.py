@@ -21,8 +21,21 @@ import socket
 import subprocess
 import sys
 import re
+import threading
 import time
 from datetime import datetime
+
+
+def hora_local(iso: str) -> str:
+    """25/11 (Claude, el usuario: 'por que una hora menos si los dos equipos son de Espana'): Antigravity guarda created_at
+    en UTC ('...Z'); antes se cortaba tal cual y los chats salian 1 h antes (2 h en verano). Ahora hora de este equipo."""
+    if not iso:
+        return ""
+    try:
+        limpio = re.sub(r"\.\d+", "", iso.strip()).replace("Z", "+00:00")  # sin fracciones (nanosegundos)
+        return datetime.fromisoformat(limpio).astimezone().strftime("%Y-%m-%d %H:%M:%S")
+    except ValueError:
+        return iso[:19].replace("T", " ")
 
 # ---------- Claves fuera de los chat logs (se suben a Drive) ----------
 # Si el usuario pega una clave en el chat, el log y el puente la guardan TACHADA: la clave real solo vive en el cofre
@@ -74,12 +87,16 @@ STATE_FILE = os.path.expanduser(
     os.path.join("~", ".gemini", "antigravity", "buffer_guardian_state.json")
 )
 
-TOKEN_THRESHOLD = 100000  # 100k tokens: Punto dulce antes de consumo alto de bateria
-TOKEN_STEP = 25000  # Re-alertar cada 25k adicionales (125k, 150k, 175k, etc.)
+# 23/11 (Claude, el usuario: "me salta a cada rato y me estresa"): antes 80k y cada 10k SIN FIN (una conversacion de 202k = 12
+# avisos). Los modelos nuevos compactan solos y pasan de 200k. Ahora MAXIMO 3 avisos por conversacion: 200k, 350k, 500k.
+AVISOS_TOKENS = (200000, 350000, 500000)
+TOKEN_THRESHOLD = AVISOS_TOKENS[0]
 RETENTION_DAYS = 90  # 3 meses de retencion para logs crudos
 
 LAST_MTIME_MAP = {}
 CACHED_RESULTS = {}
+ES_ORQUESTADOR = {}  # 20/11 (Claude): conv_id -> True si la conversacion usa un Orchestrator (Neon/Argon)
+VENTANA_ACTIVA_S = 600  # 20/11: se vigilan TODAS las conversaciones tocadas en los ultimos 10 min, no solo la ultima
 
 os.makedirs(CHAT_LOGS_DIR, exist_ok=True)
 
@@ -145,7 +162,7 @@ def parse_and_sync_transcript(conv_id, transcript_path):
                     continue
 
                 step_type = obj.get("type", "")
-                created = obj.get("created_at", "")[:19].replace("T", " ")
+                created = hora_local(obj.get("created_at", ""))
                 if not first_created and created:
                     first_created = created
 
@@ -182,6 +199,8 @@ def parse_and_sync_transcript(conv_id, transcript_path):
                         dialogues.append(f"[{created}] ALEXANDER: {content}")
 
                 elif step_type == "PLANNER_RESPONSE":
+                    if "orchestrator" in str(obj.get("model", "")):
+                        ES_ORQUESTADOR[conv_id] = True
                     inp = obj.get("input_tokens", 0) or 0
                     cache = obj.get("cache_read_tokens", 0) or 0
                     if (inp + cache) > 0:
@@ -207,6 +226,13 @@ def parse_and_sync_transcript(conv_id, transcript_path):
     log_file = os.path.join(
         CHAT_LOGS_DIR, f"chat_{date_str}_inicio-{time_str}_conv-{conv_id[:8]}.txt"
     )
+    # 25/11: una conversacion empezada antes del arreglo de la hora tiene su archivo con el nombre en UTC: se renombra
+    # (si no, quedarian dos archivos de la misma ventana).
+    if not os.path.exists(log_file):
+        viejos = glob.glob(os.path.join(CHAT_LOGS_DIR, f"chat_*_conv-{conv_id[:8]}.txt"))
+        if len(viejos) == 1:
+            with contextlib.suppress(OSError):
+                os.replace(viejos[0], log_file)
 
     try:
         with open(log_file, "w", encoding="utf-8") as f:
@@ -294,8 +320,33 @@ def parse_and_sync_transcript(conv_id, transcript_path):
     return current_tokens, user_msg_count, checkpoints_count
 
 
-def trigger_alert(current_tokens, ciclos_compact=0):
-    """Dispara alerta sonora, aviso de voz nativo y guarda el puente en memoria."""
+def _trato() -> str:
+    """'Ana, ' con el nombre que el usuario dio al instalar (perfil_usuario.json), o vacio."""
+    try:
+        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+        import nova_comun
+
+        nombre = nova_comun.nombre_usuario()
+        return f"{nombre}, " if nombre else ""
+    except Exception:
+        return ""
+
+
+def avisar_con_marina(texto, ciclos=0):
+    """v3.3: aviso hablado en Windows, macOS y Linux (nova_comun: notificacion + voz; con el pack de voz, Marina)."""
+    try:
+        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+        import nova_comun
+
+        nova_comun.notificar("Nova: aviso de tokens", texto)
+        nova_comun.hablar(texto, rol="guardian")
+    except Exception:
+        pass
+
+
+def trigger_alert(current_tokens, ciclos_compact=0, n_aviso=1):
+    """Dispara alerta sonora, aviso de voz nativo y guarda el puente en memoria. v3.3: maximo 3 avisos por
+    conversacion (200k / 350k / 500k)."""
     k_tokens = int(current_tokens / 1000)
     print(
         f"[ALERTA BUFFER] Sesion en {current_tokens:,} tokens ({k_tokens}k) | Ciclos: {ciclos_compact}/5. Puente guardado en memoria."
@@ -307,31 +358,44 @@ def trigger_alert(current_tokens, ciclos_compact=0):
         sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
         import nova_comun
 
-        nombre = nova_comun.nombre_usuario()
-        trato = f"{nombre}, " if nombre else ""
-        if ciclos_compact < 5:
-            voice_msg = (
-                f"{trato}la sesion supero los {k_tokens} mil tokens. "
-                f"Llevas {ciclos_compact} de 5 compactaciones. Escribe compact para resetear el bufer a 17 mil tokens."
-            )
-        else:
-            voice_msg = (
-                f"{trato}alcanzaste 5 compactaciones en esta sesion. "
-                f"El puente esta guardado en memoria para saltar a una ventana nueva limpia."
-            )
         nova_comun.pitido()
-        nova_comun.notificar("Nova: aviso de tokens", voice_msg)
-        nova_comun.hablar(voice_msg, rol="guardian")  # con el pack de voz: Marina
     except Exception:
         pass
+
+    # 2. Aviso por voz (3 sistemas; con el pack de voz lo dice Marina). Maximo 3 avisos por conversacion.
+    consejo = {1: "Si vas a seguir mucho, escribe compact.",
+               2: "Cada mensaje ya gasta mucho cupo, compact o ventana nueva.",
+               3: "Ultimo aviso, mejor abre una ventana nueva, el puente esta guardado."}.get(n_aviso, "")
+    voice_msg = f"{_trato()}la conversacion va por {k_tokens} mil tokens. Aviso {n_aviso} de 3. {consejo}"
+    threading.Thread(target=avisar_con_marina, args=(voice_msg, 5 if n_aviso >= 3 else 0), daemon=True).start()
+
+
+def transcripts_activos():
+    """20/11: (conv_id, ruta) de TODAS las conversaciones tocadas en los ultimos VENTANA_ACTIVA_S segundos,
+    de la mas vieja a la mas nueva. Antes solo se miraba la ultima modificada: con dos ventanas abiertas el guardian
+    saltaba de una a otra y mezclaba sus avisos. La mas nueva va al final para que el puente quede con ella."""
+    pattern = os.path.join(BRAIN_DIR, "*", ".system_generated", "logs", "transcript.jsonl")
+    ahora = time.time()
+    rutas = [p for p in glob.glob(pattern) if ahora - os.path.getmtime(p) <= VENTANA_ACTIVA_S]
+    if not rutas:  # nada reciente: como antes, la ultima (para que --silent siga copiando el chat)
+        conv_id, ultimo = get_latest_transcript()
+        return [(conv_id, ultimo)] if ultimo else []
+    return [(p.split(os.sep)[-4], p) for p in sorted(rutas, key=os.path.getmtime)]
 
 
 def check_once(silent=False):
     purge_old_logs()
-    conv_id, transcript = get_latest_transcript()
-    if not transcript:
-        return
+    for conv_id, transcript in transcripts_activos():
+        with contextlib.suppress(Exception):
+            revisar_conversacion(conv_id, transcript, silent)
+
+
+def revisar_conversacion(conv_id, transcript, silent=False):
     tokens, msgs, ciclos = parse_and_sync_transcript(conv_id, transcript)
+    if ES_ORQUESTADOR.get(conv_id):
+        # 20/11 (Claude): con Orchestrator (Neon/Argon) no hay avisos de bufer/compact: el contexto crece por diseno
+        # y no se puede frenar. Lo vigila nova_hook_turno.py (vigilante del orquestador: gasto y % de cupo).
+        silent = True
     print(
         f"[Nova Buffer Guardian] Conversacion: {conv_id[:8]} | Carga actual: {tokens:,} tokens | Mensajes: {msgs} | Ciclos compact: {ciclos}/5"
     )
@@ -346,9 +410,11 @@ def check_once(silent=False):
             state = {}
 
     raw_conv_data = state.get(conv_id, 0)
+    avisados = []
     if isinstance(raw_conv_data, dict):
         last_alert_tokens = raw_conv_data.get("tokens", 0)
         last_ciclos = raw_conv_data.get("ciclos", 0)
+        avisados = list(raw_conv_data.get("avisados") or [])
     else:
         last_alert_tokens = int(raw_conv_data or 0)
         last_ciclos = 0
@@ -356,31 +422,35 @@ def check_once(silent=False):
     # Deteccion de compactacion de contexto: si los tokens cayeron mas de 15k o aumento el contador de checkpoints
     if tokens < (last_alert_tokens - 15000) or ciclos > last_ciclos:
         print(f"[COMPACT DETECTADO] Ciclo {ciclos}/5 activo | Buffer reducido a {tokens:,} tokens.")
+        # 23/11: las compactaciones automaticas ya NO hablan (salen en el chat por el hook); solo la 5a, una vez,
+        # para sugerir ventana nueva.
+        if ciclos > last_ciclos and ciclos == 5 and conv_id in state and not silent:
+            msg = (f"{_trato()}Antigravity ya compacto esta conversacion cinco veces. "
+                   "Cuando puedas, abre una ventana nueva, el puente esta guardado.")
+            threading.Thread(target=avisar_con_marina, args=(msg, ciclos), daemon=True).start()
         last_alert_tokens = tokens
         last_ciclos = ciclos
-        state[conv_id] = {"tokens": tokens, "ciclos": ciclos}
+        state[conv_id] = {"tokens": tokens, "ciclos": ciclos, "avisados": avisados}
         try:
             with open(STATE_FILE, "w", encoding="utf-8") as f:
                 json.dump(state, f)
         except Exception:
             pass
 
-    should_alert = False
-    if (
-        not silent
-        and tokens >= TOKEN_THRESHOLD
-        and (last_alert_tokens == 0 or (tokens - last_alert_tokens) >= TOKEN_STEP)
-    ):
-        should_alert = True
-
-    if should_alert:
-        state[conv_id] = {"tokens": tokens, "ciclos": ciclos}
-        try:
-            with open(STATE_FILE, "w", encoding="utf-8") as f:
-                json.dump(state, f)
-        except Exception:
-            pass
-        trigger_alert(tokens, ciclos_compact=ciclos)
+    # Maximo 3 avisos por conversacion: cada umbral (200k/350k/500k) suena UNA vez, aunque luego compacte y vuelva a subir
+    if silent or tokens < TOKEN_THRESHOLD or len(avisados) >= len(AVISOS_TOKENS):
+        return
+    umbral = max(u for u in AVISOS_TOKENS if tokens >= u)
+    if umbral in avisados:
+        return
+    avisados.append(umbral)
+    state[conv_id] = {"tokens": tokens, "ciclos": ciclos, "avisados": avisados}
+    try:
+        with open(STATE_FILE, "w", encoding="utf-8") as f:
+            json.dump(state, f)
+    except Exception:
+        pass
+    trigger_alert(tokens, ciclos_compact=ciclos, n_aviso=len(avisados))
 
 
 
@@ -396,7 +466,7 @@ def sync_all_historical_chats():
 
     for t_path in files:
         conv_id = t_path.split(os.sep)[-4]
-        tokens, msgs = parse_and_sync_transcript(conv_id, t_path)
+        tokens, msgs, _ciclos = parse_and_sync_transcript(conv_id, t_path)  # 20/11: devuelve 3 valores (antes rompia)
         if msgs == 0:
             continue
         total_conv += 1

@@ -18,7 +18,7 @@ from pathlib import Path
 from urllib.parse import urlparse
 
 BASE = Path(__file__).resolve().parent
-SALIDA = Path(__file__).resolve().parent.parent / "workspace"
+SALIDA = Path(__file__).resolve().parent.parent / "workspace"  # 22/11: sale de la carpeta del motor (PC y laptop)
 OLLAMA = "http://127.0.0.1:11434"
 def _modelo_nova(clave, defecto):
     try:

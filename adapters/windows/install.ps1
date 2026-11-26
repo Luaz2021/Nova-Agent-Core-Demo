@@ -194,9 +194,11 @@ $perfilData = @{
 $repoRoot = (Resolve-Path (Join-Path $PSScriptRoot "..\..")).Path
 $repoSkills = Join-Path $repoRoot "skills"
 if (Test-Path $repoSkills) {
-    Write-Host "[INFO] Copiando el catalogo de skills..." -ForegroundColor Cyan
+    # v3.3: skills\ del repo = solo los 9 indices -> config\skills (Antigravity los lee en cada mensaje). El resto de
+    #       skills vive en antigravity\almacen\skills (se copia abajo con el almacen).
+    Write-Host "[INFO] Copiando los indices de skills..." -ForegroundColor Cyan
     Get-ChildItem -Path $repoSkills -Directory | ForEach-Object {
-        foreach ($targetDir in @($novaLocalSkills, $novaConfigSkills)) {
+        foreach ($targetDir in @($novaConfigSkills)) {
             $dest = Join-Path $targetDir $_.Name
             $it = Get-Item -LiteralPath $dest -Force -ErrorAction SilentlyContinue
             if ($it -and ($it.Attributes -band [IO.FileAttributes]::ReparsePoint)) {
@@ -215,6 +217,12 @@ $repoCore = Join-Path $repoRoot "nova_core"
 if (Test-Path $repoCore) { Copy-Item -Path "$repoCore\*" -Destination $novaCore -Recurse -Force }
 $repoAlmacen = Join-Path $repoRoot "almacen"
 if (Test-Path $repoAlmacen) { Copy-Item -Path "$repoAlmacen\*" -Destination $novaAlmacen -Recurse -Force }
+# v3.3: sub-agentes (asesor de la piramide) -> config\agents
+$repoAgents = Join-Path $repoRoot "agents"
+if (Test-Path $repoAgents) {
+    New-Item -ItemType Directory -Path "$geminiDir\config\agents" -Force | Out-Null
+    Copy-Item -Path "$repoAgents\*" -Destination "$geminiDir\config\agents" -Recurse -Force
+}
 foreach ($extra in @("herramientas", "clonador")) {
     $src = Join-Path $repoRoot $extra
     # v3.2: antes la ruta tenia un caracter invisible (BEL) en lugar de "\a" y herramientas/clonador NUNCA se instalaban

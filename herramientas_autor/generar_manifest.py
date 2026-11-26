@@ -26,8 +26,9 @@ EXCLUIR_PARTES = {"__pycache__", ".git", "medios_cache", "node_modules", ".DS_St
 EXCLUIR_NOMBRES = {"perfil_usuario.json", "memoria_disenos.json", "desktop.ini", "Thumbs.db"}  # v3.2: basura de Drive/Windows
 EXCLUIR_EXT = {".pyc"}
 PRESERVAR = {
-    "nova_core/nova_hooks_config.json"
-}  # el usuario puede cambiarlo (modo registro/bloqueo)
+    "nova_core/nova_hooks_config.json",  # el usuario puede cambiarlo (modo registro/bloqueo)
+    "herramientas/datos/estudio_web/casos.json",  # v3.3: Nova le anade las correcciones del usuario
+}
 
 
 def sha_github(p: Path) -> tuple[str, int]:
@@ -94,6 +95,8 @@ def generar(version: str) -> dict:
             comps.append(componente("File", p.name, rel, f"antigravity/{rel}", p))
     for p, rel in archivos(RAIZ / "almacen"):
         comps.append(componente("File", p.name, rel, f"antigravity/{rel}", p))
+    for p, rel in archivos(RAIZ / "agents"):  # v3.3: sub-agentes (asesor) -> config/agents
+        comps.append(componente("File", p.name, rel, f"config/{rel}", p))
     for carpeta in sorted(d for d in (RAIZ / "skills").iterdir() if d.is_dir()):
         skill_md = carpeta / "SKILL.md"
         for p, rel in archivos(carpeta):

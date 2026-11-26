@@ -81,15 +81,25 @@ def detectar_dominio(pedido: str, archivo: str) -> str:
     return "ui-frontend"
 
 
+RE_NOMBRE_SKILL = re.compile(r"`([a-z0-9][\w\-]+)`")
+
+
 def skills_del_indice(dominio: str) -> list[str]:
-    """Las skills que el indice manda abrir en su apartado 1 (el salto obligatorio), sin repetir."""
+    """Las skills OBLIGATORIAS del indice (las que existen en el almacen), sin repetir.
+    26/11 (Claude, auditoria de Carbon): los indices nombran las skills como `nombre`, no como skills/x/SKILL.md, y
+    index-ui-frontend las movio al apartado 5 el 15/11 -> devolvia 0 skills en TODOS los indices. Ahora: 1o las lineas
+    que dicen "obligatori", 2o las rutas skills/x/SKILL.md, 3o los nombres del apartado 1 y 2."""
     indice = INDICES / f"index-{dominio}" / "SKILL.md"
     if not indice.exists():
         return []
     texto = indice.read_text(encoding="utf-8", errors="ignore")
-    m = re.search(r"\n## 1\..*?(?=\n## )", texto, re.S)
-    nombres = RE_SKILL.findall(m.group(0) if m else texto)
-    return list(dict.fromkeys(nombres))
+    existe = lambda n: (ALMACEN / n / "SKILL.md").exists()
+    nombres = [n for l in texto.splitlines() if re.search(r"(?i)obligatori", l) for n in RE_NOMBRE_SKILL.findall(l)]
+    nombres += RE_SKILL.findall(texto)
+    if not [n for n in nombres if existe(n)]:
+        m = re.search(r"\n## 1\..*?(?=\n## 3\.|\Z)", texto, re.S)
+        nombres += RE_NOMBRE_SKILL.findall(m.group(0) if m else "")
+    return [n for n in dict.fromkeys(nombres) if existe(n)]
 
 
 def resumen_skill(nombre: str) -> str:

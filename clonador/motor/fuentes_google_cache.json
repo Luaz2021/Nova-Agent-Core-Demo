@@ -5,5 +5,15 @@
  "Inter Variable": false,
  "Berkeley Mono": false,
  "SF Pro Text": false,
- "SF Pro Display": false
+ "SF Pro Display": false,
+ "Plus Jakarta Sans": true,
+ "Jost": true,
+ "Montserrat": true,
+ "SourceSansProRegular": false,
+ "Flux-Regular": false,
+ "SourceSansProBold": false,
+ "Consolas": false,
+ "Georgia": false,
+ "SourceSansProItalic": false,
+ "Flux-Bold": false
 }

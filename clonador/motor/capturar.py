@@ -42,6 +42,16 @@ PROPS = [
     "text-align", "text-transform", "text-decoration-line", "text-decoration-color", "white-space", "word-break",
     "text-overflow", "overflow-x", "overflow-y", "opacity", "visibility", "transform", "transform-origin",
     "box-shadow", "text-shadow", "filter", "mix-blend-mode",
+    # 22/11 (Claude, W1): «isolation: isolate» crea un contexto de apilamiento. apple.com lo pone en cada tarjeta y la
+    # foto va con z-index:-1 DENTRO de ella; sin copiarlo, la foto se pintaba detrás del fondo blanco (sec. 5 sin fotos).
+    # backdrop-filter: el desenfoque «cristal» de cabeceras y tarjetas (también crea contexto de apilamiento).
+    "isolation", "backdrop-filter", "-webkit-backdrop-filter",
+    # espacio entre palabras: Elementor separa sus iconos sociales (inline-block) con word-spacing:10px en el contenedor
+    "word-spacing",
+    # texto cortado a N líneas con «…» (títulos de proyectos de wsm: 1 línea; sin esto saltaban a 2)
+    "-webkit-line-clamp", "-webkit-box-orient",
+    # iconos con máscara CSS (sin ella: un cuadro del color de fondo)
+    "-webkit-mask-image", "-webkit-mask-size", "-webkit-mask-position", "-webkit-mask-repeat",
     "flex-direction", "flex-wrap", "justify-content", "align-items", "align-content", "align-self",
     "flex-grow", "flex-shrink", "flex-basis", "order", "row-gap", "column-gap",
     "grid-template-columns", "grid-template-rows", "grid-template-areas", "grid-auto-rows", "grid-auto-columns", "justify-self", "grid-column-start", "grid-column-end",
@@ -52,7 +62,7 @@ PROPS = [
 ]
 HEREDADAS = {"color", "font-family", "font-size", "font-weight", "font-style", "line-height", "letter-spacing",
              "text-align", "text-transform", "white-space", "word-break", "visibility", "list-style-type", "cursor",
-             "fill", "stroke"}
+             "fill", "stroke", "word-spacing"}
 
 JS_CAPTURA = r"""
 ([props, heredadas, vista, inicial]) => {
@@ -141,7 +151,13 @@ JS_CAPTURA = r"""
       && ['auto', 'normal', 'stretch'].includes(cs.alignSelf);
     const flexFila = enFlex && psP.flexDirection.startsWith('row') && ['normal', 'flex-start', 'start'].includes(psP.justifyContent) && enFlujo === 1;
     const enBloque = cs.display === 'block' && psP && ['block', 'flow-root'].includes(psP.display);
-    if (padre && ['static', 'relative'].includes(cs.position) && (enBloque || flexCol || flexFila)) {
+    // 22/11 (Claude, W1): si el padre tiene TEXTO suelto, lo que «desplaza» al hijo es ese texto (no un centrado oculto):
+    // el <i class="indicator"> vacío tras «Aviso Legal» recibía margin-left = ancho del texto y el enlace salía al doble
+    const padreConTexto = padre && [...padre.childNodes].some(x => x.nodeType === 3 && x.textContent.trim());
+    // ...ni a un FLOTANTE: lo que lo coloca al lado del anterior es el propio float (python.org: las 4 columnas recibían
+    // margin-left 294/588/882 px y se escalonaban), ni a lo que va detrás de un flotante en la misma línea
+    const trasFlotante = el.previousElementSibling && getComputedStyle(el.previousElementSibling).float !== 'none';
+    if (padre && !padreConTexto && cs.float === 'none' && !trasFlotante && ['static', 'relative'].includes(cs.position) && (enBloque || flexCol || flexFila)) {
       const ps = psP, pr = padre.getBoundingClientRect();
       const ini = pr.left + parseFloat(ps.borderLeftWidth) + parseFloat(ps.paddingLeft);
       const fin = pr.right - parseFloat(ps.borderRightWidth) - parseFloat(ps.paddingRight);
@@ -156,7 +172,20 @@ JS_CAPTURA = r"""
     // ...y tampoco un elemento de una fila flex que no crece solo (flex-grow 0): sin ancho se encoge a su contenido
     // (la barra legal de un pie de WordPress pasa de 1610 a 1066 px y los enlaces se parten)
     const itemFila = enFlex && psP.flexDirection.startsWith('row') && parseFloat(cs.flexGrow) === 0;
-    const encoge = ['BUTTON', 'INPUT', 'SELECT', 'TEXTAREA', 'FIELDSET', 'TABLE'].includes(tag) || itemFila;
+    // 22/11 (Claude, W1): también por DISPLAY, no solo por etiqueta: apple.com monta el menú del pie con un <nav>
+    // display:table; sin width:100% se encogía de 1260 a 800 px y los enlaces saltaban de línea (sec. 9)
+    const encogeDisplay = ['table', 'inline-table', 'inline-block', 'inline-flex', 'inline-grid'].includes(cs.display);
+    let encoge = ['BUTTON', 'INPUT', 'SELECT', 'TEXTAREA', 'FIELDSET', 'TABLE'].includes(tag) || encogeDisplay || itemFila;
+    // 22/11 (Claude, W1): si el PADRE mide lo que su contenido (un enlace flex que envuelve su texto), el hijo lo «llena»
+    // por definición y width:100% crea un círculo (el ancho del padre depende del hijo y al revés): en el clon de
+    // webstudiomarketing.es los enlaces legales del pie salían al DOBLE (82 -> 163 px). Se mide el padre con max-content.
+    if (encoge && ocupaTodo && padre && padre !== document.body) {
+      const pW = padre.style.getPropertyValue('width'), pP = padre.style.getPropertyPriority('width');
+      padre.style.setProperty('width', 'max-content', 'important');
+      const mcP = padre.getBoundingClientRect().width;
+      if (pW) padre.style.setProperty('width', pW, pP); else padre.style.removeProperty('width');
+      if (Math.abs(mcP - padre.getBoundingClientRect().width) <= 1) encoge = false;
+    }
     if (ocupaTodo && !esRepl && !absoluto && encoge) est['width'] = '100%';
     else if (ocupaTodo && !esRepl && !absoluto) delete est['width'];
     else if (!esRepl && !absoluto && !sinHijos && cs.display === 'block' && !cs.width.endsWith('px')) delete est['width'];
@@ -179,15 +208,20 @@ JS_CAPTURA = r"""
       // aunque el Range los cuente: la altura la pone la hoja de la web y hay que guardarla como min-height
       const fuera = [...el.children].filter(h => { const p = getComputedStyle(h).position; return p === 'absolute' || p === 'fixed'; }).length;
       const textoSuelto = [...el.childNodes].some(n => n.nodeType === 3 && n.textContent.trim());
-      const contenido = (el.children.length && fuera === el.children.length && !textoSuelto) ? 0 : (rc.height || 0);
-      // si lo que "sobra" es justo su propio margen (Elementor: el contenedor mide titular + margin-bottom y el margen
-      // vuelve a sumarse fuera) no es una altura fijada: guardarla como min-height lo duplicaría en el clon
-      const margenes = parseFloat(cs.marginTop) + parseFloat(cs.marginBottom);
       // el contenido medido con Range incluye texto que desborda la caja del hijo (63 frente a 60): también se mira
       // la caja que ocupan los hijos en flujo
       const enFlujo = [...el.children].map(h => [h, getComputedStyle(h)]).filter(([h, s]) => s.display !== 'none' && s.position !== 'absolute' && s.position !== 'fixed')
         .map(([h]) => h.getBoundingClientRect());
-      const cajaHijos = enFlujo.length ? Math.max(...enFlujo.map(q => q.bottom)) - Math.min(...enFlujo.map(q => q.top)) : contenido;
+      // 22/11 (Claude, W1): si ALGÚN hijo va fuera del flujo, el Range lo cuenta igual. Elementor mete en cada botón social
+      // un <span> «solo lectores de pantalla» absolute a -150.000 px: el Range medía 150.027 px de contenido, el botón
+      // «no tenía altura propia» y en el clon salía aplastado (30x15 en vez de 30x30). Entonces manda la caja en flujo.
+      const rangoHijos = enFlujo.length ? Math.max(...enFlujo.map(q => q.bottom)) - Math.min(...enFlujo.map(q => q.top)) : 0;
+      const contenido = (el.children.length && fuera === el.children.length && !textoSuelto) ? 0
+        : (fuera > 0 && !textoSuelto) ? rangoHijos : (rc.height || 0);
+      // si lo que "sobra" es justo su propio margen (Elementor: el contenedor mide titular + margin-bottom y el margen
+      // vuelve a sumarse fuera) no es una altura fijada: guardarla como min-height lo duplicaría en el clon
+      const margenes = parseFloat(cs.marginTop) + parseFloat(cs.marginBottom);
+      const cajaHijos = enFlujo.length ? rangoHijos : contenido;
       const esMargen = margenes > 0 && (Math.abs(r.height - pv - contenido - margenes) <= 2 || Math.abs(r.height - pv - cajaHijos - margenes) <= 2);
       if (r.height - pv - contenido > 4 && !esMargen && !['inline'].includes(cs.display)) {
         est['min-height'] = (cs.boxSizing === 'border-box' ? r.height : r.height - pv).toFixed(2) + 'px';
@@ -205,6 +239,21 @@ JS_CAPTURA = r"""
         }
       }
     }
+    // 22/11 (Claude, W1): imagen/picture/svg/vídeo EN LÍNEA que llena su contenedor sin hueco: con la fuente sustituta
+    // (otras medidas de ascendente/descendente) aparece un hueco bajo la línea base y la foto sube (apple sec. 7: 7 px,
+    // 222 -> 215). Alineada arriba se ve igual que en la original y ya no depende de la fuente.
+    if (['IMG', 'PICTURE', 'SVG', 'VIDEO', 'CANVAS'].includes(tag) && ['inline', 'inline-block'].includes(cs.display)
+        && cs.verticalAlign === 'baseline' && padre && !absoluto) {
+      const pc = getComputedStyle(padre), pr = padre.getBoundingClientRect();
+      const interior = pr.height - parseFloat(pc.paddingTop) - parseFloat(pc.paddingBottom) - parseFloat(pc.borderTopWidth) - parseFloat(pc.borderBottomWidth);
+      const otros = [...padre.childNodes].filter(x => x !== el && ((x.nodeType === 3 && x.textContent.trim()) || (x.nodeType === 1 && getComputedStyle(x).display !== 'none'))).length;
+      if (!otros && r.height > 8 && Math.abs(interior - r.height) <= 3) est['vertical-align'] = 'top';
+    }
+    // 22/11 (Claude, W1): Chrome informa como «flow-root» lo que la web escribió como display:-webkit-box + line-clamp;
+    // escrito tal cual en el clon, el corte a N líneas con «…» NO se activa (títulos de wsm a 2 líneas en vez de 1)
+    if (cs.webkitLineClamp && cs.webkitLineClamp !== 'none') {
+      est['display'] = '-webkit-box'; est['-webkit-line-clamp'] = cs.webkitLineClamp; est['-webkit-box-orient'] = 'vertical';
+    }
     if (!est['transform']) delete est['transform-origin'];          // solo importa si hay transformación
     for (const lado of ['top', 'right', 'bottom', 'left'])            // bordes sin estilo: su color/ancho no se ven
       if (cs.getPropertyValue('border-' + lado + '-style') === 'none') { delete est['border-' + lado + '-color']; delete est['border-' + lado + '-width'];
@@ -212,7 +261,8 @@ JS_CAPTURA = r"""
         if (def['border-' + lado + '-style'] === 'none') delete est['border-' + lado + '-style']; else est['border-' + lado + '-style'] = 'none'; }
     if (cs.getPropertyValue('text-decoration-line') === 'none') delete est['text-decoration-color'];
     if (cs.position === 'fixed') est['position'] = 'absolute';
-    if (est['background-image']) est['background-image'] = est['background-image'].replace(/url\("?(?!data:)([^")]+)"?\)/g, (m, u) => 'url("' + new URL(u, document.baseURI).href + '")');
+    for (const q of ['background-image', '-webkit-mask-image'])
+      if (est[q]) est[q] = est[q].replace(/url\("?(?!data:)([^")]+)"?\)/g, (m, u) => 'url("' + new URL(u, document.baseURI).href + '")');
     const d = { e: est, x: Math.round(r.left), y: Math.round(r.top + scrollY), w: Math.round(r.width), h: Math.round(r.height) };
     // en PC se guarda además el valor REAL de cada propiedad: si el móvil cambia algo que aquí no se apuntó (por ser el
     // valor por defecto, el del padre o por limpieza), el clon de PC vuelve a este valor exacto y no a uno adivinado
@@ -222,13 +272,20 @@ JS_CAPTURA = r"""
       // con display:none no se pinta (Apple pone el › en ::before y ::after y oculta uno): no se copia
       if (c && c !== 'none' && c !== 'normal' && p.getPropertyValue('display') !== 'none') {
         const o = { content: c };
-        for (const q of ['display', 'position', 'top', 'right', 'bottom', 'left', 'width', 'height', 'color', 'background-color', 'background-image',
+        // 22/11 (Claude, W1): + clear/float/visibility: el «clearfix» (::after{content:"";display:table;clear:both}) da
+        // altura a las filas de flotantes; sin clear el contenedor medía 0 (python.org)
+        for (const q of ['display', 'position', 'top', 'right', 'bottom', 'left', 'width', 'height', 'clear', 'float', 'color', 'background-color', 'background-image',
           'background-size', 'font-family', 'font-size', 'font-weight', 'line-height', 'margin-right', 'margin-left',
           'padding-left', 'padding-right', 'padding-top', 'padding-bottom', 'vertical-align', 'border-top-left-radius',
-          'border-top-right-radius', 'border-bottom-left-radius', 'border-bottom-right-radius', 'transform', 'opacity', 'z-index'])
+          'border-top-right-radius', 'border-bottom-left-radius', 'border-bottom-right-radius', 'transform', 'opacity', 'z-index',
+          // 22/11 (Claude, W1): iconos dibujados con MÁSCARA (logo de Apple y › del pie de apple.com): sin ella el ::before
+          // es un cuadro del color de fondo
+          '-webkit-mask-image', '-webkit-mask-size', '-webkit-mask-position', '-webkit-mask-repeat',
+          'mask-image', 'mask-size', 'mask-position', 'mask-repeat'])
           { const v = p.getPropertyValue(q); const pos0 = ['top', 'right', 'bottom', 'left'].includes(q);
             if (v && v !== 'auto' && v !== 'none' && v !== 'normal' && (pos0 || v !== '0px') && v !== 'rgba(0, 0, 0, 0)') o[q] = v; }
-        if (o['background-image']) o['background-image'] = o['background-image'].replace(/url\("?(?!data:)([^")]+)"?\)/g, (m, u) => 'url("' + new URL(u, document.baseURI).href + '")');
+        for (const q of ['background-image', '-webkit-mask-image', 'mask-image'])
+          if (o[q]) o[q] = o[q].replace(/url\("?(?!data:)([^")]+)"?\)/g, (m, u) => 'url("' + new URL(u, document.baseURI).href + '")');
         d[ps === '::before' ? 'antes' : 'despues'] = o;
       }
     }
@@ -428,6 +485,36 @@ async (urls) => { const out = {};
 """
 
 
+def incrustar_mascaras(css):
+    """22/11 (Claude, W1): las máscaras CSS (mask-image) se piden con CORS: abiertas desde el disco, la del servidor de la
+    web (apple.com/api-www/...: logo de Apple y › del pie) se bloquea y el icono desaparece. Se bajan aquí (Python, sin
+    CORS) y van dentro del clon como data: (como las fuentes de iconos). Máx. 300 KB por máscara."""
+    import base64
+    import urllib.request
+    urls = set()
+    for decl in re.findall(r"(?:-webkit-)?mask-image\s*:[^;}]*", css or "", re.I):
+        urls.update(re.findall(r'url\("?(https?://[^")]+)"?\)', decl))
+    cache = {}
+    for u in sorted(urls):
+        try:
+            req = urllib.request.Request(u, headers={"User-Agent": "Mozilla/5.0"})
+            with urllib.request.urlopen(req, timeout=12) as r:
+                datos = r.read(300_001)
+                tipo = (r.headers.get("Content-Type") or "").split(";")[0].strip()
+            if len(datos) > 300_000:
+                continue
+            if not tipo or tipo == "application/octet-stream":
+                tipo = "image/svg+xml" if u.split("?")[0].lower().endswith(".svg") else "image/png"
+            cache[u] = f"data:{tipo};base64,{base64.b64encode(datos).decode()}"
+        except Exception:
+            pass
+    for u, d in cache.items():
+        css = css.replace(f'url("{u}")', f'url("{d}")').replace(f"url({u})", f'url("{d}")')
+    if urls:
+        print(f"  máscaras CSS dentro del clon: {len(cache)} de {len(urls)}")
+    return css
+
+
 def incrustar_fuentes(page, caras):
     """Las reglas @font-face dadas, con su woff2 (o woff) dentro como data: (descargado desde la propia página)."""
     elegidas = {}
@@ -437,9 +524,15 @@ def incrustar_fuentes(page, caras):
             elegidas[b] = sorted(urls, key=lambda x: x[1] != "woff2")[0]
     datos = page.evaluate(JS_BAJAR_FUENTES, sorted({u for u, _ in elegidas.values()})) if elegidas else {}
     out = []
+    # 22/11 (Claude, W1): el src se quita ENTERO respetando paréntesis. python.org trae src:url(data:application/
+    # x-font-woff;charset=utf-8;base64,...): cortar en el primer «;» dejaba medio base64 suelto y el navegador
+    # TIRABA todo el CSS de detrás (el clon salía en Times, sin colores). Se quitan todos los src y se pone uno.
+    re_src = re.compile(r"src\s*:(?:[^;(){}]|\([^)]*\))+;?", re.I)
     for b, (u, fmt) in elegidas.items():
         if datos.get(u):
-            out.append(re.sub(r"src\s*:[^;}]+;?", f'src: url("data:font/{fmt};base64,{datos[u]}") format("{fmt}");', b, count=1))
+            nuevo = f'src: url("data:font/{fmt};base64,{datos[u]}") format("{fmt}");'
+            sin_src = re_src.sub("", b)
+            out.append(re.sub(r"\{", "{" + nuevo, sin_src, count=1))
     return "\n".join(out)
 
 
@@ -660,9 +753,13 @@ JS_CAJA = "(k) => { const e = document.querySelector(`[data-k='${k}']`); if (!e)
 # el elemento por otro (apple.com lo hace al acabar el vídeo), se busca por su dirección. null si el navegador no deja
 # leerlo (vídeo de otro dominio sin CORS) o aún no tiene imagen.
 JS_FOTOGRAMA = r"""
-([k, src]) => { let e = document.querySelector(`[data-k="${k}"]`);
+async ([k, src]) => { let e = document.querySelector(`[data-k="${k}"]`);
   if (!e && src) e = [...document.querySelectorAll('video')].find(v => (v.currentSrc || v.src) === src);
   if (!e) return null;
+  // 22/11 (Claude, W1): vídeo en bucle -> el fotograma del segundo 0, el mismo que fotografía extraer.foto_seccion
+  if (e.tagName === 'VIDEO' && e.loop) await new Promise(ok => { const t = setTimeout(ok, 2500);
+    e.addEventListener('seeked', () => { clearTimeout(t); setTimeout(ok, 80); }, { once: true }); e.pause();
+    if (e.currentTime === 0 && e.readyState >= 2) { clearTimeout(t); ok(); } else e.currentTime = 0; });
   const ancho = e.tagName === 'VIDEO' ? e.videoWidth : e.tagName === 'CANVAS' ? e.width : 0;
   const alto = e.tagName === 'VIDEO' ? e.videoHeight : e.tagName === 'CANVAS' ? e.height : 0;
   if (!ancho || !alto) return null;
@@ -914,6 +1011,7 @@ def capturar_web(url, carpeta, fuentes="originales", imagenes="originales", spec
     if fuentes != "originales":
         css, link_google = sustituir_fuentes(css)
     cuerpo = ser["cuerpo"]
+    css = incrustar_mascaras(css)
     if imagenes == "relleno":
         cuerpo = re.sub(r'(<img [^>]*src=")[^"]*(")', r'\1data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22/%3E\2', cuerpo)
         css = re.sub(r'url\("http[^"]*"\)', "none", css)

@@ -15,11 +15,11 @@ import stat
 import sys
 from pathlib import Path
 
-GLOBAL_SCRIPTS_DIR = Path(
-    r"<NOVA_HOME>\antigravity\scripts\security"
-)
+# 17/11 (Claude, multiequipo): antes la ruta de la laptop iba escrita a fuego y en el PC no encontraba nada.
+# Ahora sale del propio archivo (vale en cualquier equipo y usuario).
+GLOBAL_SCRIPTS_DIR = Path(__file__).resolve().parent
 SCANNER_PATH = GLOBAL_SCRIPTS_DIR / "entropy_secret_scanner.py"
-ORQUESTADOR_PATH = Path(r"<NOVA_HOME>\nova_core\orquestador.py")
+ORQUESTADOR_PATH = Path.home() / ".gemini" / "nova_core" / "orquestador.py"
 
 HOOK_SHELL_CONTENT = f"""#!/bin/sh
 # ==============================================================================

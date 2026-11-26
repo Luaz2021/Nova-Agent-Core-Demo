@@ -1,7 +1,7 @@
-"""GUARDIAN DE CLAVES (12/11/2026, Claude): las claves de API que Luaz pega en el chat de Antigravity NO llegan a la nube.
+"""GUARDIAN DE CLAVES (12/11/2026, Claude): las claves de API que el usuario pega en el chat de Antigravity NO llegan a la nube.
 
 La aduana (aduana.js) detecta la clave al pegarla, la quita del mensaje y se la pasa a nova_voz.py, que llama a
-guardar(). Aqui se guarda en el cofre de Drive (vault\\google_cloud.env, linea NOMBRE=valor) y en las variables de
+guardar(). Aqui se guarda en el cofre local (~/.gemini/antigravity/vault\\google_cloud.env, linea NOMBRE=valor) y en las variables de
 Windows del usuario, para que el codigo la use con os.environ.get("NOMBRE"). En el chat solo queda
 "[clave guardada en el cofre: NOMBRE]". El valor no se imprime ni se apunta en ningun log.
 
@@ -43,7 +43,7 @@ PREFIJOS = [
     (r"^xox[abprs]-", "SLACK_TOKEN"),
     (r"^AKIA", "AWS_ACCESS_KEY_ID"),
 ]
-# Si el prefijo no lo dice, lo que Luaz escribio justo antes de pegar ("la api de trello: ...")
+# Si el prefijo no lo dice, lo que el usuario escribio justo antes de pegar ("la api de trello: ...")
 SERVICIOS = ["gamma", "trello", "openai", "anthropic", "claude", "gemini", "google", "youtube", "groq", "mistral",
              "openrouter", "supabase", "resend", "elevenlabs", "github", "stripe", "huggingface", "deepseek",
              "notion", "airtable", "twilio", "cloudflare", "vercel", "netlify", "highlevel", "brevo", "mailchimp"]
@@ -94,7 +94,7 @@ def _variable_windows(nombre: str, valor: str | None) -> None:
 
 def guardar(clave: str, nombre: str) -> tuple[str, bool]:
     """Guarda NOMBRE=clave en el cofre. Devuelve (nombre final, ya_estaba). Si el nombre existe con otro valor,
-    se sustituye (la clave nueva manda: es la que Luaz acaba de pegar)."""
+    se sustituye (la clave nueva manda: es la que el usuario acaba de pegar)."""
     clave = clave.strip()
     if not RE_NOMBRE.match(nombre):
         nombre = nombre_para(clave)

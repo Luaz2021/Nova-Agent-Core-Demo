@@ -1,0 +1,119 @@
+==========================================================================================
+ NOVA AGENT · ESTRUCTURA DEL REPOSITORIO PUBLICO (version 3.3, 26/11/2026)
+ Creado por Saul Alexander Martinez Rivas (@Luaz2021). Licencia MIT (las voces Ayla y Marina NO: LICENCIA_VOCES.md).
+ PARA QUIEN HAGA EL PROXIMO PARCHE (persona o IA): lee esto ENTERO antes de tocar nada y, al terminar, ACTUALIZA
+ este archivo (estructura, compatibilidad y el registro de cambios del final). Es el mapa del repo.
+==========================================================================================
+
+------------------------------------------------------------------------------------------
+1. QUE ES Y COMO SE INSTALA
+------------------------------------------------------------------------------------------
+- Nova = agente de ingenieria para Google Antigravity (Gemini). Sus leyes estan en GEMINI.md; los hooks (nova_core)
+  hacen cumplir con CODIGO lo importante, porque el modelo no siempre obedece reglas escritas.
+- Instalar: instalar_nova.bat (Windows) / instalar_nova.sh (macOS y Linux) -> adapters/<sistema>/install.*
+- Actualizar: el usuario dice "Nova, busca actualizaciones" -> scripts/actualizar_nova.py lee manifest_master.json
+  (SHA-256 de cada archivo; solo baja lo que cambio y verifica cada descarga), lanza el Doctor antes (--estructura)
+  y despues, y nunca toca memory/, perfil_usuario.json, claves, hooks.json ni config.json.
+- Reparar: scripts/nova_doctor.py --reparar (Windows llama ademas a scripts/nova_doctor.ps1).
+
+------------------------------------------------------------------------------------------
+2. DONDE VA CADA CARPETA DEL REPO EN EL EQUIPO DEL USUARIO (~ = carpeta del usuario)
+------------------------------------------------------------------------------------------
+  repo                    -> equipo                                   que es
+  GEMINI.md               -> ~/.gemini/config/GEMINI.md                leyes de Nova (LIMITE 23.784 caracteres: Antigravity
+                                                                      corta lo que pase; en v3.3 va por ~22.800)
+  AYUDA.md                -> ~/.gemini/config/AYUDA.md                 atajos para el usuario
+  skills/                 -> ~/.gemini/config/skills/                  SOLO los 9 indices index-* (Antigravity los mete en
+                                                                      cada mensaje: nada mas aqui)
+  almacen/skills/         -> ~/.gemini/antigravity/almacen/skills/      las ~162 skills de verdad (se leen bajo demanda)
+  almacen/biblioteca_web/ -> ~/.gemini/antigravity/almacen/biblioteca_web/  motor de webs de negocio
+  agents/                 -> ~/.gemini/config/agents/                  sub-agentes (asesor de la piramide)
+  nova_core/              -> ~/.gemini/nova_core/                      hooks, frenos, redactor de documentos, linter
+  scripts/                -> ~/.gemini/antigravity/scripts/            sync, Doctor, actualizador, guardian, MCP...
+  herramientas/           -> ~/.gemini/antigravity/herramientas/        herramientas oficiales (indice: herramientas/LEEME.md)
+  clonador/               -> ~/.gemini/antigravity/clonador/           clonador de webs de referencia (motor + revision)
+  memory_templates/       -> ~/.gemini/antigravity/memory/             plantillas (se guardan como *_oficial.md)
+  adapters/, instalar_*   -> (solo instalacion)
+  herramientas_autor/     -> (solo el autor: generar_manifest.py)
+
+------------------------------------------------------------------------------------------
+3. PIEZAS CLAVE
+------------------------------------------------------------------------------------------
+nova_core/
+  nova_hook.py ........... PreToolUse: decide allow / auto_approve / force_ask / deny en CADA herramienta de Nova.
+                           Zona blindada (hooks, config/, Doctor, sync, actualizador) = nunca; modos CHARLA/ENCARGO/
+                           TOTAL; permiso explicito del usuario; modo practicas; freno de reescrituras y de capas;
+                           claves de API; python a secas; carpeta de Nova Sync; director.
+                           RUTAS: todo se compara en forma canonica con _w() (barras \ y minusculas) para que funcione
+                           igual en Windows, macOS y Linux. Si anades una ruta, pasala por _w() o _norm().
+  nova_hook_turno.py ..... PreInvocation / Stop: avisos (modo, carril, adjuntos, bufer 200k/350k/500k, AGENTS.md,
+                           practicas, permiso) y frenos de cierre (autonomia, verificacion, revision visual, compilar).
+  nova_autonomia.py ...... "sin excusas" y "sin pedir sigue" en un encargo.
+  nova_verificacion.py ... no dar la razon sin comprobar (modo profe) + revision visual obligatoria en webs.
+  nova_carriles.py ....... tema del mensaje/archivo -> kit de herramientas/carriles/ (+ carriles.json).
+  nova_aprendido.py ...... memory/aprendido.jsonl -> bloque "Errores que ya cometiste" de cada kit.
+  nova_cupo.py ........... coste ponderado por modelo y % de cupo (estimacion calibrada con un plan real).
+  redactar.py + redaccion/ generador de documentos (Word/PDF/Markdown/Excel/Gamma) con revision final.
+  instalar_hooks.py ...... registra los hooks en ~/.gemini/config/hooks.json.
+scripts/
+  actualizar_nova.py, nova_doctor.py (+ .ps1 en Windows), nova_sync.py + nova_sync_pedir.py (Nova Sync con Google
+  Drive), nova_buffer_guardian.py (copia de chats y avisos de tokens), nova_mcp.py (encender/apagar MCP: crea la
+  entrada de "codebase" y "penpot" si falta), session_guard.ps1 (Windows: servicios con Antigravity abierto),
+  nova_comun.py (pitido / notificacion / voz / nombre del usuario en los 3 sistemas), nova_revisor.py (informe semanal).
+herramientas/ (ver herramientas/LEEME.md, tiene la tabla de sistemas)
+  carriles, director, estudio_web, revision_visual, api_xray, consultas, seguridad, codebase_memory (radiografia),
+  penpot_mcp, video (destilador_video), voz, voz_clon (pack de voz), nube, trello, horario, pruebas, radar_web.py.
+
+------------------------------------------------------------------------------------------
+4. COMPATIBILIDAD (regla: TODO lo nuevo funciona en Windows, macOS y Linux o lo dice claro)
+------------------------------------------------------------------------------------------
+- 3 sistemas: hooks y frenos, skills, redactor, carriles, director (CLI agy; criterios en PowerShell o bash),
+  estudio web, revision visual, API X-Ray, consultas, arnes de seguridad, radiografia (instalar.py elige el binario),
+  Penpot (Node.js), destilador de video (instalar.py), Nova Sync (Linux con rclone), Doctor, actualizador, clonador
+  (.bat en Windows; .sh y CLONAR.command en macOS/Linux).
+- Solo Windows: voz manos libres, aduana de adjuntos, mascota/monito, guardian de claves, horario, session_guard.ps1,
+  pruebas/phantom_test.ps1, seguridad/git_clone_sentinel.ps1.
+- Trucos de portabilidad usados (repetirlos): CREATE_NO_WINDOW solo si os.name == "nt"; en macOS/Linux procesos de
+  fondo con start_new_session=True; tasklist/taskkill -> os.kill / killpg; winsound -> afplay / paplay / aplay;
+  DevToolsActivePort en %APPDATA% / ~/Library/Application Support / ~/.config; Python de Nova = nova_env/Scripts/
+  python.exe (Windows) o nova_env/bin/python; en textos para Nova usar <PYTHON> y <NOVA_HOME>/... con barras /.
+- .ps1 sin acentos (PowerShell 5.1 los lee en ANSI). Los .sh/.command necesitan el bit de ejecucion en git
+  (git update-index --chmod=+x).
+
+------------------------------------------------------------------------------------------
+5. COMO HACER UN PARCHE SIN ROMPER NADA
+------------------------------------------------------------------------------------------
+1) Clon LIMPIO fuera de Google Drive (Drive mete desktop.ini dentro de .git y lo rompe). Rama nueva (vX.Y).
+2) Privacidad: nada de rutas personales, nombres, cofres de claves, proyectos o datos del autor. En los textos para
+   Nova: "el usuario" (GEMINI.md le dice que use el nombre de perfil_usuario.json).
+3) Lo que el usuario puede cambiar va en PRESERVAR de herramientas_autor/generar_manifest.py (no se pisa).
+4) Si una carpeta/archivo se MUEVE o se RETIRA: el actualizador no borra; que lo aparte el Doctor (con copia en
+   backups/) como hace revisar_skills_sueltas().
+5) Probar: hooks en una casa falsa (USERPROFILE/HOME a otra carpeta) con rutas de Windows y de Mac; el actualizador
+   de punta a punta con NOVA_REPO_RAW_URL=file:///<clon> desde la version anterior; NOVA_DOCTOR_SIN_PS=1 en pruebas.
+6) python herramientas_autor/generar_manifest.py --version X.Y, actualizar README (novedades + tabla de sistemas),
+   AYUDA.md si hay atajos nuevos, y ESTE archivo.
+
+------------------------------------------------------------------------------------------
+6. REGISTRO DE CAMBIOS (lo mas nuevo arriba)
+------------------------------------------------------------------------------------------
+v3.3 (26/11/2026)
+  NUEVO: nova_core/nova_autonomia.py, nova_verificacion.py, nova_carriles.py, nova_aprendido.py, nova_cupo.py ·
+    agents/asesor.md · herramientas/carriles, director, estudio_web, revision_visual, api_xray, consultas,
+    seguridad/nova_seguridad.py, codebase_memory (radiografia.py + instalar.py), penpot_mcp/lanzar.py,
+    video/destilador_video (destilar.py + instalar.py), datos/estudio_web/casos.json (PRESERVAR) ·
+    25 skills en almacen/skills (android-*, java-*, spring-*, estructura-proyectos, security-audit-cloudflare,
+    reverse-engineer-anything, nova-piramide, nova-web-director, figma-nova-bridge...) · skills/index-java ·
+    clonador: guias/, herramientas/revision/, lanzadores .sh y CLONAR.command.
+  MODIFICADO: nova_hook.py y nova_hook_turno.py (fusion con la Nova privada + rutas canonicas para los 3 sistemas) ·
+    GEMINI.md (modos, piramide, carriles, Hydrogen/Carbon/Neon, bufer 200k) · los 9 indices · redactor ·
+    nova_buffer_guardian.py (3 avisos maximo, multiplataforma) · nova_doctor.py (config/agents + aparta skills
+    repetidas) · nova_doctor.ps1 (accesos de Antigravity con --remote-debugging-port=0) · session_guard.ps1
+    (revisor semanal al cerrar) · nova_mcp.py · voz (Nova Voz Live, clonador, widget con hojas WebP) · instaladores
+    (skills/ solo a config/skills; agents/) · generar_manifest.py (agents/ y PRESERVAR) · README, AYUDA.
+  MOVIDO: skills/nova-awake-sentinel -> almacen/skills/ · android-core -> android-compose.
+  RETIRADO: las ~136 copias repetidas de skills/ (siguen en almacen/skills; el Doctor las aparta en equipos viejos) ·
+    almacen/skills/_archivo · herramientas/video/destilador (viejo) · voz/widget/fotogramas.zip ·
+    codebase_memory/instalar.ps1 y lanzar.cmd · rutas privadas que quedaban en 3 skills, gamma.py y el diccionario.
+v3.2 (17/11/2026): Nova Sync, Nova Doctor multiplataforma, parches que reparan, pack de voz, Nova Voz Live.
+v3.1 (14/11/2026): sync del nucleo, redactor, 145 skills, instaladores nova_env para los 3 sistemas.

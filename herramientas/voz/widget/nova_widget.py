@@ -3,8 +3,7 @@ NOVA WIDGET (17/11/2026, Claude) - el monito de Nova FUERA de Antigravity: venta
 ================================================================================================================
 - Ventana de Windows transparente de verdad (bordes suaves), siempre encima, sin icono en la barra de tareas.
 - Se arrastra con el raton; recuerda donde la dejaste. Clic derecho: menu (ocultar bocadillo / salir).
-- Las caras son los fotogramas de fotogramas.zip (o de la carpeta fotogramas\\ si existe; los hace
-  generar_fotogramas.py con el mismo dibujo que mascota.js).
+- Las caras son los fotogramas de fotogramas\\ (generar_fotogramas.py, mismo dibujo que mascota.js).
 - Nova Voz Live le cambia la cara por UDP local (127.0.0.1:5011), mensajes JSON: {"estado": "hablando"}
   Estados: espera · mirando · escuchando · pensando · hablando · error · pausa.  {"cmd": "salir"} lo cierra.
 
@@ -22,8 +21,6 @@ import re
 import socket
 import sys
 import threading
-import io
-import zipfile
 import zlib
 from ctypes import wintypes as wt
 
@@ -31,12 +28,27 @@ from PIL import Image
 
 AQUI = os.path.dirname(os.path.abspath(__file__))
 FOTOGRAMAS = os.path.join(AQUI, "fotogramas")
-FOTOGRAMAS_ZIP = os.path.join(AQUI, "fotogramas.zip")  # v3.2: un solo archivo en el repo
 POSICION = os.path.join(AQUI, "posicion.json")
 VOZ_APAGADA = os.path.expanduser(r"~\.gemini\antigravity\voice_cache\voz_apagada.flag")
 PUERTO = 5011
 FPS_MS = 100        # los fotogramas estan hechos cada 100 ms
 TAM_BASE = 150      # ancho del monito a 100 % de escala de Windows (los fotogramas son de 300 px)
+_HOJAS: dict = {}   # hoja WebP ya descomprimida (solo la del estado que se esta cargando)
+
+
+def _abrir_fotograma(f):
+    """Un fotograma: ruta de PNG suelto (formato viejo) o (hoja, indice, w, h, columnas) de hojas.json."""
+    if isinstance(f, str):
+        return Image.open(f)
+    ruta, i, w, h, cols = f
+    hoja = _HOJAS.get(ruta)  # referencia local: la precarga (otro hilo) puede vaciar _HOJAS a la vez
+    if hoja is None:
+        with Image.open(ruta) as im:
+            hoja = im.convert("RGBA")
+        _HOJAS.clear()
+        _HOJAS[ruta] = hoja
+    x, y = (i % cols) * w, (i // cols) * h
+    return hoja.crop((x, y, x + w, y + h))
 
 user32 = ctypes.WinDLL("user32", use_last_error=True)
 gdi32 = ctypes.WinDLL("gdi32", use_last_error=True)
@@ -144,25 +156,23 @@ class Widget:
         self.ancho = int(TAM_BASE * self.escala)
         self.estado = "espera"
         self.bocadillo = True
-        self.frames: dict[str, list[str]] = {}
-        self.png: dict[str, bytes] = {}  # nombre -> png (todo en memoria: ~15 MB, sin leer el disco al animar)
-        rutas = sorted(glob.glob(os.path.join(FOTOGRAMAS, "*.png")))
-        if rutas:
-            for ruta in rutas:
-                with open(ruta, "rb") as f:
-                    self.png[os.path.basename(ruta)] = f.read()
-        elif os.path.exists(FOTOGRAMAS_ZIP):
-            with zipfile.ZipFile(FOTOGRAMAS_ZIP) as z:
-                for n in sorted(z.namelist()):
-                    if n.endswith(".png"):
-                        self.png[os.path.basename(n)] = z.read(n)
-        for nombre in sorted(self.png):
-            m = re.match(r"(.+)_(\d+)\.png$", nombre)
-            if m:
-                self.frames.setdefault(m.group(1), []).append(nombre)
+        # 26/11: fotogramas en hojas WebP (hojas.json, una por estado) o, si no hay, los PNG sueltos de antes
+        self.frames: dict[str, list] = {}
+        hojas = os.path.join(FOTOGRAMAS, "hojas.json")
+        if os.path.exists(hojas):
+            with open(hojas, encoding="utf-8") as f:
+                for estado, m in json.load(f).items():
+                    ruta = os.path.join(FOTOGRAMAS, m["hoja"])
+                    if os.path.exists(ruta):
+                        self.frames[estado] = [(ruta, i, m["w"], m["h"], m["columnas"]) for i in range(m["n"])]
+        if not self.frames:
+            for ruta in sorted(glob.glob(os.path.join(FOTOGRAMAS, "*.png"))):
+                mm = re.match(r"(.+)_(\d+)\.png$", os.path.basename(ruta))
+                if mm:
+                    self.frames.setdefault(mm.group(1), []).append(ruta)
         if "espera" not in self.frames:
-            raise SystemExit("No hay fotogramas: falta fotogramas.zip (o ejecuta generar_fotogramas.py)")
-        with Image.open(io.BytesIO(self.png[self.frames["espera"][0]])) as im:
+            raise SystemExit("No hay fotogramas: ejecuta generar_fotogramas.py")
+        with _abrir_fotograma(self.frames["espera"][0]) as im:
             self.alto = int(im.height * self.ancho / im.width)
         self.cache: dict[str, list[bytes]] = {}
         self.i = 0
@@ -180,7 +190,7 @@ class Widget:
         if estado not in cache:
             lista = []
             for ruta in self.frames.get(estado) or self.frames["espera"]:
-                with Image.open(io.BytesIO(self.png[ruta])) as im:
+                with _abrir_fotograma(ruta) as im:
                     im = im.convert("RGBA").resize((self.ancho, self.alto), Image.LANCZOS)
                     if not con_bocadillo:  # el bocadillo ocupa la franja de arriba (~18 %)
                         recorte = int(self.alto * 0.18)
@@ -188,6 +198,7 @@ class Widget:
                         im.paste(transparente, (0, 0))
                     lista.append(zlib.compress(im.convert("RGBa").tobytes("raw", "BGRa"), 1))
             cache[estado] = lista
+            _HOJAS.clear()  # la hoja descomprimida ocupa ~30 MB: fuera en cuanto el estado esta en cache
         return cache[estado]
 
     # ---------------------------------------------------------------- ventana
@@ -304,7 +315,7 @@ class Widget:
 
     # ---------------------------------------------------------------- juegos / pantalla completa
     def _pantalla_completa(self) -> bool:
-        """17/11 (que no se superponga a juegos: algunos anti-trampas lo castigan): True si la ventana de delante ocupa
+        """17/11 (el usuario: "que no se superponga a juegos, luego me banean"): True si la ventana de delante ocupa
         TODA su pantalla (juego, video, presentacion...) o Windows dice que hay algo a pantalla completa."""
         try:
             estado = ctypes.c_int(0)

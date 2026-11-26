@@ -180,29 +180,110 @@ def resumen(ruta: Path) -> str:
 # ------------------------------------------------------------- exportar
 
 
+def _escribir_referencias(doc, referencias: list[str], estilo: str) -> None:
+    if not referencias:
+        return
+    doc.add_heading("Referencias", level=1)
+    usar_francesa = estilo in ("apa", "uem")
+    tiene_est_ref = "Referencia" in {s.name for s in doc.styles}
+    for ref in sorted(referencias, key=lambda r: r.strip().lower()):
+        p = doc.add_paragraph(
+            ref.strip(),
+            style="Referencia" if (usar_francesa and tiene_est_ref) else None,
+        )
+        if usar_francesa and not tiene_est_ref:
+            p.paragraph_format.left_indent = Cm(1.27)
+            p.paragraph_format.first_line_indent = Cm(-1.27)
+
+
+def _es_preliminar(titulo: str) -> bool:
+    return titulo.strip().lower().startswith(("resumen", "abstract"))
+
+
+def _es_especial_final(titulo: str) -> str | None:
+    bajo = titulo.strip().lower()
+    if bajo.startswith(("referencias", "bibliograf")):
+        return "referencias"
+    if bajo.startswith("anexo"):
+        return "anexos"
+    return None
+
+
 def a_word(guion: dict, ficha: dict, secciones: list[dict], destino: Path) -> None:
     estilo = guion.get("estilo") or ficha.get("estilo", "formal")
-    doc = estilos.abrir(estilo)
-    tipo_portada = ficha.get("portada") if guion.get("portada", True) else None
-    if tipo_portada:
-        word.portada(doc, guion, tipo_portada)
-    elif guion.get("titulo"):
-        doc.add_paragraph(guion["titulo"], style="Title")
-        datos = " · ".join(str(guion[k]) for k in ("autor", "fecha") if guion.get(k))
-        if datos:
-            doc.add_paragraph(datos, style="Nota")
+    plantilla = guion.get("plantilla")
+    doc = estilos.abrir(estilo, plantilla=plantilla)
+    if plantilla and Path(plantilla).exists():
+        word.salto_pagina(doc)
+    else:
+        tipo_portada = ficha.get("portada") if guion.get("portada", True) else None
+        if tipo_portada:
+            word.portada(doc, guion, tipo_portada)
+        elif guion.get("titulo"):
+            doc.add_paragraph(guion["titulo"], style="Title")
+            datos = " · ".join(
+                str(guion[k]) for k in ("autor", "fecha") if guion.get(k)
+            )
+            if datos:
+                doc.add_paragraph(datos, style="Nota")
+
     numerar = ficha.get("numerar_secciones", False)
+    con_indices = bool(guion.get("indices", ficha.get("indices", False)))
     tema = estilo if estilo in estilos.TEMAS else None
-    for n, s in enumerate(secciones, start=1):
+
+    if not con_indices:
+        for n, s in enumerate(secciones, start=1):
+            doc.add_heading(f"{n}. {s['titulo']}" if numerar else s["titulo"], level=1)
+            lang = (
+                "en-US" if s["titulo"].strip().lower().startswith("abstract") else None
+            )
+            word.markdown_a_word(doc, s["cuerpo"], tema=tema, lang=lang)
+        _escribir_referencias(doc, guion.get("referencias", []), estilo)
+        doc.save(str(destino))
+        return
+
+    preliminares = [s for s in secciones if _es_preliminar(s["titulo"])]
+    cuerpo = [
+        s
+        for s in secciones
+        if not _es_preliminar(s["titulo"]) and not _es_especial_final(s["titulo"])
+    ]
+    refs_sec = [
+        s for s in secciones if _es_especial_final(s["titulo"]) == "referencias"
+    ]
+    anexos = [s for s in secciones if _es_especial_final(s["titulo"]) == "anexos"]
+
+    for s in preliminares:
+        doc.add_heading(s["titulo"], level=1)
+        lang = "en-US" if s["titulo"].strip().lower().startswith("abstract") else None
+        word.markdown_a_word(doc, s["cuerpo"], tema=tema, lang=lang)
+    if preliminares:
+        word.salto_pagina(doc)
+
+    word.indice_automatico(doc, "Índice", 'TOC \\o "1-3" \\h \\z \\u', tema=tema)
+    word.indice_automatico(
+        doc, "Índice de tablas", 'TOC \\h \\z \\c "Tabla"', tema=tema
+    )
+    word.indice_automatico(
+        doc, "Índice de figuras", 'TOC \\h \\z \\c "Figura"', tema=tema
+    )
+    word.salto_pagina(doc)
+
+    for n, s in enumerate(cuerpo, start=1):
         doc.add_heading(f"{n}. {s['titulo']}" if numerar else s["titulo"], level=1)
         word.markdown_a_word(doc, s["cuerpo"], tema=tema)
-    if guion.get("referencias"):
-        doc.add_heading("Referencias", level=1)
-        for ref in guion["referencias"]:
-            p = doc.add_paragraph(ref)
-            if estilo == "apa":  # sangria francesa APA 7
-                p.paragraph_format.left_indent = Cm(1.27)
-                p.paragraph_format.first_line_indent = Cm(-1.27)
+
+    refs_lista = list(guion.get("referencias", []))
+    for rs in refs_sec:
+        refs_lista.extend(
+            ln.strip(" -*") for ln in rs["cuerpo"].splitlines() if ln.strip()
+        )
+    _escribir_referencias(doc, refs_lista, estilo)
+
+    for ax in anexos:
+        word.salto_pagina(doc)
+        doc.add_heading(ax["titulo"], level=1)
+        word.markdown_a_word(doc, ax["cuerpo"], tema=tema)
     doc.save(str(destino))
 
 

@@ -826,8 +826,7 @@ class NovaLive:
         vosk.SetLogLevel(-1)
         self.loop = asyncio.get_running_loop()
         self.mic = asyncio.Queue()
-        if self.usar_ayla:
-            self.ayla.calentar()
+        # Solo arrancar el servidor pesado de Ayla cuando el usuario active la voz ("Nova" / conversar)
         self.abrir_widget()
         threading.Thread(target=self._repetir_cara, daemon=True).start()
         if self.args.texto:

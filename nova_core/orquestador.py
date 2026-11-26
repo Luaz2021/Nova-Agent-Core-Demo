@@ -942,12 +942,22 @@ def _revisar_preparado(raiz: Path, archivo: str) -> tuple[list[str], list[dict]]
     return pasos or [], avisos
 
 
+def _es_doc_o_ignorado(rel: str) -> bool:
+    """v3.3: en el commit tambien valen IGNORAR_DIRS, y los EJEMPLOS de documentacion de las skills
+    (skills/<x>/examples|templates) no son codigo del proyecto (fragmentos que no compilan sueltos o usan globales
+    de un CDN). Todo lo demas se sigue revisando igual."""
+    partes = Path(rel).parts
+    if set(partes) & IGNORAR_DIRS:
+        return True
+    return "skills" in partes and bool({"examples", "templates"} & set(partes))
+
+
 def revisar_commit() -> int:
     raiz = Path(_git(["rev-parse", "--show-toplevel"], Path.cwd()).strip() or Path.cwd())
     preparados = [
         f.strip()
         for f in _git(["diff", "--cached", "--name-only", "--diff-filter=ACMR"], raiz).splitlines()
-        if f.strip() and Path(f.strip()).suffix.lower() in EXT_SOPORTADAS
+        if f.strip() and Path(f.strip()).suffix.lower() in EXT_SOPORTADAS and not _es_doc_o_ignorado(f.strip())
     ]
     if not preparados:
         print("[OK] Sin archivos de codigo en el commit.")

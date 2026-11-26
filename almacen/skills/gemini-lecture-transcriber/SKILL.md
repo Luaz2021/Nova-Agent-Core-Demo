@@ -23,7 +23,7 @@ El agente activará esta habilidad cuando el usuario:
    - El agente ejecuta el script local en Python:
      `python "<NOVA_HOME>\antigravity\almacen\skills\gemini-lecture-transcriber\scripts\transcribe.py" "<URL>"`
    - Guarda la transcripción limpia en:
-     `G:\Mi unidad\Antigravity\transcripts\<nombre-clase>.txt`
+     `<NOVA_HOME>/antigravity/documentos_generados/transcripts/<nombre-clase>.txt`
 2. **Generación de Apuntes (Por el Tutor Académico):**
    - Una vez obtenido el texto plano, el agente no se limita a copiarlo:
      - **Resumen Ejecutivo:** Los 3 conceptos fundamentales explicados en la clase.

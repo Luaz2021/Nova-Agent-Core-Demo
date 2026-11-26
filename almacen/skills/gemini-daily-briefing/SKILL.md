@@ -52,7 +52,7 @@ Esta habilidad convierte a **Nova** en el asistente de control diario del usuari
 4. **Respuesta al usuario:**
    - Confirmación ultra rápida de una línea: *"Anotado en la lista: [tarea] ✅"* o *"Tarea completada y archivada ✅"*.
 ## 3. MODO 3: Lectura de Instrucciones de Voz en Segundo Plano (Voice Inbox)
-Al iniciar sesión, saludar o antes de planificar tareas, revisar si existe `G:\Mi unidad\Antigravity\nova_voice_inbox.txt`.
+Al iniciar sesión, saludar o antes de planificar tareas, revisar si existe `<NOVA_HOME>/antigravity/memory/nova_voice_inbox.txt`.
 - Si contiene instrucciones grabadas por voz mientras el usuario estaba fuera o almorzando, procesarlas y vaciar el buzón o marcarlas como procesadas.
 
 4. **Verificación de Hitos y Fechas:**

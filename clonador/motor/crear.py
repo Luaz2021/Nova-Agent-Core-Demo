@@ -101,6 +101,10 @@ def main():
     html = puente_interactividad.inyectar(
         html, carpeta
     )  # pestañas, colores, modales, hover (clon-interacciones.js)
+    # 22/11 (Claude, W1): las fotos de vídeos/canvas/iframes van en base/assets/ y el HTML (escrito para base/) las pide
+    # como "assets/...". Copiado a construccion/ no las encontraba: el vídeo de portada de webstudiomarketing.es salía
+    # NEGRO. Solo rutas relativas (comillas, paréntesis, espacio o coma delante), nunca https://.../assets/...
+    html = re.sub(r'(?<=["\'(\s,])assets/', "base/assets/", html)
     secs = sorted(set(int(n) for n in re.findall(r'data-clon-sec="(\d+)"', html)))
     if (out / "index.html").exists():
         shutil.copy(out / "index.html", out / "index_anterior.html")

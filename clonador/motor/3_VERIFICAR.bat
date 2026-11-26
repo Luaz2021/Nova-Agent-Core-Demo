@@ -1,6 +1,7 @@
 @echo off
 chcp 65001 >nul
 cd /d "%~dp0"
+if defined NOVA_PYTHON (set "PY=%NOVA_PYTHON%") else (set "PY=python")
 set PYTHONUTF8=1
 set PYTHONIOENCODING=utf-8
 set PYTHONDONTWRITEBYTECODE=1
@@ -12,7 +13,7 @@ curl -s http://127.0.0.1:11434/api/tags >nul 2>&1 || (echo Abriendo Ollama... & 
 set SOLO=
 set /p N="Verificar solo las primeras N secciones? (numero, o Enter = todas): "
 if not "%N%"=="" set SOLO=--solo=%N%
-python -u verificar.py %SOLO%
+"%PY%" -u verificar.py %SOLO%
 echo.
 echo ============================================================
 echo  Terminado. Se abre la revision. Dile a Claude: "ya verifique"

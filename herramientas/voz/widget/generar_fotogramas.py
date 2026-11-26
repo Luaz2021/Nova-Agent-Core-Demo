@@ -46,7 +46,52 @@ def main():
             pag.evaluate("document.getAnimations().forEach(a => a.play())")
         nav.close()
     print(f"{total} fotogramas en {SALIDA}")
+    empaquetar()
+
+
+def empaquetar(carpeta: str = SALIDA, columnas: int = 8) -> None:
+    """26/11 (Claude, auditoria de Carbon): 448 PNG sueltos -> 1 hoja WebP SIN perdida por estado + hojas.json.
+    Mismos pixeles (se comprueba antes de borrar los PNG); Drive sincroniza 8 archivos en vez de 448."""
+    import glob
+    import json
+    import re
+    from PIL import Image
+
+    grupos: dict[str, list[str]] = {}
+    for ruta in sorted(glob.glob(os.path.join(carpeta, "*.png"))):
+        m = re.match(r"(.+)_(\d+)\.png$", os.path.basename(ruta))
+        if m:
+            grupos.setdefault(m.group(1), []).append(ruta)
+    if not grupos:
+        print("No hay PNG que empaquetar.")
+        return
+    meta = {}
+    for estado, rutas in grupos.items():
+        imgs = [Image.open(r).convert("RGBA") for r in rutas]
+        w, h = imgs[0].size
+        filas = -(-len(imgs) // columnas)
+        hoja = Image.new("RGBA", (w * columnas, h * filas), (0, 0, 0, 0))
+        for i, im in enumerate(imgs):
+            hoja.paste(im, ((i % columnas) * w, (i // columnas) * h))
+        destino = os.path.join(carpeta, f"{estado}.webp")
+        hoja.save(destino, "WEBP", lossless=True, quality=100, method=6, exact=True)
+        with Image.open(destino) as comp:  # comprobar pixel a pixel antes de borrar nada
+            comp = comp.convert("RGBA")
+            for i, im in enumerate(imgs):
+                x, y = (i % columnas) * w, (i // columnas) * h
+                if comp.crop((x, y, x + w, y + h)).tobytes() != im.tobytes():
+                    raise SystemExit(f"{estado}: el fotograma {i} no sale identico; no se borra nada")
+        meta[estado] = {"hoja": f"{estado}.webp", "n": len(imgs), "w": w, "h": h, "columnas": columnas}
+        for im in imgs:
+            im.close()
+    with open(os.path.join(carpeta, "hojas.json"), "w", encoding="utf-8") as f:
+        json.dump(meta, f, indent=1)
+    for rutas in grupos.values():
+        for r in rutas:
+            os.remove(r)
+    print(f"{sum(m['n'] for m in meta.values())} fotogramas -> {len(meta)} hojas WebP (identicas) en {carpeta}")
 
 
 if __name__ == "__main__":
-    main()
+    import sys
+    empaquetar() if "--empaquetar" in sys.argv else main()
